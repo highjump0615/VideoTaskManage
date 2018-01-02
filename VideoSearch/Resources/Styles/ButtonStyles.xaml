@@ -1,0 +1,1244 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:VideoSearch.Resources.Styles">
+
+    <!-- ButtonFocusVisual -->
+    <Style x:Key="ButtonFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border>
+                        <Rectangle Margin="0"
+                                     StrokeThickness="0"
+                                     Stroke="Transparent"
+                                     StrokeDashArray="1 2" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- BrownButton -->
+    <Style x:Key="BrownButtonStyle" TargetType="Button">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="MinHeight" Value="16" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="4"
+                            BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="Transparent" Offset="0" />
+                                        <GradientStop Color="Transparent" Offset="0.8" />
+                                        <GradientStop Color="{DynamicResource CommonButtonFrameColor}" Offset="1" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Border.Background>
+
+                        <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                  x:Name="Border"
+                                                  CornerRadius="3"
+                                                  BorderThickness="1">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="0.0" />
+                                            <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="1.0" />
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.6,1"
+                                                                        StartPoint="0.6,0">
+                                    <GradientStop Color="{DynamicResource BrownButtonLightColor}"
+                                                                    Offset="0" />
+                                    <GradientStop Color="{DynamicResource BrownButtonMediumColor}"
+                                                                    Offset="0.6" />
+                                    <GradientStop Color="{DynamicResource BrownButtonDarkColor}"
+                                                                    Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter Margin="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            RecognizesAccessKey="True" />
+                        </Border>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonLightColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        
+                                        <ColorAnimationUsingKeyFrames
+                                                                    Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BrownButtonDisabledForegroundColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).
+                                                                        (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource ButtonBorderColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="true">
+
+                            <Setter TargetName="Border" Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CommonButtonBorderColor}"/>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- GreenButton -->
+    <Style x:Key="GreenButtonStyle" TargetType="Button">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="MinHeight" Value="16" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="4"
+                            BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="Transparent" Offset="0" />
+                                        <GradientStop Color="Transparent" Offset="0.8" />
+                                        <GradientStop Color="{DynamicResource CommonButtonFrameColor}" Offset="1" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Border.Background>
+
+                        <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                  x:Name="Border"
+                                                  CornerRadius="3"
+                                                  BorderThickness="1">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="0.0" />
+                                            <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="1.0" />
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.6,1"
+                                                                        StartPoint="0.6,0">
+                                    <GradientStop Color="{DynamicResource GreenButtonLightColor}"
+                                                                    Offset="0" />
+                                    <GradientStop Color="{DynamicResource GreenButtonMediumColor}"
+                                                                    Offset="0.6" />
+                                    <GradientStop Color="{DynamicResource GreenButtonDarkColor}"
+                                                                    Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter Margin="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            RecognizesAccessKey="True" />
+                        </Border>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonLightColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames
+                                                                    Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonDisabledForegroundColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).
+                                                                        (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource ButtonBorderColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="true">
+
+                            <Setter TargetName="Border" Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CommonButtonBorderColor}"/>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- BlueButton -->
+    <Style x:Key="BlueButtonStyle" TargetType="Button">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="MinHeight" Value="16" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="4"
+                            BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="Transparent" Offset="0" />
+                                        <GradientStop Color="Transparent" Offset="0.8" />
+                                        <GradientStop Color="{DynamicResource CommonButtonFrameColor}" Offset="1" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Border.Background>
+
+                        <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                  x:Name="Border"
+                                                  CornerRadius="3"
+                                                  BorderThickness="1">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="0.0" />
+                                            <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="1.0" />
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.6,1"
+                                                                        StartPoint="0.6,0">
+                                    <GradientStop Color="{DynamicResource BlueButtonLightColor}"
+                                                                    Offset="0" />
+                                    <GradientStop Color="{DynamicResource BlueButtonMediumColor}"
+                                                                    Offset="0.6" />
+                                    <GradientStop Color="{DynamicResource BlueButtonDarkColor}"
+                                                                    Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter Margin="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            RecognizesAccessKey="True" />
+                        </Border>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonLightColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames
+                                                                    Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueButtonDisabledForegroundColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).
+                                                                        (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource ButtonBorderColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="true">
+
+                            <Setter TargetName="Border" Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CommonButtonBorderColor}"/>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- GreenFrameButton -->
+    <Style x:Key="GreenFrameButtonStyle" TargetType="Button">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="MinHeight" Value="16" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                  x:Name="Border"
+                                                  CornerRadius="1"
+                                                  BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="0.0" />
+                                        <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="1.0" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.6,1"
+                                                                        StartPoint="0.6,0">
+                                <GradientStop Color="{DynamicResource GreenButtonLightColor}"
+                                                                    Offset="0" />
+                                <GradientStop Color="{DynamicResource GreenButtonMediumColor}"
+                                                                    Offset="0.6" />
+                                <GradientStop Color="{DynamicResource GreenButtonDarkColor}"
+                                                                    Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonLightColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames
+                                                                    Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource GreenButtonDisabledForegroundColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).
+                                                                        (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource ButtonBorderColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter Margin="2"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="true">
+
+                            <Setter TargetName="Border" Property="BorderBrush">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                                                EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="{DynamicResource DefaultBorderBrushLightBrush}"
+                                                                                    Offset="0.0" />
+                                                <GradientStop Color="{DynamicResource DefaultBorderBrushDarkColor}"
+                                                                                    Offset="1.0" />
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- BlueFrameButton -->
+    <Style x:Key="BlueFrameButtonStyle" TargetType="Button">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="MinHeight" Value="16" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                  x:Name="Border"
+                                                  CornerRadius="1"
+                                                  BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="0.0" />
+                                        <GradientStop Color="{DynamicResource ButtonBorderColor}"
+                                                                            Offset="1.0" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.6,1"
+                                                                        StartPoint="0.6,0">
+                                <GradientStop Color="{DynamicResource BlueFrameButtonLightColor}"
+                                                                    Offset="0" />
+                                <GradientStop Color="{DynamicResource BlueFrameButtonMediumColor}"
+                                                                    Offset="0.6" />
+                                <GradientStop Color="{DynamicResource BlueFrameButtonDarkColor}"
+                                                                    Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueFrameButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueFrameButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueFrameButtonMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueFrameButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueFrameButtonLightColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueFrameButtonPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueFrameButtonDisabledDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames
+                                                                    Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource BlueFrameButtonDisabledForegroundColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).
+                                                                        (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource ButtonBorderColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter Margin="2"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="true">
+
+                            <Setter TargetName="Border" Property="BorderBrush">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                                                EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="{DynamicResource DefaultBorderBrushLightBrush}"
+                                                                                    Offset="0.0" />
+                                                <GradientStop Color="{DynamicResource DefaultBorderBrushDarkColor}"
+                                                                                    Offset="1.0" />
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ImageButton base style -->
+    <ControlTemplate x:Key="ButtonBaseTemplate" TargetType="{x:Type ButtonBase}">
+        <Border Background="{TemplateBinding Background}" BorderBrush="{x:Null}">
+            <ContentPresenter />
+        </Border>
+    </ControlTemplate>
+
+    <!-- ImageButton style -->
+    <Style x:Key="ImageButtonStyle" TargetType="ButtonBase">
+        <Setter Property="Template" Value="{StaticResource ButtonBaseTemplate}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="DockPanel.Dock" Value="Right" />
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="White" Opacity="0.2" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="DarkGray" Opacity="0.2" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="Opacity" Value="1.0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Opacity" Value="0.4" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- PickerButton style -->
+    <Style x:Key="PickerButton" TargetType="ButtonBase">
+        <Setter Property="Template" Value="{StaticResource ButtonBaseTemplate}" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="White" Opacity="0.24" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource BorderDarkColor}" />
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="White" Opacity="0.32" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource BorderDarkColor}" />
+                    </Setter.Value>
+                </Setter>
+
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="DarkGray" Opacity="0.2" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="LightGray" Opacity="0.2"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource BorderDarkColor}" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="Opacity" Value="1.0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Opacity" Value="0.9" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="Transparent" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DlgCloseButton style -->
+    <Style x:Key="DlgCloseButton" TargetType="ButtonBase">
+        <Setter Property="Template" Value="{StaticResource ButtonBaseTemplate}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="DockPanel.Dock" Value="Right" />
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Button/dlg_close_normal.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Button/dlg_close_over.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Button/dlg_close_pressed.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- PlayerButton style -->
+    <Style x:Key="PlayerButtonStyle" TargetType="Button">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="MinWidth" Value="46" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="15"
+                            BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="Transparent" Offset="0" />
+                                        <GradientStop Color="Transparent" Offset="0.3" />
+                                        <GradientStop Color="{DynamicResource CommonButtonFrameColor}" Offset="1" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Border.Background>
+                        
+                        <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                  x:Name="Border"
+                                                  CornerRadius="14"
+                                                  BorderThickness="1">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CommonButtonBorderColor}"/>
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                    <GradientStop Color="{DynamicResource PlayerButtonNormalLightColor}" Offset="0" />
+                                    <GradientStop Color="{DynamicResource PlayerButtonNormalMediumColor}" Offset="0.7" />
+                                    <GradientStop Color="{DynamicResource PlayerButtonNormalDarkColor}" Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+
+                            <ContentPresenter Margin="0"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
+
+                        </Border>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonPressedLightColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonPressedMediumColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonPressedDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonDisabledColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonDisabledColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonDisabledColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="true">
+
+                            <Setter TargetName="Border" Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CommonButtonBorderColor}"/>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- PlayerStopButton style -->
+    <Style x:Key="PlayerStopButtonStyle" TargetType="Button">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="MinWidth" Value="46" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="15"
+                            BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="Transparent" Offset="0" />
+                                        <GradientStop Color="Transparent" Offset="0.3" />
+                                        <GradientStop Color="{DynamicResource CommonButtonFrameColor}" Offset="1" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Border.Background>
+
+                        <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                  x:Name="Border"
+                                                  CornerRadius="14"
+                                                  BorderThickness="1">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource CommonButtonBorderColor}"/>
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                    <GradientStop Color="{DynamicResource PlayerStopButtonNormalLightColor}" Offset="0" />
+                                    <GradientStop Color="{DynamicResource PlayerStopButtonNormalMediumColor}" Offset="0.7" />
+                                    <GradientStop Color="{DynamicResource PlayerStopButtonNormalDarkColor}" Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+
+                            <ContentPresenter Margin="0"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
+
+                        </Border>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerStopButtonOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerStopButtonOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerStopButtonOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerStopButtonPressedLightColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerStopButtonPressedMediumColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerStopButtonPressedDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonDisabledColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonDisabledColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                                                                                            (GradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                  Storyboard.TargetName="Border">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                           Value="{StaticResource PlayerButtonDisabledColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="true">
+
+                            <Setter TargetName="Border" Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource CommonButtonBorderColor}"/>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

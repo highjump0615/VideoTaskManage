@@ -1,0 +1,30 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VideoSearch.Views.PlayView"
+             xmlns:Player="clr-namespace:VideoSearch.Views.Player" x:Class="VideoSearch.Views.PlayView.PlayViewSmall"
+             mc:Ignorable="d" 
+             d:DesignHeight="575" d:DesignWidth="998">
+    <Grid>
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="474*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="474*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="262*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="262*"/>
+            </Grid.RowDefinitions>
+
+            <ContentControl Content="{Binding PlayerList[0]}" />
+            <ContentControl Content="{Binding PlayerList[1]}" Grid.Column="2"/>
+            <ContentControl Content="{Binding PlayerList[2]}" Grid.Column="0" Grid.Row="2"/>
+            <ContentControl Content="{Binding PlayerList[3]}" Grid.Column="2" Grid.Row="2"/>
+
+        </Grid>
+    </Grid>
+</UserControl>

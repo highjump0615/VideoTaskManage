@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:VideoSearch.Resources.Colors">
+
+    <!-- Common color -->
+    <Color x:Key="LightColor">#ff686868</Color>
+    <Color x:Key="MediumColor">#ff464646</Color>
+    <Color x:Key="DarkColor">#ff403f3a</Color>
+    <Color x:Key="BorderLightkColor">#ff484847</Color>
+    <Color x:Key="BorderDarkColor">#ff2a2a28</Color>
+
+
+</ResourceDictionary>

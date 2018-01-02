@@ -1,0 +1,154 @@
+﻿<UserControl x:Class="VideoSearch.Views.PanelViewTaskSummaryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VideoSearch.Views"
+             xmlns:thumbnail="clr-namespace:VideoSearch.SkinControl.Thumbnail"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600">
+    <Grid Margin="20">
+        <Grid.Resources>
+            <thumbnail:ThumbnailList x:Key="thumbList"/>
+        </Grid.Resources>
+
+        <Border CornerRadius="4" Background="#FF464646" 
+                BorderBrush="#FF222222" BorderThickness="1">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="34" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid Margin="20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="140"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="每页200张图片"
+                           FontFamily="Arial" FontSize="16" 
+                           Height="18" Margin="20,0" Foreground="White" 
+                           TextAlignment="Left" 
+                           VerticalAlignment="Center" IsHitTestVisible="False" />
+
+                    <Button Grid.Column="2" Height="26"
+                            Style="{DynamicResource BlueButtonStyle}">
+                        <Grid Width="66" Height="24" Margin="0">
+                            <Image HorizontalAlignment="Right" Margin="0,0,8,0"
+                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_popup.png" Stretch="None" />
+
+                            <TextBlock Text="小图片" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
+                        </Grid>
+                    </Button>
+
+                    <TabControl Grid.Column="4" VerticalAlignment="Center"
+                                Style="{DynamicResource BlueTabControlStyle}">
+                        <TabItem>
+                            <Grid Margin="4,0" HorizontalAlignment="Stretch">
+                                <Image HorizontalAlignment="Left" Source="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail_Full.png" Stretch="None"/>
+                                <TextBlock Text="全景" Margin="26,0,0,0"
+                                           FontFamily="Arial" FontSize="12" 
+                                           Height="14" Foreground="White" 
+                                           TextAlignment="Left" 
+                                           VerticalAlignment="Center" IsHitTestVisible="False" />
+                            </Grid>
+                          </TabItem>
+                        <TabItem>
+                            <Grid Margin="4,0" HorizontalAlignment="Stretch">
+                                <Image HorizontalAlignment="Left" Source="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail_Sub.png" Stretch="None"/>
+                                <TextBlock Text="特写" Margin="26,0,0,0"
+                                           FontFamily="Arial" FontSize="12" 
+                                           Height="14" Foreground="White" 
+                                           TextAlignment="Left" 
+                                           VerticalAlignment="Center" IsHitTestVisible="False" />
+                            </Grid>
+
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <Separator Background="Black" Margin="0"/>
+                    <Separator Background="#FF3B3B3B" Margin="0" Grid.Row="1"/>
+                    <Border CornerRadius="0,0,3,3" Background="#FF323232" BorderThickness="0" Grid.Row="2">
+
+                    </Border>
+                    <ItemsControl Margin="15,0"
+                                Grid.Row="2"
+                              ItemsSource="{Binding Source={StaticResource thumbList}}" 
+                              HorizontalContentAlignment="Stretch" 
+                              VerticalContentAlignment="Stretch" 
+                              VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <ItemsControl.Template>
+                            <ControlTemplate TargetType="ItemsControl">
+                                <Border>
+                                    <WrapPanel Orientation="Horizontal"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Center">
+                                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                            <ItemsPresenter/>
+                                        </ScrollViewer>
+                                    </WrapPanel>
+                                </Border>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="217" Height="257">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="255"/>
+                                        <RowDefinition Height="1"/>
+                                        <RowDefinition Height="1"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Margin="5,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="180"/>
+                                            <RowDefinition Height="55"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="1"
+                                            CornerRadius="2">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail.png"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock Grid.Row="2" Text="{Binding ThumbTitle}"
+                                               FontFamily="Arial" FontSize="16" 
+                                               Height="18" Margin="8,8" Foreground="White" 
+                                               TextAlignment="Center" 
+                                               VerticalAlignment="Center" IsHitTestVisible="False" />
+                                    </Grid>
+
+                                    <Separator Background="Black" Margin="0" Grid.Row="1"/>
+                                    <Separator Background="#FF3B3B3B" Margin="0" Grid.Row="2"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+</UserControl>

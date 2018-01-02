@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:VideoSearch.Resources.Colors">
+
+
+    <!-- SettingSlider colors -->
+    <Color x:Key="SettingSliderTickerColor">#ff727272</Color>
+    <Color x:Key="SettingSliderBorderColor">#ff2c2b28</Color>
+
+    <!-- TimeRangeSlider colors -->
+    <Color x:Key="TimeRangeSliderThumbLightColor">#FF7B7B7B</Color>
+    <Color x:Key="TimeRangeSliderThumbMediumColor">#FFE4E4E4</Color>
+    <Color x:Key="TimeRangeSliderThumbOverColor">#FFFF0000</Color>
+    <Color x:Key="TimeRangeSliderThumbPressedColor">#FF4B4B4B</Color>
+    <Color x:Key="TimeRangeSliderThumbDisabledColor">#FFFBFBFB</Color>
+
+    <Color x:Key="TimeRangeSliderLightColor">#FF373737</Color>
+    <Color x:Key="TimeRangeSliderDarkColor">#171717</Color>
+
+    <Color x:Key="TimeRangeSliderTrackLightColor">#FFF89832</Color>
+    <Color x:Key="TimeRangeSliderTrackDarkColor">#FF5B2D04</Color>
+
+    <Color x:Key="TimeRangeSliderBorderLightColor">#FF2D2D2D</Color>
+    <Color x:Key="TimeRangeSliderBorderMediumColor">#FF5B5B5A</Color>
+    
+</ResourceDictionary>

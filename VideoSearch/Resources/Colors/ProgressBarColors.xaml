@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:VideoSearch.Resources.Colors">
+
+    <!-- ProgressBar colors -->
+    <Color x:Key="ProgressBarLightColor">#FF343433</Color>
+    <Color x:Key="ProgressBarMediumColor">#FF3A3A39</Color>
+    <Color x:Key="ProgressBarDarkColor">#FF323231</Color>
+
+    <Color x:Key="ProgressBarIndicatorColor">#FFFFC25B</Color>
+
+    <Color x:Key="ProgressBarBorderLightColor">#FF2D2D2D</Color>
+    <Color x:Key="ProgressBarBorderMediumColor">#FF5B5B5A</Color>
+    
+</ResourceDictionary>

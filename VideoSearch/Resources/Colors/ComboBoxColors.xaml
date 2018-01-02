@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:VideoSearch.Resources.Colors">
+
+    <!-- ComboBox colors -->
+    <Color x:Key="ComboDisabledLightColor">#FFE8EDF9</Color>
+    <Color x:Key="ComboDisabledDarkColor">#FFC5CBF9</Color>
+    <Color x:Key="ComboDisabledForegroundColor">#FF888888</Color>
+
+    <Color x:Key="ComboSelectedBackgroundColor">#FF0082E7</Color>
+    <Color x:Key="ComboSelectedUnfocusedColor">#FF0082E7</Color>
+
+    <Color x:Key="ComboLightColor">#FF646361</Color>
+    <Color x:Key="ComboMediumColor">#FF646361</Color>
+    <Color x:Key="ComboDarkColor">#FF646361</Color>
+
+    <Color x:Key="ComboDropBoxBkColor">#FF434954</Color>
+
+    <Color x:Key="ComboMouseOverColor">#FF00A0FF</Color>
+    <Color x:Key="ComboPressedColor">#FF646361</Color>
+
+    <Color x:Key="ComboGlyphColor">White</Color>
+
+    <Color x:Key="ComboBorderLightColor">#FF302F2B</Color>
+    <Color x:Key="ComboBorderMediumColor">#FF302F2B</Color>
+    <Color x:Key="ComboBorderDarkColor">#FF302F2B</Color>
+
+    <Color x:Key="ComboDisabledBorderColor">#302F2B</Color>
+    
+</ResourceDictionary>

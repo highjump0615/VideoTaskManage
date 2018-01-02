@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:VideoSearch.Resources.Colors">
+
+    <!-- SearchTextBox colors -->
+    <Color x:Key="SearchTextBoxDisabledLightColor">#FFE8EDF9</Color>
+    <Color x:Key="SearchTextBoxDisabledDarkColor">#FFC5CBF9</Color>
+    <Color x:Key="SearchTextBoxBackgroundColor">Transparent</Color>
+
+</ResourceDictionary>

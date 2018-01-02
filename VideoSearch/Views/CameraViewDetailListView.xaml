@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="VideoSearch.Views.CameraViewDetailListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VideoSearch.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="360" d:DesignWidth="980">
+    <Grid>
+        <Grid Background="#FF686868" Margin="20">
+            <Grid Name="Table" Margin="0,0,0,0" Background="#FF4F4F4E">
+                <DataGrid x:Name="EventDataGrid" BorderBrush="Black"
+					        ColumnHeaderHeight="58" RowHeight="42" 
+					        ItemsSource="{Binding Path=Owner, UpdateSourceTrigger=PropertyChanged}" 
+					        HeadersVisibility="Column" 
+					        FontFamily="Arial" FontSize="14" Foreground="White" 
+					        ScrollViewer.CanContentScroll="False" 
+					        VerticalScrollBarVisibility="Hidden" 
+					        HorizontalScrollBarVisibility="Disabled" 
+					        AutoGenerateColumns="False" 
+					        CanUserResizeRows="False" CanUserAddRows="False">
+
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn  Header="" Width="71*"
+							CellTemplate="{StaticResource CheckColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="序号" Width="71*"
+							CellTemplate="{StaticResource OrderColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="摄像头编号" Width="131*"
+							CellTemplate="{StaticResource IDColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="摄像头名称" Width="131*"
+							CellTemplate="{StaticResource NameColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="地址" Width="261*"
+							CellTemplate="{StaticResource CameraAddressDetailColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="摄像头类型" Width="103*"
+							CellTemplate="{StaticResource CameraTypeColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="视频源" Width="101*"
+							CellTemplate="{StaticResource CameraSourceColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="操作" Width="72*"
+							CellTemplate="{StaticResource OperationColumnTemplate}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Grid HorizontalAlignment="Right" Margin="0,0,0,12" Name="grid1" Width="180" Height="24" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24*" />
+                    <ColumnDefinition Width="62*" />
+                    <ColumnDefinition Width="24*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="60*" />
+                </Grid.ColumnDefinitions>
+                <Button IsEnabled="{Binding Path=IsEnabledPrevPage}" Command="{Binding PrevPageCommand}"
+                        Height="24" Width="24" Style="{DynamicResource ImageButtonStyle}" >
+                    <Image Source="/VideoSearch;component/Resources/Images/View/Page/prev_normal.png" Stretch="None" />
+                </Button>
+                <Button IsEnabled="{Binding Path=IsEnabledNextPage}" Command="{Binding NextPageCommand}"
+                        Height="24" Width="24"  Grid.Column="2" Style="{DynamicResource ImageButtonStyle}" >
+                    <Image Source="/VideoSearch;component/Resources/Images/View/Page/next_normal.png" Stretch="None" />
+                </Button>
+                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=PageNumber}" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" />
+                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=ItemCount}" VerticalAlignment="Center" Grid.Column="4" FlowDirection="RightToLeft" />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

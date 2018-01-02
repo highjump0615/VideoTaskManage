@@ -1,0 +1,31 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VideoSearch.SkinFrame"
+             xmlns:SkinControl="clr-namespace:VideoSearch.SkinControl" x:Class="VideoSearch.SkinFrame.MainFrame"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="400">
+    <Grid>
+        <SkinControl:SkinFrame x:Name="mainFrame" Margin="0" BkColor="{StaticResource MainFrameBkColor}" TitlebarColor="{StaticResource MainFrameTitleBarBkColor}"/>
+        <Grid Height="25" Margin="0" Name="titleBar" VerticalAlignment="Top" MinWidth="0" MinHeight="0">
+            <SkinControl:SkinButton Height="24" HorizontalAlignment="Right" Margin="0,0,4,0" x:Name="btClose" NormalImage="/VideoSearch;component/Resources/Images/SystemButton/close_normal.png" OverImage="/VideoSearch;component/Resources/Images/SystemButton/close_over.png" PressedImage="/VideoSearch;component/Resources/Images/SystemButton/close_pressed.png" VerticalAlignment="Top" Width="32" Click="OnClose" OverColor="#FF605E58" PressedColor="#FF585856" Padding="0" OffsetWithImage="0" />
+            <SkinControl:SkinButton Height="24" HorizontalAlignment="Right" Margin="0,0,35,0" x:Name="btRestore" 
+                                    NormalImage="/VideoSearch;component/Resources/Images/SystemButton/max_normal.png" 
+                                    OverImage="/VideoSearch;component/Resources/Images/SystemButton/max_over.png" 
+                                    PressedImage="/VideoSearch;component/Resources/Images/SystemButton/max_pressed.png" 
+                                    AlternateNormalImage="/VideoSearch;component/Resources/Images/SystemButton/restore_normal.png" 
+                                    AlternateOverImage="/VideoSearch;component/Resources/Images/SystemButton/restore_over.png" 
+                                    AlternatePressedImage="/VideoSearch;component/Resources/Images/SystemButton/restore_pressed.png" 
+                                   
+                                    OverColor="#FF605E58" 
+                                    PressedColor="#FF585856" 
+                                    Padding="0"  OffsetWithImage="0" 
+                                    VerticalAlignment="Top" Width="32" 
+                                    Click="OnRestore"/>
+            <SkinControl:SkinButton Height="24" HorizontalAlignment="Right" Margin="0,0,66,0" x:Name="btMinimize" NormalImage="/VideoSearch;component/Resources/Images/SystemButton/min_normal.png" OverImage="/VideoSearch;component/Resources/Images/SystemButton/min_over.png" PressedImage="/VideoSearch;component/Resources/Images/SystemButton/min_pressed.png" VerticalAlignment="Top" Width="32" Click="OnMinimize" OverColor="#FF605E58" PressedColor="#FF585856" Padding="0" OffsetWithImage="0" />
+        </Grid>
+        <Grid Margin="0,25,0,0"/>
+    </Grid>
+</UserControl>

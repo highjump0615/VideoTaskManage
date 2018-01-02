@@ -1,0 +1,812 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{090D1E26-5FEB-417A-9656-31D6E98784C8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VideoSearch</RootNamespace>
+    <AssemblyName>VideoSearch</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Design.Extensibility, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Windows.Design.Interaction, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.106.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.106.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.106.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Database\CameraTable.cs" />
+    <Compile Include="Database\DBManager.cs" />
+    <Compile Include="Database\EventTable.cs" />
+    <Compile Include="Database\MovieTable.cs" />
+    <Compile Include="Database\MovieTaskTable.cs" />
+    <Compile Include="Database\TableManager.cs" />
+    <Compile Include="Model\CameraItem.cs" />
+    <Compile Include="Model\DataItemBase.cs" />
+    <Compile Include="Model\EventItem.cs" />
+    <Compile Include="Model\MovieItem.cs" />
+    <Compile Include="Model\MovieTaskCompressItem.cs" />
+    <Compile Include="Model\MovieTaskItem.cs" />
+    <Compile Include="Model\MovieTaskSummaryItem.cs" />
+    <Compile Include="Model\MovieTaskSearchItem.cs" />
+    <Compile Include="Model\SearchResult.cs" />
+    <Compile Include="Model\SearchService.cs" />
+    <Compile Include="Model\VideoData.cs" />
+    <Compile Include="SearchListView\SearchListViewItemContent.xaml.cs">
+      <DependentUpon>SearchListViewItemContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchListView\SearchResultItem.xaml.cs">
+      <DependentUpon>SearchResultItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinControl\ColorPicker\BrushExtendedEditor.cs" />
+    <Compile Include="SkinControl\ColorPicker\ColorList.cs" />
+    <Compile Include="SkinControl\ColorPicker\ColorPicker.xaml.cs">
+      <DependentUpon>ColorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinControl\ColorPicker\ColorPickerButton.cs" />
+    <Compile Include="SkinControl\ColorPicker\EditorResources.cs" />
+    <Compile Include="SkinControl\ColorPicker\Metadata.cs" />
+    <Compile Include="SkinControl\RegionEditor.xaml.cs">
+      <DependentUpon>RegionEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinControl\SkinButton.xaml.cs">
+      <DependentUpon>SkinButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinControl\SkinButtonGroup.xaml.cs">
+      <DependentUpon>SkinButtonGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinControl\SkinFrame.xaml.cs">
+      <DependentUpon>SkinFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinControl\Thumbnail\ThumbnailItem.xaml.cs">
+      <DependentUpon>ThumbnailItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinControl\Thumbnail\ThumbnailList.cs" />
+    <Compile Include="SkinControl\TimeRangeMarker.xaml.cs">
+      <DependentUpon>TimeRangeMarker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinFrame\AssistFrame.xaml.cs">
+      <DependentUpon>AssistFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinFrame\DialogFrame.xaml.cs">
+      <DependentUpon>DialogFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinFrame\MainFrame.xaml.cs">
+      <DependentUpon>MainFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ExceptionUtils.cs" />
+    <Compile Include="VideoService\VideoAnalysis.cs" />
+    <Compile Include="VideoService\VideoInfo.cs" />
+    <Compile Include="VideoService\VideoResponsor.cs" />
+    <Compile Include="ViewModel\Base\HostViewModel.cs" />
+    <Compile Include="ViewModel\Base\ListViewModel.cs" />
+    <Compile Include="ViewModel\Base\RelayCommand.cs" />
+    <Compile Include="ViewModel\Base\RelayCommandEx.cs" />
+    <Compile Include="ViewModel\CameraViewDetailListModel.cs" />
+    <Compile Include="ViewModel\CameraViewListModel.cs" />
+    <Compile Include="ViewModel\CameraViewMapModel.cs" />
+    <Compile Include="ViewModel\CameraViewModel.cs" />
+    <Compile Include="ViewModel\EventViewModel.cs" />
+    <Compile Include="ViewModel\MovieTaskViewListModel.cs" />
+    <Compile Include="ViewModel\MovieTaskViewMainModel.cs" />
+    <Compile Include="ViewModel\MovieViewAnalysisModel.cs" />
+    <Compile Include="ViewModel\MovieViewListModel.cs" />
+    <Compile Include="ViewModel\MovieTaskViewModel.cs" />
+    <Compile Include="ViewModel\MovieViewModel.cs" />
+    <Compile Include="ViewModel\MovieViewPlayModel.cs" />
+    <Compile Include="ViewModel\PanelViewListModel.cs" />
+    <Compile Include="ViewModel\PanelViewPathModel.cs" />
+    <Compile Include="ViewModel\PanelViewModel.cs" />
+    <Compile Include="ViewModel\PanelViewTaskCompressModel.cs" />
+    <Compile Include="ViewModel\PanelViewTaskSummaryModel.cs" />
+    <Compile Include="ViewModel\PanelViewTaskSearchModel.cs" />
+    <Compile Include="ViewModel\Player\MiniPlayerViewModel.cs" />
+    <Compile Include="ViewModel\Player\PlayerViewModel.cs" />
+    <Compile Include="ViewModel\Player\PlayerViewModelBase.cs" />
+    <Compile Include="ViewModel\PlayView\MultiPlayerModel.cs" />
+    <Compile Include="ViewModel\PlayView\PlayViewLargeModel.cs" />
+    <Compile Include="ViewModel\PlayView\PlayViewMainModel.cs" />
+    <Compile Include="ViewModel\PlayView\PlayViewMediumModel.cs" />
+    <Compile Include="ViewModel\PlayView\PlayViewSmallModel.cs" />
+    <Compile Include="Views\CameraViewDetailListView.xaml.cs">
+      <DependentUpon>CameraViewDetailListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CameraViewListView.xaml.cs">
+      <DependentUpon>CameraViewListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CameraViewMapView.xaml.cs">
+      <DependentUpon>CameraViewMapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CameraView.xaml.cs">
+      <DependentUpon>CameraView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventView.xaml.cs">
+      <DependentUpon>EventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieTaskView.xaml.cs">
+      <DependentUpon>MovieTaskView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieTaskViewListView.xaml.cs">
+      <DependentUpon>MovieTaskViewListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieTaskViewMainView.xaml.cs">
+      <DependentUpon>MovieTaskViewMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieView.xaml.cs">
+      <DependentUpon>MovieView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieViewAnalysisView.xaml.cs">
+      <DependentUpon>MovieViewAnalysisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieViewListView.xaml.cs">
+      <DependentUpon>MovieViewListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieViewPlayView.xaml.cs">
+      <DependentUpon>MovieViewPlayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PanelView.xaml.cs">
+      <DependentUpon>PanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PanelViewListView.xaml.cs">
+      <DependentUpon>PanelViewListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PanelViewPathView.xaml.cs">
+      <DependentUpon>PanelViewPathView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PanelViewTaskCompressView.xaml.cs">
+      <DependentUpon>PanelViewTaskCompressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PanelViewTaskSummaryView.xaml.cs">
+      <DependentUpon>PanelViewTaskSummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PanelViewTaskSearchView.xaml.cs">
+      <DependentUpon>PanelViewTaskSearchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Player\MiniPlayerView.xaml.cs">
+      <DependentUpon>MiniPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Player\PlayerView.xaml.cs">
+      <DependentUpon>PlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayView\PlayViewLarge.xaml.cs">
+      <DependentUpon>PlayViewLarge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayView\PlayViewMain.xaml.cs">
+      <DependentUpon>PlayViewMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayView\PlayViewMedium.xaml.cs">
+      <DependentUpon>PlayViewMedium.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayView\PlayViewSmall.xaml.cs">
+      <DependentUpon>PlayViewSmall.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ConfirmDeleteWindow.xaml.cs">
+      <DependentUpon>ConfirmDeleteWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CreateCameraWindow.xaml.cs">
+      <DependentUpon>CreateCameraWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CreateEventWindow.xaml.cs">
+      <DependentUpon>CreateEventWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MovieCompressWindow.xaml.cs">
+      <DependentUpon>MovieCompressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MovieSummaryWindow.xaml.cs">
+      <DependentUpon>MovieSummaryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MovieSearchWindow.xaml.cs">
+      <DependentUpon>MovieSearchWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PlayerWindow.xaml.cs">
+      <DependentUpon>PlayerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SearchWindow.xaml.cs">
+      <DependentUpon>SearchWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\ButtonColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\ComboBoxColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\CommonColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\GroupBoxColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\ListBoxColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\WindowColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\ProgressBarColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\SliderColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\TextBoxColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MoviePlayerDataGridColumn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ComboBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\GroupBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ProgressBarStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\SliderStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\TabControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\TextBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Values.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\VideoDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\VideoDataGridColumn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchListView\SearchListViewItemContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchListView\SearchResultItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\ColorPicker\ColorPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\ColorPicker\EditorResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\RegionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\SkinButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\SkinButtonGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\SkinFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\Thumbnail\ThumbnailItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\TimeRangeMarker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinFrame\AssistFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinFrame\DialogFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinFrame\MainFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CameraViewDetailListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CameraViewListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CameraViewMapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CameraView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieTaskView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieTaskViewListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieTaskViewMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieViewAnalysisView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieViewListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieViewPlayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PanelViewListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PanelViewPathView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PanelViewTaskCompressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PanelViewTaskSummaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PanelViewTaskSearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Player\MiniPlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Player\PlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayView\PlayViewLarge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayView\PlayViewMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayView\PlayViewMedium.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayView\PlayViewSmall.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ConfirmDeleteWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreateCameraWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreateEventWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MovieCompressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MovieSummaryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MovieSearchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PlayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SearchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\Map\CameraMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\SystemButton\close_normal.png" />
+    <Resource Include="Resources\Images\SystemButton\close_over.png" />
+    <Resource Include="Resources\Images\SystemButton\close_pressed.png" />
+    <Resource Include="Resources\Images\SystemButton\max_normal.png" />
+    <Resource Include="Resources\Images\SystemButton\max_over.png" />
+    <Resource Include="Resources\Images\SystemButton\max_pressed.png" />
+    <Resource Include="Resources\Images\SystemButton\min_normal.png" />
+    <Resource Include="Resources\Images\SystemButton\min_over.png" />
+    <Resource Include="Resources\Images\SystemButton\min_pressed.png" />
+    <Resource Include="Resources\Images\SystemButton\restore_normal.png" />
+    <Resource Include="Resources\Images\SystemButton\restore_over.png" />
+    <Resource Include="Resources\Images\SystemButton\restore_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\MainWindow\app_icon.ico" />
+    <Resource Include="Resources\Images\MainWindow\mainframe_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Toolbar\Toolbar01\btDeleteEvent.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar01\btNewEvent.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar01\btSearchEvent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Toolbar\Toolbar02\btDeleteCamera.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar02\btNewCamera.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar02\btShowCameraList.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar02\btShowCameraMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\btAutoAnaysisMovie.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\btDeleteMovie.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\btFindMovie.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\btMovieImport.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\btPlayMovie.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\btShowMovieList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Toolbar\Toolbar05\btPanelExport.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar05\btPanelPreview.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar05\btPanelShowPath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Toolbar\Toolbar06\btHelp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\Search\search_cancel_normal.png" />
+    <Resource Include="Resources\Images\View\Search\search_cancel_over.png" />
+    <Resource Include="Resources\Images\View\Search\search_cancel_pressed.png" />
+    <Resource Include="Resources\Images\View\Search\search_icon.png" />
+    <Resource Include="Resources\Images\View\Search\search_no_result_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\ConfirmDelete\delete_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\CreateNewEvent\calendar_normal.png" />
+    <Resource Include="Resources\Images\View\CreateNewEvent\calendar_over.png" />
+    <Resource Include="Resources\Images\View\CreateNewEvent\calendar_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\TreeView\tree_icon_Camera.png" />
+    <Resource Include="Resources\Images\View\TreeView\tree_icon_Event.png" />
+    <Resource Include="Resources\Images\View\TreeView\tree_icon_CompressTask.png" />
+    <Resource Include="Resources\Images\View\TreeView\tree_icon_OutlineTask.png" />
+    <Resource Include="Resources\Images\View\TreeView\tree_icon_Movie.png" />
+    <Resource Include="Resources\Images\View\TreeView\tree_icon_SearchTask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\Page\next_normal.png" />
+    <Resource Include="Resources\Images\View\Page\next_over.png" />
+    <Resource Include="Resources\Images\View\Page\next_pressed.png" />
+    <Resource Include="Resources\Images\View\Page\prev_normal.png" />
+    <Resource Include="Resources\Images\View\Page\prev_over.png" />
+    <Resource Include="Resources\Images\View\Page\prev_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\Help\HelpIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="app_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\dlg_close_normal.png" />
+    <Resource Include="Resources\Images\Button\dlg_close_over.png" />
+    <Resource Include="Resources\Images\Button\dlg_close_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\SpliterHandle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\Map\PathMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\MovieImporting.png" />
+    <Resource Include="Resources\Images\Button\MovieImportReady.png" />
+    <Resource Include="Resources\Images\Button\MovieImportStop.png" />
+    <Resource Include="Resources\Images\Button\MoviePlay.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\MovieImport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Player\PlayerBg.png" />
+    <Resource Include="Resources\Images\Player\PlayerLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Player\player_icon_goto_end.png" />
+    <Resource Include="Resources\Images\Player\player_icon_speed_up.png" />
+    <Resource Include="Resources\Images\Player\player_icon_pause.png" />
+    <Resource Include="Resources\Images\Player\player_icon_play.png" />
+    <Resource Include="Resources\Images\Player\player_icon_goto_begin.png" />
+    <Resource Include="Resources\Images\Player\player_icon_speed_down.png" />
+    <Resource Include="Resources\Images\Player\player_icon_stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\MovieProcess\Default_Movie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\ColorPattern.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\ColorPicker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\setting_slider_thumb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\setting_slider_track.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\MovieImportPause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\MovieImportResume.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Player\player_icon_cut.png" />
+    <Resource Include="Resources\Images\Player\player_icon_popup.png" />
+    <Resource Include="Resources\Images\Player\player_icon_search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\MovieTaskDelete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Toolbar\Toolbar04\btMovieTaskChargeList.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar04\btMovieTaskCompress.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar04\btMovieTaskFind.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar04\btMovieTaskFindAndPlay.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar04\btMovieTaskSummary.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar04\btMovieTaskSearch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\MovieProcess\Thumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\MovieProcess\Thumbnail_Full.png" />
+    <Resource Include="Resources\Images\View\MovieProcess\Thumbnail_Sub.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

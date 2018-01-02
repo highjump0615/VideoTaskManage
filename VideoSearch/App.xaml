@@ -1,0 +1,131 @@
+﻿<Application x:Class="VideoSearch.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:VideoSearch"
+             xmlns:views="clr-namespace:VideoSearch.Views"
+             xmlns:playViews="clr-namespace:VideoSearch.Views.PlayView"
+             xmlns:playerViews="clr-namespace:VideoSearch.Views.Player"
+             xmlns:viewModel="clr-namespace:VideoSearch.ViewModel"
+             xmlns:playerModel="clr-namespace:VideoSearch.ViewModel.Player"
+             xmlns:PlayViewModel="clr-namespace:VideoSearch.ViewModel.PlayView"
+
+             StartupUri="MainWindow.xaml">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Colors.xaml" />
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
+                <ResourceDictionary Source="/Resources/Values.xaml" />
+                <ResourceDictionary Source="/Resources/MoviePlayerDataGridColumn.xaml" />
+                <ResourceDictionary Source="/Resources/VideoDataGrid.xaml" />
+                <ResourceDictionary Source="/Resources/VideoDataGridColumn.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- ViewModels -->
+            <DataTemplate DataType="{x:Type viewModel:EventViewModel}">
+                <views:EventView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CameraViewModel}">
+                <views:CameraView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MovieViewModel}">
+                <views:MovieView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MovieTaskViewModel}">
+                <views:MovieTaskView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PanelViewModel}">
+                <views:PanelView />
+            </DataTemplate>
+
+            <!-- ViewModels for CameraViewModel-->
+            <DataTemplate DataType="{x:Type viewModel:CameraViewListModel}">
+                <views:CameraViewListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CameraViewDetailListModel}">
+                <views:CameraViewDetailListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CameraViewMapModel}">
+                <views:CameraViewMapView />
+            </DataTemplate>
+
+            <!-- ViewModels for MovieView-->
+            <DataTemplate DataType="{x:Type viewModel:MovieViewListModel}">
+                <views:MovieViewListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MovieViewPlayModel}">
+                <views:MovieViewPlayView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MovieViewAnalysisModel}">
+                <views:MovieViewAnalysisView />
+            </DataTemplate>
+
+            <!-- ViewModels for MovieTaskView-->
+            <DataTemplate DataType="{x:Type viewModel:MovieTaskViewMainModel}">
+                <views:MovieTaskViewMainView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:MovieTaskViewListModel}">
+                <views:MovieTaskViewListView />
+            </DataTemplate>
+
+            <!-- ViewModels for PanelView-->
+            <DataTemplate DataType="{x:Type viewModel:PanelViewTaskSearchModel}">
+                <views:PanelViewTaskSearchView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PanelViewTaskSummaryModel}">
+                <views:PanelViewTaskSummaryView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PanelViewTaskCompressModel}">
+                <views:PanelViewTaskCompressView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PanelViewListModel}">
+                <views:PanelViewListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PanelViewPathModel}">
+                <views:PanelViewPathView />
+            </DataTemplate>
+
+            <!-- ViewModels for Player-->
+            <DataTemplate DataType="{x:Type playerModel:MiniPlayerViewModel}">
+                <playerViews:MiniPlayerView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type playerModel:PlayerViewModel}">
+                <playerViews:PlayerView/>
+            </DataTemplate>
+
+            <!-- ViewModels for PlayView -->
+            <DataTemplate DataType="{x:Type PlayViewModel:PlayViewMainModel}">
+                <playViews:PlayViewMain/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type PlayViewModel:PlayViewLargeModel}">
+                <playViews:PlayViewLarge/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type PlayViewModel:PlayViewMediumModel}">
+                <playViews:PlayViewMedium/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type PlayViewModel:PlayViewSmallModel}">
+                <playViews:PlayViewSmall/>
+            </DataTemplate>
+        </ResourceDictionary>
+
+    </Application.Resources>
+    
+</Application>

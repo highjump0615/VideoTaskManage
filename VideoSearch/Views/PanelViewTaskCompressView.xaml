@@ -1,0 +1,200 @@
+﻿<UserControl x:Class="VideoSearch.Views.PanelViewTaskCompressView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VideoSearch.Views"
+             xmlns:skinControl="clr-namespace:VideoSearch.SkinControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="640" d:DesignWidth="980">
+    <Grid Margin="20">
+        <Grid x:Name="PlayerContainer">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="160"/>
+            </Grid.RowDefinitions>
+
+            <Border Background="#FF464646" BorderBrush="#FF222222" BorderThickness="1" CornerRadius="6,6,4,4" Grid.RowSpan="4"/>
+
+            <!-- Title-->
+            <TextBlock x:Name="MediaTitle" Text="{Binding Path=MovieTitle}"
+                       FontFamily="Arial" FontSize="16" 
+                       Height="18" Margin="80,0" Foreground="White" 
+                       TextAlignment="Center" TextTrimming="CharacterEllipsis" 
+                       VerticalAlignment="Center" IsHitTestVisible="False" />
+
+            <!-- Player-->
+            <Grid x:Name="PlayerGrid" Grid.Row="1">
+                <Border BorderBrush="#FF222222" BorderThickness="1,0" >
+                    <Border.Background>
+                        <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Player/PlayerBg.png" Stretch="UniformToFill"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="24*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="1" Source="/VideoSearch;component/Resources/Images/Player/PlayerLogo.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+                <Border x:Name="PlayerPanel" Background="Black">
+                    <MediaElement x:Name="MediaPlayer" 
+                                  Source="{Binding Path=MoviePath}"
+                                  ScrubbingEnabled="True"
+                                  LoadedBehavior="Manual" 
+                                  UnloadedBehavior="Manual" 
+                                  Loaded="OnLoaded"
+                                  Unloaded="OnUnLoaded"
+                                  MediaOpened="OnOpend"
+                                  MediaEnded="OnEnded" />
+
+                </Border>
+
+                <Separator VerticalAlignment="Top" Background="#FF222222" Margin="0"/>
+                <Separator VerticalAlignment="Bottom" Background="#FF222222" Margin="0"/>
+            </Grid>
+
+            <!-- ControlBar-->
+
+            <Grid Margin="32,0" Grid.Row="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+
+                <!-- TimeRangeMarker-->
+                <skinControl:TimeRangeMarker x:Name="TimeMarker" Margin="6,0,6,16"/>
+                <!-- Progressbar-->
+                <Slider x:Name="DurationSlider" VerticalAlignment="Bottom"
+                        ValueChanged="OnDurationChanged"
+                        Style="{DynamicResource TimeRangeSlider}"/>
+
+                <!-- Control Buttons-->
+                <Grid Width="364" Height="30" Grid.Row="1"
+                      HorizontalAlignment="Left" VerticalAlignment="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="StopButton"
+                            Width="46"
+                            Style="{DynamicResource PlayerStopButtonStyle}" 
+                            Click="OnStop">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_stop.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="PauseButton" Grid.Column="2"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnPause">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_pause.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="PlayButton" Grid.Column="4"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnPlay">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_play.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="GotoEndButton" Grid.Column="6"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnGotoEnd">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_goto_end.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="GotoBeginButton" Grid.Column="8"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnGotoBegin">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_goto_begin.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="SpeedUpButton" Grid.Column="10"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnSpeedUp">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_speed_up.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="SpeedDownButton" Grid.Column="12"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnSpeedDown">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_speed_down.png" Stretch="None" />
+                    </Button>
+                </Grid>
+
+                <!-- Edit Buttons-->
+                <Grid Width="296" Height="30" Grid.Row="1"
+                      HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="73"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="84"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="67"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="48"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="CutButton"
+                            Style="{DynamicResource BlueButtonStyle}">
+                        <Grid Width="63" Height="24" Margin="0">
+                            <Image HorizontalAlignment="Left" Margin="8,0,0,0"
+                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_cut.png" Stretch="None" />
+
+                            <TextBlock Text="截屏" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
+
+                        </Grid>
+                    </Button>
+
+                    <Button x:Name="SearchButton" Grid.Column="2"
+                            Style="{DynamicResource BlueButtonStyle}">
+                        <Grid Width="74" Height="24" Margin="0">
+                            <Image HorizontalAlignment="Left" Margin="8,0,0,0"
+                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_search.png" Stretch="None" />
+
+                            <TextBlock Text="放大镜" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
+                        </Grid>
+                    </Button>
+
+                    <Button x:Name="ResultButton" Grid.Column="4"
+                            Style="{DynamicResource BlueButtonStyle}">
+                        <Grid Width="57" Height="24" Margin="0">
+                            <Image HorizontalAlignment="Right" Margin="0,0,8,0"
+                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_popup.png" Stretch="None" />
+
+                            <TextBlock Text="效果" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
+                        </Grid>
+                    </Button>
+
+                    <Grid Grid.Column="6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+
+                        <CheckBox x:Name="ChkTarget" Content="物标" 
+                                  VerticalContentAlignment="Bottom" HorizontalAlignment="Right" 
+                                  Foreground="White" FontFamily="Arial" FontSize="12"/>
+                        <CheckBox x:Name="ChkTime" Content="时标" Grid.Row="1"
+                                  VerticalContentAlignment="Bottom" HorizontalAlignment="Right" 
+                                  Foreground="White" FontFamily="Arial" FontSize="12"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</UserControl>

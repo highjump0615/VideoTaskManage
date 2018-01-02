@@ -1,0 +1,404 @@
+﻿<UserControl x:Class="VideoSearch.Views.MovieTaskViewMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VideoSearch.Views"
+             xmlns:skinControl="clr-namespace:VideoSearch.SkinControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="640" d:DesignWidth="980">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="680"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="224" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid x:Name="PlayerContainer">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="160"/>
+            </Grid.RowDefinitions>
+
+            <Border Background="#FF464646" BorderBrush="#FF222222" BorderThickness="1" CornerRadius="6,6,4,4" Grid.RowSpan="4"/>
+
+            <!-- Title-->
+            <TextBlock x:Name="MediaTitle" Text="{Binding Path=MovieTitle}"
+                       FontFamily="Arial" FontSize="16" 
+                       Height="18" Margin="80,0" Foreground="White" 
+                       TextAlignment="Center" TextTrimming="CharacterEllipsis" 
+                       VerticalAlignment="Center" IsHitTestVisible="False" />
+
+            <!-- Player-->
+            <Grid x:Name="PlayerGrid" Grid.Row="1">
+                <Border BorderBrush="#FF222222" BorderThickness="1,0" >
+                    <Border.Background>
+                        <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Player/PlayerBg.png" Stretch="UniformToFill"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="24*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="1" Source="/VideoSearch;component/Resources/Images/Player/PlayerLogo.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+                <Border x:Name="PlayerPanel" Background="Black">
+                    <MediaElement x:Name="MediaPlayer" 
+                                  Source="{Binding Path=MoviePath}"
+                                  ScrubbingEnabled="True"
+                                  LoadedBehavior="Manual" 
+                                  UnloadedBehavior="Manual" 
+                                  Loaded="OnLoaded"
+                                  Unloaded="OnUnLoaded"
+                                  MediaOpened="OnOpend"
+                                  MediaEnded="OnEnded" />
+
+                </Border>
+                
+                <Separator VerticalAlignment="Top" Background="#FF222222" Margin="0"/>
+                <Separator VerticalAlignment="Bottom" Background="#FF222222" Margin="0"/>
+            </Grid>
+            
+            <!-- ControlBar-->
+
+            <Grid Margin="32,0" Grid.Row="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+
+                <!-- TimeRangeMarker-->
+                <skinControl:TimeRangeMarker x:Name="TimeMarker" Margin="6,0,6,16"/>
+                <!-- Progressbar-->
+                <Slider x:Name="DurationSlider" VerticalAlignment="Bottom"
+                        ValueChanged="OnDurationChanged"
+                        Style="{DynamicResource TimeRangeSlider}"/>
+
+                <!-- Control Buttons-->
+                <Grid Width="364" Height="30" Grid.Row="1"
+                      HorizontalAlignment="Left" VerticalAlignment="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="StopButton"
+                            Width="46"
+                            Style="{DynamicResource PlayerStopButtonStyle}" 
+                            Click="OnStop">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_stop.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="PauseButton" Grid.Column="2"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnPause">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_pause.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="PlayButton" Grid.Column="4"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnPlay">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_play.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="GotoEndButton" Grid.Column="6"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnGotoEnd">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_goto_end.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="GotoBeginButton" Grid.Column="8"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnGotoBegin">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_goto_begin.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="SpeedUpButton" Grid.Column="10"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnSpeedUp">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_speed_up.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="SpeedDownButton" Grid.Column="12"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnSpeedDown">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_speed_down.png" Stretch="None" />
+                    </Button>
+                </Grid>
+
+                <!-- Edit Buttons-->
+                <Grid Width="238" Height="30" Grid.Row="1"
+                      HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="71"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="82"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="65"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="CutButton"
+                            Style="{DynamicResource BlueButtonStyle}">
+                        <Grid Width="63" Height="24" Margin="0">
+                            <Image HorizontalAlignment="Left" Margin="8,0,0,0"
+                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_cut.png" Stretch="None" />
+
+                            <TextBlock Text="截屏" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
+
+                        </Grid>
+                     </Button>
+
+                    <Button x:Name="SearchButton" Grid.Column="2"
+                            Style="{DynamicResource BlueButtonStyle}">
+                        <Grid Width="74" Height="24" Margin="0">
+                            <Image HorizontalAlignment="Left" Margin="8,0,0,0"
+                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_search.png" Stretch="None" />
+
+                            <TextBlock Text="放大镜" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
+                        </Grid>
+                    </Button>
+
+                    <Button x:Name="ResultButton" Grid.Column="4"
+                            Style="{DynamicResource BlueButtonStyle}">
+                        <Grid Width="57" Height="24" Margin="0">
+                            <Image HorizontalAlignment="Right" Margin="0,0,8,0"
+                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_popup.png" Stretch="None" />
+
+                            <TextBlock Text="效果" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
+                        </Grid>
+                    </Button>
+
+                </Grid>
+            </Grid>
+        </Grid>
+        
+        <Grid x:Name="TableContainer" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="6"/>
+                <RowDefinition Height="444"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Border Background="#FF464646" BorderBrush="Black"
+                        BorderThickness="1,1,1,0"
+                        CornerRadius="4,4,0,0">
+                    <TextBlock Text="标注列表" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                </Border>
+                <DataGrid x:Name="PathDataGrid" Grid.Row="1"
+                            BorderBrush="Black"
+					        ColumnHeaderHeight="31" RowHeight="31" 
+					        ItemsSource="{Binding Path=Owner, UpdateSourceTrigger=PropertyChanged}" 
+					        HeadersVisibility="Column" 
+					        FontFamily="Arial" FontSize="14" Foreground="White" 
+					        ScrollViewer.CanContentScroll="False" 
+					        VerticalScrollBarVisibility="Auto" 
+					        HorizontalScrollBarVisibility="Disabled" 
+					        AutoGenerateColumns="False" 
+					        CanUserResizeRows="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn  Header="时间" Width="40*"
+							CellTemplate="{StaticResource AddingTimeColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="X0" Width="40*"
+							CellTemplate="{StaticResource LeftPosColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="Y0" Width="40*"
+							CellTemplate="{StaticResource TopPosColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="X1" Width="40*"
+							CellTemplate="{StaticResource RightPosColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="X2" Width="40*"
+							CellTemplate="{StaticResource BottomPosColumnTemplate}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </Grid>
+            
+            <Grid Grid.Row="2">
+                <Border Background="#FF464646" BorderBrush="Black" Grid.RowSpan="2"
+                        BorderThickness="1"
+                        CornerRadius="4,4,0,0">
+                </Border>
+
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=" 30" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 32" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="标注信息" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <Separator  Background="Black" Margin="1,0" VerticalAlignment="Bottom" />
+
+                    <Grid Grid.Row="1" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="轨迹说明" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="关键字" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="3" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="目标类型" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="4" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="裤子颜色" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="5" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="裤子种类" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="6" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="其它体貌特征" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="7" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="上衣颜色" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="8" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="是否背包" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="9" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="是否戴帽子" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="10" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="是否戴眼镜" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="11" Margin="1,0"  Background="#FF323231">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="姓名" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    </Grid>
+
+                    <Border BorderBrush="Black" 
+                            BorderThickness="1,0,0,0"
+                            HorizontalAlignment="Center" 
+                            Grid.Row="1" Grid.RowSpan="11"/>
+
+                    <Grid Grid.Row="12" Margin="1,0,1,1"  Background="#FF323231">
+
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="81" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="81" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Content="清空标注" Name="btnClear" Foreground="White" FontFamily="Arial" FontSize="14" Focusable="False" 
+                                    Click="OnClear" Height="30" 
+                                    Style="{DynamicResource BrownButtonStyle}">
+                            </Button>
+                            <Button Content="保存标注" Name="btnSave" Foreground="White" FontFamily="Arial" FontSize="14" Grid.Column="2" Focusable="False" 
+                                    Click="OnSave" Height="30" 
+                                    Style="{DynamicResource GreenButtonStyle}"/>
+
+                        </Grid>
+
+                    </Grid>
+                
+                </Grid>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</UserControl>

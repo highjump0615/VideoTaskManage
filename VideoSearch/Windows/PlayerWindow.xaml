@@ -1,0 +1,134 @@
+﻿<Window x:Class="VideoSearch.Windows.PlayerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VideoSearch.Windows"
+        xmlns:SkinControl="clr-namespace:VideoSearch.SkinControl"
+        xmlns:SkinFrame="clr-namespace:VideoSearch.SkinFrame" 
+        mc:Ignorable="d"
+        Title="" Width="712" Height="512" 
+        ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" 
+        Background="#00000000" AllowsTransparency="True" 
+        WindowStartupLocation="CenterScreen" Topmost="False"
+        Closed="OnClosed">
+    <Grid Name="WindowContent">
+        <SkinFrame:AssistFrame Margin="0" ShadowSize="6" CornerRadius="4" BorderSize="1"/>
+        <Grid Name="ContentView">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title-->
+                <Grid x:Name="TitleGrid">
+                    <TextBlock x:Name="MediaTitle" FontFamily="Arial" FontSize="16" 
+                               Height="18" Margin="80,0" Foreground="White" 
+                               TextAlignment="Center" TextTrimming="CharacterEllipsis" 
+                               VerticalAlignment="Center" IsHitTestVisible="False" />
+
+                    <!-- CloseButton-->
+                    <SkinControl:SkinButton x:Name="btnClose" Click="OnClose" 
+                                        Width="24" Height="24" Margin="0,0,8,0" 
+                                        HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                        NormalImage="/VideoSearch;component/Resources/Images/Button/dlg_close_normal.png" 
+                                        OverImage="/VideoSearch;component/Resources/Images/Button/dlg_close_over.png" 
+                                        PressedImage="/VideoSearch;component/Resources/Images/Button/dlg_close_pressed.png" />
+
+                </Grid>
+
+                <!-- Player-->
+                <Grid x:Name="PlayerGrid" Grid.Row="1">
+                    <Border BorderBrush="#FF222222" BorderThickness="1,0" >
+                        <Border.Background>
+                            <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Player/PlayerBg.png" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="20*"/>
+                                <RowDefinition Height="30*"/>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="1" Source="/VideoSearch;component/Resources/Images/Player/PlayerLogo.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <Border x:Name="PlayerPanel" Background="Black">
+                        <MediaElement x:Name="MediaPlayer" 
+                                      LoadedBehavior="Manual" 
+                                      UnloadedBehavior="Manual" 
+                                      MediaEnded="OnEnded"/>
+                    </Border>
+                    <Separator VerticalAlignment="Top" Background="#FF222222" Margin="0"/>
+                    <Separator VerticalAlignment="Bottom" Background="#FF222222" Margin="0"/>
+                </Grid>
+                <!-- ControlBar-->
+                <Grid x:Name="ControlsGrid" 
+                        Width="364" Height="30"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Grid.Row="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                        <ColumnDefinition Width="7"/>
+                        <ColumnDefinition Width="46"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="StopButton"
+                            Width="46"
+                            Style="{DynamicResource PlayerStopButtonStyle}" 
+                            Click="OnStop">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_stop.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="PauseButton" Grid.Column="2"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnPause">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_pause.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="PlayButton" Grid.Column="4"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnPlay">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_play.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="GotoEndButton" Grid.Column="6"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnGotoEnd">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_goto_end.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="GotoBeginButton" Grid.Column="8"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnGotoBegin">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_goto_begin.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="SpeedUpButton" Grid.Column="10"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnSpeedUp">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_speed_up.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="SpeedDownButton" Grid.Column="12"
+                            Width="46"
+                            Style="{DynamicResource PlayerButtonStyle}" 
+                            Click="OnSpeedDown">
+                        <Image Source="/VideoSearch;component/Resources/Images/Player/player_icon_speed_down.png" Stretch="None" />
+                    </Button>
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

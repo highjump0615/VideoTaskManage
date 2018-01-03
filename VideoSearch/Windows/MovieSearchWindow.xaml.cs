@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using VideoSearch.Model;
 
@@ -193,6 +194,24 @@ namespace VideoSearch.Windows
 
         private void OnPicker1(object sender, RoutedEventArgs e)
         {
+        }
+
+        /// <summary>
+        /// 点击上半身颜色按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnButColor1(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.ColorDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                // need to convert from the ColorDialog GDI colorspace to the WPF colorspace
+                var wpfColor = Color.FromArgb(dialog.Color.A, dialog.Color.R, dialog.Color.G, dialog.Color.B);
+
+                var brush = new SolidColorBrush(wpfColor);
+                this.ButColor1.Background = brush;
+            }
         }
     }
 }

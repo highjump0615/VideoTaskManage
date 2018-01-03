@@ -99,6 +99,8 @@
                                 <Border.Background>
                                     <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Button/ColorPattern.png"/>
                                 </Border.Background>
+                                <Button Background="{x:Null}" Name="ButColor1" Click="OnButColor1" >
+                                </Button>
                             </Border>
 
                             <Button Grid.Column="4" Grid.Row="2" Style="{DynamicResource PickerButton}" HorizontalAlignment="Stretch" Click="OnPicker1">

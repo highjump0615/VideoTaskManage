@@ -25,9 +25,23 @@ namespace VideoSearch.VideoService
             }
         }
 
+        /// <summary>
+        /// Queries all tasks info
+        /// </summary>
+        /// <returns></returns>
+        public XElement GetQueryTaskList()
+        {
+            return sendToServiceByGet(API_PATH + "/QueryTaskList");
+        }
+
+        /// <summary>
+        /// Send Http Get Request
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public XElement sendToServiceByGet(string url)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://192.168.0.20:8080/VideoAnalysisService/VideoService/QueryVideoList");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
             try
             {
@@ -38,7 +52,7 @@ namespace VideoSearch.VideoService
                     try
                     {
                         xmlDoc = XDocument.Parse(sr.ReadToEnd());
-                        return xmlDoc.Root.Element("result");
+                        return xmlDoc.Root;
                     }
                     catch (Exception e)
                     {

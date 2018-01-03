@@ -458,7 +458,7 @@ namespace VideoSearch.Model
                     if (_state == ConvertStatus.ImportReady)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImport.png";
-                        Operation = "已终止";
+                        Operation = "未导入";
                         OpNameMargin = new Thickness(0);
                         OpName = "开始导入";
                         ProgressBarVisibility = Visibility.Hidden;
@@ -472,7 +472,7 @@ namespace VideoSearch.Model
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImportPause.png";
                         Operation = "";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
-                        OpName = "暂停";
+                        OpName = "停止";
                         ProgressBarVisibility = Visibility.Visible;
                         Opacity = 1.0;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
@@ -484,7 +484,7 @@ namespace VideoSearch.Model
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImportStop.png";
                         Operation = "";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
-                        OpName = "转码";
+                        OpName = "停止";
                         ProgressBarVisibility = Visibility.Visible;
                         Opacity = 1.0;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";

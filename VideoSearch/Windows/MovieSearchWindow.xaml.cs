@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -15,6 +16,10 @@ namespace VideoSearch.Windows
         #region Property
         private double _width = 0;
         private double _height = 0;
+        private bool _isSelectedColor1 = false;
+        private bool _isSelectedColor2 = false;
+
+        private Color _color1, _color2;
 
         private Rect _region;
         public Rect Region
@@ -25,6 +30,23 @@ namespace VideoSearch.Windows
         public String TaskName
         {
             get { return TaskNameEditor.Text; }
+        }
+
+        public String Colors
+        {
+            get
+            {
+                String Colors = "";
+
+                if (ColorPickerButton1.IsEnabled && _isSelectedColor1)
+                    Colors = String.Format("{0},{1},{2}", _color1.R, _color1.G, _color1.B);
+                Colors += ";";
+                if (ColorPickerButton2.IsEnabled && _isSelectedColor2)
+                    Colors += String.Format("{0},{1},{2}", _color2.R, _color2.G, _color2.B);
+                Colors += ";";
+
+                return Colors;
+            }
         }
 
         public String ObjectType
@@ -71,6 +93,13 @@ namespace VideoSearch.Windows
             }
         }
 
+        public String AlarmInfo
+        {
+            get
+            {
+                return RegionEditor.AlarmInfo;
+            }
+        }
         #endregion
 
         #region Constructor & Init
@@ -78,8 +107,9 @@ namespace VideoSearch.Windows
         {
             InitializeComponent();
 
-            LoadInfo(movie);
+            Owner = MainWindow.VideoSearchMainWindow;
 
+            LoadInfo(movie);
         }
 
         private void LoadInfo(MovieItem movie)
@@ -135,7 +165,7 @@ namespace VideoSearch.Windows
                 RegionEditor.SetPoint(pos);
         }
 
-        private void OnUpdateRegion(object sender, MouseEventArgs e)
+        private void OnUpdateRegionAndDirection(object sender, MouseEventArgs e)
         {
             Point pos = e.GetPosition(RegionEditor);
 
@@ -153,9 +183,21 @@ namespace VideoSearch.Windows
                 {
                     if (IsUpdatingRegion)
                         RegionEditor.UpdatePoint(pos);
+                    else
+                        RegionEditor.UpdatePoint(pos, false);
                 }
             }
+        }
 
+        private void OnSettingAlarmPos(object sender, MouseButtonEventArgs e)
+        {
+            Point pos = e.GetPosition(RegionEditor);
+
+            if (pos.X >= 0 && pos.Y >= 0 &&
+               pos.X < RegionEditor.ActualWidth &&
+               pos.Y < RegionEditor.ActualHeight)
+
+                RegionEditor.SetPoint(pos, false);
         }
 
         private void OnSettingDirection(object sender, MouseButtonEventArgs e)
@@ -176,7 +218,7 @@ namespace VideoSearch.Windows
 
         private void OnResetDirection(object sender, RoutedEventArgs e)
         {
-            RegionEditor.ResetDirection();
+            RegionEditor.ResetAlarm();
         }
 
         private void OnSelectRegionType(object sender, RoutedEventArgs e)
@@ -190,28 +232,57 @@ namespace VideoSearch.Windows
                 ChkInclude.IsChecked = !ChkExclude.IsChecked;
         }
 
-        #endregion
-
-        private void OnPicker1(object sender, RoutedEventArgs e)
+        private void CboObjectType_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            if (ColorPickerButton1 == null || ColorPickerButton2 == null)
+                return;
+
+            ComboBoxItem selectedItem = ((sender as ComboBox).SelectedItem as ComboBoxItem);
+
+            String strType = selectedItem.Content.ToString();
+
+            if (strType == "人")
+            {
+                ColorPickerButton1.IsEnabled = true;
+                ColorPickerButton2.IsEnabled = true;
+            }
+            else if (strType == "人形")
+            {
+                ColorPickerButton1.IsEnabled = false;
+                ColorPickerButton2.IsEnabled = false;
+            }
+            else
+            {
+                ColorPickerButton1.IsEnabled = true;
+                ColorPickerButton2.IsEnabled = false;
+            }
         }
 
-        /// <summary>
-        /// 点击上半身颜色按钮
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnButColor1(object sender, RoutedEventArgs e)
+        private void OnColorPicker(object sender, RoutedEventArgs e)
         {
             var dialog = new System.Windows.Forms.ColorDialog();
+
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 // need to convert from the ColorDialog GDI colorspace to the WPF colorspace
                 var wpfColor = Color.FromArgb(dialog.Color.A, dialog.Color.R, dialog.Color.G, dialog.Color.B);
 
                 var brush = new SolidColorBrush(wpfColor);
-                this.ButColor1.Background = brush;
+
+                if(sender == ColorPickerButton1)
+                {
+                    this.SelectedColor1.Background = brush;
+                    _isSelectedColor1 = true;
+                    _color1 = wpfColor;
+                }
+                else
+                {
+                    this.SelectedColor2.Background = brush;
+                    _isSelectedColor2 = true;
+                    _color2 = wpfColor;
+                }
             }
         }
+        #endregion
     }
 }

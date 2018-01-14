@@ -40,19 +40,22 @@ namespace VideoSearch.Model
         #endregion
 
         #region Constructor & Init
-        public EventItem() : base()
+        public EventItem(DataItemBase parent = null) : base()
         {
+            Parent = parent;
+
             SetLevel(1);
             ItemNamePrefix = "Camera";
             IconPath = "Resources/Images/View/TreeView/tree_icon_Event.png";
             Margin = new Thickness(0, 4, 0, 0);
 
+
             Table = EventTable.Table;
             ItemsTable = CameraTable.Table;
         }
 
-        public EventItem(String id, String display_id, String name, String date, String remark, bool isSelected)
-            : this()
+        public EventItem(DataItemBase parent, String id, String display_id, String name, String date, String remark, bool isSelected)
+            : this(parent)
         {
             ID = id;
             DisplayID = display_id;
@@ -62,13 +65,13 @@ namespace VideoSearch.Model
             IsSelected = isSelected;
         }
 
-        public EventItem(String id, String display_id, String name, String date, String remark)
-            : this(id, display_id, name, date, remark, false)
+        public EventItem(DataItemBase parent, String id, String display_id, String name, String date, String remark)
+            : this(parent, id, display_id, name, date, remark, false)
         {
         }
 
         public EventItem(EventItem item)
-            : this(item.ID, item.DisplayID, item.Name, item.Date, item.Remark, item.IsSelected)
+            : this(item.Parent, item.ID, item.DisplayID, item.Name, item.Date, item.Remark, item.IsSelected)
         {            
         }
 

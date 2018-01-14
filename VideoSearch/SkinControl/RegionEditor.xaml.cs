@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,7 +13,8 @@ namespace VideoSearch.SkinControl
         #region Property
 
         private int _direction = -1;
-        private List<Point> _posList;
+        private List<Point> _alarmPosList;
+        private List<Point> _regionPosList;
 
         private BitmapImage _thumbnail = null;
         Rect _rtImage = new Rect();
@@ -32,9 +34,9 @@ namespace VideoSearch.SkinControl
         {
             get
             {
-                if (_posList.Count == 2)
+                if (_regionPosList.Count == 2)
                 {
-                    Rect region = new Rect(_posList[0], _posList[1]);
+                    Rect region = new Rect(_regionPosList[0], _regionPosList[1]);
                     region.Scale(_rate, _rate);
 
                     return region;
@@ -43,39 +45,82 @@ namespace VideoSearch.SkinControl
             }
         }
 
+        public String AlarmInfo
+        {
+            get
+            {
+                String alarmInfo = "";
+
+                if(_direction >= 0 && _alarmPosList.Count >= 2)
+                {
+                    Point leftPos = _alarmPosList[0];
+                    Point rightPos = _alarmPosList[1];
+
+                    if (_alarmPosList[0].X > _alarmPosList[1].X)
+                    {
+                        leftPos = _alarmPosList[1];
+                        rightPos = _alarmPosList[0];
+                    }
+
+                    alarmInfo = String.Format("{0},{1},{2},{3},{4}", (int)leftPos.X, (int)leftPos.Y, (int)rightPos.X, (int)rightPos.Y, _direction);
+                }
+
+                return alarmInfo;
+            }
+        }
         #endregion
 
         public RegionEditor()
         {
             InitializeComponent();
 
-            _posList = new List<Point>();
+            _regionPosList = new List<Point>();
+            _alarmPosList = new List<Point>();
         }
 
 
         #region Functions
-        public void SetPoint(Point pos)
+        public void SetPoint(Point pos, bool isRegion = true)
         {
             if (_rtImage.Width == 0 || _rtImage.Height == 0 || !_rtImage.Contains(pos))
                 return;
 
-            if (_posList.Count >= 2)
-                Reset();
+            List<Point> _posList = isRegion ? _regionPosList : _alarmPosList;
 
-            _posList.Add(pos);
+            if (!isRegion && _posList.Count == 0)
+                _direction = 2;
 
-            InvalidateVisual();
+            if (_posList.Count < 4)
+            {
+                if (_posList.Count == 3)
+                    _posList[2] = pos;
+                else
+                    _posList.Add(pos);
+            }
         }
 
-        public void UpdatePoint(Point pos)
+        public void UpdatePoint(Point pos, bool isRegion = true)
         {
             if (_rtImage.Width == 0 || _rtImage.Height == 0 || !_rtImage.Contains(pos))
                 return;
+
+            List<Point> _posList = isRegion ? _regionPosList : _alarmPosList;
 
             if (_posList.Count < 2)
                 _posList.Add(pos);
             else
+            {
+                if (_posList.Count == 3)
+                {
+                    Point startPos = _posList[2];
+
+                    _direction = 2;
+
+                    _posList[0] = _posList[2];
+                    _posList.RemoveAt(2);
+                }
                 _posList[1] = pos;
+            }
 
             InvalidateVisual();
         }
@@ -85,44 +130,28 @@ namespace VideoSearch.SkinControl
             if (_rtImage.Width == 0 || _rtImage.Height == 0 || !_rtImage.Contains(pos))
                 return;
 
-            _direction = (_direction + 1) % 3;
+            if (_alarmPosList.Count == 3)
+            {
+                _direction = (_direction + 1) % 3;
+            }
             InvalidateVisual();
         }
 
-        public void ResetDirection()
+        public void ResetAlarm()
         {
+            _alarmPosList.Clear();
             _direction = -1;
             InvalidateVisual();
         }
 
         public void Reset()
         {
-            _posList.Clear();
+            _regionPosList.Clear();
             InvalidateVisual();
         }
         #endregion
 
         #region Drawing
-        protected void drawArrowAtPoint(DrawingContext drawingContext, Pen pen, Point pos, bool isLeft)
-        {
-            Point pos1, pos2;
-            double x = 12, y = 4;
-
-            if (isLeft)
-            {
-                pos1 = new Point(pos.X + x, pos.Y - y);
-                pos2 = new Point(pos.X + x, pos.Y + y);
-            }
-            else
-            {
-                pos1 = new Point(pos.X - x, pos.Y - y);
-                pos2 = new Point(pos.X - x, pos.Y + y);
-            }
-
-            drawingContext.DrawLine(pen, pos, pos1);
-            drawingContext.DrawLine(pen, pos, pos2);
-        }
-
         protected override void OnRender(DrawingContext drawingContext)
         {
             double w = ActualWidth;
@@ -154,7 +183,7 @@ namespace VideoSearch.SkinControl
                         ih = iw / r2;
                     }
                     _rtImage = new Rect(_rtImage.Left + (_rtImage.Width - iw) / 2,
-                                         (_rtImage.Height - ih) / 2,
+                                        _rtImage.Top + (_rtImage.Height - ih) / 2,
                                         iw, ih);
 
                     _rate = _thumbnail.Width / _rtImage.Width;
@@ -171,45 +200,83 @@ namespace VideoSearch.SkinControl
             shapeOutlinePen.Freeze();
 
             // draw outline
-            if (_posList.Count == 1)
+            if (_regionPosList.Count == 1)
             {
-                drawingContext.DrawEllipse(Brushes.Red, shapeOutlinePen, _posList[0], 1, 1);
+                drawingContext.DrawEllipse(Brushes.Red, shapeOutlinePen, _regionPosList[0], 1, 1);
             }
-            else if(_posList.Count == 2)
+            else if(_regionPosList.Count == 2)
             {
-                drawingContext.DrawRectangle(Brushes.Transparent, shapeOutlinePen, new Rect(_posList[0], _posList[1]));
+                drawingContext.DrawRectangle(Brushes.Transparent, shapeOutlinePen, new Rect(_regionPosList[0], _regionPosList[1]));
             }
 
             // draw direction
-            if (_direction >= 0)
+            if (_direction >= 0 && _alarmPosList.Count > 1)
             {
-                double margin = 60;
-                Pen dirPen = new Pen(Brushes.Green, 1.0);
-                Point left = new Point(margin, h / 2);
-                Point center = new Point(w / 2, h / 2);
-                Point right = new Point(w - margin, h / 2);
+                Pen dirPen = new Pen(Brushes.Blue, 1.0);
+                Point left = _alarmPosList[0];
+                Point right = _alarmPosList[1];
+                Rect rtBounds = new Rect(left, right);
+                double angle = Math.Atan(rtBounds.Height / rtBounds.Width);
 
-
-                if (_direction == 0)
+                if (_alarmPosList[0].X > _alarmPosList[1].X)
                 {
-                    drawingContext.DrawLine(dirPen, center, right);
-                     drawArrowAtPoint(drawingContext, dirPen, right, false);
+                    left = _alarmPosList[1];
+                    right = _alarmPosList[0];
 
+                    angle *= -1;
                 }
-                else if (_direction == 1)
+
+                if (_alarmPosList[0].Y < _alarmPosList[1].Y)
                 {
-                    drawingContext.DrawLine(dirPen, left, center);
-                    drawArrowAtPoint(drawingContext, dirPen, left, true);
+                    angle *= -1;
                 }
-                else
+
+                if (rtBounds.Width > 20 || rtBounds.Height > 20)
                 {
+                    Point center = new Point(rtBounds.Left + rtBounds.Width / 2, rtBounds.Top + rtBounds.Height / 2);
+
                     drawingContext.DrawLine(dirPen, left, right);
-                    drawArrowAtPoint(drawingContext, dirPen, left, true);
-                    drawArrowAtPoint(drawingContext, dirPen, right, false);
-                }
+                    drawingContext.DrawEllipse(Brushes.White, dirPen, center, 4, 4);
 
-                drawingContext.DrawEllipse(Brushes.White, dirPen, center, 4, 4);
+                    if (_direction == 0)
+                    {
+                        drawArrowAtPoint(drawingContext, dirPen, right, false, angle);
+
+                    }
+                    else if (_direction == 1)
+                    {
+                        drawArrowAtPoint(drawingContext, dirPen, left, true, angle);
+                    }
+                    else
+                    {
+                        drawArrowAtPoint(drawingContext, dirPen, left, true, angle);
+                        drawArrowAtPoint(drawingContext, dirPen, right, false, angle);
+                    }
+                }
             }
+        }
+
+        protected void drawArrowAtPoint(DrawingContext drawingContext, Pen pen, Point pos, bool isLeft, double rotate)
+        {
+            Point pos1, pos2;
+            double size = 16.0;
+
+            Console.WriteLine("=== ro = {0}", rotate * 180 / Math.PI);
+            double angle = 30 * Math.PI / 180;
+
+            if (isLeft)
+            {
+                pos1 = new Point(pos.X + size * Math.Cos(angle + rotate), pos.Y - size * Math.Sin(angle + rotate));
+                pos2 = new Point(pos.X + size * Math.Cos(angle - rotate), pos.Y + size * Math.Sin(angle - rotate));
+            }
+            else
+            {
+                pos1 = new Point(pos.X - size * Math.Cos(angle - rotate), pos.Y - size * Math.Sin(angle - rotate));
+                pos2 = new Point(pos.X - size * Math.Cos(angle + rotate), pos.Y + size * Math.Sin(angle + rotate));
+            }
+
+            drawingContext.DrawLine(pen, pos, pos1);
+            drawingContext.DrawLine(pen, pos, pos2);
         }
         #endregion
     }

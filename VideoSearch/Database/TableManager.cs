@@ -22,7 +22,7 @@ namespace VideoSearch.Database
 
         }
 
-        public virtual DataItemBase DataItemWithRow(DataRow row)
+        public virtual DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
         {
             return null;
         }
@@ -48,7 +48,7 @@ namespace VideoSearch.Database
             DataTable dt = DBManager.GetDataTable(sql, parameters);
             foreach (DataRow row in dt.Rows)
             {
-                DataItemBase item = DataItemWithRow(row);
+                DataItemBase item = DataItemWithRow(row, parent);
 
                 if (item != null)
                     parent.AddItem(item, false);

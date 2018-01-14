@@ -12,14 +12,6 @@ namespace VideoSearch.ViewModel
         {
         }
 
-        public override DataItemBase EmptyItem()
-        {
-            EventItem item = new EventItem();
-            item.Visibility = Visibility.Hidden;
-
-            return item;
-        }
-
         #region override
 
         public override void AddNewItem()

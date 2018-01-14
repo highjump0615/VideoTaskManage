@@ -14,8 +14,9 @@ namespace VideoSearch.Windows
         {
             InitializeComponent();
             EventCalendar.Visibility = Visibility.Hidden;
+            Owner = MainWindow.VideoSearchMainWindow;
 
-            if(item == null)
+            if (item == null)
             {
                 _item = new EventItem();
 

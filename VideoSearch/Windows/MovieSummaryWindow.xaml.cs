@@ -56,6 +56,8 @@ namespace VideoSearch.Windows
         {
             InitializeComponent();
 
+            Owner = MainWindow.VideoSearchMainWindow;
+
             LoadInfo(movie);
         }
 

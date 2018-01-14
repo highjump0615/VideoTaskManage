@@ -23,6 +23,7 @@ namespace VideoSearch.Model
         {
             ID = copyItem.ID;
             Name = copyItem.Name;
+            Parent = copyItem.Parent;
         }
 
         public DataItemBase FindFriendItem(String find_id)

@@ -10,6 +10,8 @@ namespace VideoSearch.Windows
         public ConfirmDeleteWindow()
         {
             InitializeComponent();
+
+            Owner = MainWindow.VideoSearchMainWindow;
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)

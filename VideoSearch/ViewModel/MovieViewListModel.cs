@@ -23,13 +23,5 @@ namespace VideoSearch.ViewModel
                 }
             }
         }
-
-        public override DataItemBase EmptyItem()
-        {
-            MovieItem item = new MovieItem();
-            item.Visibility = Visibility.Hidden;
-
-            return item;
-        }
     }
 }

@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using System.Xml.Linq;
 using VideoSearch.Database;
+using VideoSearch.Utils;
 using VideoSearch.VideoService;
 
 namespace VideoSearch.Model
@@ -24,16 +26,19 @@ namespace VideoSearch.Model
 
         #region Constructor & Init
         
-        public MovieTaskItem()
+        public MovieTaskItem(DataItemBase parent = null)
             : base()
         {
+            Parent = parent;
+
             SetLevel(4);
 
             Table = MovieTaskTable.Table;
         }
 
-        public MovieTaskItem(String id, String displayID, String taskId, String name, String moviePos,
-                        MovieTaskType taskType, MovieTaskState state) : this()
+        public MovieTaskItem(DataItemBase parent, String id, String displayID, String taskId, String name, String moviePos,
+                        MovieTaskType taskType, MovieTaskState state) 
+            : this(parent)
         {
             ID = id;
             DisplayID = displayID;
@@ -46,7 +51,8 @@ namespace VideoSearch.Model
             InitFromServer();
         }
 
-        public MovieTaskItem(String taskId, String name, MovieTaskType taskType, DataItemBase parent) : this()
+        public MovieTaskItem(DataItemBase parent, String taskId, String name, MovieTaskType taskType) 
+            : this(parent)
         {
             ID = String.Format("{0}", DateTime.Now.ToString("yyyyMMddHHmmssfff"));
             DisplayID = parent.GetItemDisplayID(ID);
@@ -62,13 +68,13 @@ namespace VideoSearch.Model
 
         protected void InitFromServer()
         {
-            QueryTaskResponse response = VideoAnalysis.QueryTask(TaskId);
+            XElement response = ApiManager.Instance.GetQueryTask(TaskId);
 
             if (response != null)
             {
-                SectionCount = response.SectionCount;
-                Progress = response.Progress / 100.0;
-                State = (MovieTaskState)response.Status;
+                SectionCount = StringUtils.String2Int(response.Element("SectionCount").Value);
+                Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
+                State = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
 
                 if (State == MovieTaskState.CreateReady || State == MovieTaskState.Creating)
                 {
@@ -125,7 +131,7 @@ namespace VideoSearch.Model
         {
             if (TaskId != "0")
             {
-                if(VideoAnalysis.DeleteTask(TaskId))
+                if(ApiManager.Instance.DeleteTask(TaskId))
                 {
                     return base.ClearFromDB();
                 }
@@ -462,18 +468,26 @@ namespace VideoSearch.Model
 
         public void TaskProcess()
         {
-            QueryTaskResponse response = null;
+            XElement response = null;
+            MovieTaskState state = MovieTaskState.UnInited;
+
             do
             {
-                response = VideoAnalysis.QueryTask(TaskId);
+                response = ApiManager.Instance.GetQueryTask(TaskId);
 
                 if (response != null)
                 {
-                    Progress = response.Progress / 100.0;
-                }
-            } while (response.IsRunning || response.IsReady);
+                    state = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
 
-            if (response != null && response.IsOk)
+                    if(state == MovieTaskState.Creating)
+                    {
+                        Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
+                        Console.WriteLine("*** state = {0}, progress = {1}", state, Progress);
+                    }
+                }
+            } while (state == MovieTaskState.Creating || state == MovieTaskState.CreateReady);
+
+            if (response != null && state == MovieTaskState.Created)
             {
                 State = MovieTaskState.Created;
                 UpdateProperty();

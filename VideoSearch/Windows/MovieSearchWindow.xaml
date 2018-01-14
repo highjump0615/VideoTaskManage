@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:VideoSearch.Windows"
         xmlns:SkinFrame="clr-namespace:VideoSearch.SkinFrame" 
         xmlns:SkinControl="clr-namespace:VideoSearch.SkinControl" 
-        xmlns:ColorPicker="clr-namespace:VideoSearch.SkinControl.ColorPicker" 
         mc:Ignorable="d"
         Title="视频检索" Height="589" Width="754" 
         ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" 
         Background="#00000000" AllowsTransparency="True" 
         WindowStartupLocation="CenterScreen" Topmost="False"
         MouseLeftButtonDown="OnSettingRegion"
-        MouseMove="OnUpdateRegion"
-        MouseRightButtonDown="OnSettingDirection">
+        MouseMove="OnUpdateRegionAndDirection"
+        MouseRightButtonDown="OnSettingAlarmPos"
+        MouseRightButtonUp="OnSettingDirection">
 
     <Grid Name="WindowContent">
         <SkinFrame:DialogFrame Margin="0" x:Name="windowFrame" />
@@ -87,7 +87,7 @@
                             <TextBlock Text="场景模式" Grid.Row="6" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
 
                             <ComboBox Name="CboObjectType" FontFamily="Arial" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueComboBox}" 
-                                      Grid.Column="2" Grid.ColumnSpan="4" SelectedIndex="0">
+                                      Grid.Column="2" Grid.ColumnSpan="4" SelectedIndex="0" SelectionChanged="CboObjectType_SelectionChanged">
                                 <ComboBoxItem Content="全部" />
                                 <ComboBoxItem Content="人" />
                                 <ComboBoxItem Content="人形" />
@@ -95,25 +95,23 @@
                                 <ComboBoxItem Content="其他" />
                             </ComboBox>
 
-                            <Border Grid.Column="2" Grid.Row="2" BorderBrush="#FF262626" BorderThickness="1" CornerRadius="2">
+                            <Border x:Name="SelectedColor1" Grid.Column="2" Grid.Row="2" BorderBrush="#FF262626" BorderThickness="1" CornerRadius="2">
                                 <Border.Background>
                                     <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Button/ColorPattern.png"/>
                                 </Border.Background>
-                                <Button Background="{x:Null}" Name="ButColor1" Click="OnButColor1" >
-                                </Button>
                             </Border>
 
-                            <Button Grid.Column="4" Grid.Row="2" Style="{DynamicResource PickerButton}" HorizontalAlignment="Stretch" Click="OnPicker1">
+                            <Button x:Name="ColorPickerButton1" Grid.Column="4" Grid.Row="2" Style="{DynamicResource PickerButton}" HorizontalAlignment="Stretch" Click="OnColorPicker">
                                 <Image Source="/VideoSearch;component/Resources/Images/Button/ColorPicker.png"/>
                             </Button>
 
-                            <Border Grid.Column="2" Grid.Row="4" BorderBrush="#FF262626" BorderThickness="1" CornerRadius="2">
+                            <Border x:Name="SelectedColor2" Grid.Column="2" Grid.Row="4" BorderBrush="#FF262626" BorderThickness="1" CornerRadius="2">
                                 <Border.Background>
                                     <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Button/ColorPattern.png"/>
                                 </Border.Background>
                             </Border>
 
-                            <Button Grid.Column="4" Grid.Row="4" Style="{DynamicResource PickerButton}" HorizontalAlignment="Stretch" IsEnabled="False">
+                            <Button x:Name="ColorPickerButton2" Grid.Column="4" Grid.Row="4" Style="{DynamicResource PickerButton}" HorizontalAlignment="Stretch" Click="OnColorPicker">
                                 <Image Source="/VideoSearch;component/Resources/Images/Button/ColorPicker.png"/>
                             </Button>
 

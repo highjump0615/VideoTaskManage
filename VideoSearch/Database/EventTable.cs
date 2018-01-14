@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
-using System.Threading.Tasks;
 using VideoSearch.Model;
 
 namespace VideoSearch.Database
@@ -34,16 +33,17 @@ namespace VideoSearch.Database
             Load(parent, sql);
         }
 
-        public override DataItemBase DataItemWithRow(DataRow row)
+        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
         {
             if (row == null)
                 return null;
 
-            return new EventItem(string.Format("{0}", row["ID"]),
-                    string.Format("{0}", row["DisplayID"]),
-                    string.Format("{0}", row["Name"]),
-                    string.Format("{0}", row["Date"]),
-                    string.Format("{0}", row["Remark"]), false);
+            return new EventItem(parent,
+                                string.Format("{0}", row["ID"]),
+                                string.Format("{0}", row["DisplayID"]),
+                                string.Format("{0}", row["Name"]),
+                                string.Format("{0}", row["Date"]),
+                                string.Format("{0}", row["Remark"]), false);
         }
 
         public override int Add(DataItemBase newItem)

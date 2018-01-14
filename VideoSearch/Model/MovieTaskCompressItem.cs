@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Xml.Linq;
 using VideoSearch.VideoService;
 
 namespace VideoSearch.Model
@@ -9,19 +10,19 @@ namespace VideoSearch.Model
     {
         #region Constructor & Init
 
-        public MovieTaskCompressItem()
-            : base()
+        public MovieTaskCompressItem(DataItemBase parent = null)
+            : base(parent)
         {
         }
 
-        public MovieTaskCompressItem(String id, String displayID, String taskId, String name, String moviePos,
+        public MovieTaskCompressItem(DataItemBase parent, String id, String displayID, String taskId, String name, String moviePos,
                         MovieTaskType taskType, MovieTaskState state) 
-            : base(id, displayID, taskId, name, moviePos, taskType, state)
+            : base(parent, id, displayID, taskId, name, moviePos, taskType, state)
         {
         }
 
-        public MovieTaskCompressItem(String taskId, String name, MovieTaskType taskType, DataItemBase parent) 
-            : base(taskId, name, taskType, parent)
+        public MovieTaskCompressItem(DataItemBase parent, String taskId, String name, MovieTaskType taskType) 
+            : base(parent, taskId, name, taskType)
         {
         }
 
@@ -48,7 +49,7 @@ namespace VideoSearch.Model
                 if (State != MovieTaskState.Created || CompressedPath == null || CompressedPath.Length == 0)
                     return null;
 
-                String playPath = "D:\\VideoInvestigationDataDB\\CvtFile";
+                String playPath = "D:\\VideoInvestigationDataDB\\AnalysisFile";
 
                 return Path.Combine(playPath, CompressedPath);
             }
@@ -58,11 +59,11 @@ namespace VideoSearch.Model
         #region Override
         public override void UpdateProperty()
         {
-            SummaryResponse summaryResponse = VideoAnalysis.GetVideoSummary(TaskId);
+            XElement response = ApiManager.Instance.GetTaskSnapshot(TaskId);
 
-            if(summaryResponse != null)
+            if(response != null)
             {
-                _compressedPath = summaryResponse.VideoSkimmingPath;
+                _compressedPath = response.Element("VideoSkimmingPath").Value;
             }
         }
         #endregion

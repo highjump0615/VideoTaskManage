@@ -3,31 +3,33 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Windows;
-using System.Net;
 using VideoSearch.Database;
 using VideoSearch.VideoService;
 using VideoSearch.Windows;
+using System.Xml.Linq;
+using VideoSearch.Utils;
 
 namespace VideoSearch.Model
 {
     public class MovieItem : DataItemBase
     {
         #region Constructor & Init & Destructor
-        public MovieItem() : base()
+        public MovieItem(DataItemBase parent = null) : base()
         {
+            Parent = parent;
+
             SetLevel(3);
             ItemNamePrefix = "MovieSeq";
             IconPath = "Resources/Images/View/TreeView/tree_icon_Movie.png";
 
             State = ConvertStatus.ImportReady;
-
             Table = MovieTable.Table;
             ItemsTable = MovieTaskTable.Table;
         }
 
-        public MovieItem(String id, String displayID, String videoId, String name, String cameraPos, String srcPath,
+        public MovieItem(DataItemBase parent, String id, String displayID, String videoId, String name, String cameraPos, String srcPath,
                         ConvertStatus state, String movieTask)
-            : this()
+            : this(parent)
         {
             ID = id;
             DisplayID = displayID;
@@ -44,7 +46,7 @@ namespace VideoSearch.Model
                 InitFromServer();
         }
 
-        public MovieItem(String srcPath, DataItemBase parent) : this()
+        public MovieItem(DataItemBase parent, String srcPath) : this(parent)
         {
             SrcPath = srcPath;
             ID = String.Format("{0}", DateTime.Now.ToString("yyyyMMddHHmmssfff"));
@@ -58,19 +60,18 @@ namespace VideoSearch.Model
 
         protected void InitFromServer()
         {
-            QueryVideoResponse response = VideoAnalysis.QueryVideo(VideoId);
-
-            if(response != null)
+            XElement videoInfo = ApiManager.Instance.GetQueryVideo(VideoId);
+            if(videoInfo != null)
             {
-                SubmitTime = GMTTimeToString(response.SubmitTime);
-                OrgPath = response.FilePath;
-                CvtPath = response.CvtPath;
-                ThumbnailPath = response.FirstFrameBmp;
-                MovieLength = response.FileSize;
-                State = (ConvertStatus)response.TranscodeStatus;
-                Progress = response.Progress / 100.0;
+                SubmitTime = GMTTimeToString(StringUtils.String2Int64(videoInfo.Element("SubmitTime").Value));
+                OrgPath = videoInfo.Element("FilePath").Value;
+                CvtPath = videoInfo.Element("CvtPath").Value;
+                ThumbnailPath = videoInfo.Element("FirstFrameBmp").Value;
+                MovieLength = StringUtils.String2UInt64(videoInfo.Element("FileSize").Value);
+                State = (ConvertStatus)StringUtils.String2Int(videoInfo.Element("TranscodeStatus").Value);
+                Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
 
-                if(State != ConvertStatus.PlayReady || Progress < 1.0)
+                if (State != ConvertStatus.PlayReady || Progress < 1.0)
                 {
                     if (State == ConvertStatus.ConvertReady)
                         SubmitVideo();
@@ -82,7 +83,6 @@ namespace VideoSearch.Model
                 }
             }
         }
-
 
         protected override void DisposeItem()
         {
@@ -190,7 +190,10 @@ namespace VideoSearch.Model
 
                 if (orgPath != value)
                 {
-                    _thumbnailPath = Path.Combine(pathPrefix, value);
+                    if (value != null)
+                        _thumbnailPath = Path.Combine(pathPrefix, value);
+                    else
+                        _thumbnailPath = "";
 
                     OnPropertyChanged(new PropertyChangedEventArgs("ThumbnailPath"));
                 }
@@ -528,7 +531,7 @@ namespace VideoSearch.Model
         {
             if(VideoId != "0")
             {
-                if(VideoAnalysis.DeleteVideo(VideoId))
+                if(ApiManager.Instance.DeleteVideo(VideoId))
                 {
                     return base.ClearFromDB();
                 }
@@ -653,23 +656,30 @@ namespace VideoSearch.Model
 
         private void ConvertMonitorThread()
         {
-            QueryVideoResponse videoResponse = null;
+            ConvertStatus status = ConvertStatus.UnInited;
+            XElement videoInfo = null;
             do
             {
-                videoResponse = VideoAnalysis.QueryVideo(VideoId);
-
-                if (videoResponse != null)
+                videoInfo = ApiManager.Instance.GetQueryVideo(VideoId);
+                if (videoInfo != null)
                 {
-                    Progress = videoResponse.Progress / 100.0;
-                }
-            } while ((ConvertStatus)videoResponse.TranscodeStatus != ConvertStatus.ConvertedOk || 
-                        videoResponse.Progress < 1.0);
+                    status = (ConvertStatus)StringUtils.String2Int(videoInfo.Element("TranscodeStatus").Value);
 
-            if (videoResponse != null &&
-                (ConvertStatus)videoResponse.TranscodeStatus == ConvertStatus.ConvertedOk)
+                    Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
+                }
+            } while (status != ConvertStatus.ConvertedOk ||
+                        Progress < 1.0);
+
+            if (videoInfo != null && status == ConvertStatus.ConvertedOk)
             {
                 State = ConvertStatus.PlayReady;
-                ThumbnailPath = videoResponse.FirstFrameBmp;
+
+                SubmitTime = GMTTimeToString(StringUtils.String2Int64(videoInfo.Element("SubmitTime").Value));
+                OrgPath = videoInfo.Element("FilePath").Value;
+                CvtPath = videoInfo.Element("CvtPath").Value;
+                ThumbnailPath = videoInfo.Element("FirstFrameBmp").Value;
+                MovieLength = StringUtils.String2UInt64(videoInfo.Element("FileSize").Value);
+                Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
             }
             else
                 State = ConvertStatus.ConvertReady;
@@ -679,32 +689,34 @@ namespace VideoSearch.Model
 
         protected void SubmitVideo()
         {
-            SubmitVideoResponse response = VideoAnalysis.SubmitVideoAndTransCode(this);
+            String videoPath = "file://" + Parent.DisplayID + "/" + ID + "/" + ID;
+            XElement response = ApiManager.Instance.SubmitVideo(videoPath);
 
-            if (response.IsOk)
+            if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
             {
-                VideoId = String.Format("{0}", response.SubmitId);
+                VideoId = response.Element("VideoId").Value;
 
-                QueryVideoResponse videoResponse = VideoAnalysis.QueryVideo(VideoId);
+                XElement videoInfo = ApiManager.Instance.GetQueryVideo(VideoId);
+                if (videoInfo != null)
+                {
+                    SubmitTime = GMTTimeToString(StringUtils.String2Int64(videoInfo.Element("SubmitTime").Value));
+                    OrgPath = videoInfo.Element("FilePath").Value;
+                    CvtPath = videoInfo.Element("CvtPath").Value;
+                    ThumbnailPath = videoInfo.Element("FirstFrameBmp").Value;
+                    MovieLength = StringUtils.String2UInt64(videoInfo.Element("FileSize").Value);
+                    Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
 
-                SubmitTime = GMTTimeToString(videoResponse.SubmitTime);
+                    State = ConvertStatus.Converting;
 
-                MovieLength = videoResponse.FileSize;
-                OrgPath = videoResponse.FilePath;
-                CvtPath = videoResponse.CvtPath;
-                ThumbnailPath = videoResponse.FirstFrameBmp;
-                Progress = videoResponse.Progress / 100.0;
-
-                State = ConvertStatus.Converting;
-
-                _monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
-                _monitorThread.Start();
+                    _monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
+                    _monitorThread.Start();
+                }
             }
             else
             {
                 State = ConvertStatus.ConvertReady;
 
-                MessageBox.Show(response.ErrorMessage);
+                MessageBox.Show("SubmitVideo fail!");
             }
 
         }

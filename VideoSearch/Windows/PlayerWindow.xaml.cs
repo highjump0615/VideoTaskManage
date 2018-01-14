@@ -73,6 +73,8 @@ namespace VideoSearch.Windows
         {
             InitializeComponent();
 
+            Owner = MainWindow.VideoSearchMainWindow;
+
             OnStop(null, null);
         }
 

@@ -4,13 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VideoSearch.Views"
-             xmlns:thumbnail="clr-namespace:VideoSearch.SkinControl.Thumbnail"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid Margin="20">
-        <Grid.Resources>
-            <thumbnail:ThumbnailList x:Key="thumbList"/>
-        </Grid.Resources>
 
         <Border CornerRadius="4" Background="#FF464646" 
                 BorderBrush="#FF222222" BorderThickness="1">
@@ -30,7 +26,7 @@
                         <ColumnDefinition Width="140"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="每页200张图片"
+                    <TextBlock Text="{Binding Path=Title}"
                            FontFamily="Arial" FontSize="16" 
                            Height="18" Margin="20,0" Foreground="White" 
                            TextAlignment="Left" 
@@ -47,7 +43,8 @@
                     </Button>
 
                     <TabControl Grid.Column="4" VerticalAlignment="Center"
-                                Style="{DynamicResource BlueTabControlStyle}">
+                                Style="{DynamicResource BlueTabControlStyle}"
+                                SelectedIndex="{Binding Path=DisplayType, Mode=TwoWay}">
                         <TabItem>
                             <Grid Margin="4,0" HorizontalAlignment="Stretch">
                                 <Image HorizontalAlignment="Left" Source="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail_Full.png" Stretch="None"/>
@@ -87,7 +84,7 @@
                     </Border>
                     <ItemsControl Margin="15,0"
                                 Grid.Row="2"
-                              ItemsSource="{Binding Source={StaticResource thumbList}}" 
+                              ItemsSource="{Binding Path=Snapshots}" 
                               HorizontalContentAlignment="Stretch" 
                               VerticalContentAlignment="Stretch" 
                               VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -130,7 +127,23 @@
                                                 <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail.png"/>
                                             </Border.Background>
                                         </Border>
-                                        <TextBlock Grid.Row="2" Text="{Binding ThumbTitle}"
+
+                                        <Border Grid.Row="1"
+                                                CornerRadius="2"
+                                                Background="Black"
+                                                Visibility="{Binding BlackBGVisible, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        <Border Grid.Row="1"
+                                                CornerRadius="2"
+                                                Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                                BorderThickness="{Binding BorderThickness, UpdateSourceTrigger=PropertyChanged}"
+                                                BorderBrush="Black">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{Binding PicPath}" Viewbox="{Binding ViewPort, UpdateSourceTrigger=PropertyChanged}"/>
+                                            </Border.Background>
+                                        </Border>
+                                        
+                                        <TextBlock Grid.Row="2" Text="{Binding PicTitle}"
                                                FontFamily="Arial" FontSize="16" 
                                                Height="18" Margin="8,8" Foreground="White" 
                                                TextAlignment="Center" 

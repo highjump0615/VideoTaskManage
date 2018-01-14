@@ -45,6 +45,8 @@ namespace VideoSearch.Windows
         {
             InitializeComponent();
 
+            //Owner = MainWindow.VideoSearchMainWindow;
+
             SearchType = SearchFilterType.SearchAll;
         }
 

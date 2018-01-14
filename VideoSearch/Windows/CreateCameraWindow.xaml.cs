@@ -17,6 +17,7 @@ namespace VideoSearch.Windows
         {
             InitializeComponent();
 
+            Owner = MainWindow.VideoSearchMainWindow;
             EventIDs = DBManager.EventIDList();
             cboEvent.ItemsSource = DBManager.EventDisplayIDList();
 

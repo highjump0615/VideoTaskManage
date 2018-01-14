@@ -39,12 +39,13 @@ namespace VideoSearch.Database
                 });
         }
 
-        public override DataItemBase DataItemWithRow(DataRow row)
+        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
         {
             if (row == null)
                 return null;
 
-            return new CameraItem(string.Format("{0}", row["EventPos"]),
+            return new CameraItem(parent,
+                                  string.Format("{0}", row["EventPos"]),
                                   string.Format("{0}", row["ID"]),
                                   string.Format("{0}", row["DisplayID"]),
                                   string.Format("{0}", row["Name"]),

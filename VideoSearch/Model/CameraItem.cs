@@ -201,8 +201,10 @@ namespace VideoSearch.Model
         #endregion
 
         #region Constructor & Init
-        public CameraItem() : base()
+        public CameraItem(DataItemBase parent = null) : base()
         {
+            Parent = parent;
+
             SetLevel(2);
             ItemNamePrefix = "Movie";
             IconPath = "Resources/Images/View/TreeView/tree_icon_Camera.png";
@@ -211,8 +213,8 @@ namespace VideoSearch.Model
             ItemsTable = MovieTable.Table;
         }
 
-        public CameraItem(String eventPos, String id, String display_id, String name, String address, String longitude, String latitude, String type, String source, String portCount, bool isSelected = false)
-           : this()
+        public CameraItem(DataItemBase parent, String eventPos, String id, String display_id, String name, String address, String longitude, String latitude, String type, String source, String portCount, bool isSelected = false)
+           : this(parent)
         {
             EventPos = eventPos;
             ID = id;
@@ -228,7 +230,7 @@ namespace VideoSearch.Model
         }
 
         public CameraItem(CameraItem item)
-            : this(item.EventPos, item.ID, item.DisplayID, item.Name, item.Address, item.Longitude, item.Latitude, item.Type, item.Source, item.PortCount)
+            : this(item.Parent, item.EventPos, item.ID, item.DisplayID, item.Name, item.Address, item.Longitude, item.Latitude, item.Type, item.Source, item.PortCount)
         {
         }
 

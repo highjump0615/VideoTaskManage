@@ -18,9 +18,16 @@ namespace VideoSearch
 
         private ObservableCollection<Control> _groupList = null;
 
+        private static MainWindow _mainWindow = null;
+        public static MainWindow VideoSearchMainWindow
+        {
+            get { return _mainWindow; }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+            _mainWindow = this;
         }
         
         private void WindowLoaded(object sender, RoutedEventArgs e)

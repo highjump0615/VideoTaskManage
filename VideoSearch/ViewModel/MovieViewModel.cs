@@ -48,7 +48,7 @@ namespace VideoSearch.ViewModel
                 
                 foreach (String filePath in filenames)
                 {
-                    Owner.AddItem(new MovieItem(filePath, Owner));
+                    Owner.AddItem(new MovieItem(Owner, filePath));
                 }
             }
         }

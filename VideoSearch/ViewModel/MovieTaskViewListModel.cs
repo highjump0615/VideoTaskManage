@@ -9,13 +9,5 @@ namespace VideoSearch.ViewModel
         public MovieTaskViewListModel(DataItemBase owner) : base(owner)
         {
         }
-
-        public override DataItemBase EmptyItem()
-        {
-            MovieTaskItem item = new MovieTaskItem();
-            item.Visibility = Visibility.Hidden;
-
-            return item;
-        }
     }
 }

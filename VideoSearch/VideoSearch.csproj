@@ -145,14 +145,6 @@
     <Compile Include="SearchListView\SearchResultItem.xaml.cs">
       <DependentUpon>SearchResultItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SkinControl\ColorPicker\BrushExtendedEditor.cs" />
-    <Compile Include="SkinControl\ColorPicker\ColorList.cs" />
-    <Compile Include="SkinControl\ColorPicker\ColorPicker.xaml.cs">
-      <DependentUpon>ColorPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SkinControl\ColorPicker\ColorPickerButton.cs" />
-    <Compile Include="SkinControl\ColorPicker\EditorResources.cs" />
-    <Compile Include="SkinControl\ColorPicker\Metadata.cs" />
     <Compile Include="SkinControl\RegionEditor.xaml.cs">
       <DependentUpon>RegionEditor.xaml</DependentUpon>
     </Compile>
@@ -165,10 +157,6 @@
     <Compile Include="SkinControl\SkinFrame.xaml.cs">
       <DependentUpon>SkinFrame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SkinControl\Thumbnail\ThumbnailItem.xaml.cs">
-      <DependentUpon>ThumbnailItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SkinControl\Thumbnail\ThumbnailList.cs" />
     <Compile Include="SkinControl\TimeRangeMarker.xaml.cs">
       <DependentUpon>TimeRangeMarker.xaml</DependentUpon>
     </Compile>
@@ -182,10 +170,9 @@
       <DependentUpon>MainFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\ExceptionUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="VideoService\ApiManager.cs" />
-    <Compile Include="VideoService\VideoAnalysis.cs" />
     <Compile Include="VideoService\VideoInfo.cs" />
-    <Compile Include="VideoService\VideoResponsor.cs" />
     <Compile Include="ViewModel\Base\HostViewModel.cs" />
     <Compile Include="ViewModel\Base\ListViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
@@ -423,14 +410,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SkinControl\ColorPicker\ColorPicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SkinControl\ColorPicker\EditorResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SkinControl\RegionEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -444,10 +423,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SkinControl\SkinFrame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SkinControl\Thumbnail\ThumbnailItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

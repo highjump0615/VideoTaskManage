@@ -38,19 +38,20 @@ namespace VideoSearch.Database
 
         }
 
-        public override DataItemBase DataItemWithRow(DataRow row)
+        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
         {
             if (row == null)
                 return null;
 
-            return new MovieItem(string.Format("{0}", row["ID"]),
-                    string.Format("{0}", row["DisplayID"]),
-                    string.Format("{0}", row["VideoId"]),
-                    string.Format("{0}", row["Name"]),
-                    string.Format("{0}", row["CameraPos"]),
-                    string.Format("{0}", row["SrcPath"]),
-                    (ConvertStatus)row["State"],
-                    string.Format("{0}", row["MovieTask"]));
+            return new MovieItem(parent,
+                                 string.Format("{0}", row["ID"]),
+                                 string.Format("{0}", row["DisplayID"]),
+                                 string.Format("{0}", row["VideoId"]),
+                                 string.Format("{0}", row["Name"]),
+                                 string.Format("{0}", row["CameraPos"]),
+                                 string.Format("{0}", row["SrcPath"]),
+                                 (ConvertStatus)row["State"],
+                                 string.Format("{0}", row["MovieTask"]));
         }
 
         public override int Add(DataItemBase newItem)

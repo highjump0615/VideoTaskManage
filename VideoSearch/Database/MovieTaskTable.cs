@@ -38,7 +38,7 @@ namespace VideoSearch.Database
 
         }
 
-        public override DataItemBase DataItemWithRow(DataRow row)
+        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
         {
             if (row == null)
                 return null;
@@ -47,7 +47,8 @@ namespace VideoSearch.Database
             MovieTaskState state = (MovieTaskState)row["State"];
 
             if (taskType == MovieTaskType.SearchTask)
-                return new MovieTaskSearchItem(string.Format("{0}", row["ID"]),
+                return new MovieTaskSearchItem(parent, 
+                    string.Format("{0}", row["ID"]),
                     string.Format("{0}", row["DisplayID"]),
                     string.Format("{0}", row["TaskId"]),
                     string.Format("{0}", row["Name"]),
@@ -55,7 +56,8 @@ namespace VideoSearch.Database
                     taskType,
                     state);
             else if (taskType == MovieTaskType.OutlineTask)
-                return new MovieTaskSummaryItem(string.Format("{0}", row["ID"]),
+                return new MovieTaskSummaryItem(parent,
+                    string.Format("{0}", row["ID"]),
                     string.Format("{0}", row["DisplayID"]),
                     string.Format("{0}", row["TaskId"]),
                     string.Format("{0}", row["Name"]),
@@ -63,7 +65,8 @@ namespace VideoSearch.Database
                     taskType,
                     state);
             else if (taskType == MovieTaskType.CompressTask)
-                return new MovieTaskCompressItem(string.Format("{0}", row["ID"]),
+                return new MovieTaskCompressItem(parent,
+                    string.Format("{0}", row["ID"]),
                     string.Format("{0}", row["DisplayID"]),
                     string.Format("{0}", row["TaskId"]),
                     string.Format("{0}", row["Name"]),

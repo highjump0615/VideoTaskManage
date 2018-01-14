@@ -77,14 +77,6 @@ namespace VideoSearch.ViewModel.Base
             }
         }
 
-        public virtual DataItemBase EmptyItem()
-        {
-            DataItemBase item = new DataItemBase();
-            item.Visibility = Visibility.Hidden;
-
-            return item;
-        }
-
         #region utility fuction
         public virtual void AddNewItem()
         {

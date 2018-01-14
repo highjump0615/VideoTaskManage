@@ -7,19 +7,19 @@ namespace VideoSearch.Model
     {
         #region Constructor & Init
 
-        public MovieTaskSearchItem()
-            : base()
+        public MovieTaskSearchItem(DataItemBase parent = null)
+            : base(parent)
         {
         }
 
-        public MovieTaskSearchItem(String id, String displayID, String taskId, String name, String moviePos,
+        public MovieTaskSearchItem(DataItemBase parent, String id, String displayID, String taskId, String name, String moviePos,
                         MovieTaskType taskType, MovieTaskState state) 
-            : base(id, displayID, taskId, name, moviePos, taskType, state)
+            : base(parent, id, displayID, taskId, name, moviePos, taskType, state)
         {
         }
 
-        public MovieTaskSearchItem(String taskId, String name, MovieTaskType taskType, DataItemBase parent) 
-            : base(taskId, name, taskType, parent)
+        public MovieTaskSearchItem(DataItemBase parent, String taskId, String name, MovieTaskType taskType) 
+            : base(parent, taskId, name, taskType)
         {
         }
 

@@ -105,9 +105,9 @@
                                    EndPoint="0,1">
                                     <LinearGradientBrush.GradientStops>
                                         <GradientStopCollection>
-                                            <GradientStop Color="{DynamicResource ControlLightColor}"
+                                            <GradientStop Color="Transparent"
                                   Offset="0.0" />
-                                            <GradientStop Color="{DynamicResource ControlMediumColor}"
+                                            <GradientStop Color="Transparent"
                                   Offset="1.0" />
                                         </GradientStopCollection>
                                     </LinearGradientBrush.GradientStops>

@@ -82,12 +82,31 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="检索类型" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBlock Text="上半身颜色" Grid.Row="2" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBlock Text="下半身颜色" Grid.Row="4" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="ColorTitle1" Text="上半身颜色" Grid.Row="2" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="ColorTitle2" Text="下半身颜色" Grid.Row="4" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
                             <TextBlock Text="场景模式" Grid.Row="6" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
 
-                            <ComboBox Name="CboObjectType" FontFamily="Arial" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueComboBox}" 
-                                      Grid.Column="2" Grid.ColumnSpan="4" SelectedIndex="0" SelectionChanged="CboObjectType_SelectionChanged">
+                            <Grid x:Name="ExtractPuppetGrid" Margin="8,0"
+                                  Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="5" 
+                                  Visibility="Hidden">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="90" />
+                                </Grid.ColumnDefinitions>
+
+                                <Border BorderBrush="#FF262626" BorderThickness="1">
+                                    <Image x:Name="PuppetImage" />
+                                </Border>
+                                
+                                <Button VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                        Width="80" Height="26" Grid.Column="2" 
+                                        Foreground="White" FontFamily="Arial" FontSize="14" 
+                                        Style="{DynamicResource BlueFrameButtonStyle}" 
+                                        Content="人性勾画" Click="OnExtractPuppet" />
+                            </Grid>
+                            <ComboBox Name="CboObjectType" FontFamily="Arial" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueFrameComboBox}" 
+                                      Grid.Column="2" Grid.ColumnSpan="4" SelectedIndex="1" SelectionChanged="CboObjectType_SelectionChanged">
                                 <ComboBoxItem Content="全部" />
                                 <ComboBoxItem Content="人" />
                                 <ComboBoxItem Content="人形" />
@@ -115,7 +134,7 @@
                                 <Image Source="/VideoSearch;component/Resources/Images/Button/ColorPicker.png"/>
                             </Button>
 
-                            <ComboBox Name="CboSensitivity" FontFamily="Arial" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueComboBox}" 
+                            <ComboBox Name="CboSensitivity" FontFamily="Arial" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueFrameComboBox}" 
                                       Grid.Column="2" Grid.Row="7"  Grid.ColumnSpan="4" SelectedIndex="0">
                                 <ComboBoxItem Content="晴天" />
                                 <ComboBoxItem Content="阴天" />

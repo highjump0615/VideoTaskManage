@@ -6,6 +6,8 @@ namespace VideoSearch.ViewModel
 {
     public class PanelViewTaskSummaryModel
     {
+        private MovieTaskSummaryItem _owner = null;
+
         public PanelViewTaskSummaryModel(DataItemBase item)
         {
             if (item != null && item.GetType() == typeof(MovieTaskSummaryItem))
@@ -14,7 +16,11 @@ namespace VideoSearch.ViewModel
 
                 _snapshots = summaryItem.Snapshots;
                 _title = _snapshots.Count > 0 ? String.Format("{0}张图片", _snapshots.Count) : "";
-            }
+                _owner = summaryItem;
+
+                DisplayType = _owner.DisplayType;
+                ItemSizeIndex = _owner.ItemSizeIndex;
+             }
         }
         #region Property
 
@@ -46,6 +52,30 @@ namespace VideoSearch.ViewModel
                     {
                         snapshot.DisplayType = _displayType;
                     }
+
+                    if (_owner != null)
+                        _owner.DisplayType = _displayType;
+                }
+            }
+        }
+
+        private int _itemSizeIndex = 0;
+        public int ItemSizeIndex
+        {
+            get { return _itemSizeIndex; }
+            set
+            {
+                if (_itemSizeIndex != value)
+                {
+                    _itemSizeIndex = value;
+
+                    foreach (TaskSnapshot snapshot in _snapshots)
+                    {
+                        snapshot.ItemSizeIndex = _itemSizeIndex;
+                    }
+
+                    if (_owner != null)
+                        _owner.ItemSizeIndex = _itemSizeIndex;
                 }
             }
         }

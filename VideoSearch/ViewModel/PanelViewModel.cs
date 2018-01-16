@@ -24,7 +24,7 @@ namespace VideoSearch.ViewModel
         public void ShowResult()
         {
             if (Owner.GetType() == typeof(MovieTaskSearchItem))
-                Contents = new PanelViewTaskSearchModel();
+                Contents = new PanelViewTaskSearchModel(Owner);
             else if (Owner.GetType() == typeof(MovieTaskSummaryItem))
                 Contents = new PanelViewTaskSummaryModel(Owner);
             else if (Owner.GetType() == typeof(MovieTaskCompressItem))

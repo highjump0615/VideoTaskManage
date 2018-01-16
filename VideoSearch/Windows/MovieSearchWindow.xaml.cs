@@ -1,10 +1,13 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using VideoSearch.Model;
+using VideoSearch.VideoService;
 
 namespace VideoSearch.Windows
 {
@@ -38,10 +41,10 @@ namespace VideoSearch.Windows
             {
                 String Colors = "";
 
-                if (ColorPickerButton1.IsEnabled && _isSelectedColor1)
+                if (ColorPickerButton1.IsVisible && _isSelectedColor1)
                     Colors = String.Format("{0},{1},{2}", _color1.R, _color1.G, _color1.B);
                 Colors += ";";
-                if (ColorPickerButton2.IsEnabled && _isSelectedColor2)
+                if (ColorPickerButton2.IsVisible && _isSelectedColor2)
                     Colors += String.Format("{0},{1},{2}", _color2.R, _color2.G, _color2.B);
                 Colors += ";";
 
@@ -102,6 +105,44 @@ namespace VideoSearch.Windows
         }
         #endregion
 
+        public char[] RenXingPic
+        {
+            get
+            {
+                String filePath = _image.UriSource.AbsolutePath;
+
+                return Base64EncodedData(filePath);
+            }
+        }
+
+        public char[] RenXingMaskPic
+        {
+            get
+            {
+                if(_maskImage != null)
+                {
+                    String strPath = GeneratePNGFromPath(_maskImage);
+
+                    char[] encoded = Base64EncodedData(strPath);
+
+                    return encoded;
+                }
+                return null;
+            }
+        }
+
+        public Rect RenXingWaiJieRect
+        {
+            get
+            {
+                return _renXingWaiJieRect;
+            }
+        }
+        private BitmapImage _image = null;
+        private BitmapSource _maskImage = null;
+        private Rect _renXingWaiJieRect = new Rect();
+        private PointCollection _path = null;
+
         #region Constructor & Init
         public MovieSearchWindow(MovieItem movie)
         {
@@ -123,6 +164,21 @@ namespace VideoSearch.Windows
 
                 RegionEditor.Thumbnail = img;
             }
+        }
+
+        private String GeneratePNGFromPath(BitmapSource clippedImage)
+        {
+            String strPath = Path.GetTempFileName();
+
+
+            Console.WriteLine("=== [{0}] ===", strPath);
+            FileStream stream = new FileStream(strPath, FileMode.Create);
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(clippedImage));
+            encoder.Save(stream);
+            stream.Close();
+
+            return strPath;
         }
         #endregion
 
@@ -211,6 +267,23 @@ namespace VideoSearch.Windows
                 RegionEditor.UpdateDirection(pos);
         }
 
+        private void OnExtractPuppet(object sender, RoutedEventArgs e)
+        {
+            ExtractPuppetWindow puppetWindow = new ExtractPuppetWindow(_image, _path);
+            puppetWindow.Owner = this;
+
+            var ret = puppetWindow.ShowDialog();
+
+            _image = puppetWindow.Thumbnail.Clone();
+            if (ret == true)
+            {
+                _path = puppetWindow.Path;
+                _maskImage = puppetWindow.ClippedThumbnail;
+                _renXingWaiJieRect = puppetWindow.Bounds;
+                PuppetImage.Source = _maskImage;
+            }
+        }
+
         private void OnResetRegion(object sender, RoutedEventArgs e)
         {
             RegionEditor.Reset();
@@ -243,18 +316,44 @@ namespace VideoSearch.Windows
 
             if (strType == "人")
             {
-                ColorPickerButton1.IsEnabled = true;
-                ColorPickerButton2.IsEnabled = true;
+                ColorTitle1.Text = "上半身颜色";
+                ColorTitle1.Visibility = Visibility.Visible;
+                ColorPickerButton1.Visibility = Visibility.Visible;
+                SelectedColor1.Visibility = Visibility.Visible;
+
+                ColorTitle2.Text = "下半身颜色";
+                ColorTitle2.Visibility = Visibility.Visible;
+                ColorPickerButton2.Visibility = Visibility.Visible;
+                SelectedColor2.Visibility = Visibility.Visible;
+                ExtractPuppetGrid.Visibility = Visibility.Hidden;
             }
             else if (strType == "人形")
             {
-                ColorPickerButton1.IsEnabled = false;
-                ColorPickerButton2.IsEnabled = false;
+                ColorTitle1.Text = "";
+                ColorTitle1.Visibility = Visibility.Hidden;
+                ColorPickerButton1.Visibility = Visibility.Hidden;
+                SelectedColor1.Visibility = Visibility.Hidden;
+
+                ColorTitle2.Text = "";
+                ColorTitle2.Visibility = Visibility.Hidden;
+                ColorPickerButton2.Visibility = Visibility.Hidden;
+                SelectedColor2.Visibility = Visibility.Hidden;
+                ExtractPuppetGrid.Visibility = Visibility.Visible;
+
+                OnExtractPuppet(sender, e);
             }
             else
             {
-                ColorPickerButton1.IsEnabled = true;
-                ColorPickerButton2.IsEnabled = false;
+                ColorTitle1.Text = "目标颜色";
+                ColorTitle1.Visibility = Visibility.Visible;
+                ColorPickerButton1.Visibility = Visibility.Visible;
+                SelectedColor1.Visibility = Visibility.Visible;
+
+                ColorTitle2.Text = "";
+                ColorTitle2.Visibility = Visibility.Hidden;
+                ColorPickerButton2.Visibility = Visibility.Hidden;
+                SelectedColor2.Visibility = Visibility.Hidden;
+                ExtractPuppetGrid.Visibility = Visibility.Hidden;
             }
         }
 
@@ -282,6 +381,53 @@ namespace VideoSearch.Windows
                     _color2 = wpfColor;
                 }
             }
+        }
+        #endregion
+
+        #region Utility
+        private char[] Base64EncodedData(String path)
+        {
+            if (_image != null)
+            {
+                try
+                {
+
+                    using (FileStream fsSource = new FileStream(path,
+                        FileMode.Open, FileAccess.Read))
+                    {
+
+                        // Read the source file into a byte array. 
+                        byte[] bytes = new byte[fsSource.Length];
+                        int numBytesToRead = (int)fsSource.Length;
+                        int numBytesRead = 0;
+                        while (numBytesToRead > 0)
+                        {
+                            // Read may return anything from 0 to numBytesToRead. 
+                            int n = fsSource.Read(bytes, numBytesRead, numBytesToRead);
+
+                            // Break when the end of the file is reached. 
+                            if (n == 0)
+                                break;
+
+                            numBytesRead += n;
+                            numBytesToRead -= n;
+                        }
+                        numBytesToRead = bytes.Length;
+
+                        Base64Encoder encoder = new Base64Encoder(bytes);
+
+                        return encoder.GetEncoded();
+
+                    }
+                }
+                catch (FileNotFoundException ioEx)
+                {
+                    Console.WriteLine(ioEx.Message);
+                    return null;
+                }
+
+            }
+            return null;
         }
         #endregion
     }

@@ -141,7 +141,7 @@ namespace VideoSearch.VideoService
         /// <param name="renxingPic"></param>
         /// <param name="renxingMaskPic"></param>
         /// <param name="renxingWaijieRect"></param>
-        public XElement CreateSearchTask(String videoId, String sensitivity, int nRegionType, Rect region, String objType, String colors, String alarmInfo, List<Byte> renxingPic = null, List<Byte> renxingMaskPic = null, Rect renxingWaijieRect = new Rect())
+        public XElement CreateSearchTask(String videoId, String sensitivity, int nRegionType, Rect region, String objType, String colors, String alarmInfo, char[] renxingPic, char[] renxingMaskPic, Rect renxingWaijieRect)
         {
             return SubmitTask("3", videoId, sensitivity, nRegionType, region, -1, objType, colors, alarmInfo, renxingPic, renxingMaskPic, renxingWaijieRect);
         }
@@ -162,7 +162,7 @@ namespace VideoSearch.VideoService
         /// <param name="renxingMaskPic"></param>
         /// <param name="renxingWaijieRect"></param>
         /// <returns></returns>
-        public XElement SubmitTask(String taskType, String videoId, String sensitivity, int nRegionType, Rect region, int thickness, String objType = "", String colors = "", String alarmInfo = "", List<Byte> renxingPic = null, List<Byte> renxingMaskPic = null, Rect renxingWaijieRect = new Rect())
+        public XElement SubmitTask(String taskType, String videoId, String sensitivity, int nRegionType, Rect region, int thickness, String objType = "", String colors = "", String alarmInfo = "", char[] renxingPic = null, char[] renxingMaskPic = null, Rect renxingWaijieRect = new Rect())
         {
             int left, top, right, bottom;
 
@@ -186,9 +186,20 @@ namespace VideoSearch.VideoService
             {
                 postData += String.Format("&ObjType={0}&Color={1}&AlarmLine={2}", objType, colors, alarmInfo);
 
-                if(objType == "5")
+                if(objType == "5" && 
+                   renxingPic != null &&
+                   renxingMaskPic != null &&
+                   !renxingWaijieRect.IsEmpty)
                 {
+                    left = (int)renxingWaijieRect.Left;
+                    top = (int)renxingWaijieRect.Top;
+                    right = (int)renxingWaijieRect.Right;
+                    bottom = (int)renxingWaijieRect.Bottom;
 
+                    String strRenXingWaiJieRect = String.Format("{0},{1},{2},{3}", left, top, right, bottom);
+                    String strRenxingPic = new string(renxingPic);
+                    String strRenxingMaskPic = new string(renxingMaskPic);
+                    postData += String.Format("&RenXingPic={0}&RenXingMaskPic={1}&RenXingWaiJieRect={2}", strRenxingPic, strRenxingMaskPic, strRenXingWaiJieRect);
                 }
 
             }

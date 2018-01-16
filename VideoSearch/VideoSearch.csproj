@@ -138,12 +138,16 @@
     <Compile Include="Model\MovieTaskSearchItem.cs" />
     <Compile Include="Model\SearchResult.cs" />
     <Compile Include="Model\SearchService.cs" />
+    <Compile Include="Model\TaskSnapshot.cs" />
     <Compile Include="Model\VideoData.cs" />
     <Compile Include="SearchListView\SearchListViewItemContent.xaml.cs">
       <DependentUpon>SearchListViewItemContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="SearchListView\SearchResultItem.xaml.cs">
       <DependentUpon>SearchResultItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SkinControl\ModelExtractor.xaml.cs">
+      <DependentUpon>ModelExtractor.xaml</DependentUpon>
     </Compile>
     <Compile Include="SkinControl\RegionEditor.xaml.cs">
       <DependentUpon>RegionEditor.xaml</DependentUpon>
@@ -172,6 +176,8 @@
     <Compile Include="Utils\ExceptionUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="VideoService\ApiManager.cs" />
+    <Compile Include="VideoService\Base64Decoder.cs" />
+    <Compile Include="VideoService\Base64Encoder.cs" />
     <Compile Include="VideoService\VideoInfo.cs" />
     <Compile Include="ViewModel\Base\HostViewModel.cs" />
     <Compile Include="ViewModel\Base\ListViewModel.cs" />
@@ -284,6 +290,9 @@
     <Compile Include="Windows\CreateEventWindow.xaml.cs">
       <DependentUpon>CreateEventWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ExtractPuppetWindow.xaml.cs">
+      <DependentUpon>ExtractPuppetWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
@@ -335,6 +344,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Colors\ListBoxColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\TreeViewColors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -407,6 +420,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchListView\SearchResultItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SkinControl\ModelExtractor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -554,6 +571,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\ExtractPuppetWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\HelpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -604,6 +625,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\Images\View\MovieProcess\目标颜色.docx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -774,6 +796,17 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\MovieProcess\ExtractPuppet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\View\MovieProcess\ArrowDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button\dlg_minimize_normal.png" />
+    <Resource Include="Resources\Images\Button\dlg_minimize_over.png" />
+    <Resource Include="Resources\Images\Button\dlg_minimize_pressed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets')" />

@@ -289,7 +289,7 @@ namespace VideoSearch.Model
 
                     String picPath = "D:\\VideoInvestigationDataDB\\AnalysisFile";
 
-                    snapshot.PicPath = Path.Combine(picPath, obj.Element("PicPath").Value);
+                    snapshot.PicPath = picPath + obj.Element("PicPath").Value;
                     snapshot.PicTitle = Path.GetFileNameWithoutExtension(snapshot.PicPath);
                     snapshot.StartFrame = StringUtils.String2Int(obj.Element("StartFrame").Value);
                     snapshot.EndFrame = StringUtils.String2Int(obj.Element("EndFrame").Value);

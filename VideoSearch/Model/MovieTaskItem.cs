@@ -485,6 +485,8 @@ namespace VideoSearch.Model
                         Console.WriteLine("*** state = {0}, progress = {1}", state, Progress);
                     }
                 }
+
+                Thread.Sleep(2000);
             } while (state == MovieTaskState.Creating || state == MovieTaskState.CreateReady);
 
             if (response != null && state == MovieTaskState.Created)

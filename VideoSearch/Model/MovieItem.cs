@@ -667,6 +667,8 @@ namespace VideoSearch.Model
 
                     Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
                 }
+
+                Thread.Sleep(2000);
             } while (status != ConvertStatus.ConvertedOk ||
                         Progress < 1.0);
 

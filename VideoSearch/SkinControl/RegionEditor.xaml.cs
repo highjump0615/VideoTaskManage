@@ -261,7 +261,6 @@ namespace VideoSearch.SkinControl
             Point pos1, pos2;
             double size = 16.0;
 
-            Console.WriteLine("=== ro = {0}", rotate * 180 / Math.PI);
             double angle = 30 * Math.PI / 180;
 
             if (isLeft)

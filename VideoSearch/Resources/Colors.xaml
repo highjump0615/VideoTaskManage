@@ -11,6 +11,7 @@
         <ResourceDictionary Source="/Resources/Colors/ProgressBarColors.xaml" />
         <ResourceDictionary Source="/Resources/Colors/SliderColors.xaml" />
         <ResourceDictionary Source="/Resources/Colors/TextBoxColors.xaml" />
+        <ResourceDictionary Source="/Resources/Colors/TreeViewColors.xaml" />
         <ResourceDictionary Source="/Resources/Colors/WindowColors.xaml" />
     </ResourceDictionary.MergedDictionaries>
     

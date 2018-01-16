@@ -28,6 +28,20 @@
     <Color x:Key="GreenButtonMouseOverColor">#FF458A6E</Color>
     <Color x:Key="GreenButtonPressedColor">#FF406355</Color>
 
+    <!--OrangeButton colors.-->
+    <Color x:Key="OrangeButtonDisabledLightColor">#FFDBDBDB</Color>
+    <Color x:Key="OrangeButtonDisabledDarkColor">#FFCDCDCD</Color>
+    <Color x:Key="OrangeButtonDisabledForegroundColor">#FF888888</Color>
+
+    <Color x:Key="OrangeButtonLightColor">#FFEEBE6C</Color>
+    <Color x:Key="OrangeButtonMediumColor">#FFE6B764</Color>
+    <Color x:Key="OrangeButtonDarkColor">#FFEEBE6C</Color>
+
+    <Color x:Key="OrangeButtonMouseOverColor">#FFE99B10</Color>
+    <Color x:Key="OrangeButtonPressedColor">#FFE5AC46</Color>
+
+    <Color x:Key="OrangeButtonBorderColor">#FF717173</Color>
+
     <!--BlueButton colors.-->
     <Color x:Key="BlueButtonDisabledDarkColor">#FF7F7F7F</Color>
     <Color x:Key="BlueButtonDisabledForegroundColor">#FF888888</Color>
@@ -52,6 +66,7 @@
 
     <!--Button Border colors-->
     <Color x:Key="ButtonBorderColor">#FF2A2928</Color>
+    <Color x:Key="DefaultBorderBrushLightColor">Black</Color>
     <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>
 
     <!--PlayerButton colors-->

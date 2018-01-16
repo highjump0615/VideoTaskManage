@@ -32,16 +32,14 @@
                            TextAlignment="Left" 
                            VerticalAlignment="Center" IsHitTestVisible="False" />
 
-                    <Button Grid.Column="2" Height="26"
-                            Style="{DynamicResource BlueButtonStyle}">
-                        <Grid Width="66" Height="24" Margin="0">
-                            <Image HorizontalAlignment="Right" Margin="0,0,8,0"
-                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_popup.png" Stretch="None" />
-
-                            <TextBlock Text="小图片" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
-                        </Grid>
-                    </Button>
-
+                    <ComboBox Name="CboItemSize" Height="26"
+                              FontFamily="Arial" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueComboBox}" 
+                                      Grid.Column="2" SelectedIndex="{Binding Path=ItemSizeIndex, Mode=TwoWay}" >
+                        <ComboBoxItem Content="小图片" />
+                        <ComboBoxItem Content="中图片" />
+                        <ComboBoxItem Content="大图片" />
+                    </ComboBox>
+                    
                     <TabControl Grid.Column="4" VerticalAlignment="Center"
                                 Style="{DynamicResource BlueTabControlStyle}"
                                 SelectedIndex="{Binding Path=DisplayType, Mode=TwoWay}">
@@ -108,9 +106,9 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid Width="217" Height="257">
+                                <Grid Width="{Binding Path=Width}" Height="{Binding Path=Height}">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="255"/>
+                                        <RowDefinition />
                                         <RowDefinition Height="1"/>
                                         <RowDefinition Height="1"/>
                                     </Grid.RowDefinitions>
@@ -118,7 +116,7 @@
                                     <Grid Margin="5,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="20"/>
-                                            <RowDefinition Height="180"/>
+                                            <RowDefinition />
                                             <RowDefinition Height="55"/>
                                         </Grid.RowDefinitions>
                                         <Border Grid.Row="1"

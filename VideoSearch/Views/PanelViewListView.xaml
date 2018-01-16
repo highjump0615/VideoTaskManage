@@ -12,7 +12,7 @@
             <Grid>
                 <!-- TargetType -->
                 <TextBlock Height="18" Text="目标类型" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="16,0,0,0" HorizontalAlignment="Left" />
-                <ComboBox Height="26" Width="126" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="100,0,0,0" HorizontalAlignment="Left" Style="{DynamicResource BlueComboBox}">
+                <ComboBox Height="26" Width="126" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="100,0,0,0" HorizontalAlignment="Left" Style="{DynamicResource BlueFrameComboBox}">
                     <ComboBoxItem Content="全部" />
                     <ComboBoxItem Content="人" />
                     <ComboBoxItem Content="人形" />

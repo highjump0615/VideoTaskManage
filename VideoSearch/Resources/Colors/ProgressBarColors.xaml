@@ -11,5 +11,19 @@
 
     <Color x:Key="ProgressBarBorderLightColor">#FF2D2D2D</Color>
     <Color x:Key="ProgressBarBorderMediumColor">#FF5B5B5A</Color>
-    
+
+    <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill"
+                     StartPoint="0,0"
+                     EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FF343433"
+                    Offset="0" />
+                <GradientStop Color="#FFFFC25B"
+                    Offset="0.5" />
+                <GradientStop Color="#FF343433"
+                    Offset="1" />
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
 </ResourceDictionary>

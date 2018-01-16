@@ -248,16 +248,21 @@
                 </Grid.ColumnDefinitions>
 
                 <ProgressBar Height="10" VerticalAlignment="Center" Style="{DynamicResource OrangeProgressBar}" Maximum="1" 
-                                     Value="{Binding Progress}"
-                                     Visibility="{Binding ProgressBarVisibility}"/>
-                <TextBlock Height="18" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Left" TextTrimming="CharacterEllipsis" 
-                                   Text="{Binding Operation}" 
-                                   Opacity="{Binding Opacity}" />
+                             Value="{Binding Progress}"
+                             IsIndeterminate="{Binding IsIndeterminate}"
+                             Grid.Column="0"
+                             Visibility="{Binding ProgressBarVisibility}"/>
+                <TextBlock Height="18" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 
+                           TextAlignment="{Binding OperationAlignment}" 
+                           Grid.Column="{Binding OperationPos}"        
+                           Text="{Binding Operation}" 
+                           Opacity="{Binding Opacity}" />
 
                 <Button Style="{DynamicResource GreenButtonStyle}"
                         IsEnabled="{Binding IsEnabled}"
                         Command="{Binding DataItemCommand}" 
                         CommandParameter="{Binding MovieImportCommand}" 
+                        Visibility="{Binding ButtonVisibility}"
                         Grid.Column="1"
                         Focusable="False"  Margin="4,0" Width="70" Height="26"
                         VerticalAlignment="Center"
@@ -338,16 +343,21 @@
                 </Grid.ColumnDefinitions>
 
                 <ProgressBar Height="10" VerticalAlignment="Center" Style="{DynamicResource OrangeProgressBar}" Maximum="1" 
-                                     Value="{Binding Progress}"
-                                     Visibility="{Binding ProgressBarVisibility}"/>
-                <TextBlock Height="18" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Left" TextTrimming="CharacterEllipsis" 
-                                   Text="{Binding Operation}" 
-                                   Opacity="{Binding Opacity}" />
+                             Value="{Binding Progress}"
+                             IsIndeterminate="{Binding IsIndeterminate}"
+                             Grid.Column="{Binding ProgressPos}"
+                             Visibility="{Binding ProgressBarVisibility}"/>
+                <TextBlock Height="18" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 
+                           TextAlignment="Left" 
+                           Text="{Binding Operation}" 
+                           Grid.Column="0"
+                           Opacity="{Binding Opacity}" />
 
                 <Button Style="{DynamicResource GreenButtonStyle}"
                         IsEnabled="{Binding IsEnabled}"
                         Command="{Binding DataItemCommand}" 
                         CommandParameter="{Binding MovieTaskCommand}" 
+                        Visibility="{Binding ButtonVisibility}"
                         Grid.Column="1"
                         Focusable="False"  Margin="4,0" Width="70" Height="26"
                         VerticalAlignment="Center"

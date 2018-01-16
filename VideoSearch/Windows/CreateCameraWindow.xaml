@@ -45,7 +45,7 @@
                 <TextBlock FontFamily="Arial" FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock7" Text="所属视频源" VerticalAlignment="Center" Grid.Row="12" />
                 <TextBlock FontFamily="Arial" FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock8" Text="摄像头通道号" VerticalAlignment="Center" Grid.Row="14" />
 
-                <ComboBox Grid.Column="1" Name="cboEvent" FontFamily="Arial" FontSize="14" Foreground="White" Text="" Style="{DynamicResource BlueComboBox}">
+                <ComboBox Grid.Column="1" Name="cboEvent" FontFamily="Arial" FontSize="14" Foreground="White" Text="" Style="{DynamicResource BlueFrameComboBox}">
                 </ComboBox>
 
 
@@ -74,11 +74,11 @@
                     <TextBox Margin="0" Name="PortCount" FontFamily="Arial" FontSize="14" BorderBrush="#FF302F2B" Background="#FF646361" Text="" TextAlignment="Left" Foreground="White" Padding="6" MaxLines="4" />
                     <TextBlock FontFamily="Arial" FontSize="14" Foreground="#FF8CB4FC" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock9" Text="'-1' 表示下载时可手动输入" VerticalAlignment="Center" Grid.Column="2" />
                 </Grid>
-                <ComboBox Name="cboType" Grid.Column="1" Grid.Row="10" FontFamily="Arial" FontSize="14" Foreground="White" Style="{DynamicResource BlueComboBox}" SelectedIndex="0">
+                <ComboBox Name="cboType" Grid.Column="1" Grid.Row="10" FontFamily="Arial" FontSize="14" Foreground="White" Style="{DynamicResource BlueFrameComboBox}" SelectedIndex="0">
                     <ComboBoxItem Content="球机" />
                     <ComboBoxItem Content="枪机" />
                 </ComboBox>
-                <ComboBox Name="cboSource" Padding="0" Grid.Column="1" Grid.Row="12" FontFamily="Arial" FontSize="14" Foreground="White" Style="{DynamicResource BlueComboBox}">
+                <ComboBox Name="cboSource" Padding="0" Grid.Column="1" Grid.Row="12" FontFamily="Arial" FontSize="14" Foreground="White" Style="{DynamicResource BlueFrameComboBox}">
                 </ComboBox>
             </Grid>
             <Grid HorizontalAlignment="Center" Margin="0,0,0,16" Name="grid2" Width="190" Height="33" VerticalAlignment="Bottom">

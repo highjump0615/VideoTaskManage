@@ -51,7 +51,7 @@ namespace VideoSearch.Model
 
                 String playPath = "D:\\VideoInvestigationDataDB\\AnalysisFile";
 
-                return Path.Combine(playPath, CompressedPath);
+                return playPath + CompressedPath;
             }
         }
         #endregion
@@ -59,7 +59,7 @@ namespace VideoSearch.Model
         #region Override
         public override void UpdateProperty()
         {
-            XElement response = ApiManager.Instance.GetTaskSnapshot(TaskId);
+            XElement response = ApiManager.Instance.GetVideoSummary(TaskId);
 
             if(response != null)
             {

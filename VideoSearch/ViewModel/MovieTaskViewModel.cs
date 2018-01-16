@@ -45,7 +45,8 @@ namespace VideoSearch.ViewModel
             if (result == true)
             {
                 XElement response = ApiManager.Instance.CreateSearchTask(movieItem.VideoId, searchDlg.Sensitivity, searchDlg.RegionType, searchDlg.Region, 
-                    searchDlg.ObjectType, searchDlg.Colors, searchDlg.AlarmInfo);
+                    searchDlg.ObjectType, searchDlg.Colors, searchDlg.AlarmInfo,
+                    searchDlg.RenXingPic, searchDlg.RenXingMaskPic, searchDlg.RenXingWaiJieRect);
 
                 if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {

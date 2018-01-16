@@ -110,11 +110,6 @@
                 </Grid.ColumnDefinitions>
                 <TreeView x:Name="treeView" ItemsSource="{Binding Source={StaticResource dataItems}}" Style="{DynamicResource {x:Type TreeView}}" SelectedItemChanged="OnTreeItemSelectionChanged">
                     <TreeView.Resources>
-                        <!-- colors -->
-                        <Color x:Key="TreeBackgroundColor">#FF403F3A</Color>
-                        <Color x:Key="TreeBorderColor">#FF888888</Color>
-                        <Color x:Key="TreeSelectedItemBkColor">#FF222221</Color>
-                        <Color x:Key="TreeGlyphColor">#FF8C8C8C</Color>
 
                         <!-- TreeView style -->
                         <Style x:Key="{x:Type TreeView}" TargetType="TreeView">

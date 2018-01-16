@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:VideoSearch.Resources.Colors">
+
+    <Color x:Key="TreeBackgroundColor">#FF403F3A</Color>
+    <Color x:Key="TreeBorderColor">#FF888888</Color>
+    <Color x:Key="TreeSelectedItemBkColor">#FF222221</Color>
+    <Color x:Key="TreeGlyphColor">#FF8C8C8C</Color>
+    
+</ResourceDictionary>

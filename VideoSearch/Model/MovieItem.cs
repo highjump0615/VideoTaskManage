@@ -448,6 +448,49 @@ namespace VideoSearch.Model
             }
         }
 
+        private Visibility _buttonVisibility = Visibility.Visible;
+        public Visibility ButtonVisibility
+        {
+            get { return _buttonVisibility; }
+            set
+            {
+                if (_buttonVisibility != value)
+                {
+                    _buttonVisibility = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs("ButtonVisibility"));
+                }
+            }
+        }
+
+        private int _operationPos = 0;
+        public int OperationPos
+        {
+            get { return _operationPos; }
+            set
+            {
+                if (_operationPos != value)
+                {
+                    _operationPos = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs("OperationPos"));
+                    OnPropertyChanged(new PropertyChangedEventArgs("IsIndeterminate"));
+                    OnPropertyChanged(new PropertyChangedEventArgs("OperationAlignment"));
+                }
+            }
+        }
+
+        public TextAlignment OperationAlignment
+        {
+            get
+            {
+                return (_operationPos == 1) ? TextAlignment.Center : TextAlignment.Left;
+            }
+        }
+
+        public bool IsIndeterminate
+        {
+            get { return (_operationPos == 1) ? true : false; }
+        }
+
         private ConvertStatus _state = ConvertStatus.UnInited;
         public ConvertStatus State
         {
@@ -464,7 +507,9 @@ namespace VideoSearch.Model
                         Operation = "未导入";
                         OpNameMargin = new Thickness(0);
                         OpName = "开始导入";
+                        ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
+                        OperationPos = 0;
                         Opacity = 1.0;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = true;
@@ -476,19 +521,37 @@ namespace VideoSearch.Model
                         Operation = "";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
                         OpName = "停止";
+                        ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Visible;
+                        OperationPos = 0;
                         Opacity = 1.0;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = true;
                         Progress = 0.0;
                     }
-                    else if (_state == ConvertStatus.ConvertReady || _state == ConvertStatus.Converting)
+                    else if (_state == ConvertStatus.ConvertReady)
+                    {
+                        OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImportStop.png";
+                        Operation = "未开始";
+                        OpNameMargin = new Thickness(0);
+                        OpName = "";
+                        ButtonVisibility = Visibility.Hidden;
+                        ProgressBarVisibility = Visibility.Visible;
+                        OperationPos = 1;
+                        Opacity = 1.0;
+                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
+                        IsEnabled = false;
+                        Progress = 0.0;
+                    }
+                    else if (_state == ConvertStatus.Converting)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImportStop.png";
                         Operation = "";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
                         OpName = "停止";
+                        ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Visible;
+                        OperationPos = 0;
                         Opacity = 1.0;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
@@ -500,7 +563,9 @@ namespace VideoSearch.Model
                         Operation = "";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
                         OpName = "开始";
+                        ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Visible;
+                        OperationPos = 0;
                         Opacity = 1.0;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = true;
@@ -512,7 +577,9 @@ namespace VideoSearch.Model
                         Operation = "已导入";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
                         OpName = "播放";
+                        ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
+                        OperationPos = 0;
                         Opacity = 0.6;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImportReady.png";
                         IsEnabled = true;

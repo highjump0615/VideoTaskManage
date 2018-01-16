@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:VideoSearch.Resources.Styles">
 
 
-    <!-- ProgressBar Style -->
+    <!-- Orange ProgressBar Style -->
     <Style x:Key="OrangeProgressBar"
        TargetType="{x:Type ProgressBar}">
         <Setter Property="Template">
@@ -64,6 +64,13 @@
                             <Border.BorderBrush>
                                 <SolidColorBrush Color="Transparent" />
                             </Border.BorderBrush>
+                            <Grid ClipToBounds="True" x:Name="Animation" >
+                                <Rectangle x:Name="PART_GlowRect"
+                                             Width="{TemplateBinding Width}"
+                                             HorizontalAlignment="Left"
+                                             Fill="{StaticResource ProgressBarIndicatorAnimatedFill}"
+                                             Margin="0" />     
+                            </Grid>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -81,5 +88,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

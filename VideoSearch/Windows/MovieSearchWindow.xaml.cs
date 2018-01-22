@@ -274,6 +274,11 @@ namespace VideoSearch.Windows
 
             var ret = puppetWindow.ShowDialog();
 
+            if (puppetWindow.Thumbnail == null)
+            {
+                return;
+            }
+
             _image = puppetWindow.Thumbnail.Clone();
             if (ret == true)
             {

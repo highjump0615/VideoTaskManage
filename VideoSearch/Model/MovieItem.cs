@@ -504,7 +504,7 @@ namespace VideoSearch.Model
                     if (_state == ConvertStatus.ImportReady)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImport.png";
-                        Operation = "未导入";
+                        Operation = "已加载";
                         OpNameMargin = new Thickness(0);
                         OpName = "开始导入";
                         ButtonVisibility = Visibility.Visible;
@@ -532,7 +532,7 @@ namespace VideoSearch.Model
                     else if (_state == ConvertStatus.ConvertReady)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImportStop.png";
-                        Operation = "未开始";
+                        Operation = "";
                         OpNameMargin = new Thickness(0);
                         OpName = "";
                         ButtonVisibility = Visibility.Hidden;

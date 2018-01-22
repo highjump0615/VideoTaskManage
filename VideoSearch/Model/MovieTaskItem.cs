@@ -76,7 +76,7 @@ namespace VideoSearch.Model
                 Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
                 State = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
 
-                if (State == MovieTaskState.CreateReady || State == MovieTaskState.Creating)
+                if (State != MovieTaskState.Created && State != MovieTaskState.CreateFail)
                 {
                     _monitorThread = new Thread(new ThreadStart(TaskProcess));
                     _monitorThread.Start();
@@ -434,7 +434,7 @@ namespace VideoSearch.Model
                     if (_state == MovieTaskState.CreateReady)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImport.png";
-                        Operation = "未开始";
+                        Operation = "正在处理...";
                         OpNameMargin = new Thickness(0);
                         OpName = "开始导入";
                         ButtonVisibility = Visibility.Hidden;
@@ -450,7 +450,7 @@ namespace VideoSearch.Model
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImportStop.png";
                         Operation = "";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
-                        OpName = "转码";
+                        OpName = "取消";
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Visible;
                         ProgressPos = 0;
@@ -533,15 +533,12 @@ namespace VideoSearch.Model
                 {
                     state = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
 
-                    if(state == MovieTaskState.Creating)
-                    {
-                        Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
-                        Console.WriteLine("*** state = {0}, progress = {1}", state, Progress);
-                    }
+                    Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
+                    Console.WriteLine("*** state = {0}, progress = {1}", state, Progress);
                 }
 
                 Thread.Sleep(2000);
-            } while (state == MovieTaskState.Creating || state == MovieTaskState.CreateReady);
+            } while (state != MovieTaskState.Created && state != MovieTaskState.CreateFail);
 
             if (response != null && state == MovieTaskState.Created)
             {

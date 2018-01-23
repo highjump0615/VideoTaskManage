@@ -8,7 +8,7 @@
              d:DesignHeight="100" d:DesignWidth="300" Background="#FF312F29" IsEnabledChanged="OnIsEnabledChanged">
     <Grid>
         <Grid Name="bottom_bar" Height="25" VerticalAlignment="Bottom" Background="#FF292723">
-            <TextBlock Name="Caption" Text="TextBlock" TextAlignment="Center" Padding="0,4,0,0" FontFamily="Arial" FontSize="16" Foreground="#FFF8F8F8" Background="#00000000" />
+            <TextBlock Name="Caption" Text="TextBlock" TextAlignment="Center" Padding="0,4,0,0" FontSize="16" Foreground="#FFF8F8F8" Background="#00000000" />
         </Grid>
         <Grid Height="67" Margin="0,4,0,0" Name="separator" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1" Background="#FF616161" />
     </Grid>

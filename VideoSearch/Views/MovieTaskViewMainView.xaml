@@ -25,7 +25,7 @@
 
             <!-- Title-->
             <TextBlock x:Name="MediaTitle" Text="{Binding Path=MovieTitle}"
-                       FontFamily="Arial" FontSize="16" 
+                       FontSize="16" 
                        Height="18" Margin="80,0" Foreground="White" 
                        TextAlignment="Center" TextTrimming="CharacterEllipsis" 
                        VerticalAlignment="Center" IsHitTestVisible="False" />
@@ -158,7 +158,7 @@
                             <Image HorizontalAlignment="Left" Margin="8,0,0,0"
                             Source="/VideoSearch;component/Resources/Images/Player/player_icon_cut.png" Stretch="None" />
 
-                            <TextBlock Text="截屏" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
+                            <TextBlock Text="截屏" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
 
                         </Grid>
                      </Button>
@@ -169,7 +169,7 @@
                             <Image HorizontalAlignment="Left" Margin="8,0,0,0"
                             Source="/VideoSearch;component/Resources/Images/Player/player_icon_search.png" Stretch="None" />
 
-                            <TextBlock Text="放大镜" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
+                            <TextBlock Text="放大镜" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
                         </Grid>
                     </Button>
 
@@ -179,7 +179,7 @@
                             <Image HorizontalAlignment="Right" Margin="0,0,8,0"
                             Source="/VideoSearch;component/Resources/Images/Player/player_icon_popup.png" Stretch="None" />
 
-                            <TextBlock Text="效果" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
+                            <TextBlock Text="效果" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
                         </Grid>
                     </Button>
 
@@ -203,14 +203,14 @@
                 <Border Background="#FF464646" BorderBrush="Black"
                         BorderThickness="1,1,1,0"
                         CornerRadius="4,4,0,0">
-                    <TextBlock Text="标注列表" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="标注列表" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                 </Border>
                 <DataGrid x:Name="PathDataGrid" Grid.Row="1"
                             BorderBrush="Black"
 					        ColumnHeaderHeight="31" RowHeight="31" 
 					        ItemsSource="{Binding Path=Owner, UpdateSourceTrigger=PropertyChanged}" 
 					        HeadersVisibility="Column" 
-					        FontFamily="Arial" FontSize="14" Foreground="White" 
+					        FontSize="14" Foreground="White" 
 					        ScrollViewer.CanContentScroll="False" 
 					        VerticalScrollBarVisibility="Auto" 
 					        HorizontalScrollBarVisibility="Disabled" 
@@ -255,7 +255,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="标注信息" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="标注信息" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                     <Separator  Background="Black" Margin="1,0" VerticalAlignment="Bottom" />
 
                     <Grid Grid.Row="1" Margin="1,0"  Background="#FF323231">
@@ -264,7 +264,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="轨迹说明" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="轨迹说明" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -274,7 +274,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="关键字" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="关键字" VerticalAlignment="Center" Foreground="White" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -284,7 +284,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="目标类型" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="目标类型" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -294,7 +294,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="裤子颜色" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="裤子颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -304,7 +304,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="裤子种类" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="裤子种类" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -314,7 +314,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="其它体貌特征" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="其它体貌特征" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -324,7 +324,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="上衣颜色" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="上衣颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -334,7 +334,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="是否背包" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="是否背包" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -344,7 +344,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="是否戴帽子" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="是否戴帽子" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -354,7 +354,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="是否戴眼镜" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="是否戴眼镜" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -364,7 +364,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="姓名" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="姓名" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
                     </Grid>
@@ -383,11 +383,11 @@
                                 <ColumnDefinition Width="81" />
                             </Grid.ColumnDefinitions>
 
-                            <Button Content="清空标注" Name="btnClear" Foreground="White" FontFamily="Arial" FontSize="14" Focusable="False" 
+                            <Button Content="清空标注" Name="btnClear" Foreground="White" FontSize="14" Focusable="False" 
                                     Click="OnClear" Height="30" 
                                     Style="{DynamicResource BrownButtonStyle}">
                             </Button>
-                            <Button Content="保存标注" Name="btnSave" Foreground="White" FontFamily="Arial" FontSize="14" Grid.Column="2" Focusable="False" 
+                            <Button Content="保存标注" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" 
                                     Click="OnSave" Height="30" 
                                     Style="{DynamicResource GreenButtonStyle}"/>
 

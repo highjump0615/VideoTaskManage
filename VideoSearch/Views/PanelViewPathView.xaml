@@ -15,7 +15,7 @@
 
         <Border BorderBrush="Black" BorderThickness="2">
             <Grid Height="50" x:Name="grid1" VerticalAlignment="Top" Background="#993F3E3C" OpacityMask="Black">
-                <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" x:Name="textBlock1" Text="查看行驶轨迹" FontFamily="Arial" Foreground="White" VerticalAlignment="Center" />
+                <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" x:Name="textBlock1" Text="查看行驶轨迹" Foreground="White" VerticalAlignment="Center" />
 
                 <Button Width="24" Height="24" Margin="0,0,12,0" 
                         Command="{Binding ClosePathCommand}"

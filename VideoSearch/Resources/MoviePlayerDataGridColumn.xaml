@@ -11,35 +11,35 @@
     <!-- AddingTime -->
     <DataTemplate x:Key="AddingTimeColumnTemplate" >
         <Grid Margin="-1">
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>
     </DataTemplate>
 
     <!-- LeftPos -->
     <DataTemplate x:Key="LeftPosColumnTemplate" >
         <Grid Margin="-1">
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>
     </DataTemplate>
 
     <!-- TopPos -->
     <DataTemplate x:Key="TopPosColumnTemplate" >
         <Grid Margin="-1">
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>
     </DataTemplate>
 
     <!-- RightPos -->
     <DataTemplate x:Key="RightPosColumnTemplate" >
         <Grid Margin="-1">
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>
     </DataTemplate>
 
     <!-- BottomPos -->
     <DataTemplate x:Key="BottomPosColumnTemplate" >
         <Grid Margin="-1">
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>
     </DataTemplate>
 

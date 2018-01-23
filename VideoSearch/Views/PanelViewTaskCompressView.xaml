@@ -19,7 +19,7 @@
 
             <!-- Title-->
             <TextBlock x:Name="MediaTitle" Text="{Binding Path=MovieTitle}"
-                       FontFamily="Arial" FontSize="16" 
+                       FontSize="16" 
                        Height="18" Margin="80,0" Foreground="White" 
                        TextAlignment="Center" TextTrimming="CharacterEllipsis" 
                        VerticalAlignment="Center" IsHitTestVisible="False" />
@@ -154,7 +154,7 @@
                             <Image HorizontalAlignment="Left" Margin="8,0,0,0"
                             Source="/VideoSearch;component/Resources/Images/Player/player_icon_cut.png" Stretch="None" />
 
-                            <TextBlock Text="截屏" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
+                            <TextBlock Text="截屏" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
 
                         </Grid>
                     </Button>
@@ -165,7 +165,7 @@
                             <Image HorizontalAlignment="Left" Margin="8,0,0,0"
                             Source="/VideoSearch;component/Resources/Images/Player/player_icon_search.png" Stretch="None" />
 
-                            <TextBlock Text="放大镜" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
+                            <TextBlock Text="放大镜" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontSize="12" Height="14" TextAlignment="Right" Margin="0,0,8,0" />
                         </Grid>
                     </Button>
 
@@ -175,7 +175,7 @@
                             <Image HorizontalAlignment="Right" Margin="0,0,8,0"
                             Source="/VideoSearch;component/Resources/Images/Player/player_icon_popup.png" Stretch="None" />
 
-                            <TextBlock Text="效果" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontFamily="Arial" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
+                            <TextBlock Text="效果" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
                         </Grid>
                     </Button>
 
@@ -187,10 +187,10 @@
 
                         <CheckBox x:Name="ChkTarget" Content="物标" 
                                   VerticalContentAlignment="Bottom" HorizontalAlignment="Right" 
-                                  Foreground="White" FontFamily="Arial" FontSize="12"/>
+                                  Foreground="White" FontSize="12"/>
                         <CheckBox x:Name="ChkTime" Content="时标" Grid.Row="1"
                                   VerticalContentAlignment="Bottom" HorizontalAlignment="Right" 
-                                  Foreground="White" FontFamily="Arial" FontSize="12"/>
+                                  Foreground="White" FontSize="12"/>
                     </Grid>
                 </Grid>
             </Grid>

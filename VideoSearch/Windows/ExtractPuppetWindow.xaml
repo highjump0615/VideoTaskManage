@@ -24,7 +24,7 @@
             </Border>
             <Grid VerticalAlignment="Top" Height="50">
                 <Border Background="#FF3F3E3E" Opacity="0.6"/>
-                <TextBlock FontFamily="Arial" FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="12,0" Text="人性勾画" TextAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False" />
+                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="12,0" Text="人性勾画" TextAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False" />
                 <SkinControl:SkinButton HorizontalAlignment="Right" Margin="0,0,50,0" x:Name="btnMinimize" Width="24" Height="24" VerticalAlignment="Center" Click="OnMinimize" NormalImage="/VideoSearch;component/Resources/Images/Button/dlg_minimize_normal.png" OverImage="/VideoSearch;component/Resources/Images/Button/dlg_minimize_over.png" PressedImage="/VideoSearch;component/Resources/Images/Button/dlg_minimize_pressed.png" />
                 <SkinControl:SkinButton HorizontalAlignment="Right" Margin="0,0,20,0" x:Name="btnClose" Width="24" Height="24" VerticalAlignment="Center" Click="OnClose" NormalImage="/VideoSearch;component/Resources/Images/Button/dlg_close_normal.png" OverImage="/VideoSearch;component/Resources/Images/Button/dlg_close_over.png" PressedImage="/VideoSearch;component/Resources/Images/Button/dlg_close_pressed.png" />
             </Grid>
@@ -43,30 +43,30 @@
                         <RowDefinition Height="80"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="第一步 加载图片" FontFamily="Arial" FontSize="18" Foreground="White" Height="20" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Top"/>
-                    <TextBlock Text="第二步 勾画轮廓" Grid.Row="2" FontFamily="Arial" FontSize="18" Foreground="White" Height="20" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Top"/>
-                    <TextBlock Text="第三步 保存结果" Grid.Row="4" FontFamily="Arial" FontSize="18" Foreground="White" Height="20" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Text="第一步 加载图片" FontSize="18" Foreground="White" Height="20" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Text="第二步 勾画轮廓" Grid.Row="2" FontSize="18" Foreground="White" Height="20" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Text="第三步 保存结果" Grid.Row="4" FontSize="18" Foreground="White" Height="20" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Top"/>
 
                     <Image Grid.Row="1" Source="/VideoSearch;component/Resources/Images/View/MovieProcess/ArrowDown.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Image Grid.Row="3" Source="/VideoSearch;component/Resources/Images/View/MovieProcess/ArrowDown.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                     <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" 
                         Width="85" Height="30" 
-                        Foreground="#FF717173" FontFamily="Arial" FontSize="14" 
+                        Foreground="#FF717173" FontSize="14" 
                         Style="{DynamicResource OrangeFrameButtonStyle}" 
                         Content="选择图片" Click="OnOpenImage" />
 
                     <Button x:Name="ResetButton"
                         VerticalAlignment="Bottom" HorizontalAlignment="Center" 
                         Width="85" Height="30" Grid.Row="2" IsEnabled="False"
-                        Foreground="#FF717173" FontFamily="Arial" FontSize="14" 
+                        Foreground="#FF717173" FontSize="14" 
                         Style="{DynamicResource OrangeFrameButtonStyle}" 
                         Content="开始勾画" Click="OnReset" />
 
                     <Button x:Name="SaveButton"
                         VerticalAlignment="Bottom" HorizontalAlignment="Center" 
                         Width="85" Height="30"  Grid.Row="4" IsEnabled="False"
-                        Foreground="#FF717173" FontFamily="Arial" FontSize="14" 
+                        Foreground="#FF717173" FontSize="14" 
                         Style="{DynamicResource OrangeFrameButtonStyle}" 
                         Content="保存" Click="OnSave" />
 

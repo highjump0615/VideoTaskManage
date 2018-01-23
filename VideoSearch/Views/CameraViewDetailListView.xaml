@@ -13,7 +13,7 @@
 					        ColumnHeaderHeight="58" RowHeight="42" 
 					        ItemsSource="{Binding Path=Owner, UpdateSourceTrigger=PropertyChanged}" 
 					        HeadersVisibility="Column" 
-					        FontFamily="Arial" FontSize="14" Foreground="White" 
+					        FontSize="14" Foreground="White" 
 					        ScrollViewer.CanContentScroll="False" 
 					        VerticalScrollBarVisibility="Hidden" 
 					        HorizontalScrollBarVisibility="Disabled" 
@@ -56,8 +56,8 @@
                         Height="24" Width="24"  Grid.Column="2" Style="{DynamicResource ImageButtonStyle}" >
                     <Image Source="/VideoSearch;component/Resources/Images/View/Page/next_normal.png" Stretch="None" />
                 </Button>
-                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=PageNumber}" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" />
-                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=ItemCount}" VerticalAlignment="Center" Grid.Column="4" FlowDirection="RightToLeft" />
+                <TextBlock Foreground="White" Text="{Binding Path=PageNumber}" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" />
+                <TextBlock Foreground="White" Text="{Binding Path=ItemCount}" VerticalAlignment="Center" Grid.Column="4" FlowDirection="RightToLeft" />
             </Grid>
         </Grid>
     </Grid>

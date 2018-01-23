@@ -11,8 +11,8 @@
         <Border Background="#FF868686" BorderBrush="Black" Height="48" VerticalAlignment="Top" Margin="20" BorderThickness="1,1,1,0" >
             <Grid>
                 <!-- TargetType -->
-                <TextBlock Height="18" Text="目标类型" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="16,0,0,0" HorizontalAlignment="Left" />
-                <ComboBox Height="26" Width="126" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="100,0,0,0" HorizontalAlignment="Left" Style="{DynamicResource BlueFrameComboBox}">
+                <TextBlock Height="18" Text="目标类型" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="16,0,0,0" HorizontalAlignment="Left" />
+                <ComboBox Height="26" Width="126" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="100,0,0,0" HorizontalAlignment="Left" Style="{DynamicResource BlueFrameComboBox}">
                     <ComboBoxItem Content="全部" />
                     <ComboBoxItem Content="人" />
                     <ComboBoxItem Content="人形" />
@@ -21,11 +21,11 @@
                 </ComboBox>
 
                 <!-- Keyword -->
-                <TextBlock Height="18" Text="关键字" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="290,0,0,0" HorizontalAlignment="Left" />
+                <TextBlock Height="18" Text="关键字" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="290,0,0,0" HorizontalAlignment="Left" />
                 <Border Height="26" Width="126" VerticalAlignment="Center" Margin="360,0,0,0" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="#FF302F2B" Background="#FF646361" />
 
-                <Button Content="查询" Width="85" Height="26" Foreground="White" FontFamily="Arial" FontSize="12" Focusable="False" HorizontalAlignment="Right" Margin="0,0,114,0" Style="{DynamicResource GreenFrameButtonStyle}"/>
-                <Button Content="重置" Width="85" Height="26" Foreground="White" FontFamily="Arial" FontSize="12" Focusable="False" HorizontalAlignment="Right" Margin="0,0,14,0" Style="{DynamicResource BlueFrameButtonStyle}"/>
+                <Button Content="查询" Width="85" Height="26" Foreground="White" FontSize="12" Focusable="False" HorizontalAlignment="Right" Margin="0,0,114,0" Style="{DynamicResource GreenFrameButtonStyle}"/>
+                <Button Content="重置" Width="85" Height="26" Foreground="White" FontSize="12" Focusable="False" HorizontalAlignment="Right" Margin="0,0,14,0" Style="{DynamicResource BlueFrameButtonStyle}"/>
             </Grid>
         </Border>
         
@@ -54,14 +54,14 @@
                 <Canvas Grid.ColumnSpan="8" Margin="0" Background="#FF3B3B3A" />
 
                 <!--Table Header-->
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_01" Padding="0" Text="" TextAlignment="Center" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_02" Padding="0" Text="序号" TextAlignment="Center" Grid.Column="1" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_03" Padding="0" Text="摄像头名称" TextAlignment="Center" Grid.Column="2" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_04" Padding="0" Text="摄像头位置" TextAlignment="Center" Grid.Column="3" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_05" Padding="0" Text="视频名称" TextAlignment="Center" Grid.Column="4" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_06" Padding="0" Text="目标对象" TextAlignment="Center" Grid.Column="5" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_07" Padding="0" Text="时间点" TextAlignment="Center" Grid.Column="6" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_08" Padding="0" Text="线索内容" TextAlignment="Center" Grid.Column="7" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
+                <TextBlock FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_01" Padding="0" Text="" TextAlignment="Center" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
+                <TextBlock FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_02" Padding="0" Text="序号" TextAlignment="Center" Grid.Column="1" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
+                <TextBlock FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_03" Padding="0" Text="摄像头名称" TextAlignment="Center" Grid.Column="2" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
+                <TextBlock FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_04" Padding="0" Text="摄像头位置" TextAlignment="Center" Grid.Column="3" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
+                <TextBlock FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_05" Padding="0" Text="视频名称" TextAlignment="Center" Grid.Column="4" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
+                <TextBlock FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_06" Padding="0" Text="目标对象" TextAlignment="Center" Grid.Column="5" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
+                <TextBlock FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_07" Padding="0" Text="时间点" TextAlignment="Center" Grid.Column="6" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
+                <TextBlock FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_08" Padding="0" Text="线索内容" TextAlignment="Center" Grid.Column="7" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
 
                 <Grid Grid.ColumnSpan="8" Grid.Row="1" Visibility="{Binding Path=ItemsInPage[0].Visibility}">
                     <Grid.ColumnDefinitions>
@@ -86,21 +86,21 @@
                     <!-- CheckBox -->
                     <CheckBox Height="16" Width="16" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=ItemsInPage[0].IsChecked, Mode=TwoWay}"/>
                     <!-- Order -->
-                    <TextBlock Grid.Column="1" Height="18" Text="{Binding Path=ItemsInPage[0].Order}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="1" Height="18" Text="{Binding Path=ItemsInPage[0].Order}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                     <!--CameraName-->
-                    <TextBlock Grid.Column="2" Height="18" Text="{Binding Path=ItemsInPage[0].ID}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="2" Height="18" Text="{Binding Path=ItemsInPage[0].ID}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                     <!--CameraPosition-->
-                    <TextBlock Grid.Column="3" Height="18" Text="{Binding Path=ItemsInPage[0].Name}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="3" Height="18" Text="{Binding Path=ItemsInPage[0].Name}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                     <!--VideoName-->
-                    <TextBlock Grid.Column="4" Height="18" Text="{Binding Path=ItemsInPage[0].Type}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="4" Height="18" Text="{Binding Path=ItemsInPage[0].Type}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                     <!--Target-->
-                    <TextBlock Grid.Column="5" Height="18" Text="{Binding Path=ItemsInPage[0].Source}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="5" Height="18" Text="{Binding Path=ItemsInPage[0].Source}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                     <!--TimeRange-->
                     <Button Content="地图查看" Grid.Column="6" 
                             Command="{Binding ShowMapCommand}" CommandParameter="{Binding ItemsInPage[0]}" 
-                            Foreground="White" FontFamily="Arial" FontSize="12" Height="26" Focusable="False" VerticalAlignment="Center" Margin="4,0" Style="{DynamicResource GreenButtonStyle}"/>
+                            Foreground="White" FontSize="12" Height="26" Focusable="False" VerticalAlignment="Center" Margin="4,0" Style="{DynamicResource GreenButtonStyle}"/>
                     <!--KeyContents-->
-                    <TextBlock Grid.Column="7" Height="18" Text="{Binding Path=ItemsInPage[0].Operation}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="7" Height="18" Text="{Binding Path=ItemsInPage[0].Operation}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                 </Grid>
 
                 <!--Separator (horizontal & vertical)-->
@@ -137,8 +137,8 @@
                         Height="24" Width="24"  Grid.Column="2" Style="{DynamicResource ImageButtonStyle}" >
                     <Image Source="/VideoSearch;component/Resources/Images/View/Page/next_normal.png" Stretch="None" />
                 </Button>
-                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=PageNumber}" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" />
-                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=ItemCount}" VerticalAlignment="Center" Grid.Column="4" FlowDirection="RightToLeft" />
+                <TextBlock Foreground="White" Text="{Binding Path=PageNumber}" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" />
+                <TextBlock Foreground="White" Text="{Binding Path=ItemCount}" VerticalAlignment="Center" Grid.Column="4" FlowDirection="RightToLeft" />
             </Grid>
         </Grid>
     </Grid>

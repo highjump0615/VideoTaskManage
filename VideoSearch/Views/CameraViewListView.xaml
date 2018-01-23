@@ -14,7 +14,7 @@
 					        ColumnHeaderHeight="58" RowHeight="42" 
 					        ItemsSource="{Binding Path=Owner, UpdateSourceTrigger=PropertyChanged}" 
 					        HeadersVisibility="Column" 
-					        FontFamily="Arial" FontSize="14" Foreground="White" 
+					        FontSize="14" Foreground="White" 
 					        ScrollViewer.CanContentScroll="False" 
 					        VerticalScrollBarVisibility="Auto" 
 					        HorizontalScrollBarVisibility="Disabled" 

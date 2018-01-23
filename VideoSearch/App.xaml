@@ -73,7 +73,7 @@
             <DataTemplate DataType="{x:Type viewModel:MovieTaskViewMainModel}">
                 <views:MovieTaskViewMainView />
             </DataTemplate>
-            
+
             <DataTemplate DataType="{x:Type viewModel:MovieTaskViewListModel}">
                 <views:MovieTaskViewListView />
             </DataTemplate>
@@ -124,6 +124,24 @@
             <DataTemplate DataType="{x:Type PlayViewModel:PlayViewSmallModel}">
                 <playViews:PlayViewSmall/>
             </DataTemplate>
+
+
+            <!-- 对话框按钮 -->
+            <Style x:Key="DlgButCancelStyle" TargetType="Button" BasedOn="{StaticResource BrownButtonStyle}">
+                <Setter Property="Height" Value="33" />
+                <Setter Property="Width" Value="88" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            <Style x:Key="DlgButOkStyle" TargetType="Button" BasedOn="{StaticResource GreenButtonStyle}">
+                <Setter Property="Height" Value="33" />
+                <Setter Property="Width" Value="88" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            
         </ResourceDictionary>
 
     </Application.Resources>

@@ -141,7 +141,10 @@ namespace VideoSearch.Windows
         #region Handler
         private void OnSelectCoordinateFromMap(object sender, RoutedEventArgs e)
         {
+            MapAddLocationWindow mapDlg = new MapAddLocationWindow();
+            mapDlg.Owner = this;
 
+            mapDlg.ShowDialog();
         }
 
         private void OnCreateOrUpdateClick(object sender, RoutedEventArgs e)

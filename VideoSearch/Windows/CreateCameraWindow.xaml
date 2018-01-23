@@ -62,7 +62,15 @@
                     </Grid.ColumnDefinitions>
                     <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Margin="0" Name="Longitude" Padding="6" Text="" TextAlignment="Left" MaxLines="4" />
                     <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Name="Latitude" Padding="6" Text="" TextAlignment="Left" Grid.Column="2" MaxLines="4" />
-                    <Button Content="选择坐标" Focusable="False" FontSize="14" Foreground="White" Margin="0" Name="btnSelectCoordinateFromMap" Grid.Column="4" Click="OnSelectCoordinateFromMap" Style="{DynamicResource BlueButtonStyle}">
+                    <Button Content="选择坐标" 
+                            Focusable="False" 
+                            FontSize="14" 
+                            Foreground="White" 
+                            Margin="0" 
+                            Name="btnSelectCoordinateFromMap" 
+                            Grid.Column="4" 
+                            Click="OnSelectCoordinateFromMap" 
+                            Style="{DynamicResource BlueButtonStyle}">
                     </Button>
                 </Grid>
                 <Grid Name="gridPortCount" Grid.Column="1" Grid.Row="14" >

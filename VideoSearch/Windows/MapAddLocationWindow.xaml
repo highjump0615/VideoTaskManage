@@ -1,0 +1,40 @@
+﻿<Window x:Class="VideoSearch.Windows.MapAddLocationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VideoSearch.Windows"
+        xmlns:SkinFrame="clr-namespace:VideoSearch.SkinFrame" 
+        mc:Ignorable="d"
+        Title="选择坐标" Height="530" Width="820" 
+        ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" 
+        Background="Transparent" AllowsTransparency="True" 
+        Topmost="False" Loaded="Window_Loaded">
+    <Grid>
+        <SkinFrame:DialogFrame Margin="0" x:Name="windowFrame" />
+
+        <Grid Margin="0,25,0,0" Name="ContentView">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="42"/>
+            </Grid.RowDefinitions>
+            
+            <Border Name="bdMap" Grid.Row="0"/>
+
+            <Border Grid.Row="1">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center">
+                    <Button Content="取消" Name="btnCancel" 
+                            IsCancel="True" 
+                            Style="{DynamicResource DlgButCancelStyle}"
+                            Margin="0 0 20 0">
+                    </Button>
+                    <Button Content="确定" 
+                            Name="btnSave" 
+                            Click="OnButOk" 
+                            Style="{DynamicResource DlgButOkStyle}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

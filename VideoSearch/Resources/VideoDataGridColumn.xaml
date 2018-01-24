@@ -116,14 +116,12 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <Grid Margin="8,0,8,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="21*" />
-                    <RowDefinition Height="21*" />
-                </Grid.RowDefinitions>
-                <TextBlock Canvas.Left="10" Canvas.Top="10" Height="18" Text="{Binding Address}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" />
-                <TextBlock Canvas.Left="10" Canvas.Top="10" Height="18" Text="{Binding Coordinate}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Grid.Row="1"/>
-            </Grid>
+            <TextBlock Margin="8,0,8,0"
+                       Text="{Binding AddressDesc}" 
+                       VerticalAlignment="Center" 
+                       FontSize="16" 
+                       Foreground="White" 
+                       TextAlignment="Center" />
         </Grid>
     </DataTemplate>
 

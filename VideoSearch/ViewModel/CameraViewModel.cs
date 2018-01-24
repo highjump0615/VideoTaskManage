@@ -96,7 +96,7 @@ namespace VideoSearch.ViewModel
             Contents = new CameraViewMapModel();
         }
 
-        public void ShowCameraMap(String longitude, String latitude)
+        public void ShowCameraMap(double longitude, double latitude)
         {
             Contents = new CameraViewMapModel(longitude, latitude);
         }

@@ -33,7 +33,26 @@ namespace VideoSearch.Model
                 {
                     _address = value;
                     OnPropertyChanged(new PropertyChangedEventArgs("Address"));
+                    OnPropertyChanged(new PropertyChangedEventArgs("AddressDesc"));
                 }
+            }
+        }
+
+        /// <summary>
+        /// 地址 + 经纬度
+        /// </summary>
+        public String AddressDesc
+        {
+            get
+            {
+                string strAddr = this.Address;
+                if (!String.IsNullOrEmpty(strAddr))
+                {
+                    strAddr += "\n";
+                }
+                strAddr += this.Coordinate;
+
+                return strAddr;
             }
         }
 
@@ -41,15 +60,12 @@ namespace VideoSearch.Model
         {
             get
             {
-                if (Longitude.Length == 0 || Latitude.Length == 0)
-                    return "";
-
-                return String.Format("({0:D}, ", Longitude) + String.Format(" {0:D})", Latitude);
+                return String.Format("({0:0.00000}, {1:0.00000})", this.Longitude, this.Latitude);
             }
         }
 
-        private String _longitude = "";
-        public String Longitude
+        private double _longitude;
+        public double Longitude
         {
             get { return _longitude; }
             set
@@ -59,12 +75,13 @@ namespace VideoSearch.Model
                     _longitude = value;
                     OnPropertyChanged(new PropertyChangedEventArgs("Longitude"));
                     OnPropertyChanged(new PropertyChangedEventArgs("Coordinate"));
+                    OnPropertyChanged(new PropertyChangedEventArgs("AddressDesc"));
                 }
             }
         }
 
-        private String _latitude = "";
-        public String Latitude
+        private double _latitude;
+        public double Latitude
         {
             get { return _latitude; }
             set
@@ -74,6 +91,7 @@ namespace VideoSearch.Model
                     _latitude = value;
                     OnPropertyChanged(new PropertyChangedEventArgs("Latitude"));
                     OnPropertyChanged(new PropertyChangedEventArgs("Coordinate"));
+                    OnPropertyChanged(new PropertyChangedEventArgs("AddressDesc"));
                 }
             }
         }
@@ -141,6 +159,9 @@ namespace VideoSearch.Model
 
         protected void UpdateItem()
         {
+            // 
+            // 弹出摄像头添加对话框
+            //
             CreateCameraWindow createDlg = new CreateCameraWindow(this);
 
             Nullable<bool> result = createDlg.ShowDialog();
@@ -213,7 +234,7 @@ namespace VideoSearch.Model
             ItemsTable = MovieTable.Table;
         }
 
-        public CameraItem(DataItemBase parent, String eventPos, String id, String display_id, String name, String address, String longitude, String latitude, String type, String source, String portCount, bool isSelected = false)
+        public CameraItem(DataItemBase parent, String eventPos, String id, String display_id, String name, String address, double longitude, double latitude, String type, String source, String portCount, bool isSelected = false)
            : this(parent)
         {
             EventPos = eventPos;

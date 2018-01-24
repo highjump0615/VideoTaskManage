@@ -8,7 +8,7 @@ namespace VideoSearch.ViewModel
         {
         }
 
-        public CameraViewMapModel(String longitude, String latitude)
+        public CameraViewMapModel(double longitude, double latitude)
         {
 
         }

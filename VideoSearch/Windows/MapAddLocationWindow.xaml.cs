@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace VideoSearch.Windows
 {
@@ -19,13 +21,28 @@ namespace VideoSearch.Windows
     /// </summary>
     public partial class MapAddLocationWindow : Window
     {
-        public MapAddLocationWindow()
+        private WebBrowserOverlay _wbo;
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+        public MapAddLocationWindow(double lat, double lng)
         {
             InitializeComponent();
 
-            WebBrowserOverlay wbo = new WebBrowserOverlay(bdMap);
+            this.Latitude = lat;
+            this.Longitude = lng;
 
-            wbo.webBrowser.Navigate(Path.Combine(Environment.CurrentDirectory, "Map\\addLocation.html"));
+            _wbo = new WebBrowserOverlay(bdMap);
+            _wbo.webBrowser.Navigate(Path.Combine(Environment.CurrentDirectory, "Map\\addLocation.html"));
+
+            _wbo.webBrowser.LoadCompleted += new LoadCompletedEventHandler(BrowserLoadCompleted);
+        }
+
+        private void BrowserLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            // 地图移动到指定位置
+            _wbo.webBrowser.InvokeScript("moveToPosition", this.Latitude, this.Longitude);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -43,7 +60,14 @@ namespace VideoSearch.Windows
         /// <param name="e"></param>
         private void OnButOk(object sender, RoutedEventArgs e)
         {
+            // 获取当前地图位置
+            var strLatLong = _wbo.webBrowser.InvokeScript("getCenterPoint").ToString();
+            var objLatLong = new JavaScriptSerializer().Deserialize<Dictionary<String, Double>>(strLatLong);
 
+            this.Latitude = objLatLong["lat"];
+            this.Longitude = objLatLong["lng"];
+
+            DialogResult = true;
         }
     }
 }

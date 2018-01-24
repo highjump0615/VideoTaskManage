@@ -60,8 +60,12 @@
                         <ColumnDefinition Width="20*" />
                         <ColumnDefinition Width="86*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Margin="0" Name="Longitude" Padding="6" Text="" TextAlignment="Left" MaxLines="4" />
-                    <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Name="Latitude" Padding="6" Text="" TextAlignment="Left" Grid.Column="2" MaxLines="4" />
+                    <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Margin="0" Name="Longitude" Padding="6" TextAlignment="Left" MaxLines="4"
+                             Text="0.00000" 
+                             IsReadOnly="True" />
+                    <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Name="Latitude" Padding="6" TextAlignment="Left" Grid.Column="2" MaxLines="4" 
+                             Text="0.00000" 
+                             IsReadOnly="True" />
                     <Button Content="选择坐标" 
                             Focusable="False" 
                             FontSize="14" 

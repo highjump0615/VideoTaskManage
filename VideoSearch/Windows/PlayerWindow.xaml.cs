@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
+using vlcPlayerLib;
 
 namespace VideoSearch.Windows
 {
@@ -7,6 +9,7 @@ namespace VideoSearch.Windows
     {
         #region static acces
         private static PlayerWindow _player = null;
+        private vlcPlayer _vlcPlayer = null;
 
         public static PlayerWindow Player
         {
@@ -33,15 +36,13 @@ namespace VideoSearch.Windows
 
         public static void CloseMovie()
         {
-            if (_player != null)
-                _player.StopMovie();
+             if (_player != null)
+                 _player.StopMovie();
         }
 
         #endregion
 
         #region Property
-
-        private bool _isSkip = false;
 
         private String _movieTitle = "";
         public String MovieTitle
@@ -61,7 +62,6 @@ namespace VideoSearch.Windows
             set
             {
                 _moviePath = value;
-                MediaPlayer.Source = new Uri(_moviePath);
             }
         }
 
@@ -75,15 +75,29 @@ namespace VideoSearch.Windows
 
             Owner = MainWindow.VideoSearchMainWindow;
 
+            _vlcPlayer = new vlcPlayer();
+            _vlcPlayer.SetIntiTimeInfo(false);
+            _vlcPlayer.SetControlPanelTimer(false);
+            _vlcPlayer.SetManualMarkMode(true);
+
+            _vlcPlayer.PlayerStopped += OnMovieStopped;
+
             OnStop(null, null);
         }
 
         public void StopMovie()
         {
-            if (MediaPlayer.HasVideo)
-                MediaPlayer.Stop();
+            if (_vlcPlayer.IsPlaying())
+                _vlcPlayer.Stop();
 
             Close();
+        }
+        
+        private void OnLoaded(object sender, EventArgs e)
+        {
+            _vlcPlayer.SetVideoInfo(_moviePath, true);
+
+            PlayerPanel.Child = _vlcPlayer;
         }
 
         private void OnClosed(object sender, EventArgs e)
@@ -96,12 +110,17 @@ namespace VideoSearch.Windows
             PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
         }
 
+
+        private void OnMouseLeftDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
         #endregion
 
         #region Buttons Handler
         private void OnPause(object sender, RoutedEventArgs e)
         {
-            MediaPlayer.Pause();
+            _vlcPlayer.Pause();
 
             PlayButton.IsEnabled = true;
             PauseButton.IsEnabled = false;
@@ -109,11 +128,7 @@ namespace VideoSearch.Windows
 
         private void OnStop(object sender, RoutedEventArgs e)
         {
-            MediaPlayer.SpeedRatio = 1.0;
-            MediaPlayer.Close();
-
-            if(_moviePath.Length > 0)
-                MediaPlayer.Source = new Uri(_moviePath);
+            _vlcPlayer.Stop();
 
             ShowPlayer(false);
 
@@ -129,9 +144,12 @@ namespace VideoSearch.Windows
 
         private void OnPlay(object sender, RoutedEventArgs e)
         {
-            ShowPlayer(true);
+            if(sender != null && e != null)
+            {
+                ShowPlayer(true);
+                _vlcPlayer.Play();
+            }
 
-            MediaPlayer.Play();
 
             PlayButton.IsEnabled = false;
             PauseButton.IsEnabled = true;
@@ -145,61 +163,52 @@ namespace VideoSearch.Windows
 
         private void OnGotoBegin(object sender, RoutedEventArgs e)
         {
-            if (MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                MediaPlayer.Position = TimeSpan.Zero;
-                OnPlay(sender, e);
+                _vlcPlayer.SetPlayerPositionForOuterControl(0);
+                OnPlay(null, null);
             }
         }
 
         private void OnGotoEnd(object sender, RoutedEventArgs e)
         {
-            if(MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                _isSkip = true;
-
-                MediaPlayer.Position = new TimeSpan(MediaPlayer.NaturalDuration.TimeSpan.Ticks - 1);
-                OnPlay(sender, e);
+                _vlcPlayer.SetPlayerPositionForOuterControl(_vlcPlayer.VideoTime);
+                OnPlay(null, null);
             }
         }
 
         private void OnSpeedUp(object sender, RoutedEventArgs e)
         {
-            if(MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                MediaPlayer.SpeedRatio = MediaPlayer.SpeedRatio * 2;
-                OnPlay(sender, e);
+                _vlcPlayer.Accelarete();
+                OnPlay(null, null);
             }
         }
 
         private void OnSpeedDown(object sender, RoutedEventArgs e)
         {
-            if (MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                MediaPlayer.SpeedRatio = MediaPlayer.SpeedRatio / 2;
-                OnPlay(sender, e);
+                _vlcPlayer.Slow();
+                OnPlay(null, null);
             }
         }
 
         private void OnClose(object sender, RoutedEventArgs e)
         {
-            StopMovie();
+             StopMovie();
         }
         #endregion
 
         #region Media Hanlder
-        
-        private void OnEnded(object sender, RoutedEventArgs e)
+        private void OnMovieStopped(object sender, EventArgs e)
         {
-            if (_isSkip)
-            {
-                _isSkip = false;
-            }
-            else
-            {
-                OnStop(sender, e);
-            }
+            OnStop(sender, null);
         }
+
         #endregion
     }
 }

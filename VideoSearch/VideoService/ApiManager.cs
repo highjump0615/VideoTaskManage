@@ -189,7 +189,8 @@ namespace VideoSearch.VideoService
                 if(objType == "5" && 
                    renxingPic != null &&
                    renxingMaskPic != null &&
-                   !renxingWaijieRect.IsEmpty)
+                   renxingWaijieRect.Width > 0 &&
+                   renxingWaijieRect.Height > 0)
                 {
                     left = (int)renxingWaijieRect.Left;
                     top = (int)renxingWaijieRect.Top;

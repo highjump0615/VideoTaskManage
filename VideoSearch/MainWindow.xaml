@@ -4,17 +4,57 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VideoSearch"
-        xmlns:SkinFrame="clr-namespace:VideoSearch.SkinFrame" 
         xmlns:SkinControl="clr-namespace:VideoSearch.SkinControl" 
         xmlns:Model="clr-namespace:VideoSearch.Model" 
         xmlns:ViewModel="clr-namespace:VideoSearch.ViewModel" 
         x:Class="VideoSearch.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1224" MinWidth="1224" MinHeight="700"
-        AllowsTransparency="True" WindowStyle="None" Background="#00000000"  
-        Icon="Resources/Images/MainWindow/app_icon.ico" Loaded="WindowLoaded" Unloaded="Window_Unloaded" WindowStartupLocation="CenterScreen">
+        Height="700" Width="1224" MinWidth="1224" MinHeight="700"
+        WindowStyle="None" Background="#00000000"  
+        Icon="Resources/Images/MainWindow/app_icon.ico" 
+        Style="{DynamicResource ShadowNormalWindowStyle}"
+        WindowStartupLocation="CenterScreen"
+        Loaded="WindowLoaded" 
+        Unloaded="Window_Unloaded">
 
     <Window.Resources>
+
+        <!-- ShadowNormalWindowStyle -->
+        <Style x:Key="ShadowNormalWindowStyle" TargetType="{x:Type Window}">
+            <Setter Property="WindowChrome.WindowChrome" Value="{DynamicResource ResizableWindowChromeKey}"/>
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <Border Background="#ff3e3e3e" BorderBrush="Black" BorderThickness="1">
+                            <AdornerDecorator>
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                        </Border>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ShadowMaximizedWindowStyle -->
+        <Style x:Key="ShadowMaximizedWindowStyle" TargetType="{x:Type Window}">
+            <Setter Property="WindowChrome.WindowChrome" Value="{DynamicResource ResizableWindowChromeKey}"/>
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <Border Background="#ff3e3e3e" BorderBrush="Black" BorderThickness="1">
+                            <AdornerDecorator Margin="6" >
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                        </Border>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Model:VideoData x:Key="dataItems"/>
 
         <!-- Event Items -->
@@ -43,9 +83,67 @@
     </Window.Resources>
 
     <Grid x:Name="WindowContent">
-        <SkinFrame:MainFrame ExtraIcon="Resources/Images/MainWindow/mainframe_icon.png" Maximized="False"/>
-        <Grid Margin="0,25,0,0" x:Name="ContentView">
-            <Grid Height="100" Margin="0,0,0,0" x:Name="Toolbar" VerticalAlignment="Top" Background="#FF312F29">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Grid x:Name="TitleBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="24"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="31"/>
+                <ColumnDefinition Width="31"/>
+                <ColumnDefinition Width="31"/>
+                <ColumnDefinition Width="4"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="1" Source="Resources/Images/MainWindow/app_icon.ico" />
+            <Image Grid.Column="3" Source="Resources/Images/MainWindow/mainframe_icon.png"/>
+            <SkinControl:SkinButton x:Name="btMinimize" Width="32" Height="24" 
+                                    Grid.Column="7" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                    NormalImage="/VideoSearch;component/Resources/Images/SystemButton/min_normal.png" 
+                                    OverImage="/VideoSearch;component/Resources/Images/SystemButton/min_over.png"
+                                    PressedImage="/VideoSearch;component/Resources/Images/SystemButton/min_pressed.png" 
+                                    Click="OnMinimize" 
+                                    OverColor="#FF605E58" 
+                                    PressedColor="#FF585856" 
+                                    Padding="0" 
+                                    OffsetWithImage="0" />
+            <SkinControl:SkinButton x:Name="btRestore" Width="32" Height="24" 
+                                    Grid.Column="8" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                    NormalImage="/VideoSearch;component/Resources/Images/SystemButton/max_normal.png" 
+                                    OverImage="/VideoSearch;component/Resources/Images/SystemButton/max_over.png" 
+                                    PressedImage="/VideoSearch;component/Resources/Images/SystemButton/max_pressed.png" 
+                                    AlternateNormalImage="/VideoSearch;component/Resources/Images/SystemButton/restore_normal.png" 
+                                    AlternateOverImage="/VideoSearch;component/Resources/Images/SystemButton/restore_over.png" 
+                                    AlternatePressedImage="/VideoSearch;component/Resources/Images/SystemButton/restore_pressed.png" 
+                                   
+                                    OverColor="#FF605E58" 
+                                    PressedColor="#FF585856" 
+                                    Padding="0"  
+                                    OffsetWithImage="0" 
+                                    Click="OnRestore"/>
+            <SkinControl:SkinButton x:Name="btClose" Width="32" Height="24" 
+                                    Grid.Column="9" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                    NormalImage="/VideoSearch;component/Resources/Images/SystemButton/close_normal.png" 
+                                    OverImage="/VideoSearch;component/Resources/Images/SystemButton/close_over.png" 
+                                    PressedImage="/VideoSearch;component/Resources/Images/SystemButton/close_pressed.png" 
+                                    
+                                    Click="OnClose" 
+                                    OverColor="#FF605E58" 
+                                    PressedColor="#FF585856" 
+                                    Padding="0" 
+                                    OffsetWithImage="0" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid Height="100" x:Name="Toolbar" VerticalAlignment="Top" Background="#FF312F29">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="181" />
                     <ColumnDefinition Width="239" />

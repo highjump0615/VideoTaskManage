@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:VideoSearch.Views"
              xmlns:skinControl="clr-namespace:VideoSearch.SkinControl"
              mc:Ignorable="d" 
-             d:DesignHeight="640" d:DesignWidth="980">
+             d:DesignHeight="640" d:DesignWidth="980"
+             Loaded="OnLoaded">
     <Grid Margin="20">
         <Grid x:Name="PlayerContainer">
             <Grid.RowDefinitions>
@@ -39,19 +40,10 @@
                         <Image Grid.Row="1" Source="/VideoSearch;component/Resources/Images/Player/PlayerLogo.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
                 </Border>
-                <Border x:Name="PlayerPanel" Background="Black">
-                    <MediaElement x:Name="MediaPlayer" 
-                                  Source="{Binding Path=MoviePath}"
-                                  ScrubbingEnabled="True"
-                                  LoadedBehavior="Manual" 
-                                  UnloadedBehavior="Manual" 
-                                  Loaded="OnLoaded"
-                                  Unloaded="OnUnLoaded"
-                                  MediaOpened="OnOpend"
-                                  MediaEnded="OnEnded" />
 
-                </Border>
-
+                <TextBlock x:Name="MovieSource" Text="{Binding Path=MoviePath}" Visibility="Hidden"/>
+                <WindowsFormsHost x:Name="PlayerPanel" Margin="1" Background="Black"/>
+             
                 <Separator VerticalAlignment="Top" Background="#FF222222" Margin="0"/>
                 <Separator VerticalAlignment="Bottom" Background="#FF222222" Margin="0"/>
             </Grid>

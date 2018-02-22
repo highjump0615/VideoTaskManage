@@ -6,6 +6,8 @@ using VideoSearch.ViewModel;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using VideoSearch.SkinControl;
+using System.Windows.Input;
+using System.Windows.Shell;
 
 namespace VideoSearch
 {
@@ -49,6 +51,65 @@ namespace VideoSearch
         {
             VideoData.AppVideoData.Dispose();
         }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            Rect bounds = new Rect(0, 0, ActualWidth, 25);
+
+            if(bounds.Contains(e.GetPosition(this)))
+                DragMove();
+        }
+
+        protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+
+            Rect bounds = new Rect(0, 0, ActualWidth, 25);
+
+            if (bounds.Contains(e.GetPosition(this)))
+                OnRestore(this, null);
+        }
+
+        protected override void OnStateChanged(EventArgs e)
+        {
+            base.OnStateChanged(e);
+
+            if (WindowState == WindowState.Maximized)
+                btRestore.IsAltState = true;
+            else if (WindowState == WindowState.Normal)
+                btRestore.IsAltState = false;
+        }
+        #region SystemButton
+        /////////////////////////////////////////////////////////
+        // Process system buttons
+        /////////////////////////////////////////////////////////
+        private void OnClose(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void OnRestore(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                Style = (Style)(this.Resources["ShadowNormalWindowStyle"]);
+                WindowState = WindowState.Normal;
+            }
+            else
+            {
+                Style = (Style)(this.Resources["ShadowMaximizedWindowStyle"]);
+                WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void OnMinimize(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+        #endregion
+
         /////////////////////////////////////////////////////////
         // Process command from TreeView
         /////////////////////////////////////////////////////////

@@ -10,6 +10,7 @@
         <ResourceDictionary Source="/Resources/Styles/SliderStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/TextBoxStyles.xaml" />
+        <ResourceDictionary Source="/Resources/Styles/WindowStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 

@@ -3,19 +3,29 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using vlcPlayerLib;
 
 namespace VideoSearch.Views
 {
-    public delegate void UpdateDurationDelegate();
+    public delegate void UpdateDurationDelegate(long pos);
 
     public partial class MovieTaskViewMainView : UserControl
     {
-        private Timer _monitor = null;
-        private String _source = null;
+        private vlcPlayer _vlcPlayer = null;
+        private long _curPos = 0;
 
         public MovieTaskViewMainView()
         {
             InitializeComponent();
+
+            _vlcPlayer = new vlcPlayer();
+            _vlcPlayer.SetIntiTimeInfo(false);
+            _vlcPlayer.SetControlPanelTimer(false);
+            _vlcPlayer.SetManualMarkMode(true);
+
+            _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
+            _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
+            _vlcPlayer.PlayerStopped += OnMovieStopped;
 
             OnStop(this, null);
         }
@@ -23,8 +33,8 @@ namespace VideoSearch.Views
         #region Utility
         public void StopMovie()
         {
-            if (MediaPlayer.HasVideo)
-                MediaPlayer.Stop();
+            if (_vlcPlayer.IsPlaying())
+                _vlcPlayer.Stop();
         }
 
 
@@ -56,7 +66,7 @@ namespace VideoSearch.Views
         #region Buttons Handler
         private void OnPause(object sender, RoutedEventArgs e)
         {
-            MediaPlayer.Pause();
+            _vlcPlayer.Pause();
 
             PlayButton.IsEnabled = true;
             PauseButton.IsEnabled = false;
@@ -64,9 +74,9 @@ namespace VideoSearch.Views
 
         private void OnStop(object sender, RoutedEventArgs e)
         {
-            MediaPlayer.SpeedRatio = 1.0;
-            MediaPlayer.Position = TimeSpan.Zero;
-            MediaPlayer.Close();
+            _vlcPlayer.Stop();
+            DurationSlider.Value = 0;
+            DurationSlider.IsEnabled = false;
 
             ShowPlayer(false);
         }
@@ -75,40 +85,45 @@ namespace VideoSearch.Views
         {
             ShowPlayer(true);
 
-            MediaPlayer.Play();
+            if (sender != null && e != null)
+            {
+                _vlcPlayer.Play();
+            }
         }
 
         private void OnGotoBegin(object sender, RoutedEventArgs e)
         {
-            if (MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                MediaPlayer.Position = TimeSpan.Zero;
+                _vlcPlayer.SetPlayerPositionForOuterControl(0);
+                 OnPlay(null, null);
             }
         }
 
         private void OnGotoEnd(object sender, RoutedEventArgs e)
         {
-            if (MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                MediaPlayer.Position = new TimeSpan(MediaPlayer.NaturalDuration.TimeSpan.Ticks - 1);
+                _vlcPlayer.SetPlayerPositionForOuterControl(_vlcPlayer.VideoTime);
+                 OnPlay(null, null);
             }
         }
 
         private void OnSpeedUp(object sender, RoutedEventArgs e)
         {
-            if (MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                MediaPlayer.SpeedRatio = MediaPlayer.SpeedRatio * 2;
-                OnPlay(sender, e);
+                _vlcPlayer.Accelarete();
+                OnPlay(null, null);
             }
         }
 
         private void OnSpeedDown(object sender, RoutedEventArgs e)
         {
-            if (MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                MediaPlayer.SpeedRatio = MediaPlayer.SpeedRatio / 2;
-                OnPlay(sender, e);
+                _vlcPlayer.Slow();
+                OnPlay(null, null);
             }
         }
 
@@ -122,10 +137,15 @@ namespace VideoSearch.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("=========== load +++ == : {0}", MediaPlayer.Source);
+            String moviePath = MovieSource.Text;
+            if (moviePath != null && moviePath.Length > 0)
+            {
+                _vlcPlayer.SetVideoInfo(moviePath, true);
 
-            if (MediaPlayer.Source != null)
-                OnPlay(null, null);
+                PlayerPanel.Child = _vlcPlayer;
+
+                OnPlay(sender, e);
+            }
             else
             {
                 OnStop(this, null);
@@ -133,95 +153,41 @@ namespace VideoSearch.Views
             }                
         }
 
-        private void OnUnLoaded(object sender, RoutedEventArgs e)
+        protected void UpdateDuration(long pos)
         {
-            Console.WriteLine("=========== unload ==");
-            DurationSlider.IsEnabled = false;
-
-//            ResetPlaybackMonitor();
+            _curPos = pos;
+            DurationSlider.Value = pos;
         }
 
-
-        private void OnOpend(object sender, RoutedEventArgs e)
+        private void OnMoviePosChanged(object sender, long pos)
         {
-            Console.WriteLine("=========== OnOpend ==");
-            if (MediaPlayer.Source == null)
-            {
-                OnStop(this, null);
-                PlayButton.IsEnabled = false;
-                return;
-            }
+            DurationSlider.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new UpdateDurationDelegate(UpdateDuration), pos);
+        }
 
-            String newSource = MediaPlayer.Source.ToString();
-
-            if(_source != newSource)
-            {
-                _source = newSource;
-
-                OnStop(this, null);
-                OnPlay(this, null);
-
-                Console.WriteLine("=========== eeeadfa  OnOpend ==");
-                return;
-            }
-
-
-            TimeSpan duration = MediaPlayer.NaturalDuration.TimeSpan;
-            TimeMarker.Duration = duration;
+        private void OnMovieDurationChanged(object sender, long duration)
+        {
+            TimeMarker.Duration = new TimeSpan(duration);
 
             DurationSlider.IsEnabled = true;
-
-            DurationSlider.SmallChange = new TimeSpan(0, 0, 0, 1).Ticks;
-            DurationSlider.LargeChange = DurationSlider.SmallChange;
+            DurationSlider.SmallChange = 500;
+            DurationSlider.LargeChange = 5000;
             DurationSlider.Minimum = 0;
-            DurationSlider.Maximum = duration.Ticks;
-
-            StartPlaybackMonitor();
-
+            DurationSlider.Maximum = duration;
         }
 
-        private void OnEnded(object sender, RoutedEventArgs e)
+        private void OnMovieStopped(object sender, EventArgs e)
         {
             DurationSlider.Value = DurationSlider.Maximum;
-        }
-        #endregion
-
-        #region Playback Monitor Timer
-        protected void StartPlaybackMonitor()
-        {
-            ResetPlaybackMonitor();
-            TimerCallback searchCallback = UpdateMediaPos;
-            _monitor = new Timer(searchCallback, null, 0, 1);
-        }
-
-        protected void ResetPlaybackMonitor()
-        {
-            if (_monitor != null)
-            {
-                _monitor.Dispose();
-                _monitor = null;
-            }
-        }
-
-        protected void UpdateMediaPos(Object stateInfo)
-        {
-            DurationSlider.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new UpdateDurationDelegate(UpdateDuration));
-        }
-
-        protected void UpdateDuration()
-        {
-            DurationSlider.Value = MediaPlayer.Position.Ticks;
+            OnStop(sender, null);
         }
         #endregion
 
         private void OnDurationChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if(MediaPlayer.HasVideo)
+            if (_vlcPlayer.VideoTime > 0)
             {
-                long diff = Math.Abs((long)DurationSlider.Value - MediaPlayer.Position.Ticks);
-                if (diff > DurationSlider.LargeChange)
-                    OnPause(null, null);
-                MediaPlayer.Position = new TimeSpan((long)DurationSlider.Value);
+                if(DurationSlider.Value != _curPos)
+                    _vlcPlayer.SetPlayerPositionForOuterControl((long)DurationSlider.Value);
             }
         }
 

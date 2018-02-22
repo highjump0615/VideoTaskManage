@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VideoSearch.Views.Player"
              mc:Ignorable="d" 
-             d:DesignHeight="312" d:DesignWidth="465">
+             d:DesignHeight="312" d:DesignWidth="465"
+             Loaded="OnLoaded">
     <Grid x:Name="Container" >
         <Grid.RowDefinitions>
             <RowDefinition Height="24"/>
@@ -35,9 +36,10 @@
                     <Image Grid.Row="1" Source="/VideoSearch;component/Resources/Images/Player/PlayerLogo.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
             </Border>
-            <Border x:Name="PlayerPanel" Background="Black">
-                <MediaElement x:Name="MediaPlayer" Source="{Binding Path=Source}" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaEnded="OnEnded"/>
-            </Border>
+
+            <TextBlock x:Name="MovieSource" Text="{Binding Path=Source}" Visibility="Hidden"/>
+            <WindowsFormsHost x:Name="PlayerPanel" Margin="1" Background="Black"/>
+   
             <Separator VerticalAlignment="Top" Background="#FF222222" Margin="0"/>
             <Separator VerticalAlignment="Bottom" Background="#FF222222" Margin="0"/>
         </Grid>

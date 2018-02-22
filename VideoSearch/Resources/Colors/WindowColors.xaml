@@ -2,10 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:VideoSearch.Resources.Colors">
 
-    <!-- MainFrame color -->
-    <Color x:Key="MainFrameTitleBarBkColor">#ff403f3a</Color>
-    <Color x:Key="MainFrameBkColor">#ff686868</Color>
-
     <!-- Window color -->
     <Color x:Key="WindowBkColor">#ff3e3e3e</Color>
 

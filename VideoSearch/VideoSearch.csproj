@@ -113,9 +113,13 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="vlcPlayerLib">
+      <HintPath>..\plugin\vlcPlayerLib.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -169,9 +173,6 @@
     </Compile>
     <Compile Include="SkinFrame\DialogFrame.xaml.cs">
       <DependentUpon>DialogFrame.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SkinFrame\MainFrame.xaml.cs">
-      <DependentUpon>MainFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\ExceptionUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
@@ -403,6 +404,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Styles\WindowStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Values.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -452,10 +457,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SkinFrame\DialogFrame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SkinFrame\MainFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

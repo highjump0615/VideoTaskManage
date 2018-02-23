@@ -93,7 +93,7 @@ namespace VideoSearch.ViewModel
 
         public void ShowCameraMap()
         {
-            Contents = new CameraViewMapModel();
+            Contents = new CameraViewMapModel(this.Owner);
         }
 
         public void ShowCameraMap(double longitude, double latitude)

@@ -5,6 +5,27 @@ using VideoSearch.Windows;
 
 namespace VideoSearch.Model
 {
+    /// <summary>
+    /// simple camera model data for sending to map web view
+    /// </summary>
+    public class CameraSimple
+    {
+        public string DisplayId;
+        public string Name;
+        public string Address;
+        public double Latitude;
+        public double Longitude;
+
+        public CameraSimple(CameraItem data)
+        {
+            this.DisplayId = data.DisplayID;
+            this.Name = data.Name;
+            this.Address = data.Address;
+            this.Latitude = data.Latitude;
+            this.Longitude = data.Longitude;
+        }
+    }
+
     public class CameraItem : DataItemBase
     {
         #region Property

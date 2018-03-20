@@ -12,7 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="680"/>
             <ColumnDefinition Width="6"/>
-            <ColumnDefinition Width="224" />
+            <ColumnDefinition Width="224*" />
         </Grid.ColumnDefinitions>
         
         <Grid x:Name="PlayerContainer">
@@ -179,15 +179,17 @@
                 </Grid>
             </Grid>
         </Grid>
-        
+
+        <!-- 标注列表 -->
         <Grid x:Name="TableContainer" Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition />
+                <RowDefinition Height="4*"/>
                 <RowDefinition Height="6"/>
-                <RowDefinition Height="420"/>
+                <RowDefinition Height="6*"/>
             </Grid.RowDefinitions>
 
-            <Grid>
+            <!-- 标注列表 -->
+            <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition />
@@ -224,7 +226,8 @@
                 </DataGrid>
 
             </Grid>
-            
+
+            <!-- 标注信息 -->
             <Grid Grid.Row="2" x:Name="GridDetail">
                 <Border Background="#FF323231" BorderBrush="Black" Grid.RowSpan="2"
                         BorderThickness="1"
@@ -486,7 +489,7 @@
                             <TextBlock Text="乘客数量" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                             <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                            
+
                             <TextBox Grid.Column="1" x:Name="TxtMemberCount"
                                  VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
                         </Grid>
@@ -588,11 +591,22 @@
                         </Grid>
 
                     </Grid>
-                
+
                 </Grid>
             </Grid>
+            
+            <!-- Splitter -->
+            <GridSplitter 
+                Grid.Row="1" 
+                HorizontalAlignment="Stretch"
+                Background="Transparent"/>
 
         </Grid>
+
+        <GridSplitter 
+            Grid.Column="1" 
+            HorizontalAlignment="Stretch" 
+            Background="Transparent"/>
 
     </Grid>
 </UserControl>

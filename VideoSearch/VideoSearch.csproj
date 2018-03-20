@@ -127,12 +127,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Database\ArticleTable.cs" />
     <Compile Include="Database\CameraTable.cs" />
     <Compile Include="Database\DBManager.cs" />
     <Compile Include="Database\EventTable.cs" />
     <Compile Include="Database\MovieTable.cs" />
     <Compile Include="Database\MovieTaskTable.cs" />
     <Compile Include="Database\TableManager.cs" />
+    <Compile Include="Model\ArticleItem.cs" />
     <Compile Include="Model\CameraItem.cs" />
     <Compile Include="Model\DataItemBase.cs" />
     <Compile Include="Model\EventItem.cs" />
@@ -176,6 +178,7 @@
       <DependentUpon>DialogFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\ExceptionUtils.cs" />
+    <Compile Include="Utils\ManualMarkUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="VideoService\ApiManager.cs" />
     <Compile Include="VideoService\Base64Decoder.cs" />
@@ -356,6 +359,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Colors\ScrollBarColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Colors\TreeViewColors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -397,6 +404,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\ProgressBarStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\ScrollBarStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,7 +12,7 @@ namespace VideoSearch.ViewModel
     {
         public MovieTaskViewModel(DataItemBase owner) : base(owner)
         {
-            Contents = new MovieTaskViewListModel(Owner);
+            Contents = new MovieTaskViewMainModel(Owner);
 
         }
 
@@ -23,7 +23,7 @@ namespace VideoSearch.ViewModel
             if (Contents == null ||
                 Contents.GetType() == typeof(MovieTaskViewMainModel))
             {
-                Contents = new MovieTaskViewListModel(Owner);
+                Contents = new MovieTaskViewMainModel(Owner);
             }
         }
 

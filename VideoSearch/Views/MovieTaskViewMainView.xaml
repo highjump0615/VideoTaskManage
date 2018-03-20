@@ -48,6 +48,7 @@
                 </Border>
 
                 <TextBlock x:Name="MovieSource" Text="{Binding Path=MoviePath}" Visibility="Hidden"/>
+                <TextBlock x:Name="MovieID" Text="{Binding Path=MovieID}" Visibility="Hidden"/>
                 <WindowsFormsHost x:Name="PlayerPanel" Margin="1" Background="Black"/>
                 
                 <Separator VerticalAlignment="Top" Background="#FF222222" Margin="0"/>
@@ -183,7 +184,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="6"/>
-                <RowDefinition Height="444"/>
+                <RowDefinition Height="420"/>
             </Grid.RowDefinitions>
 
             <Grid>
@@ -200,7 +201,7 @@
                 <DataGrid x:Name="PathDataGrid" Grid.Row="1"
                             BorderBrush="Black"
 					        ColumnHeaderHeight="31" RowHeight="31" 
-					        ItemsSource="{Binding Path=Owner, UpdateSourceTrigger=PropertyChanged}" 
+					        ItemsSource="{Binding Path=MarkList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 					        HeadersVisibility="Column" 
 					        FontSize="14" Foreground="White" 
 					        ScrollViewer.CanContentScroll="False" 
@@ -224,8 +225,8 @@
 
             </Grid>
             
-            <Grid Grid.Row="2">
-                <Border Background="#FF464646" BorderBrush="Black" Grid.RowSpan="2"
+            <Grid Grid.Row="2" x:Name="GridDetail">
+                <Border Background="#FF323231" BorderBrush="Black" Grid.RowSpan="2"
                         BorderThickness="1"
                         CornerRadius="4,4,0,0">
                 </Border>
@@ -233,21 +234,24 @@
                 <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height=" 30" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
-                        <RowDefinition Height=" 32" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
+                        <RowDefinition Height=" 28" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="标注信息" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <Border Background="#FF464646" Margin="1" CornerRadius="4,4,0,0">
+                        <TextBlock Text="标注信息" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    </Border>
                     <Separator  Background="Black" Margin="1,0" VerticalAlignment="Bottom" />
 
                     <Grid Grid.Row="1" Margin="1,0"  Background="#FF323231">
@@ -259,6 +263,10 @@
                         <TextBlock Text="轨迹说明" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                        <TextBox Grid.Column="1" x:Name="TxtDetail"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+
                     </Grid>
                     <Grid Grid.Row="2" Margin="1,0"  Background="#FF323231">
                         <Grid.ColumnDefinitions>
@@ -269,6 +277,10 @@
                         <TextBlock Text="关键字" VerticalAlignment="Center" Foreground="White" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                        <TextBox Grid.Column="1" x:Name="TxtMainKey"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+
                     </Grid>
                     <Grid Grid.Row="3" Margin="1,0"  Background="#FF323231">
                         <Grid.ColumnDefinitions>
@@ -279,94 +291,284 @@
                         <TextBlock Text="目标类型" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
 
                         <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                        <ComboBox Grid.Column="1" Name="CboTargetType" FontSize="14" Foreground="White" Text="" Style="{DynamicResource BlueFrameComboBox}"
+                                  SelectionChanged="OnTargetTypeChanged">
+                            <ComboBoxItem Content="人" />
+                            <ComboBoxItem Content="车" />
+                        </ComboBox>
                     </Grid>
-                    <Grid Grid.Row="4" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
+                    <Grid x:Name="GridManInfo" Visibility="Hidden"
+                          Grid.Row="4" Grid.RowSpan="9">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="裤子颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <Grid Grid.Row="0" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
 
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                            <TextBlock Text="裤子颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <Border x:Name="PantsColor" Background="Transparent" Grid.Column="1">
+                                <Button x:Name="PantsColorBtn"  Style="{DynamicResource ImageButtonStyle}" HorizontalAlignment="Stretch" Click="OnSelectColor"/>
+                            </Border>
+
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="裤子种类" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <ComboBox Grid.Column="1" Name="CboPantsKind" FontSize="14" Foreground="White" Text="" Style="{DynamicResource BlueFrameComboBox}">
+                                <ComboBoxItem Content="长裤" />
+                                <ComboBoxItem Content="短裤" />
+                            </ComboBox>
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="其它体貌特征" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <TextBox Grid.Column="1" x:Name="TxtOtherHumanSpec"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+
+                        </Grid>
+                        <Grid Grid.Row="3" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="上衣颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <Border x:Name="CoatColor" Background="Transparent" Grid.Column="1">
+                                <Button x:Name="CoatColorBtn"  Style="{DynamicResource ImageButtonStyle}" HorizontalAlignment="Stretch" Click="OnSelectColor"/>
+                            </Border>
+
+                        </Grid>
+                        <Grid Grid.Row="4" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="上衣种类" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <TextBox Grid.Column="1" x:Name="TxtCoatKind"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+
+                        </Grid>
+                        <Grid Grid.Row="5" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="是否背包" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <CheckBox x:Name="ChkHasPack" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="6" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="是否戴帽子" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <CheckBox x:Name="ChkHasCap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="7" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="是否戴眼镜" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <CheckBox x:Name="ChkHasGlass" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="8" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="姓名" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <TextBox Grid.Column="1" x:Name="TxtName"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+
+                        </Grid>
+
                     </Grid>
-                    <Grid Grid.Row="5" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
+                    <Grid x:Name="GridCarInfo" Visibility="Hidden"
+                          Grid.Row="4" Grid.RowSpan="9">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="裤子种类" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                        <Grid Grid.Row="0" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
 
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                            <TextBlock Text="车牌" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <TextBox Grid.Column="1" x:Name="TxtCarNumber"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="车身颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <Border x:Name="CarColor" Background="Transparent" Grid.Column="1">
+                                <Button x:Name="CarColorBtn"  Style="{DynamicResource ImageButtonStyle}" HorizontalAlignment="Stretch" Click="OnSelectColor"/>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="乘客数量" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                            
+                            <TextBox Grid.Column="1" x:Name="TxtMemberCount"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+                        </Grid>
+                        <Grid Grid.Row="3" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="驾驶人" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <TextBox Grid.Column="1" x:Name="TxtDriver"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+                        </Grid>
+                        <Grid Grid.Row="4" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="品牌型号" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <TextBox Grid.Column="1" x:Name="TxtCarModel"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+                        </Grid>
+                        <Grid Grid.Row="5" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="其他车身特征" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+
+                            <TextBox Grid.Column="1" x:Name="TxtOtherCarSpec"
+                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+                        </Grid>
+                        <Grid Grid.Row="6" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                        </Grid>
+                        <Grid Grid.Row="7" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                        </Grid>
+                        <Grid Grid.Row="8" Margin="1,0"  Background="#FF323231">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+
+                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                        </Grid>
+
                     </Grid>
-                    <Grid Grid.Row="6" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="其它体貌特征" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    </Grid>
-                    <Grid Grid.Row="7" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="上衣颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    </Grid>
-                    <Grid Grid.Row="8" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="是否背包" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    </Grid>
-                    <Grid Grid.Row="9" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="是否戴帽子" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    </Grid>
-                    <Grid Grid.Row="10" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="是否戴眼镜" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    </Grid>
-                    <Grid Grid.Row="11" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="姓名" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    </Grid>
 
                     <Border BorderBrush="Black" 
                             BorderThickness="1,0,0,0"
                             HorizontalAlignment="Center" 
-                            Grid.Row="1" Grid.RowSpan="11"/>
+                            Grid.Row="1" Grid.RowSpan="12"/>
 
-                    <Grid Grid.Row="12" Margin="1,0,1,1"  Background="#FF323231">
+                    <Grid Grid.Row="13" Margin="1,0,1,1"  Background="#FF323231">
 
                         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
@@ -375,11 +577,11 @@
                                 <ColumnDefinition Width="81" />
                             </Grid.ColumnDefinitions>
 
-                            <Button Content="清空标注" Name="btnClear" Foreground="White" FontSize="14" Focusable="False" 
+                            <Button Content="清空标注" x:Name="btnClear" Foreground="White" FontSize="14" Focusable="False" 
                                     Click="OnClear" Height="30" 
                                     Style="{DynamicResource BrownButtonStyle}">
                             </Button>
-                            <Button Content="保存标注" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" 
+                            <Button Content="保存标注" x:Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" 
                                     Click="OnSave" Height="30" 
                                     Style="{DynamicResource GreenButtonStyle}"/>
 

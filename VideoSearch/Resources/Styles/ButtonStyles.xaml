@@ -962,7 +962,7 @@
         </Setter>
     </Style>
 
-    <!-- ImageButton base style -->
+    <!-- ButtonBaseTemplate -->
     <ControlTemplate x:Key="ButtonBaseTemplate" TargetType="{x:Type ButtonBase}">
         <Border Background="{TemplateBinding Background}" BorderBrush="{x:Null}">
             <ContentPresenter />

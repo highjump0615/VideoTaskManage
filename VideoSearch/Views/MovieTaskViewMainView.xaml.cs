@@ -1,8 +1,12 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
+using VideoSearch.Utils;
+using VideoSearch.ViewModel;
 using vlcPlayerLib;
 
 namespace VideoSearch.Views
@@ -12,23 +16,85 @@ namespace VideoSearch.Views
     public partial class MovieTaskViewMainView : UserControl
     {
         private vlcPlayer _vlcPlayer = null;
+        private ManualMarkUtils _markUtils = null;
         private long _curPos = 0;
 
         public MovieTaskViewMainView()
         {
             InitializeComponent();
 
-            _vlcPlayer = new vlcPlayer();
-            _vlcPlayer.SetIntiTimeInfo(false);
-            _vlcPlayer.SetControlPanelTimer(false);
-            _vlcPlayer.SetManualMarkMode(true);
-
-            _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-            _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
-            _vlcPlayer.PlayerStopped += OnMovieStopped;
-
             OnStop(this, null);
+
+            Unloaded += OnUnLoad;
         }
+
+        #region Delegate
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (_vlcPlayer == null)
+            {
+                _vlcPlayer = new vlcPlayer();
+                _vlcPlayer.SetIntiTimeInfo(false);
+                _vlcPlayer.SetControlPanelTimer(false);
+                _vlcPlayer.SetManualMarkMode(true);
+
+                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
+                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
+                _vlcPlayer.PlayerStopped += OnMovieStopped;
+                _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
+            }
+
+            String moviePath = MovieSource.Text;
+            if (moviePath != null && moviePath.Length > 0)
+            {
+                _vlcPlayer.SetVideoInfo(moviePath, true);
+
+                if(_markUtils == null)
+                    _markUtils = new ManualMarkUtils(_vlcPlayer, MovieID.Text);
+
+                PlayerPanel.Child = _vlcPlayer;
+
+                OnPlay(sender, e);
+            }
+            else
+            {
+                OnStop(this, null);
+                PlayButton.IsEnabled = false;
+            }
+
+            Reset();
+        }
+
+        public void OnUnLoad(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= OnUnLoad;
+
+            if(_vlcPlayer != null)
+            {
+                _vlcPlayer.Stop();
+                _vlcPlayer = null;
+            }
+        }
+        #endregion
+
+        #region VLC
+        public void ManualMarkAdded(Object sender, Rectangle manualMarkRect, long frame, Bitmap bitmap)
+        {
+            if(_markUtils.AddManualMark(manualMarkRect, frame))
+            {
+                ObservableCollection<ClipInfo> items = (ObservableCollection<ClipInfo>)PathDataGrid.ItemsSource;
+
+                ClipInfo clip = new ClipInfo(frame, manualMarkRect.X, manualMarkRect.Y, manualMarkRect.Right, manualMarkRect.Bottom);
+                items.Add(clip);
+
+                btnSave.IsEnabled = true;
+                btnClear.IsEnabled = true;
+
+                GridDetail.IsHitTestVisible = true;
+            }
+        }
+
+        #endregion
 
         #region Utility
         public void StopMovie()
@@ -74,7 +140,9 @@ namespace VideoSearch.Views
 
         private void OnStop(object sender, RoutedEventArgs e)
         {
-            _vlcPlayer.Stop();
+            if (_vlcPlayer != null)
+                _vlcPlayer.Stop();
+
             DurationSlider.Value = 0;
             DurationSlider.IsEnabled = false;
 
@@ -135,24 +203,6 @@ namespace VideoSearch.Views
 
         #region Media Hanlder
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            String moviePath = MovieSource.Text;
-            if (moviePath != null && moviePath.Length > 0)
-            {
-                _vlcPlayer.SetVideoInfo(moviePath, true);
-
-                PlayerPanel.Child = _vlcPlayer;
-
-                OnPlay(sender, e);
-            }
-            else
-            {
-                OnStop(this, null);
-                PlayButton.IsEnabled = false;
-            }                
-        }
-
         protected void UpdateDuration(long pos)
         {
             _curPos = pos;
@@ -184,7 +234,7 @@ namespace VideoSearch.Views
 
         private void OnDurationChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (_vlcPlayer.VideoTime > 0)
+            if (_vlcPlayer != null && _vlcPlayer.VideoTime > 0)
             {
                 if(DurationSlider.Value != _curPos)
                     _vlcPlayer.SetPlayerPositionForOuterControl((long)DurationSlider.Value);
@@ -193,13 +243,156 @@ namespace VideoSearch.Views
 
         private void OnClear(object sender, RoutedEventArgs e)
         {
-
+            Reset();
         }
 
         private void OnSave(object sender, RoutedEventArgs e)
         {
+            if(!IsEditedDetail())
+            {
+                if (MessageBox.Show("未保存编辑内容，是否继续?", "保存", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    Reset();
 
+                return;
+            }
+
+            _markUtils.SaveManualMark();
+            Reset();
+        }
+
+        private bool IsEditedDetail()
+        {
+            System.Windows.Media.Brush transBr = System.Windows.Media.Brushes.Transparent;
+
+            if(CboTargetType.SelectedIndex == 0)
+            {
+                if (PantsColor.Background != transBr)
+                    return true;
+
+                if (CboPantsKind.SelectedIndex > -1)
+                    return true;
+
+                if (TxtOtherHumanSpec.Text.Length > 0)
+                    return true;
+
+                if (CoatColor.Background != transBr)
+                    return true;
+
+                if (TxtCoatKind.Text.Length > 0)
+                    return true;
+
+                if (ChkHasPack.IsChecked == true ||
+                    ChkHasCap.IsChecked == true ||
+                    ChkHasGlass.IsChecked == true)
+                    return true;
+
+                if (TxtName.Text.Length > 0)
+                    return true;
+            }
+            else if (CboTargetType.SelectedIndex == 1)
+            {
+                if (TxtCarNumber.Text.Length > 0)
+                    return true;
+
+                if (CarColor.Background != transBr)
+                    return true;
+
+                if (TxtMemberCount.Text.Length > 0)
+                    return true;
+
+                if (TxtDriver.Text.Length > 0)
+                    return true;
+
+                if (TxtCarModel.Text.Length > 0)
+                    return true;
+
+                if (TxtOtherCarSpec.Text.Length > 0)
+                    return true;
+            }
+
+            if (TxtDetail.Text.Length > 0)
+                return true;
+
+            if (TxtMainKey.Text.Length > 0)
+                return true;
+
+            return false;
+        }
+
+        private void Reset()
+        {
+            ObservableCollection<ClipInfo> items = (ObservableCollection<ClipInfo>)PathDataGrid.ItemsSource;
+
+            items.Clear();
+            _markUtils.ResetManualMark();
+
+            btnSave.IsEnabled = false;
+            btnClear.IsEnabled = false;
+
+            System.Windows.Media.Brush transBr = System.Windows.Media.Brushes.Transparent;
+            TxtDetail.Text = "";
+            TxtMainKey.Text = "";
+            CboTargetType.SelectedIndex = -1;
+            PantsColor.Background = transBr;
+            CboPantsKind.SelectedIndex = -1;
+            TxtOtherHumanSpec.Text = "";
+            CoatColor.Background = transBr;
+            TxtCoatKind.Text = "";
+            ChkHasPack.IsChecked = false;
+            ChkHasCap.IsChecked = false;
+            ChkHasGlass.IsChecked = false;
+            TxtName.Text = "";
+
+            TxtCarNumber.Text = "";
+            CarColor.Background = transBr;
+            TxtMemberCount.Text = "";
+            TxtDriver.Text = "";
+            TxtCarModel.Text = "";
+            TxtOtherCarSpec.Text = "";
+
+            GridManInfo.Visibility = Visibility.Hidden;
+            GridCarInfo.Visibility = Visibility.Hidden;
+            GridDetail.IsHitTestVisible = false;
+        }
+
+        private void OnSelectColor(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.ColorDialog();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                // need to convert from the ColorDialog GDI colorspace to the WPF colorspace
+                var wpfColor = System.Windows.Media.Color.FromArgb(dialog.Color.A, dialog.Color.R, dialog.Color.G, dialog.Color.B);
+
+                var brush = new SolidColorBrush(wpfColor);
+
+                if (sender == PantsColorBtn)
+                    this.PantsColor.Background = brush;
+                else if (sender == CoatColorBtn)
+                    this.CoatColor.Background = brush;
+                else if (sender == CarColorBtn)
+                    this.CarColor.Background = brush;
+            }
+        }
+
+        private void OnTargetTypeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CboTargetType.SelectedIndex == 0)
+            {
+                GridManInfo.Visibility = Visibility.Visible;
+                GridCarInfo.Visibility = Visibility.Hidden;
+            }
+            else if (CboTargetType.SelectedIndex == 1)
+            {
+                GridManInfo.Visibility = Visibility.Hidden;
+                GridCarInfo.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                GridManInfo.Visibility = Visibility.Hidden;
+                GridCarInfo.Visibility = Visibility.Hidden;
+            }
         }
     }
-    
+
 }

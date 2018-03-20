@@ -9,6 +9,7 @@
         <ResourceDictionary Source="/Resources/Colors/GroupBoxColors.xaml" />
         <ResourceDictionary Source="/Resources/Colors/ListBoxColors.xaml" />
         <ResourceDictionary Source="/Resources/Colors/ProgressBarColors.xaml" />
+        <ResourceDictionary Source="/Resources/Colors/ScrollBarColors.xaml" />
         <ResourceDictionary Source="/Resources/Colors/SliderColors.xaml" />
         <ResourceDictionary Source="/Resources/Colors/TextBoxColors.xaml" />
         <ResourceDictionary Source="/Resources/Colors/TreeViewColors.xaml" />

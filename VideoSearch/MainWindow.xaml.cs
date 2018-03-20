@@ -45,6 +45,8 @@ namespace VideoSearch
             {
                 m_searchWindow.Close();
             }
+
+            workView.Content = null;
         }
 
         protected override void OnClosed(EventArgs e)
@@ -149,7 +151,7 @@ namespace VideoSearch
         /////////////////////////////////////////////////////////
         // utility fuctions...
         /////////////////////////////////////////////////////////
-        
+
         private void InitControls()
         {
             _groupList = new ObservableCollection<Control>();
@@ -508,7 +510,7 @@ namespace VideoSearch
 
             Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(PanelViewModel))
-                ((PanelViewModel)viewContents).ShowResult();
+                ((PanelViewModel)viewContents).ShowList();
         }
 
         private void OnPanelShowPath(object sender, RoutedEventArgs e)

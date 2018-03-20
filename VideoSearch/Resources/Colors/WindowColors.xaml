@@ -4,5 +4,6 @@
 
     <!-- Window color -->
     <Color x:Key="WindowBkColor">#ff3e3e3e</Color>
+    <Color x:Key="ColorWorkViewBg">#686868</Color>
 
 </ResourceDictionary>

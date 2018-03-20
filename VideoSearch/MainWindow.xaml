@@ -201,7 +201,13 @@
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Right" Margin="0,4,4,0" x:Name="ToolbarHelp" NormalImage="Resources/Images/Toolbar/Toolbar06/btHelp.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="54" Tag="6" Click="OnShowHelp" TextMode="Bottom" Text="关于" />
                 </Grid>
             </Grid>
+            
             <Grid Margin="0,100,0,0" VerticalAlignment="Stretch">
+                <!-- background of workview -->
+                <Grid.Background>
+                    <SolidColorBrush Color="{StaticResource ColorWorkViewBg}" />
+                </Grid.Background>
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="222*" />
                     <ColumnDefinition Width="980*" MinWidth = "640"/>
@@ -435,8 +441,14 @@
                         </Style>
                     </TreeView.Resources>
                 </TreeView>
+                
                 <Grid Grid.Column="1" Margin="0" x:Name="Work_Area">
-                    <ContentControl x:Name="workView" Content="ContentControl" Grid.Column="1" Margin="0" />
+                    <ContentControl 
+                        x:Name="workView" 
+                        Content="ContentControl" 
+                        Grid.Column="1" 
+                        Margin="0" />
+                    
                     <Image x:Name="imgHandle" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="1,0,0,0" VerticalAlignment="Center" Width="5" Source="Resources/Images/Button/SpliterHandle.png" Stretch="UniformToFill"/>
                 </Grid>
                 <GridSplitter HorizontalAlignment="Left" x:Name="Splitter" Width="10" Grid.Column="1" Background="#00000000" ShowsPreview="False" ResizeBehavior="PreviousAndCurrent" />

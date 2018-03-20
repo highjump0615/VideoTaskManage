@@ -109,6 +109,9 @@ namespace VideoSearch.Windows
         {
             get
             {
+                if (_image == null)
+                    return null;
+
                 String filePath = _image.UriSource.AbsolutePath;
 
                 return Base64EncodedData(filePath);

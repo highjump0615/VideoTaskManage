@@ -7,6 +7,7 @@
         <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/ProgressBarStyles.xaml" />
+        <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/SliderStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/TextBoxStyles.xaml" />

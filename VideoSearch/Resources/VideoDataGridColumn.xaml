@@ -372,4 +372,71 @@
             </Grid>
         </Grid>
     </DataTemplate>
+
+    <!-- 
+    *********************
+    * Article columns *
+    *********************
+    -->
+
+    <DataTemplate x:Key="ArticleCameraNameColumnTemplate" >
+        <Grid Margin="-1">
+            <Canvas Background="{DynamicResource DataGridSelection}"
+                    Visibility="{Binding SelectorVisibility}" />
+            <TextBlock Text="{Binding CameraName}" VerticalAlignment="Center" 
+                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
+                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ArticleCameraPosColumnTemplate" >
+        <Grid Margin="-1">
+            <Canvas Background="{DynamicResource DataGridSelection}"
+                    Visibility="{Binding SelectorVisibility}" />
+            <TextBlock Text="{Binding CameraPos}" VerticalAlignment="Center" 
+                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
+                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ArticleMovieNameColumnTemplate" >
+        <Grid Margin="-1">
+            <Canvas Background="{DynamicResource DataGridSelection}"
+                    Visibility="{Binding SelectorVisibility}" />
+            <TextBlock Text="{Binding MovieName}" VerticalAlignment="Center" 
+                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
+                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ArticleTargetTypeColumnTemplate" >
+        <Grid Margin="-1">
+            <Canvas Background="{DynamicResource DataGridSelection}"
+                    Visibility="{Binding SelectorVisibility}" />
+            <TextBlock Text="{Binding TargetType}" VerticalAlignment="Center" 
+                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
+                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ArticleFrameColumnTemplate" >
+        <Grid Margin="-1">
+            <Canvas Background="{DynamicResource DataGridSelection}"
+                    Visibility="{Binding SelectorVisibility}" />
+            <TextBlock Text="{Binding CameraName}" VerticalAlignment="Center" 
+                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
+                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+        </Grid>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="ArticleDescriptionTemplate" >
+        <Grid Margin="-1">
+            <Canvas Background="{DynamicResource DataGridSelection}"
+                    Visibility="{Binding SelectorVisibility}" />
+            <TextBlock Text="{Binding Description}" VerticalAlignment="Center" 
+                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
+                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+        </Grid>
+    </DataTemplate>
+
 </ResourceDictionary>

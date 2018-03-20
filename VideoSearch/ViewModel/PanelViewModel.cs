@@ -17,7 +17,7 @@ namespace VideoSearch.ViewModel
         {
             if (Contents == null || Contents.GetType() == typeof(PanelViewPathModel))
             {
-                ShowResult();
+                Contents = new PanelViewListModel(Owner);
             }
         }
 
@@ -31,6 +31,11 @@ namespace VideoSearch.ViewModel
                 Contents = new PanelViewTaskCompressModel(Owner);
             else
                 Contents = new PanelViewListModel(Owner);
+        }
+
+        public void ShowList()
+        {
+            Contents = new PanelViewListModel(Owner);
         }
 
         public void ShowPath()

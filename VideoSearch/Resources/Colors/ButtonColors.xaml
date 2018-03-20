@@ -7,8 +7,8 @@
     <Color x:Key="CommonButtonBorderColor">#FF050505</Color>
 
     <!--BrownButton colors-->
-    <Color x:Key="BrownButtonDisabledDarkColor">#FF7F7F7F</Color>
-    <Color x:Key="BrownButtonDisabledForegroundColor">#FF888888</Color>
+    <Color x:Key="BrownButtonDisabledDarkColor">#7F7F4F2F</Color>
+    <Color x:Key="BrownButtonDisabledForegroundColor">#FFAAAAAA</Color>
 
     <Color x:Key="BrownButtonLightColor">#FF7F4F2F</Color>
     <Color x:Key="BrownButtonMediumColor">#FF764525</Color>
@@ -18,8 +18,8 @@
     <Color x:Key="BrownButtonPressedColor">#FF764525</Color>
 
     <!--GreenButton colors.-->
-    <Color x:Key="GreenButtonDisabledDarkColor">#FF7F7F7F</Color>
-    <Color x:Key="GreenButtonDisabledForegroundColor">#FF888888</Color>
+    <Color x:Key="GreenButtonDisabledDarkColor">#7F496B5D</Color>
+    <Color x:Key="GreenButtonDisabledForegroundColor">#FFAAAAAA</Color>
 
     <Color x:Key="GreenButtonLightColor">#FF496B5D</Color>
     <Color x:Key="GreenButtonMediumColor">#FF406355</Color>

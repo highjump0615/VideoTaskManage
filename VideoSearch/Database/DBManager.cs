@@ -15,6 +15,8 @@ namespace VideoSearch.Database
         public const String EventTable = "Event";
         public const String CameraTable = "Camera";
         public const String MovieTable = "Movie";
+        public const String MovieTaskTable = "MovieTask";
+        public const String ArticleTable = "Article";
         #endregion
 
         #region Property

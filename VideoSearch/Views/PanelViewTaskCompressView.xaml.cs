@@ -26,6 +26,15 @@ namespace VideoSearch.Views
             _vlcPlayer.PlayerStopped += OnMovieStopped;
 
             OnStop(this, null);
+
+            Unloaded += OnUnLoad;
+
+        }
+
+        public void OnUnLoad(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= OnUnLoad;
+            _vlcPlayer.Stop();
         }
 
         #region Utility
@@ -72,7 +81,9 @@ namespace VideoSearch.Views
 
         private void OnStop(object sender, RoutedEventArgs e)
         {
-            _vlcPlayer.Stop();
+            if (_vlcPlayer != null)
+                _vlcPlayer.Stop();
+
             DurationSlider.Value = 0;
             DurationSlider.IsEnabled = false;
 

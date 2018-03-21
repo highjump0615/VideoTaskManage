@@ -10,7 +10,7 @@
              Loaded="OnLoaded">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="680"/>
+            <ColumnDefinition Width="680*"/>
             <ColumnDefinition Width="6"/>
             <ColumnDefinition Width="224*" />
         </Grid.ColumnDefinitions>
@@ -200,28 +200,49 @@
                         CornerRadius="4,4,0,0">
                     <TextBlock Text="标注列表" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
                 </Border>
+                
                 <DataGrid x:Name="PathDataGrid" Grid.Row="1"
                             BorderBrush="Black"
-					        ColumnHeaderHeight="31" RowHeight="31" 
+					        ColumnHeaderHeight="31" RowHeight="26" 
 					        ItemsSource="{Binding Path=MarkList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 					        HeadersVisibility="Column" 
-					        FontSize="14" Foreground="White" 
+					        Foreground="White" 
 					        ScrollViewer.CanContentScroll="False" 
 					        VerticalScrollBarVisibility="Auto" 
 					        HorizontalScrollBarVisibility="Disabled" 
 					        AutoGenerateColumns="False" 
-					        CanUserResizeRows="False" CanUserAddRows="False">
+					        CanUserResizeRows="False" CanUserAddRows="False"
+                          IsReadOnly="True">
+
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource GridRowStyle}" TargetType="DataGridRow" />
+                    </DataGrid.RowStyle>
+
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource GridCellStyle}" TargetType="DataGridCell" />
+                    </DataGrid.CellStyle>
+
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn  Header="时间" Width="40*"
-							CellTemplate="{StaticResource AddingTimeColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="X0" Width="40*"
-							CellTemplate="{StaticResource LeftPosColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="Y0" Width="40*"
-							CellTemplate="{StaticResource TopPosColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="X1" Width="40*"
-							CellTemplate="{StaticResource RightPosColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="X2" Width="40*"
-							CellTemplate="{StaticResource BottomPosColumnTemplate}" />
+                        <DataGridTextColumn 
+                            Binding="{Binding Frame}" 
+                            Header="时间"
+                            Width="5*"/>
+                        <DataGridTextColumn 
+                            Binding="{Binding X0}" 
+                            Header="X0"
+                            Width="4*"/>
+                        <DataGridTextColumn 
+                            Binding="{Binding Y0}" 
+                            Header="Y0"
+                            Width="4*"/>
+                        <DataGridTextColumn 
+                            Binding="{Binding X1}" 
+                            Header="X1"
+                            Width="4*"/>
+                        <DataGridTextColumn 
+                            Binding="{Binding Y1}" 
+                            Header="Y1"
+                            Width="4*"/>
                     </DataGrid.Columns>
                 </DataGrid>
 

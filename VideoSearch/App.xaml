@@ -8,18 +8,17 @@
              xmlns:viewModel="clr-namespace:VideoSearch.ViewModel"
              xmlns:playerModel="clr-namespace:VideoSearch.ViewModel.Player"
              xmlns:PlayViewModel="clr-namespace:VideoSearch.ViewModel.PlayView"
-
              StartupUri="MainWindow.xaml">
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Colors.xaml" />
-                <ResourceDictionary Source="/Resources/Styles.xaml" />
                 <ResourceDictionary Source="/Resources/Values.xaml" />
                 <ResourceDictionary Source="/Resources/MoviePlayerDataGridColumn.xaml" />
                 <ResourceDictionary Source="/Resources/VideoDataGrid.xaml" />
                 <ResourceDictionary Source="/Resources/VideoDataGridColumn.xaml" />
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!-- ViewModels -->

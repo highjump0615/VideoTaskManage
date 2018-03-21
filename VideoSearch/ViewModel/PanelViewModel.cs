@@ -13,13 +13,6 @@ namespace VideoSearch.ViewModel
         }
 
         #region utility function
-        protected void updateList()
-        {
-            if (Contents == null || Contents.GetType() == typeof(PanelViewPathModel))
-            {
-                Contents = new PanelViewListModel(Owner);
-            }
-        }
 
         public void ShowResult()
         {
@@ -31,16 +24,6 @@ namespace VideoSearch.ViewModel
                 Contents = new PanelViewTaskCompressModel(Owner);
             else
                 Contents = new PanelViewListModel(Owner);
-        }
-
-        public void ShowList()
-        {
-            Contents = new PanelViewListModel(Owner);
-        }
-
-        public void ShowPath()
-        {
-            Contents = new PanelViewPathModel(this);
         }
         
         public void Export()
@@ -57,6 +40,7 @@ namespace VideoSearch.ViewModel
                 string filename = dlg.FileName;
             }
         }
+
         #endregion
     }
 }

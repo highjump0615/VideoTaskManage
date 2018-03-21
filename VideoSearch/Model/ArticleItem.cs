@@ -47,6 +47,8 @@ namespace VideoSearch.Model
 
     public class ArticleItem : DataItemBase
     {
+        public static int LEVEL = 4;
+
         #region Constructor & Init
 
         public ArticleItem(DataItemBase parent = null)
@@ -54,7 +56,7 @@ namespace VideoSearch.Model
         {
             Parent = parent;
 
-            SetLevel(5);
+            SetLevel(4);
 
             Table = ArticleTable.Table;
         }

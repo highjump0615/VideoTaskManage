@@ -123,16 +123,32 @@ namespace VideoSearch
                 _selectedItem = selectedItem;
 
                 int level = _selectedItem == null ? 0 : _selectedItem.Level;
-                if (level == 0)
+
+                // 案件管理
+                if (level < EventItem.LEVEL)
+                {
                     workView.Content = new EventViewModel(VideoData.AppVideoData);
-                else if (level == 1)
+                }
+                // 摄像头管理
+                else if (level == EventItem.LEVEL)
+                {
                     workView.Content = new CameraViewModel(_selectedItem);
-                else if (level == 2)
+                }
+                // 视频文件管理
+                else if (level == CameraItem.LEVEL)
+                {
                     workView.Content = new MovieViewModel(_selectedItem);
-                else if (level == 3)
+                }
+                // 视频任务管理
+                else if (level == MovieItem.LEVEL)
+                {
                     workView.Content = new MovieTaskViewModel(_selectedItem);
-                else if (level == 4)
+                }
+                // 视频任务详情
+                else if (level == MovieTaskItem.LEVEL)
+                {
                     workView.Content = new PanelViewModel(_selectedItem);
+                }
             }
         }
 
@@ -141,9 +157,13 @@ namespace VideoSearch
             DataItemBase selectedItem = (DataItemBase)treeView.SelectedItem;
 
             if (selectedItem != null)
+            {
                 SelectTabWithLevel(selectedItem.Level);
+            }
             else
+            {
                 SelectRoot();
+            }
 
             UpdateContentsWithSelectedItem(selectedItem);
         }
@@ -194,18 +214,24 @@ namespace VideoSearch
             for (int i = 0; i < 5; i++)
             {
                 SkinButtonGroup control = (SkinButtonGroup)_groupList[i];
-                if (i <= level)
+                control.IsEnabled = false;
+                control.IsSelected = false;
+
+                int nTag = getTag(control);
+
+                // 
+                // 启用下一级功能
+                // 
+                if (level >= nTag)
+                {
                     control.IsEnabled = true;
-                else
-                    control.IsEnabled = false;
+                }
 
-                if (i == level)
+                if (level == nTag)
+                {
                     control.IsSelected = true;
-                else
-                    control.IsSelected = false;
+                }
             }
-
-            Level = level+1;
         }
 
         protected void SelectRoot()
@@ -225,8 +251,6 @@ namespace VideoSearch
                     control.IsSelected = false;
                 }
             }
-
-            Level = 1;
 
             UpdateContentsWithSelectedItem(null);
         }
@@ -256,32 +280,30 @@ namespace VideoSearch
             return false;
         }
 
+        /// <summary>
+        /// tag转int
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+        private int getTag(object sender)
+        {
+            Decimal senderTag = Decimal.Parse(String.Concat(((FrameworkElement)sender).Tag));
+
+            return Decimal.ToInt32(senderTag);
+        }
+
         protected void OnTabChanged(object sender, RoutedEventArgs e)
         {
             if (sender != null)
             {
-                Decimal senderTag = Decimal.Parse(String.Concat(((FrameworkElement)sender).Tag));
-
-                int nTag = Decimal.ToInt32(senderTag);
+                int nTag = getTag(sender);
 
                 DataItemBase selectedItem = (DataItemBase)treeView.SelectedItem;
-                if (!SelectParentItem(nTag - 1, selectedItem))
+                if (!SelectParentItem(nTag, selectedItem))
                 {
                     if(selectedItem != null)
                         selectedItem.IsSelected = false;
                     SelectRoot();
-                }
-            }
-        }
-
-        public int Level
-        {
-            get { return _level; }
-            set
-            {
-                if(_level != value)
-                {
-                    _level = value;
                 }
             }
         }
@@ -504,22 +526,36 @@ namespace VideoSearch
         // Process command from Toolbar5
         /////////////////////////////////////////////////////////
 
+        /// <summary>
+        /// 打开标注列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPanelPreview(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
 
             Object viewContents = workView.Content;
-            if (viewContents.GetType() == typeof(PanelViewModel))
-                ((PanelViewModel)viewContents).ShowList();
+            if (viewContents is CameraViewModel)
+            {
+                ((CameraViewModel)viewContents).ShowLabelList();
+            }
         }
 
+        /// <summary>
+        /// 打开轨迹查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPanelShowPath(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
 
             Object viewContents = workView.Content;
-            if (viewContents.GetType() == typeof(PanelViewModel))
-                ((PanelViewModel)viewContents).ShowPath();
+            if (viewContents is CameraViewModel)
+            {
+                ((CameraViewModel)viewContents).ShowLabelTracking();
+            }
         }
 
         private void OnPanelExport(object sender, RoutedEventArgs e)

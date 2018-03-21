@@ -13,6 +13,8 @@ namespace VideoSearch.Model
 {
     public class MovieItem : DataItemBase
     {
+        public static int LEVEL = 3;
+
         #region Constructor & Init & Destructor
         public MovieItem(DataItemBase parent = null) : base()
         {

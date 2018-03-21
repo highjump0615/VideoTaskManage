@@ -28,6 +28,8 @@ namespace VideoSearch.Model
 
     public class CameraItem : DataItemBase
     {
+        public static int LEVEL = 2;
+
         #region Property
 
         private String _eventPos = "";

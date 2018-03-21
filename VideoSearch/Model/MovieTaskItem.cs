@@ -23,9 +23,10 @@ namespace VideoSearch.Model
 
     public class MovieTaskItem : DataItemBase
     {
+        public static int LEVEL = 4;
 
         #region Constructor & Init
-        
+
         public MovieTaskItem(DataItemBase parent = null)
             : base()
         {

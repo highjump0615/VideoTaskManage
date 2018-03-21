@@ -101,10 +101,30 @@ namespace VideoSearch.ViewModel
             Contents = new CameraViewMapModel(longitude, latitude);
         }
 
+        /// <summary>
+        /// 打开摄像头列表
+        /// </summary>
         public void ShowCameraDetailList()
         {
             Contents = new CameraViewDetailListModel(Owner, this);
         }
+
+        /// <summary>
+        /// 打开标注列表
+        /// </summary>
+        public void ShowLabelList()
+        {
+            Contents = new PanelViewListModel(Owner, this);
+        }
+
+        /// <summary>
+        /// 打开轨迹查询
+        /// </summary>
+        public void ShowLabelTracking()
+        {
+            Contents = new PanelViewPathModel(this);
+        }
+
         #endregion
     }
 }

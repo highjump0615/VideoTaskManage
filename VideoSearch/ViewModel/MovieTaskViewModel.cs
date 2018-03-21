@@ -110,10 +110,11 @@ namespace VideoSearch.ViewModel
             }
         }
 
+        /// <summary>
+        /// 打开视频任务列表页面
+        /// </summary>
         public void ShowMovieChargeList()
         {
-            updateList();
-
             Contents = new MovieTaskViewListModel(Owner);
         }
 

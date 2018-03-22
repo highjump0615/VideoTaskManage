@@ -217,7 +217,7 @@
                             <Border.BorderBrush>
                                 <SolidColorBrush Color="Transparent" />
                             </Border.BorderBrush>
-                            <ScrollContentPresenter />
+                            <ScrollContentPresenter Margin="{TemplateBinding Padding}" />
                         </Border>
                         <ScrollBar x:Name="PART_VerticalScrollBar"
                                    Grid.Column="1"

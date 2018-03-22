@@ -249,373 +249,523 @@
             </Grid>
 
             <!-- 标注信息 -->
-            <Grid Grid.Row="2" x:Name="GridDetail">
-                <Border Background="#FF323231" BorderBrush="Black" Grid.RowSpan="2"
+            <Border Background="#FF464646" BorderBrush="Black" Grid.Row="2"
                         BorderThickness="1"
                         CornerRadius="4,4,0,0">
-                </Border>
-
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height=" 30" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition Height=" 28" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <Border Background="#FF464646" Margin="1" CornerRadius="4,4,0,0">
-                        <TextBlock Text="标注信息" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
-                    </Border>
-                    <Separator  Background="Black" Margin="1,0" VerticalAlignment="Bottom" />
-
-                    <Grid Grid.Row="1" Margin="1,0"  Background="#FF323231">
+                <DockPanel Margin="0,4,0,-4">
+                    <!-- 操作按钮 -->
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                          Height="30"
+                          Margin="7"
+                          DockPanel.Dock="Bottom">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="81" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="81" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="轨迹说明" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                        <TextBox Grid.Column="1" x:Name="TxtDetail"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
-
+                        <Button Content="清空标注" Foreground="White" FontSize="14" Focusable="False" 
+                                x:Name="btnClear" 
+                                Click="OnClear"
+                                Style="{DynamicResource BrownButtonStyle}">
+                        </Button>
+                        <Button Content="保存标注" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" 
+                                x:Name="btnSave" 
+                                Click="OnSave"
+                                Style="{DynamicResource GreenButtonStyle}"/>
                     </Grid>
-                    <Grid Grid.Row="2" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="关键字" VerticalAlignment="Center" Foreground="White" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                        <TextBox Grid.Column="1" x:Name="TxtMainKey"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
-
-                    </Grid>
-                    <Grid Grid.Row="3" Margin="1,0"  Background="#FF323231">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="目标类型" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                        <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                        <ComboBox Grid.Column="1" Name="CboTargetType" FontSize="14" Foreground="White" Text="" Style="{DynamicResource BlueFrameComboBox}"
-                                  SelectionChanged="OnTargetTypeChanged">
-                            <ComboBoxItem Content="人" />
-                            <ComboBoxItem Content="车" />
-                        </ComboBox>
-                    </Grid>
-                    <Grid x:Name="GridManInfo" Visibility="Hidden"
-                          Grid.Row="4" Grid.RowSpan="9">
+                    <!-- 标注信息 -->
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <!-- title -->
+                            <TextBlock 
+                                Text="标注信息" 
+                                VerticalAlignment="Center"
+                                Foreground="#ccc" 
+                                FontSize="16"
+                                TextAlignment="Center" 
+                                Margin="0 0 0 4" />
 
-                            <TextBlock Text="裤子颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                            <Separator 
+                                Background="Black" 
+                                Margin="1,0" 
+                                VerticalAlignment="Bottom" />
+                        </StackPanel>
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                        <!-- 属性列表 -->
+                        <ScrollViewer 
+                            Grid.Row="1" 
+                            VerticalScrollBarVisibility="Auto">
 
-                            <Border x:Name="PantsColor" Background="Transparent" Grid.Column="1">
-                                <Button x:Name="PantsColorBtn"  Style="{DynamicResource ImageButtonStyle}" HorizontalAlignment="Stretch" Click="OnSelectColor"/>
-                            </Border>
+                            <StackPanel Background="#FF323231">
+                                <!-- 轨迹说明 -->
+                                <Border Style="{StaticResource LabelInfoItemStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                            <ColumnDefinition Width="1" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                                        <TextBlock 
+                                            Grid.Column="0"
+                                            Style="{StaticResource LabelInfoNameStyle}"
+                                            Text="轨迹说明" />
+                                        <Border 
+                                            Grid.Column="1"
+                                            Style="{StaticResource LabelVertBorderStyle}" />
+                                        <TextBox
+                                            Grid.Column="2"
+                                            x:Name="TxtDetail"
+                                            Style="{StaticResource LabelTextboxStyle}"/>
+                                    </Grid>
+                                </Border>
 
-                            <TextBlock Text="裤子种类" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                                <!-- 关键词 -->
+                                <Border Style="{StaticResource LabelInfoItemStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                            <ColumnDefinition Width="1" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                                        <TextBlock 
+                                            Grid.Column="0"
+                                            Style="{StaticResource LabelInfoNameStyle}"
+                                            Text="关键词" />
+                                        <Border 
+                                            Grid.Column="1"
+                                            Style="{StaticResource LabelVertBorderStyle}" />
+                                        <TextBox
+                                            Grid.Column="2"
+                                            x:Name="TxtMainKey"
+                                            Style="{StaticResource LabelTextboxStyle}"/>
+                                    </Grid>
+                                </Border>
 
-                            <ComboBox Grid.Column="1" Name="CboPantsKind" FontSize="14" Foreground="White" Text="" Style="{DynamicResource BlueFrameComboBox}">
-                                <ComboBoxItem Content="长裤" />
-                                <ComboBoxItem Content="短裤" />
-                            </ComboBox>
-                        </Grid>
-                        <Grid Grid.Row="2" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                                <!-- 目标类型 -->
+                                <Border Style="{StaticResource LabelInfoItemStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                            <ColumnDefinition Width="1" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="其它体貌特征" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                                        <TextBlock 
+                                            Grid.Column="0"
+                                            Style="{StaticResource LabelInfoNameStyle}"
+                                            Text="目标类型" />
+                                        <Border 
+                                            Grid.Column="1"
+                                            Style="{StaticResource LabelVertBorderStyle}" />
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                                        <ComboBox
+                                            Grid.Column="2"
+                                            Name="CboTargetType"
+                                            Style="{StaticResource BlueFrameComboBox}"
+                                            Foreground="White"
+                                            SelectionChanged="OnTargetTypeChanged">
+                                            <ComboBoxItem Content="人" />
+                                            <ComboBoxItem Content="车" />
+                                        </ComboBox>
+                                    </Grid>
+                                </Border>
 
-                            <TextBox Grid.Column="1" x:Name="TxtOtherHumanSpec"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+                                <!-- 人 -->
+                                <StackPanel 
+                                    x:Name="GridManInfo" 
+                                    Visibility="Collapsed">
+                                    <!-- 裤子颜色 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                        </Grid>
-                        <Grid Grid.Row="3" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="裤子颜色" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <Border 
+                                                Grid.Column="2"
+                                                x:Name="PantsColor" 
+                                                Background="Transparent">
+                                                <Button 
+                                                    x:Name="PantsColorBtn"  
+                                                    Style="{StaticResource ImageButtonStyle}" 
+                                                    HorizontalAlignment="Stretch" 
+                                                    Click="OnSelectColor"/>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
 
-                            <TextBlock Text="上衣颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                                    <!-- 裤子种类 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="裤子种类" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <ComboBox
+                                                Grid.Column="2"
+                                                Style="{StaticResource BlueFrameComboBox}"
+                                                Foreground="White"
+                                                Name="CboPantsKind">
+                                                <ComboBoxItem Content="长裤" />
+                                                <ComboBoxItem Content="短裤" />
+                                            </ComboBox>
+                                        </Grid>
+                                    </Border>
 
-                            <Border x:Name="CoatColor" Background="Transparent" Grid.Column="1">
-                                <Button x:Name="CoatColorBtn"  Style="{DynamicResource ImageButtonStyle}" HorizontalAlignment="Stretch" Click="OnSelectColor"/>
-                            </Border>
+                                    <!-- 其它体貌特征 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                        </Grid>
-                        <Grid Grid.Row="4" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="其它体貌特征" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <TextBox
+                                                Grid.Column="2"
+                                                x:Name="TxtOtherHumanSpec"
+                                                Style="{StaticResource LabelTextboxStyle}"/>
+                                        </Grid>
+                                    </Border>
 
-                            <TextBlock Text="上衣种类" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                                    <!-- 上衣颜色 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="上衣颜色" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <Border 
+                                                Grid.Column="2"
+                                                x:Name="CoatColor" 
+                                                Background="Transparent">
+                                                <Button 
+                                                    x:Name="CoatColorBtn"  
+                                                    Style="{StaticResource ImageButtonStyle}" 
+                                                    HorizontalAlignment="Stretch" 
+                                                    Click="OnSelectColor"/>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
 
-                            <TextBox Grid.Column="1" x:Name="TxtCoatKind"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+                                    <!-- 上衣种类 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                        </Grid>
-                        <Grid Grid.Row="5" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="上衣种类" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <TextBox
+                                                Grid.Column="2"
+                                                x:Name="TxtCoatKind"
+                                                Style="{StaticResource LabelTextboxStyle}"/>
+                                        </Grid>
+                                    </Border>
 
-                            <TextBlock Text="是否背包" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                                    <!-- 是否背包 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="是否背包" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <CheckBox 
+                                                Grid.Column="2"
+                                                x:Name="ChkHasPack" 
+                                                Style="{StaticResource LabelCheckboxStyle}"/>
+                                        </Grid>
+                                    </Border>
 
-                            <CheckBox x:Name="ChkHasPack" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="6" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                                    <!-- 是否戴帽子 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="是否戴帽子" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="是否戴帽子" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <CheckBox 
+                                                Grid.Column="2"
+                                                x:Name="ChkHasCap" 
+                                                Style="{StaticResource LabelCheckboxStyle}"/>
+                                        </Grid>
+                                    </Border>
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                                    <!-- 是否戴眼镜 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                            <CheckBox x:Name="ChkHasCap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="7" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="是否戴眼镜" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <CheckBox 
+                                                Grid.Column="2"
+                                                x:Name="ChkHasGlass" 
+                                                Style="{StaticResource LabelCheckboxStyle}" />
+                                        </Grid>
+                                    </Border>
 
-                            <TextBlock Text="是否戴眼镜" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                                    <!-- 姓名 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="姓名" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <TextBox
+                                                Grid.Column="2"
+                                                x:Name="TxtName"
+                                                Style="{StaticResource LabelTextboxStyle}"/>
+                                        </Grid>
+                                    </Border>
 
-                            <CheckBox x:Name="ChkHasGlass" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="8" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                                </StackPanel>
 
-                            <TextBlock Text="姓名" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
+                                <!-- 车 -->
+                                <StackPanel
+                                    x:Name="GridCarInfo" 
+                                    Visibility="Collapsed">
+                                    <!-- 车牌 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="车牌" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <TextBox
+                                                Grid.Column="2"
+                                                x:Name="TxtCarNumber"
+                                                Style="{StaticResource LabelTextboxStyle}"/>
+                                        </Grid>
+                                    </Border>
 
-                            <TextBox Grid.Column="1" x:Name="TxtName"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
+                                    <!-- 车身颜色 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                        </Grid>
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="车身颜色" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <Border 
+                                                Grid.Column="2"
+                                                x:Name="CarColor"
+                                                Background="Transparent">
+                                                <Button 
+                                                    x:Name="CarColorBtn"  
+                                                    Style="{StaticResource ImageButtonStyle}" 
+                                                    HorizontalAlignment="Stretch" 
+                                                    Click="OnSelectColor"/>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
 
+                                    <!-- 乘客数量 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="乘客数量" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <TextBox
+                                                Grid.Column="2"
+                                                x:Name="TxtMemberCount"
+                                                Style="{StaticResource LabelTextboxStyle}"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- 驾驶人 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="驾驶人" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <TextBox
+                                                Grid.Column="2"
+                                                x:Name="TxtDriver"
+                                                Style="{StaticResource LabelTextboxStyle}"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- 品牌型号 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="品牌型号" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <TextBox
+                                                Grid.Column="2"
+                                                x:Name="TxtCarModel"
+                                                Style="{StaticResource LabelTextboxStyle}"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- 其他车身特征 -->
+                                    <Border Style="{StaticResource LabelInfoItemStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource LabelInfoNameWidth}" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Style="{StaticResource LabelInfoNameStyle}"
+                                                Text="其他车身特征" />
+                                            <Border 
+                                                Grid.Column="1"
+                                                Style="{StaticResource LabelVertBorderStyle}" />
+                                            <TextBox
+                                                Grid.Column="2"
+                                                x:Name="TxtOtherCarSpec"
+                                                Style="{StaticResource LabelTextboxStyle}"/>
+                                        </Grid>
+                                    </Border>
+
+                                </StackPanel>
+                                
+                            </StackPanel>
+
+                        </ScrollViewer>
                     </Grid>
-                    <Grid x:Name="GridCarInfo" Visibility="Hidden"
-                          Grid.Row="4" Grid.RowSpan="9">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                </DockPanel>
+                
+            </Border>
 
-                        <Grid Grid.Row="0" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="车牌" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                            <TextBox Grid.Column="1" x:Name="TxtCarNumber"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="车身颜色" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                            <Border x:Name="CarColor" Background="Transparent" Grid.Column="1">
-                                <Button x:Name="CarColorBtn"  Style="{DynamicResource ImageButtonStyle}" HorizontalAlignment="Stretch" Click="OnSelectColor"/>
-                            </Border>
-                        </Grid>
-                        <Grid Grid.Row="2" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="乘客数量" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                            <TextBox Grid.Column="1" x:Name="TxtMemberCount"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
-                        </Grid>
-                        <Grid Grid.Row="3" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="驾驶人" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                            <TextBox Grid.Column="1" x:Name="TxtDriver"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
-                        </Grid>
-                        <Grid Grid.Row="4" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="品牌型号" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                            <TextBox Grid.Column="1" x:Name="TxtCarModel"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
-                        </Grid>
-                        <Grid Grid.Row="5" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="其他车身特征" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-
-                            <TextBox Grid.Column="1" x:Name="TxtOtherCarSpec"
-                                 VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" Background="Transparent" BorderBrush="Transparent" />
-                        </Grid>
-                        <Grid Grid.Row="6" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                        </Grid>
-                        <Grid Grid.Row="7" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                        </Grid>
-                        <Grid Grid.Row="8" Margin="1,0"  Background="#FF323231">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="" VerticalAlignment="Center" Foreground="White" FontSize="14" Height="18" TextAlignment="Left" Margin="8,0" TextTrimming="CharacterEllipsis" />
-
-                            <Separator  Background="Black" Margin="0" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                        </Grid>
-
-                    </Grid>
-
-
-                    <Border BorderBrush="Black" 
-                            BorderThickness="1,0,0,0"
-                            HorizontalAlignment="Center" 
-                            Grid.Row="1" Grid.RowSpan="12"/>
-
-                    <Grid Grid.Row="13" Margin="1,0,1,1"  Background="#FF323231">
-
-                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="81" />
-                                <ColumnDefinition Width="12" />
-                                <ColumnDefinition Width="81" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Content="清空标注" x:Name="btnClear" Foreground="White" FontSize="14" Focusable="False" 
-                                    Click="OnClear" Height="30" 
-                                    Style="{DynamicResource BrownButtonStyle}">
-                            </Button>
-                            <Button Content="保存标注" x:Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" 
-                                    Click="OnSave" Height="30" 
-                                    Style="{DynamicResource GreenButtonStyle}"/>
-
-                        </Grid>
-
-                    </Grid>
-
-                </Grid>
-            </Grid>
-            
             <!-- Splitter -->
             <GridSplitter 
                 Grid.Row="1" 

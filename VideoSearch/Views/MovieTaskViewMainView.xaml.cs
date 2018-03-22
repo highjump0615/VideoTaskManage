@@ -89,8 +89,6 @@ namespace VideoSearch.Views
 
                 btnSave.IsEnabled = true;
                 btnClear.IsEnabled = true;
-
-                GridDetail.IsHitTestVisible = true;
             }
         }
 
@@ -350,9 +348,8 @@ namespace VideoSearch.Views
             TxtCarModel.Text = "";
             TxtOtherCarSpec.Text = "";
 
-            GridManInfo.Visibility = Visibility.Hidden;
-            GridCarInfo.Visibility = Visibility.Hidden;
-            GridDetail.IsHitTestVisible = false;
+            GridManInfo.Visibility = Visibility.Collapsed;
+            GridCarInfo.Visibility = Visibility.Collapsed;
         }
 
         private void OnSelectColor(object sender, RoutedEventArgs e)
@@ -377,20 +374,16 @@ namespace VideoSearch.Views
 
         private void OnTargetTypeChanged(object sender, SelectionChangedEventArgs e)
         {
+            GridManInfo.Visibility = Visibility.Collapsed;
+            GridCarInfo.Visibility = Visibility.Collapsed;
+
             if (CboTargetType.SelectedIndex == 0)
             {
                 GridManInfo.Visibility = Visibility.Visible;
-                GridCarInfo.Visibility = Visibility.Hidden;
             }
             else if (CboTargetType.SelectedIndex == 1)
             {
-                GridManInfo.Visibility = Visibility.Hidden;
                 GridCarInfo.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                GridManInfo.Visibility = Visibility.Hidden;
-                GridCarInfo.Visibility = Visibility.Hidden;
             }
         }
     }

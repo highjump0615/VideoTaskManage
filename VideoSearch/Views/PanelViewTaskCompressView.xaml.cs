@@ -151,6 +151,11 @@ namespace VideoSearch.Views
             {
                 _vlcPlayer.SetVideoInfo(moviePath, true);
 
+                // 浓缩物体显示
+                //List<string> listPath = new List<string>();
+                //listPath.Add(@"E:\Work\Project\video\test\1.xml");
+                //vlcPlayer1.SetWuShiBiaoInfo(true, listPath);
+
                 PlayerPanel.Child = _vlcPlayer;
 
                 OnPlay(sender, e);

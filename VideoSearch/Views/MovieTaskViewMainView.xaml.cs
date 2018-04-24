@@ -327,6 +327,9 @@ namespace VideoSearch.Views
             btnSave.IsEnabled = false;
             btnClear.IsEnabled = false;
 
+            //
+            // 清空标注信息详情
+            //
             System.Windows.Media.Brush transBr = System.Windows.Media.Brushes.Transparent;
             TxtDetail.Text = "";
             TxtMainKey.Text = "";

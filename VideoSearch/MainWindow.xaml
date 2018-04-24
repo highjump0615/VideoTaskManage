@@ -449,7 +449,35 @@
                         Grid.Column="1" 
                         Margin="0" />
                     
-                    <Image x:Name="imgHandle" Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="1,0,0,0" VerticalAlignment="Center" Width="5" Source="Resources/Images/Button/SpliterHandle.png" Stretch="UniformToFill"/>
+                    <!-- loading mask -->
+                    <Grid Visibility="Collapsed">
+                        <Grid.Background>
+                            <SolidColorBrush Color="{StaticResource LoadingMaskColor}" />
+                        </Grid.Background>
+                        
+                        <!-- loading mark -->
+                        <StackPanel Orientation="Vertical"
+                                    Width="300"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="正在加载...." 
+                                       Foreground="White"
+                                       TextAlignment="Center"
+                                       FontSize="12pt"/>
+                            <ProgressBar Height="12"
+                                         IsIndeterminate="True"
+                                         Margin="0 10 0 0"/>
+                        </StackPanel>
+                    </Grid>
+                    
+                    <!-- move mark -->
+                    <Image x:Name="imgHandle" 
+                           HorizontalAlignment="Left" 
+                           Height="31" 
+                           Margin="1,0,0,0" 
+                           VerticalAlignment="Center" 
+                           Width="5" 
+                           Source="Resources/Images/Button/SpliterHandle.png" 
+                           Stretch="UniformToFill"/>
                 </Grid>
                 <GridSplitter HorizontalAlignment="Left" x:Name="Splitter" Width="10" Grid.Column="1" Background="#00000000" ShowsPreview="False" ResizeBehavior="PreviousAndCurrent" />
 

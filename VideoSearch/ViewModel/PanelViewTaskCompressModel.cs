@@ -8,13 +8,16 @@ namespace VideoSearch.ViewModel
     {
         public PanelViewTaskCompressModel(DataItemBase item)
         {
-            if (item != null && item.GetType() == typeof(MovieTaskCompressItem))
+            if (item == null || item.GetType() != typeof(MovieTaskCompressItem))
             {
-                MovieTaskCompressItem compressedMovie = (MovieTaskCompressItem)item;
-
-                MovieTitle = compressedMovie.Name;
-                MoviePath = compressedMovie.CompressedPlayPath;
+                return;
             }
+
+            MovieTaskCompressItem compressedMovie = (MovieTaskCompressItem)item;
+
+            // 获取任务结果
+            MovieTitle = compressedMovie.Name;
+            MoviePath = compressedMovie.CompressedPlayPath;
         }
 
         #region Property

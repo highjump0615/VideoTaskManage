@@ -25,6 +25,8 @@ namespace VideoSearch.Model
     {
         public static int LEVEL = 4;
 
+        protected string basePath = "D:\\VideoInvestigationDataDB\\AnalysisFile";
+
         #region Constructor & Init
 
         public MovieTaskItem(DataItemBase parent = null)

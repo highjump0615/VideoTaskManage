@@ -172,7 +172,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <Grid Margin="15,0" Opacity="{Binding  }">
+            <Grid Margin="15,0" Opacity="{Binding Opacity}">
                 <TextBlock Height="18" Text="{Binding Name}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="0,0,20,0" TextTrimming="CharacterEllipsis" />
                 <Image Width="16" Height="16" Source="{Binding Remark}" HorizontalAlignment="Right"/>
             </Grid>

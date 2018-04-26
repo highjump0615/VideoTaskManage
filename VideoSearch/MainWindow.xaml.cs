@@ -116,6 +116,10 @@ namespace VideoSearch
         // Process command from TreeView
         /////////////////////////////////////////////////////////
 
+        /// <summary>
+        /// 更新工作区内容
+        /// </summary>
+        /// <param name="selectedItem"></param>
         private void UpdateContentsWithSelectedItem(DataItemBase selectedItem)
         {
             if (_selectedItem != selectedItem)

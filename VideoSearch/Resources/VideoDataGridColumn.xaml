@@ -172,7 +172,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <Grid Margin="15,0" Opacity="{Binding Opacity}">
+            <Grid Margin="15,0" Opacity="{Binding  }">
                 <TextBlock Height="18" Text="{Binding Name}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="0,0,20,0" TextTrimming="CharacterEllipsis" />
                 <Image Width="16" Height="16" Source="{Binding Remark}" HorizontalAlignment="Right"/>
             </Grid>
@@ -247,7 +247,6 @@
 
                 <ProgressBar Height="10" VerticalAlignment="Center" Style="{DynamicResource OrangeProgressBar}" Maximum="1" 
                              Value="{Binding Progress}"
-                             IsIndeterminate="{Binding IsIndeterminate}"
                              Grid.Column="0"
                              Visibility="{Binding ProgressBarVisibility}"/>
                 <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 

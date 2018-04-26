@@ -51,7 +51,7 @@ namespace VideoSearch.Model
             TaskType = taskType;
             State = state;
 
-            InitFromServer();
+            //InitFromServer();
         }
 
         public MovieTaskItem(DataItemBase parent, String taskId, String name, MovieTaskType taskType) 

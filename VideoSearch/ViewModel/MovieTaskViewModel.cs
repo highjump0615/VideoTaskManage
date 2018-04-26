@@ -36,7 +36,7 @@ namespace VideoSearch.ViewModel
 
             MovieItem movieItem = (MovieItem)Owner;
 
-            if (movieItem.VideoId == null || movieItem.VideoId.Length == 0)
+            if (movieItem.VideoId <= 0)
                 return;
 
             MovieSearchWindow searchDlg = new MovieSearchWindow(movieItem);
@@ -65,7 +65,7 @@ namespace VideoSearch.ViewModel
 
             MovieItem movieItem = (MovieItem)Owner;
 
-            if (movieItem.VideoId == null || movieItem.VideoId.Length == 0)
+            if (movieItem.VideoId <= 0)
                 return;
 
             MovieSummaryWindow outlineDlg = new MovieSummaryWindow(movieItem);
@@ -92,7 +92,7 @@ namespace VideoSearch.ViewModel
 
             MovieItem movieItem = (MovieItem)Owner;
 
-            if (movieItem.VideoId == null || movieItem.VideoId.Length == 0)
+            if (movieItem.VideoId <= 0)
                 return;
 
             MovieCompressWindow compressDlg = new MovieCompressWindow(movieItem);

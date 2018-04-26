@@ -59,7 +59,7 @@ namespace VideoSearch.ViewModel
 
                 MovieTitle = movie.Name;
                 MoviePath = movie.PlayPath;
-                MovieID = movie.VideoId;
+                MovieID = movie.VideoId.ToString();
             }
 
             _parentViewModel = parentViewModel;

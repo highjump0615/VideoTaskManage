@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using VideoSearch.Utils;
@@ -62,14 +63,24 @@ namespace VideoSearch.Views
 
         private async Task InitPlayerAsync()
         {
+            // 显示加载中提示
+            Globals.Instance.ShowWaitCursor(true);
+
+            // 重新加载需要延迟
             await Task.Delay(10);
 
             var vm = (MovieTaskViewMainModel)this.DataContext;
 
-            if (!String.IsNullOrEmpty(vm.MoviePath))
+            // 是否已获取
+            if (!vm.movieItem.IsFetched())
             {
-                _vlcPlayer.SetVideoInfo(vm.MoviePath, true);
-                _markUtils = new ManualMarkUtils(_vlcPlayer, vm.MovieID);
+                await vm.movieItem.InitFromServer(true);
+            }
+
+            if (!String.IsNullOrEmpty(vm.movieItem.PlayPath))
+            {
+                _vlcPlayer.SetVideoInfo(vm.movieItem.PlayPath, true);
+                _markUtils = new ManualMarkUtils(_vlcPlayer, vm.movieItem.VideoId);
 
                 OnPlay(this, null);
             }
@@ -78,6 +89,8 @@ namespace VideoSearch.Views
                 OnStop(this, null);
                 PlayButton.IsEnabled = false;
             }
+
+            Globals.Instance.ShowWaitCursor(false);
         }
 
         protected new void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

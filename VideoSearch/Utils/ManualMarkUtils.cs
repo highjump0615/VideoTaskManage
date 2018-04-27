@@ -11,20 +11,20 @@ namespace VideoSearch.Utils
     public class ManualMarkUtils
     {
         vlcPlayer _player = null;
-        String _videoId = null;
+        int _videoId = 0;
         String _path = null;
         int _lastIndex = 0;
         List<ManualMark> _markList = new List<ManualMark>();
 
         #region Constructor
         
-        public ManualMarkUtils(vlcPlayer player, String videoId)
+        public ManualMarkUtils(vlcPlayer player, int videoId)
         {
             _player = player;
             _videoId = videoId;
 
-            if(_videoId != null && _videoId.Length > 0)
-                _path = String.Format("D:\\VideoInvestigationDataDB\\AnalysisFile\\VideoId_{0}_Articlue", _videoId);
+            if (videoId > 0)
+                _path = $"D:\\VideoInvestigationDataDB\\AnalysisFile\\VideoId_{_videoId}_Articlue";
 
             if (Directory.Exists(_path))
             {

@@ -51,6 +51,11 @@ namespace VideoSearch.ViewModel
             }
         }
 
+        /// <summary>
+        /// 显示加载中提示
+        /// </summary>
+        /// <param name="notice"></param>
+        /// <param name="withProgress"></param>
         public void ShowWorkMask(String notice = "", bool withProgress = true)
         {
             VisibilityWorkMask = Visibility.Visible;
@@ -62,6 +67,9 @@ namespace VideoSearch.ViewModel
             VisibilityWorkMaskProgress = withProgress ? Visibility.Visible : Visibility.Hidden;
         }
 
+        /// <summary>
+        /// 隐藏加载中提示
+        /// </summary>
         public void HideWorkMask()
         {
             VisibilityWorkMask = Visibility.Collapsed;

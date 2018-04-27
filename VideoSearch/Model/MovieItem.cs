@@ -81,7 +81,7 @@ namespace VideoSearch.Model
         /// 获取视频信息
         /// </summary>
         /// <returns></returns>
-        public async Task InitFromServer()
+        public async Task InitFromServer(bool FetchOnly = false)
         {
             // 还没提交的视频，退出
             if (VideoId <= 0)
@@ -90,7 +90,7 @@ namespace VideoSearch.Model
             }
 
             // 已获取信息，退出
-            if (MovieLength > 0)
+            if (IsFetched())
             {
                 return;
             }
@@ -99,6 +99,11 @@ namespace VideoSearch.Model
             if(videoInfo != null)
             {
                 FillDataFromXml(videoInfo);
+
+                if (FetchOnly)
+                {
+                    return;
+                }
 
                 if (State != ConvertStatus.PlayReady || Progress < 1.0)
                 {
@@ -111,6 +116,11 @@ namespace VideoSearch.Model
                     }
                 }
             }
+        }
+
+        public bool IsFetched()
+        {
+            return MovieLength > 0;
         }
 
         protected override void DisposeItem()

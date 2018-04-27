@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using VideoSearch.ViewModel;
 
 namespace VideoSearch
@@ -22,5 +24,13 @@ namespace VideoSearch
         }
 
         public MainViewModel MainVM { get; set; }
+
+        public void ShowWaitCursor(bool wait)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Mouse.OverrideCursor = wait ? Cursors.Wait : null;
+            });
+        }
     }
 }

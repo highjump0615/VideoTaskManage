@@ -51,23 +51,23 @@ namespace VideoSearch.ViewModel
 
     public class MovieTaskViewMainModel : ViewModelBase
     {
+        public MovieItem movieItem;
+
         #region Constructor
         public MovieTaskViewMainModel(DataItemBase item, Object parentViewModel = null)
         {
             if (item != null && item.GetType() == typeof(MovieItem))
             {
-                MovieItem movie = (MovieItem)item;
+                movieItem = (MovieItem)item;
 
-                MovieTitle = movie.Name;
-                MoviePath = movie.PlayPath;
-                MovieID = movie.VideoId.ToString();
+                MovieTitle = movieItem.Name;
 
                 // 如果没导入完，显示加载中。。
-                if (movie.State != VideoService.ConvertStatus.ConvertedOk)
+                if (movieItem.State != VideoService.ConvertStatus.ConvertedOk)
                 {
                     String strNotice = "正在导入，请稍后";
                     bool bProgress = true;
-                    switch (movie.State)
+                    switch (movieItem.State)
                     {
                         case VideoService.ConvertStatus.ConvertedFail:
                             strNotice = "导入失败，请重新导入";
@@ -102,35 +102,6 @@ namespace VideoSearch.ViewModel
                 {
                     _movieTitle = value;
                     PropertyChanging("MovieTitle");
-                }
-            }
-        }
-
-        private String _moviePath = "";
-
-        public String MoviePath
-        {
-            get { return _moviePath; }
-            set
-            {
-                if(_moviePath != value)
-                {
-                    _moviePath = value;
-                    PropertyChanging("MoviePath");
-                }
-            }
-        }
-
-        private String _movieID= "";
-        public String MovieID
-        {
-            get { return _movieID; }
-            set
-            {
-                if (_movieID != value)
-                {
-                    _movieID = value;
-                    PropertyChanging("MovieID");
                 }
             }
         }

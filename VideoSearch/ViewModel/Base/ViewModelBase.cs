@@ -12,5 +12,15 @@ namespace VideoSearch.ViewModel.Base
         public ViewModelBase ViewModelParent { get; set; }
 
         public Control View { get; set; }
+
+        public void Dispose()
+        {
+            OnDispose();
+        }
+
+        protected virtual void OnDispose()
+        {
+            Console.WriteLine(string.Format("Disposing {0} , {1}", this.GetType().Name, this.GetType().FullName));
+        }
     }
 }

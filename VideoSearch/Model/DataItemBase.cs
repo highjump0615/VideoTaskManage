@@ -43,7 +43,7 @@ namespace VideoSearch.Model
             DisposeItem();
         }
 
-        protected virtual void DisposeItem()
+        public virtual void DisposeItem()
         {
             foreach(DataItemBase item in Items)
                 item.Dispose();

@@ -34,5 +34,15 @@ namespace VideoSearch.ViewModel
                 await item.InitFromServer();
             }
         }
+
+        protected override void OnDispose()
+        {
+            base.OnDispose();
+
+            foreach (MovieItem item in Owner)
+            {
+                item.DisposeItem();
+            }
+        }
     }
 }

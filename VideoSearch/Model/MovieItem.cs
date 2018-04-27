@@ -92,6 +92,11 @@ namespace VideoSearch.Model
             // 已获取信息，退出
             if (IsFetched())
             {
+                if (!FetchOnly)
+                {
+                    await StartMonitoring();
+                }
+
                 return;
             }
 
@@ -100,20 +105,23 @@ namespace VideoSearch.Model
             {
                 FillDataFromXml(videoInfo);
 
-                if (FetchOnly)
+                if (!FetchOnly)
                 {
-                    return;
+                    await StartMonitoring();
                 }
+            }
+        }
 
-                if (State != ConvertStatus.PlayReady || Progress < 1.0)
+        private async Task StartMonitoring()
+        {
+            if (State != ConvertStatus.PlayReady || Progress < 1.0)
+            {
+                if (State == ConvertStatus.ConvertReady)
+                    await SubmitVideo();
+                else
                 {
-                    if (State == ConvertStatus.ConvertReady)
-                        await SubmitVideo();
-                    else
-                    {
-                        _monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
-                        _monitorThread.Start();
-                    }
+                    _monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
+                    _monitorThread.Start();
                 }
             }
         }
@@ -123,7 +131,7 @@ namespace VideoSearch.Model
             return MovieLength > 0;
         }
 
-        protected override void DisposeItem()
+        public override void DisposeItem()
         {
             base.DisposeItem();
 
@@ -768,6 +776,12 @@ namespace VideoSearch.Model
 
                 status = (ConvertStatus)int.Parse(videoInfo.Element("TranscodeStatus").Value);
                 Console.WriteLine($"Convert status:{status}, Progress : {Progress}");
+
+                if (status == ConvertStatus.ConvertedFail)
+                {
+                    // 失败，退出
+                    break;
+                }
 
             } while (status != ConvertStatus.ConvertedOk ||
                         Progress < 1.0);

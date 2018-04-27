@@ -89,7 +89,7 @@ namespace VideoSearch.Model
             }
         }
         
-        protected override void DisposeItem()
+        public override void DisposeItem()
         {
             base.DisposeItem();
 

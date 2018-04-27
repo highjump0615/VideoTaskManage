@@ -34,6 +34,7 @@ namespace VideoSearch
             _mainWindow = this;
 
             MainViewModel mainVM = new MainViewModel();
+            mainVM.View = this;
             Globals.Instance.MainVM = mainVM;
 
             this.DataContext = mainVM;
@@ -593,6 +594,11 @@ namespace VideoSearch
             helpWindow.Owner = this;
             helpWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             helpWindow.ShowDialog();
+        }
+
+        public void EnableMovieTaskMenu(bool enable)
+        {
+            MovieTaskGroup.IsEnabled = enable;
         }
     }
 }

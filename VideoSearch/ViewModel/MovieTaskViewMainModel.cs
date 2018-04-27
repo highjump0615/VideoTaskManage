@@ -82,6 +82,10 @@ namespace VideoSearch.ViewModel
 
                     // 显示加载中提示
                     Globals.Instance.MainVM.ShowWorkMask(strNotice, bProgress);
+
+                    // 不让用视频处理任务
+                    var viewMain = Globals.Instance.MainVM.View as MainWindow;
+                    viewMain.EnableMovieTaskMenu(false);
                 }
             }
 

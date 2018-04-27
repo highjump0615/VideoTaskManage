@@ -9,7 +9,7 @@
         xmlns:ViewModel="clr-namespace:VideoSearch.ViewModel" 
         x:Class="VideoSearch.MainWindow"
         mc:Ignorable="d"
-        Height="700" Width="1224" MinWidth="1224" MinHeight="700"
+        Height="700" Width="1324" MinWidth="1224" MinHeight="700"
         WindowStyle="None" Background="#00000000"  
         Icon="Resources/Images/MainWindow/app_icon.ico" 
         Style="{DynamicResource ShadowNormalWindowStyle}"
@@ -209,8 +209,8 @@
                 </Grid.Background>
                 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="222*" />
-                    <ColumnDefinition Width="980*" MinWidth = "640"/>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="3*" MinWidth = "640"/>
                 </Grid.ColumnDefinitions>
                 <TreeView x:Name="treeView" ItemsSource="{Binding Source={StaticResource dataItems}}" Style="{DynamicResource {x:Type TreeView}}" SelectedItemChanged="OnTreeItemSelectionChanged">
                     <TreeView.Resources>

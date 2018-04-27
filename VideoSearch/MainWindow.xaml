@@ -450,7 +450,7 @@
                         Margin="0" />
                     
                     <!-- loading mask -->
-                    <Grid Visibility="Collapsed">
+                    <Grid Name="ViewWorkMask" Visibility="{Binding VisibilityWorkMask}">
                         <Grid.Background>
                             <SolidColorBrush Color="{StaticResource LoadingMaskColor}" />
                         </Grid.Background>
@@ -459,11 +459,12 @@
                         <StackPanel Orientation="Vertical"
                                     Width="300"
                                     VerticalAlignment="Center">
-                            <TextBlock Text="正在加载...." 
+                            <TextBlock Text="{Binding WorkMaskNotice}" 
                                        Foreground="White"
                                        TextAlignment="Center"
                                        FontSize="12pt"/>
                             <ProgressBar Height="12"
+                                         Visibility="{Binding VisibilityWorkMaskProgress}"
                                          IsIndeterminate="True"
                                          Margin="0 10 0 0"/>
                         </StackPanel>

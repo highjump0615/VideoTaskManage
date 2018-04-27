@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using VideoSearch.SkinControl;
 using System.Windows.Input;
 using System.Windows.Shell;
+using VideoSearch.Views;
+using VideoSearch.ViewModel.Base;
 
 namespace VideoSearch
 {
@@ -30,6 +32,11 @@ namespace VideoSearch
         {
             InitializeComponent();
             _mainWindow = this;
+
+            MainViewModel mainVM = new MainViewModel();
+            Globals.Instance.MainVM = mainVM;
+
+            this.DataContext = mainVM;
         }
         
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -125,6 +132,10 @@ namespace VideoSearch
             if (_selectedItem != selectedItem)
             {
                 _selectedItem = selectedItem;
+
+                // 隐藏加载中提示
+                var viewModelMain = (MainViewModel)this.DataContext;
+                viewModelMain.HideWorkMask();
 
                 int level = _selectedItem == null ? 0 : _selectedItem.Level;
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,7 +15,7 @@ namespace VideoSearch.Views
 {
     public delegate void UpdateDurationDelegate(long pos);
 
-    public partial class MovieTaskViewMainView : UserControl
+    public partial class MovieTaskViewMainView : UserControlBase
     {
         private vlcPlayer _vlcPlayer = null;
         private ManualMarkUtils _markUtils = null;
@@ -31,6 +33,13 @@ namespace VideoSearch.Views
         #region Delegate
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+        }
+
+        /// <summary>
+        /// 播放器初始化
+        /// </summary>
+        public void InitPlayer()
+        {
             if (_vlcPlayer == null)
             {
                 _vlcPlayer = new vlcPlayer();
@@ -42,38 +51,58 @@ namespace VideoSearch.Views
                 _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
                 _vlcPlayer.PlayerStopped += OnMovieStopped;
                 _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
-            }
-
-            String moviePath = MovieSource.Text;
-            if (moviePath != null && moviePath.Length > 0)
-            {
-                _vlcPlayer.SetVideoInfo(moviePath, true);
-
-                if(_markUtils == null)
-                    _markUtils = new ManualMarkUtils(_vlcPlayer, MovieID.Text);
 
                 PlayerPanel.Child = _vlcPlayer;
+            }
 
-                OnPlay(sender, e);
+            var taskInit = InitPlayerAsync();
+
+            Reset();
+        }
+
+        private async Task InitPlayerAsync()
+        {
+            await Task.Delay(10);
+
+            var vm = (MovieTaskViewMainModel)this.DataContext;
+
+            if (!String.IsNullOrEmpty(vm.MoviePath))
+            {
+                _vlcPlayer.SetVideoInfo(vm.MoviePath, true);
+                _markUtils = new ManualMarkUtils(_vlcPlayer, vm.MovieID);
+
+                OnPlay(this, null);
             }
             else
             {
                 OnStop(this, null);
                 PlayButton.IsEnabled = false;
             }
+        }
 
-            Reset();
+        protected new void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            base.onDataContextChanged(sender, e);
+
+            // 初始化播放器
+            ClearPlayer();
+            InitPlayer();
         }
 
         public void OnUnLoad(object sender, RoutedEventArgs e)
         {
             Unloaded -= OnUnLoad;
 
-            if(_vlcPlayer != null)
-            {
-                _vlcPlayer.Stop();
-                _vlcPlayer = null;
-            }
+            ClearPlayer();
+            _vlcPlayer = null;
+        }
+
+        /// <summary>
+        /// 清除播放器
+        /// </summary>
+        public void ClearPlayer()
+        {
+            OnStop(this, null);
         }
         #endregion
 
@@ -151,7 +180,7 @@ namespace VideoSearch.Views
         {
             ShowPlayer(true);
 
-            if (sender != null && e != null)
+            if (sender != null)
             {
                 _vlcPlayer.Play();
             }
@@ -320,9 +349,15 @@ namespace VideoSearch.Views
         private void Reset()
         {
             ObservableCollection<ClipInfo> items = (ObservableCollection<ClipInfo>)PathDataGrid.ItemsSource;
+            if (items != null)
+            {
+                items.Clear();
+            }
 
-            items.Clear();
-            _markUtils.ResetManualMark();
+            if (_markUtils != null)
+            {
+                _markUtils.ResetManualMark();
+            }
 
             btnSave.IsEnabled = false;
             btnClear.IsEnabled = false;

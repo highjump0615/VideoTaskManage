@@ -135,6 +135,7 @@
     <Compile Include="Database\MovieTable.cs" />
     <Compile Include="Database\MovieTaskTable.cs" />
     <Compile Include="Database\TableManager.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Model\ArticleItem.cs" />
     <Compile Include="Model\CameraItem.cs" />
     <Compile Include="Model\DataItemBase.cs" />
@@ -187,13 +188,16 @@
     <Compile Include="VideoService\VideoInfo.cs" />
     <Compile Include="ViewModel\Base\HostViewModel.cs" />
     <Compile Include="ViewModel\Base\ListViewModel.cs" />
+    <Compile Include="ViewModel\Base\ObservableObject.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\Base\RelayCommandEx.cs" />
+    <Compile Include="ViewModel\Base\ViewModelBase.cs" />
     <Compile Include="ViewModel\CameraViewDetailListModel.cs" />
     <Compile Include="ViewModel\CameraViewListModel.cs" />
     <Compile Include="ViewModel\CameraViewMapModel.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\EventViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MovieTaskViewListModel.cs" />
     <Compile Include="ViewModel\MovieTaskViewMainModel.cs" />
     <Compile Include="ViewModel\MovieViewAnalysisModel.cs" />
@@ -215,6 +219,7 @@
     <Compile Include="ViewModel\PlayView\PlayViewMainModel.cs" />
     <Compile Include="ViewModel\PlayView\PlayViewMediumModel.cs" />
     <Compile Include="ViewModel\PlayView\PlayViewSmallModel.cs" />
+    <Compile Include="Views\Base\UserControlBase.cs" />
     <Compile Include="Views\CameraViewDetailListView.xaml.cs">
       <DependentUpon>CameraViewDetailListView.xaml</DependentUpon>
     </Compile>

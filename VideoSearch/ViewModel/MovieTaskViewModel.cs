@@ -13,7 +13,6 @@ namespace VideoSearch.ViewModel
         public MovieTaskViewModel(DataItemBase owner) : base(owner)
         {
             Contents = new MovieTaskViewMainModel(Owner);
-
         }
 
         #region utility function

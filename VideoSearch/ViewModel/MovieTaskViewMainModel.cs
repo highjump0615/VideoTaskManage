@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using VideoSearch.Model;
+using VideoSearch.ViewModel.Base;
 
 namespace VideoSearch.ViewModel
 {
@@ -48,7 +49,7 @@ namespace VideoSearch.ViewModel
         }
     }
 
-    public class MovieTaskViewMainModel : INotifyPropertyChanged
+    public class MovieTaskViewMainModel : ViewModelBase
     {
         #region Constructor
         public MovieTaskViewMainModel(DataItemBase item, Object parentViewModel = null)
@@ -60,6 +61,28 @@ namespace VideoSearch.ViewModel
                 MovieTitle = movie.Name;
                 MoviePath = movie.PlayPath;
                 MovieID = movie.VideoId.ToString();
+
+                // 如果没导入完，显示加载中。。
+                if (movie.State != VideoService.ConvertStatus.ConvertedOk)
+                {
+                    String strNotice = "正在导入，请稍后";
+                    bool bProgress = true;
+                    switch (movie.State)
+                    {
+                        case VideoService.ConvertStatus.ConvertedFail:
+                            strNotice = "导入失败，请重新导入";
+                            bProgress = false;
+                            break;
+
+                        case VideoService.ConvertStatus.ImportReady:
+                            strNotice = "未导入，请导入视频转码";
+                            bProgress = false;
+                            break;
+                    }
+
+                    // 显示加载中提示
+                    Globals.Instance.MainVM.ShowWorkMask(strNotice, bProgress);
+                }
             }
 
             _parentViewModel = parentViewModel;
@@ -78,7 +101,7 @@ namespace VideoSearch.ViewModel
                 if (_movieTitle != value)
                 {
                     _movieTitle = value;
-                    OnPropertyChanged("MovieTitle");
+                    PropertyChanging("MovieTitle");
                 }
             }
         }
@@ -93,7 +116,7 @@ namespace VideoSearch.ViewModel
                 if(_moviePath != value)
                 {
                     _moviePath = value;
-                    OnPropertyChanged("MoviePath");
+                    PropertyChanging("MoviePath");
                 }
             }
         }
@@ -107,7 +130,7 @@ namespace VideoSearch.ViewModel
                 if (_movieID != value)
                 {
                     _movieID = value;
-                    OnPropertyChanged("MovieID");
+                    PropertyChanging("MovieID");
                 }
             }
         }
@@ -124,16 +147,6 @@ namespace VideoSearch.ViewModel
                 _markList = value;
             }
         }
-        #endregion
-
-        #region Notify
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
         #endregion
 
     }

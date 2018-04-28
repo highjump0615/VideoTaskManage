@@ -99,7 +99,12 @@ namespace VideoSearch.Views
 
             // 初始化播放器
             ClearPlayer();
-            InitPlayer();
+
+            if (e.NewValue is MovieTaskViewMainModel)
+            {
+                // 初始化
+                InitPlayer();
+            }            
         }
 
         public void OnUnLoad(object sender, RoutedEventArgs e)

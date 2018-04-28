@@ -113,9 +113,9 @@ namespace VideoSearch.VideoService
         /// <param name="sensitivity"></param>
         /// <param name="nRegionType"></param>
         /// <param name="region"></param>
-        public XElement CreateSummaryTask(int videoId, String sensitivity, int nRegionType, Rect region)
+        public async Task<XElement> CreateSummaryTask(int videoId, String sensitivity, int nRegionType, Rect region)
         {
-            return SubmitTask("1", videoId, sensitivity, nRegionType, region, -1);
+            return await SubmitTask("1", videoId, sensitivity, nRegionType, region, -1);
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace VideoSearch.VideoService
         /// <param name="nRegionType"></param>
         /// <param name="region"></param>
         /// <param name="thickness"></param>
-        public XElement CreateCompressTask(int videoId, int thickness, String sensitivity, int nRegionType, Rect region)
+        public async Task<XElement> CreateCompressTask(int videoId, int thickness, String sensitivity, int nRegionType, Rect region)
         {
-            return SubmitTask("2", videoId, sensitivity, nRegionType, region, thickness);
+            return await SubmitTask("2", videoId, sensitivity, nRegionType, region, thickness);
         }
 
         /// <summary>
@@ -146,9 +146,9 @@ namespace VideoSearch.VideoService
         /// <param name="renxingPic"></param>
         /// <param name="renxingMaskPic"></param>
         /// <param name="renxingWaijieRect"></param>
-        public XElement CreateSearchTask(int videoId, String sensitivity, int nRegionType, Rect region, String objType, String colors, String alarmInfo, char[] renxingPic, char[] renxingMaskPic, Rect renxingWaijieRect)
+        public async Task<XElement> CreateSearchTask(int videoId, String sensitivity, int nRegionType, Rect region, String objType, String colors, String alarmInfo, char[] renxingPic, char[] renxingMaskPic, Rect renxingWaijieRect)
         {
-            return SubmitTask("3", videoId, sensitivity, nRegionType, region, -1, objType, colors, alarmInfo, renxingPic, renxingMaskPic, renxingWaijieRect);
+            return await SubmitTask("3", videoId, sensitivity, nRegionType, region, -1, objType, colors, alarmInfo, renxingPic, renxingMaskPic, renxingWaijieRect);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace VideoSearch.VideoService
         /// <param name="renxingMaskPic"></param>
         /// <param name="renxingWaijieRect"></param>
         /// <returns></returns>
-        public XElement SubmitTask(String taskType, int videoId, String sensitivity, int nRegionType, Rect region, int thickness, String objType = "", String colors = "", String alarmInfo = "", char[] renxingPic = null, char[] renxingMaskPic = null, Rect renxingWaijieRect = new Rect())
+        public async Task<XElement> SubmitTask(String taskType, int videoId, String sensitivity, int nRegionType, Rect region, int thickness, String objType = "", String colors = "", String alarmInfo = "", char[] renxingPic = null, char[] renxingMaskPic = null, Rect renxingWaijieRect = new Rect())
         {
             int left, top, right, bottom;
 
@@ -207,10 +207,9 @@ namespace VideoSearch.VideoService
                     String strRenxingMaskPic = new string(renxingMaskPic);
                     postData += String.Format("&RenXingPic={0}&RenXingMaskPic={1}&RenXingWaiJieRect={2}", strRenxingPic, strRenxingMaskPic, strRenXingWaiJieRect);
                 }
-
             }
 
-            return sendToServiceByPost(API_PATH + "/SubmitTask", postData);
+            return await sendToServiceByPost(API_PATH + "/SubmitTask", postData);
         }
 
         /// <summary>
@@ -294,7 +293,7 @@ namespace VideoSearch.VideoService
         /// <param name="url"></param>
         /// <param name="postData"></param>
         /// <returns></returns>
-        protected XElement sendToServiceByPost(string url, string postData)
+        protected async Task<XElement> sendToServiceByPost(string url, string postData)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "POST";
@@ -312,7 +311,7 @@ namespace VideoSearch.VideoService
 
             try
             {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                var response = await request.GetResponseAsync();
                 using (var sr = new System.IO.StreamReader(response.GetResponseStream()))
                 {
                     XDocument xmlDoc = new XDocument();

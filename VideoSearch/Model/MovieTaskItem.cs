@@ -268,7 +268,7 @@ namespace VideoSearch.Model
             }
         }
 
-        private String _remark = "";
+        private String _remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
         public String Remark
         {
             get { return _remark; }
@@ -444,7 +444,6 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Visible;
                         ProgressPos = 1;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
                         Progress = 0.0;
                     }
@@ -458,7 +457,6 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Visible;
                         ProgressPos = 0;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
                         Progress = 0.0;
                     }
@@ -471,8 +469,6 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
                         ProgressPos = 0;
-                        Opacity = 0.6;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImportReady.png";
                         IsEnabled = true;
                         Progress = 0.0;
                     }
@@ -486,7 +482,6 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Hidden;
                         ProgressPos = 0;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImportReady.png";
                         IsEnabled = true;
                         Progress = 0.0;
                     }

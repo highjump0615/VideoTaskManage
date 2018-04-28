@@ -483,7 +483,7 @@ namespace VideoSearch
             Object viewContents = workView.Content; ;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
-                ((MovieTaskViewModel)viewContents).MovieSearch();
+                var taskSearch = ((MovieTaskViewModel)viewContents).MovieSearch();
             }
         }
 
@@ -520,7 +520,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
                 ((MovieTaskViewModel)viewContents).ShowMovieChargeList();

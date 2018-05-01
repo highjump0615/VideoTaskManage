@@ -13,7 +13,10 @@ namespace VideoSearch.Views
         {
             InitializeComponent();
 
-            Unloaded += (s, e) => ((ViewModelBase)this.DataContext).Dispose();
+            if (this.DataContext != null)
+            {
+                Unloaded += (s, e1) => ((ViewModelBase)this.DataContext).Dispose();
+            }
         }
     }
 }

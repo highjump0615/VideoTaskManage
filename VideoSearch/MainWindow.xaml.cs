@@ -438,7 +438,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
             {
                 ((MovieViewModel)viewContents).DeleteSelectedMovies();

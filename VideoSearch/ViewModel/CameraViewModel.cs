@@ -86,8 +86,9 @@ namespace VideoSearch.ViewModel
 
             if (result == true)
             {
-                updateList();
+                Globals.Instance.ShowWaitCursor(true);
                 Owner.DeleteSelectedItem();
+                Globals.Instance.ShowWaitCursor(false);
             }
         }
 

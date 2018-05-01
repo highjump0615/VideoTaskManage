@@ -87,7 +87,9 @@ namespace VideoSearch.ViewModel.Base
 
             if (result == true)
             {
+                Globals.Instance.ShowWaitCursor(true);
                 _owner.DeleteSelectedItem();
+                Globals.Instance.ShowWaitCursor(false);
             }
         }
         #endregion

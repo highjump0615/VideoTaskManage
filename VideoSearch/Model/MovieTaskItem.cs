@@ -51,7 +51,10 @@ namespace VideoSearch.Model
             TaskType = taskType;
             State = state;
 
-            //InitFromServer();
+            new Thread(new ThreadStart(() =>
+            {
+                InitFromServer();
+            })).Start();
         }
 
         public MovieTaskItem(DataItemBase parent, String taskId, String name, MovieTaskType taskType) 
@@ -66,12 +69,17 @@ namespace VideoSearch.Model
 
             State = MovieTaskState.CreateReady;
 
-            InitFromServer();
+            new Thread(new ThreadStart(() =>
+            {
+                InitFromServer();
+            })).Start();   
         }
 
         protected void InitFromServer()
         {
-            XElement response = ApiManager.Instance.GetQueryTask(TaskId);
+            var taskGet = ApiManager.Instance.GetQueryTask(TaskId);
+            taskGet.Wait();
+            XElement response = taskGet.Result;
 
             if (response != null)
             {
@@ -525,7 +533,9 @@ namespace VideoSearch.Model
 
             do
             {
-                response = ApiManager.Instance.GetQueryTask(TaskId);
+                var taskGet = ApiManager.Instance.GetQueryTask(TaskId);
+                taskGet.Wait();
+                response = taskGet.Result;
 
                 if (response != null)
                 {

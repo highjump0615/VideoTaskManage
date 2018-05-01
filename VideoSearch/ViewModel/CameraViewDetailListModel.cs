@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
 
@@ -7,22 +8,30 @@ namespace VideoSearch.ViewModel
 {
     public class CameraViewDetailListModel : CameraViewListModel
     {
-        public CameraViewDetailListModel(DataItemBase owner, Object parentViewModel = null) : base(owner, parentViewModel)
+        /// <summary>
+        /// 显示地图命令
+        /// </summary>
+        public RelayCommandEx ShowItemMapCommand
         {
+            get;
+            private set;
         }
 
-        public void ShowMap(DataItemBase sender)
+        public CameraViewDetailListModel(DataItemBase owner, Object parentViewModel = null) : base(owner, parentViewModel)
         {
-            if (sender != null)
-            {
-                if (sender.GetType() == typeof(CameraItem))
-                {
-                    CameraItem item = (CameraItem)sender;
+            ShowItemMapCommand = new RelayCommandEx(ShowMap);
+        }
 
-                    if (ParentViewModel != null && ParentViewModel.GetType() == typeof(CameraViewModel))
-                        ((CameraViewModel)ParentViewModel).ShowCameraMap(item.Longitude, item.Latitude);
-                }
-            }
+        /// <summary>
+        /// 显示地图
+        /// </summary>
+        /// <param name="sender"></param>
+        public void ShowMap(Object parameter)
+        {
+            //CameraItem item = (CameraItem)parameter;
+
+            //if (ParentViewModel != null && ParentViewModel.GetType() == typeof(CameraViewModel))
+            //    ((CameraViewModel)ParentViewModel).ShowCameraMap(item.Longitude, item.Latitude);
         }
     }
 }

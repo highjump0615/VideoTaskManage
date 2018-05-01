@@ -385,9 +385,18 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(CameraViewModel))
-                ((CameraViewModel)viewContents).DeleteSelectedItems();
+            {
+                var vmWork = (CameraViewModel)viewContents;
+
+                // 删除操作只有在列表页面上有效
+                if (vmWork.Contents is CameraViewListModel ||
+                    vmWork.Contents is CameraViewDetailListModel)
+                {
+                    ((CameraViewModel)viewContents).DeleteSelectedItems();
+                }
+            }
         }
 
         private void OnShowCameraMap(object sender, RoutedEventArgs e)
@@ -397,7 +406,6 @@ namespace VideoSearch
             Object viewContents = workView.Content; ;
             if (viewContents.GetType() == typeof(CameraViewModel))
             {
-                ((CameraViewModel)viewContents).DeleteSelectedItems();
                 ((CameraViewModel)viewContents).ShowCameraMap();
             }
         }

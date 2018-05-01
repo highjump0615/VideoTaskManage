@@ -39,16 +39,6 @@ namespace VideoSearch.VideoService
         }
 
         /// <summary>
-        /// Queries all video info
-        /// </summary>
-        /// <returns></returns>
-        public XElement GetQueryVideoList()
-        {
-            //return sendToServiceByGet(API_PATH + "/QueryVideoList");
-            return null;
-        }
-
-        /// <summary>
         /// Submit video
         /// </summary>
         /// <returns></returns>
@@ -64,10 +54,12 @@ namespace VideoSearch.VideoService
         /// <returns></returns>
         public bool DeleteVideo(int videoId)
         {
-            //XElement response = sendToServiceByGet(API_PATH + "/DeleteVideo?VideoId=" + videoId);
+            var taskGet = sendToServiceByGet(API_PATH + "/DeleteVideo?VideoId=" + videoId);
+            taskGet.Wait();
+            var response = taskGet.Result;
 
-            //if(response != null)
-            //    return true;
+            if (response != null)
+                return true;
 
             return false;
         }
@@ -75,34 +67,13 @@ namespace VideoSearch.VideoService
 
         #region Task Management
         /// <summary>
-        /// Queries all tasks info
-        /// </summary>
-        /// <returns></returns>
-        public XElement GetQueryTaskList()
-        {
-            //return sendToServiceByGet(API_PATH + "/QueryTaskList");
-            return null;
-        }
-
-        /// <summary>
         /// Query task info
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public XElement GetQueryTask(String taskId)
+        public async Task<XElement> GetQueryTask(String taskId)
         {
-            //return sendToServiceByGet(API_PATH + "/QueryTask?TaskId=" + taskId);
-            return null;
-        }
-
-        /// <summary>
-        /// Query tasklist detail...
-        /// </summary>
-        /// <returns></returns>
-        public XElement GetQueryListDetail()
-        {
-            //return sendToServiceByGet(API_PATH + "/QueryListDetail");
-            return null;
+            return await sendToServiceByGet(API_PATH + "/QueryTask?TaskId=" + taskId);
         }
 
         /// <summary>
@@ -219,10 +190,12 @@ namespace VideoSearch.VideoService
         /// <returns></returns>
         public bool DeleteTask(String taskId)
         {
-            //XElement response = sendToServiceByGet(API_PATH + "/DeleteTask?TaskId=" + taskId);
+            var taskGet = sendToServiceByGet(API_PATH + "/DeleteTask?TaskId=" + taskId);
+            taskGet.Wait();
+            var response = taskGet.Result;
 
-            //if (response != null)
-            //    return true;
+            if (response != null)
+                return true;
 
             return false;
         }
@@ -234,8 +207,9 @@ namespace VideoSearch.VideoService
         /// <returns></returns>
         public XElement GetTaskSnapshot(String taskId)
         {
-            //return sendToServiceByGet(API_PATH + "/GetTaskSnapshot?TaskId=" + taskId);
-            return null;
+            var taskGet = sendToServiceByGet(API_PATH + "/GetTaskSnapshot?TaskId=" + taskId);
+            taskGet.Wait();
+            return taskGet.Result;
         }
 
         /// <summary>
@@ -245,8 +219,9 @@ namespace VideoSearch.VideoService
         /// <returns></returns>
         public XElement GetVideoSummary(String taskId)
         {
-            //return sendToServiceByGet(API_PATH + "/GetVideoSummary?TaskId=" + taskId);
-            return null;
+            var taskGet = sendToServiceByGet(API_PATH + "/GetVideoSummary?TaskId=" + taskId);
+            taskGet.Wait();
+            return taskGet.Result;
         }
         #endregion
 

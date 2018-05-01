@@ -138,8 +138,16 @@
                 <TextBlock Canvas.Left="10" Canvas.Top="10" Height="18" Text="{Binding Address}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" />
                 <TextBlock Canvas.Left="10" Canvas.Top="10" Height="18" Text="{Binding Coordinate}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Grid.Row="1"/>
             </Grid>
-            <Button Content="地图查看" Command="{Binding DataItemCommand}" CommandParameter="{Binding ShowMapCommand}" 
-                            Foreground="White" FontSize="12" Grid.Column="4" Width="70" Height="26" Focusable="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0" Style="{DynamicResource GreenButtonStyle}"/>
+            <Button Grid.Column="4" 
+                    Content="地图查看" 
+                    Command="{Binding DataContext.ShowItemMapCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    CommandParameter="{Binding}" 
+                    Foreground="White" FontSize="12" 
+                    Width="70" Height="26" 
+                    Focusable="False" 
+                    VerticalAlignment="Center" HorizontalAlignment="Right" 
+                    Margin="0,0,6,0" 
+                    Style="{DynamicResource GreenButtonStyle}"/>
         </Grid>
     </DataTemplate>
 

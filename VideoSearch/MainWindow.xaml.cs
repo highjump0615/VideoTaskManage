@@ -172,6 +172,19 @@ namespace VideoSearch
         {
             DataItemBase selectedItem = (DataItemBase)treeView.SelectedItem;
 
+            DataItemBase itemOld = (DataItemBase)e.OldValue;
+            DataItemBase itemNew = (DataItemBase)e.NewValue;
+
+            Console.WriteLine("Tree Changed, old: {0}, new: {1}", 
+                itemOld == null ? "" : itemOld.Name,
+                itemNew == null ? "" : itemNew.Name);
+
+            // 树选项不变，不更新界面，直接退出
+            if (selectedItem == e.OldValue)
+            {
+                return;
+            }
+
             if (selectedItem != null)
             {
                 SelectTabWithLevel(selectedItem.Level);
@@ -217,6 +230,7 @@ namespace VideoSearch
             MovieTaskGroup.Children.Add(ToolbarMovieTaskSummary);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskCompress);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskFind);
+            MovieTaskGroup.Children.Add(ToolbarMovieTaskDelete);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskChargeList);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskFindAndPlay);
 
@@ -434,6 +448,11 @@ namespace VideoSearch
                 ((MovieViewModel)viewContents).ImportMovie();
         }
 
+        /// <summary>
+        /// 删除视频
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMovieDelete(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
@@ -475,7 +494,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
                 ((MovieViewModel)viewContents).ShowMovieAnalysis();
         }
@@ -488,7 +507,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
                 var taskSearch = ((MovieTaskViewModel)viewContents).MovieSearch();
@@ -499,10 +518,10 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
-                ((MovieTaskViewModel)viewContents).MovieOutline();
+                var taskOutline = ((MovieTaskViewModel)viewContents).MovieOutline();
             }
         }
 
@@ -513,10 +532,15 @@ namespace VideoSearch
             Object viewContents = workView.Content; ;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
-                ((MovieTaskViewModel)viewContents).MovieCompress();
+                var taskCompress = ((MovieTaskViewModel)viewContents).MovieCompress();
             }
         }
 
+        /// <summary>
+        /// 视频任务搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMovieTaskFind(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
@@ -607,6 +631,22 @@ namespace VideoSearch
         public void EnableMovieTaskMenu(bool enable)
         {
             MovieTaskGroup.IsEnabled = enable;
+        }
+
+        /// <summary>
+        /// 删除视频任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnMovieDeleteTask(object sender, RoutedEventArgs e)
+        {
+            OnTabChanged(sender, e);
+
+            Object viewContents = workView.Content;
+            if (viewContents is MovieTaskViewModel)
+            {
+                ((MovieTaskViewModel)viewContents).DeleteSelectedMovieTasks();
+            }
         }
     }
 }

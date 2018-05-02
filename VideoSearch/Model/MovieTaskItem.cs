@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using VideoSearch.Database;
@@ -39,6 +40,17 @@ namespace VideoSearch.Model
             Table = MovieTaskTable.Table;
         }
 
+        /// <summary>
+        /// init from DB
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="id"></param>
+        /// <param name="displayID"></param>
+        /// <param name="taskId"></param>
+        /// <param name="name"></param>
+        /// <param name="moviePos"></param>
+        /// <param name="taskType"></param>
+        /// <param name="state"></param>
         public MovieTaskItem(DataItemBase parent, String id, String displayID, String taskId, String name, String moviePos,
                         MovieTaskType taskType, MovieTaskState state) 
             : this(parent)
@@ -51,12 +63,16 @@ namespace VideoSearch.Model
             TaskType = taskType;
             State = state;
 
-            new Thread(new ThreadStart(() =>
-            {
-                InitFromServer();
-            })).Start();
+            InitFromServer();
         }
 
+        /// <summary>
+        /// init from new submit
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="taskId"></param>
+        /// <param name="name"></param>
+        /// <param name="taskType"></param>
         public MovieTaskItem(DataItemBase parent, String taskId, String name, MovieTaskType taskType) 
             : this(parent)
         {
@@ -69,23 +85,20 @@ namespace VideoSearch.Model
 
             State = MovieTaskState.CreateReady;
 
-            new Thread(new ThreadStart(() =>
-            {
-                InitFromServer();
-            })).Start();   
+            InitFromServer();
         }
 
         protected void InitFromServer()
         {
-            var taskGet = ApiManager.Instance.GetQueryTask(TaskId);
-            taskGet.Wait();
-            XElement response = taskGet.Result;
+            //var taskGet = ApiManager.Instance.GetQueryTask(TaskId);
+            //taskGet.Wait();
+            //XElement response = taskGet.Result;
 
-            if (response != null)
-            {
-                SectionCount = StringUtils.String2Int(response.Element("SectionCount").Value);
-                Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
-                State = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
+            //if (response != null)
+            //{
+            //    SectionCount = StringUtils.String2Int(response.Element("SectionCount").Value);
+            //    Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
+            //    State = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
 
                 if (State != MovieTaskState.Created && State != MovieTaskState.CreateFail)
                 {
@@ -94,7 +107,7 @@ namespace VideoSearch.Model
                 }
                 else if (State == MovieTaskState.Created)
                     UpdateProperty();
-            }
+            //}
         }
         
         public override void DisposeItem()
@@ -140,11 +153,11 @@ namespace VideoSearch.Model
         #endregion
 
         #region Override (ClearFromDB)
-        public override bool ClearFromDB()
+        public override async Task<bool> ClearFromDBAsync()
         {
             if (TaskId != "0")
             {
-                if(ApiManager.Instance.DeleteTask(TaskId))
+                if(await ApiManager.Instance.DeleteTask(TaskId))
                 {
                     return base.ClearFromDB();
                 }
@@ -526,6 +539,9 @@ namespace VideoSearch.Model
         #region TaskProcess & Web API
         private Thread _monitorThread = null;
 
+        /// <summary>
+        /// Monitor thread for update progress
+        /// </summary>
         public void TaskProcess()
         {
             XElement response = null;
@@ -545,7 +561,7 @@ namespace VideoSearch.Model
                     Console.WriteLine("*** state = {0}, progress = {1}", state, Progress);
                 }
 
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
             } while (state != MovieTaskState.Created && state != MovieTaskState.CreateFail);
 
             if (response != null && state == MovieTaskState.Created)

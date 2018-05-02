@@ -188,11 +188,9 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public bool DeleteTask(String taskId)
+        public async Task<bool> DeleteTask(String taskId)
         {
-            var taskGet = sendToServiceByGet(API_PATH + "/DeleteTask?TaskId=" + taskId);
-            taskGet.Wait();
-            var response = taskGet.Result;
+            var response = await sendToServiceByGet(API_PATH + "/DeleteTask?TaskId=" + taskId);
 
             if (response != null)
                 return true;

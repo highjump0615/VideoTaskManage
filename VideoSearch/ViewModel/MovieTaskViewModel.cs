@@ -33,7 +33,7 @@ namespace VideoSearch.ViewModel
         /// <returns></returns>
         public async Task MovieSearch()
         {
-            updateList();
+            //updateList();
 
             if (Owner == null || Owner.GetType() != typeof(MovieItem))
                 return;
@@ -51,14 +51,14 @@ namespace VideoSearch.ViewModel
                 Globals.Instance.ShowWaitCursor(true);
 
                 var response = await ApiManager.Instance.CreateSearchTask(
-                    movieItem.VideoId, 
-                    searchDlg.Sensitivity, 
-                    searchDlg.RegionType, 
-                    searchDlg.Region, 
-                    searchDlg.ObjectType, 
-                    searchDlg.Colors, 
+                    movieItem.VideoId,
+                    searchDlg.Sensitivity,
+                    searchDlg.RegionType,
+                    searchDlg.Region,
+                    searchDlg.ObjectType,
+                    searchDlg.Colors,
                     searchDlg.AlarmInfo,
-                    searchDlg.RenXingPic, 
+                    searchDlg.RenXingPic,
                     searchDlg.RenXingMaskPic,
                     searchDlg.RenXingWaiJieRect);
 
@@ -158,6 +158,28 @@ namespace VideoSearch.ViewModel
         public void ShowMovieChargeList()
         {
             Contents = new MovieTaskViewListModel(Owner);
+        }
+
+        /// <summary>
+        /// 删除已选的任务
+        /// </summary>
+        public async void DeleteSelectedMovieTasks()
+        {
+            if (Owner == null || !Owner.HasCheckedItem)
+                return;
+
+            ConfirmDeleteWindow deleteDlg = new ConfirmDeleteWindow();
+
+            Nullable<bool> result = deleteDlg.ShowDialog();
+
+            if (result == true)
+            {
+                Globals.Instance.ShowWaitCursor(true);
+
+                await Owner.DeleteSelectedItemAsync();
+
+                Globals.Instance.ShowWaitCursor(false);
+            }
         }
 
         public void MovieFindAndPlay()

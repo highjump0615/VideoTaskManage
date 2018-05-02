@@ -80,6 +80,11 @@ namespace VideoSearch.Model
         #region Override
         public override void UpdateProperty()
         {
+        }
+        #endregion
+
+        public void FetchResult()
+        {
             XElement response = ApiManager.Instance.GetTaskSnapshot(TaskId);
 
             if (response != null)
@@ -112,6 +117,5 @@ namespace VideoSearch.Model
                 }
             }
         }
-        #endregion
     }
 }

@@ -81,13 +81,18 @@ namespace VideoSearch.Model
         #region Override
         public override void UpdateProperty()
         {
+        }
+        #endregion
+
+        public void FetchResult()
+        {
             XElement response = ApiManager.Instance.GetTaskSnapshot(TaskId);
 
             if (response != null)
             {
                 _snapshots.Clear();
 
-                foreach(XElement obj in response.Descendants("Obj"))
+                foreach (XElement obj in response.Descendants("Obj"))
                 {
                     TaskSnapshot snapshot = new TaskSnapshot();
 
@@ -113,6 +118,5 @@ namespace VideoSearch.Model
                 }
             }
         }
-        #endregion
     }
 }

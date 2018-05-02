@@ -349,7 +349,6 @@
 
                 <ProgressBar Height="10" VerticalAlignment="Center" Style="{DynamicResource OrangeProgressBar}" Maximum="1" 
                              Value="{Binding Progress}"
-                             IsIndeterminate="{Binding IsIndeterminate}"
                              Grid.Column="{Binding ProgressPos}"
                              Visibility="{Binding ProgressBarVisibility}"/>
                 <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 

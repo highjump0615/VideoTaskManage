@@ -431,7 +431,7 @@ namespace VideoSearch.Model
         }
 
 
-        private double _progress = 0.0;
+        private double _progress = 0.5;
         public double Progress
         {
             get { return _progress; }
@@ -479,7 +479,6 @@ namespace VideoSearch.Model
                         ProgressPos = 0;
                         Opacity = 1.0;
                         IsEnabled = false;
-                        Progress = 0.0;
                     }
                     else if (_state == MovieTaskState.Created)
                     {
@@ -491,7 +490,6 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Hidden;
                         ProgressPos = 0;
                         IsEnabled = true;
-                        Progress = 0.0;
                     }
                     else if(_state == MovieTaskState.CreateFail)
                     {
@@ -504,7 +502,6 @@ namespace VideoSearch.Model
                         ProgressPos = 0;
                         Opacity = 1.0;
                         IsEnabled = true;
-                        Progress = 0.0;
                     }
 
                     if (Table != null && TaskType != MovieTaskType.UnInitTask)
@@ -549,6 +546,8 @@ namespace VideoSearch.Model
 
             do
             {
+                Thread.Sleep(1000);
+
                 var taskGet = ApiManager.Instance.GetQueryTask(TaskId);
                 taskGet.Wait();
                 response = taskGet.Result;
@@ -561,7 +560,6 @@ namespace VideoSearch.Model
                     Console.WriteLine("*** state = {0}, progress = {1}", state, Progress);
                 }
 
-                Thread.Sleep(1000);
             } while (state != MovieTaskState.Created && state != MovieTaskState.CreateFail);
 
             if (response != null && state == MovieTaskState.Created)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using VideoSearch.Utils;
@@ -83,9 +84,9 @@ namespace VideoSearch.Model
         }
         #endregion
 
-        public void FetchResult()
+        public override async Task FetchResult()
         {
-            XElement response = ApiManager.Instance.GetTaskSnapshot(TaskId);
+            XElement response = await ApiManager.Instance.GetTaskSnapshot(TaskId);
 
             if (response != null)
             {
@@ -116,6 +117,11 @@ namespace VideoSearch.Model
                     _snapshots.Add(snapshot);
                 }
             }
+        }
+
+        public override bool IsFetched()
+        {
+            return Snapshots.Count > 0;
         }
     }
 }

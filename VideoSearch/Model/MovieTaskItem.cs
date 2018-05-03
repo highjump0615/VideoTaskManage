@@ -63,7 +63,7 @@ namespace VideoSearch.Model
             TaskType = taskType;
             State = state;
 
-            InitFromServer();
+            //InitFromServer();
         }
 
         /// <summary>
@@ -85,29 +85,33 @@ namespace VideoSearch.Model
 
             State = MovieTaskState.CreateReady;
 
-            InitFromServer();
+            var taskQuery = InitFromServer();
         }
 
-        protected void InitFromServer()
+        public async Task InitFromServer()
         {
-            //var taskGet = ApiManager.Instance.GetQueryTask(TaskId);
-            //taskGet.Wait();
-            //XElement response = taskGet.Result;
+            if (State != MovieTaskState.Created && State != MovieTaskState.CreateFail)
+            {
+                _monitorThread = new Thread(new ThreadStart(TaskProcess));
+                _monitorThread.Start();
 
-            //if (response != null)
-            //{
-            //    SectionCount = StringUtils.String2Int(response.Element("SectionCount").Value);
-            //    Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
-            //    State = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
+                return;
+            }
 
-                if (State != MovieTaskState.Created && State != MovieTaskState.CreateFail)
+            if (State == MovieTaskState.Created)
+            {
+                // 已获取信息，退出
+                if (IsFetched())
                 {
-                    _monitorThread = new Thread(new ThreadStart(TaskProcess));
-                    _monitorThread.Start();
+                    return;
                 }
-                else if (State == MovieTaskState.Created)
-                    UpdateProperty();
-            //}
+
+                Globals.Instance.ShowWaitCursor(true);
+                await FetchResult();
+
+                UpdateProperty();
+                Globals.Instance.ShowWaitCursor(false);
+            }
         }
         
         public override void DisposeItem()
@@ -573,8 +577,15 @@ namespace VideoSearch.Model
             _monitorThread = null;
         }
 
+        public virtual Task FetchResult() => null;
+
         public virtual void UpdateProperty()
         {
+        }
+
+        public virtual bool IsFetched()
+        {
+            return true;
         }
 
         #endregion

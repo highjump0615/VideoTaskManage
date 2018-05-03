@@ -203,11 +203,9 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public XElement GetTaskSnapshot(String taskId)
+        public async Task<XElement> GetTaskSnapshot(String taskId)
         {
-            var taskGet = sendToServiceByGet(API_PATH + "/GetTaskSnapshot?TaskId=" + taskId);
-            taskGet.Wait();
-            return taskGet.Result;
+            return await sendToServiceByGet(API_PATH + "/GetTaskSnapshot?TaskId=" + taskId);
         }
 
         /// <summary>

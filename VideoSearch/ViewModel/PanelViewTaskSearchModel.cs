@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using VideoSearch.Model;
+using VideoSearch.ViewModel.Base;
 
 namespace VideoSearch.ViewModel
 {
-    public class PanelViewTaskSearchModel
+    public class PanelViewTaskSearchModel : ObservableObject
     {
         MovieTaskSearchItem _owner = null;
         public PanelViewTaskSearchModel(DataItemBase item)
@@ -12,13 +14,21 @@ namespace VideoSearch.ViewModel
             if (item != null && item.GetType() == typeof(MovieTaskSearchItem))
             {
                 MovieTaskSearchItem searchItem = (MovieTaskSearchItem)item;
-
-                _snapshots = searchItem.Snapshots;
-                _title = _snapshots.Count > 0 ? String.Format("{0}张图片", _snapshots.Count) : "";
                 _owner = searchItem;
+
                 DisplayType = _owner.DisplayType;
                 ItemSizeIndex = _owner.ItemSizeIndex;
+
+                var task = InitTaskResult(item);
             }
+        }
+
+        public async Task InitTaskResult(DataItemBase item)
+        {
+            await _owner.InitFromServer();
+
+            Snapshots = _owner.Snapshots;
+            Title = _snapshots.Count > 0 ? String.Format("{0}张图片", _snapshots.Count) : "";
         }
 
         #region Property
@@ -27,6 +37,11 @@ namespace VideoSearch.ViewModel
         public List<TaskSnapshot> Snapshots
         {
             get { return _snapshots; }
+            set
+            {
+                _snapshots = value;
+                PropertyChanging("Snapshots");
+            }
         }
 
         private String _title = "";
@@ -34,6 +49,11 @@ namespace VideoSearch.ViewModel
         public String Title
         {
             get { return _title; }
+            set
+            {
+                _title = value;
+                PropertyChanging("Title");
+            }
         }
 
         private int _displayType = 0;

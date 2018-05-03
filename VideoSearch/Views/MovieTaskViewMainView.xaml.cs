@@ -67,7 +67,7 @@ namespace VideoSearch.Views
             Globals.Instance.ShowWaitCursor(true);
 
             // 重新加载需要延迟
-            await Task.Delay(10);
+            await Task.Delay(20);
 
             var vm = (MovieTaskViewMainModel)this.DataContext;
 

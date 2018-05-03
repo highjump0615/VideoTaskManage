@@ -119,5 +119,10 @@ namespace VideoSearch.Model
                 }
             }
         }
+
+        public override bool IsFetched()
+        {
+            return Snapshots.Count > 0;
+        }
     }
 }

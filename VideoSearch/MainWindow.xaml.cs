@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Shell;
 using VideoSearch.Views;
 using VideoSearch.ViewModel.Base;
+using System.IO;
+using System.Threading;
 
 namespace VideoSearch
 {
@@ -46,8 +48,23 @@ namespace VideoSearch
  
             SelectRoot();
 
+            new Thread(new ThreadStart(checkServiceThread)).Start();            
+        }
+
+        private void checkServiceThread()
+        {
             // 检查服务
             Globals.Instance.MainVM.checkService();
+
+            // 检查d盘剩余容量
+            var dDrv = new DriveInfo("D");
+            long dSpace = dDrv.AvailableFreeSpace;
+
+            // 少于10G
+            if (dSpace < 100.0 * 1024 * 1024 * 1024)
+            {
+                MessageBox.Show("D盘少于10G，这会影响到使用本应用", "可用空间不足", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)

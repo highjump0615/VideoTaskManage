@@ -21,11 +21,11 @@ namespace VideoSearch.ViewModel
                 DisplayType = _owner.DisplayType;
                 ItemSizeIndex = _owner.ItemSizeIndex;
 
-                var task = InitTaskResult(item);                
+                var task = InitTaskResult();
              }
         }
 
-        public async Task InitTaskResult(DataItemBase item)
+        public async Task InitTaskResult()
         {
             await _owner.InitFromServer();
 

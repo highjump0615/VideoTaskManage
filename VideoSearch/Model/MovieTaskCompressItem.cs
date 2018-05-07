@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using VideoSearch.VideoService;
 
@@ -66,21 +67,20 @@ namespace VideoSearch.Model
         /// <summary>
         /// 获取任务结果
         /// </summary>
-        public void fetchTaskResultSync()
+        public override async Task FetchResult()
         {
-            // 已获取，直接退出
-            if (!String.IsNullOrEmpty(_compressedPath))
-            {
-                return;
-            }
-
-            XElement response = ApiManager.Instance.GetVideoSummary(TaskId);
+            XElement response = await ApiManager.Instance.GetVideoSummary(TaskId);
 
             if (response != null)
             {
                 _compressedPath = response.Element("VideoSkimmingPath").Value;
                 _tbiPath = response.Element("TbiPath").Value;
             }
+        }
+
+        public override bool IsFetched()
+        {
+            return !String.IsNullOrEmpty(_compressedPath);
         }
     }
 }

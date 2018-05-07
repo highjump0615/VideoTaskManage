@@ -1,11 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using VideoSearch.Model;
+using VideoSearch.ViewModel.Base;
+using VideoSearch.Views;
 
 namespace VideoSearch.ViewModel
 {
-    public class PanelViewTaskCompressModel : INotifyPropertyChanged
+    public class PanelViewTaskCompressModel : ViewModelBase
     {
+        private MovieTaskCompressItem _owner = null;
+        public MovieTaskCompressItem taskItem
+        {
+            get { return _owner;  }
+        }
+
         public PanelViewTaskCompressModel(DataItemBase item)
         {
             if (item == null || item.GetType() != typeof(MovieTaskCompressItem))
@@ -13,11 +22,20 @@ namespace VideoSearch.ViewModel
                 return;
             }
 
-            MovieTaskCompressItem compressedMovie = (MovieTaskCompressItem)item;
+            _owner = (MovieTaskCompressItem)item;
+        }
+
+        public async Task InitTaskResult()
+        {
+            await _owner.InitFromServer();
 
             // 获取任务结果
-            MovieTitle = compressedMovie.Name;
-            MoviePath = compressedMovie.CompressedPlayPath;
+            MovieTitle = _owner.Name;
+            MoviePath = _owner.CompressedPlayPath;
+
+            // 播放器设置
+            var view = (PanelViewTaskCompressView)this.View;
+            view.InitPlayer();
         }
 
         #region Property
@@ -31,7 +49,7 @@ namespace VideoSearch.ViewModel
                 if (_movieTitle != value)
                 {
                     _movieTitle = value;
-                    OnPropertyChanged("MovieTitle");
+                    PropertyChanging("MovieTitle");
                 }
             }
         }
@@ -46,19 +64,9 @@ namespace VideoSearch.ViewModel
                 if (_moviePath != value)
                 {
                     _moviePath = value;
-                    OnPropertyChanged("MoviePath");
+                    PropertyChanging("MoviePath");
                 }
             }
-        }
-
-        #endregion
-
-        #region Notify
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         #endregion

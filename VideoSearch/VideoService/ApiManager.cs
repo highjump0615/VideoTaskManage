@@ -213,11 +213,9 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public XElement GetVideoSummary(String taskId)
+        public async Task<XElement> GetVideoSummary(String taskId)
         {
-            var taskGet = sendToServiceByGet(API_PATH + "/GetVideoSummary?TaskId=" + taskId);
-            taskGet.Wait();
-            return taskGet.Result;
+            return await sendToServiceByGet(API_PATH + "/GetVideoSummary?TaskId=" + taskId);
         }
         #endregion
 

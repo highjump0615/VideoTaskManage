@@ -286,21 +286,33 @@ namespace VideoSearch.Views
             }
         }
 
+        /// <summary>
+        /// 清空标注
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClear(object sender, RoutedEventArgs e)
         {
-            Reset();
-        }
-
-        private void OnSave(object sender, RoutedEventArgs e)
-        {
-            if(!IsEditedDetail())
+            if (!IsEditedDetail())
             {
-                if (MessageBox.Show("未保存编辑内容，是否继续?", "保存", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("未保存编辑内容，是否继续?", "清空", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     Reset();
 
                 return;
             }
+            else
+            {
+                Reset();
+            }
+        }
 
+        /// <summary>
+        /// 保存标注
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSave(object sender, RoutedEventArgs e)
+        {
             _markUtils.SaveManualMark();
             Reset();
         }
@@ -309,55 +321,72 @@ namespace VideoSearch.Views
         {
             System.Windows.Media.Brush transBr = System.Windows.Media.Brushes.Transparent;
 
+            // 目标类型：人
             if(CboTargetType.SelectedIndex == 0)
             {
+                // 裤子颜色
                 if (PantsColor.Background != transBr)
                     return true;
 
+                // 裤子种类
                 if (CboPantsKind.SelectedIndex > -1)
                     return true;
 
+                // 其它体貌特征
                 if (TxtOtherHumanSpec.Text.Length > 0)
                     return true;
 
+                // 上衣颜色
                 if (CoatColor.Background != transBr)
                     return true;
 
+                // 上衣种类
                 if (TxtCoatKind.Text.Length > 0)
                     return true;
 
+                // 是否背包
                 if (ChkHasPack.IsChecked == true ||
                     ChkHasCap.IsChecked == true ||
                     ChkHasGlass.IsChecked == true)
                     return true;
 
+                // 姓名
                 if (TxtName.Text.Length > 0)
                     return true;
             }
+            // 目标类型：车
             else if (CboTargetType.SelectedIndex == 1)
             {
+                // 车牌
                 if (TxtCarNumber.Text.Length > 0)
                     return true;
 
+                // 车身颜色
                 if (CarColor.Background != transBr)
                     return true;
 
+                // 乘客数量
                 if (TxtMemberCount.Text.Length > 0)
                     return true;
 
+                // 驾驶人
                 if (TxtDriver.Text.Length > 0)
                     return true;
 
+                // 品牌型号
                 if (TxtCarModel.Text.Length > 0)
                     return true;
 
+                // 其他车身特征
                 if (TxtOtherCarSpec.Text.Length > 0)
                     return true;
             }
 
+            // 轨迹说明
             if (TxtDetail.Text.Length > 0)
                 return true;
 
+            // 关键词
             if (TxtMainKey.Text.Length > 0)
                 return true;
 

@@ -58,7 +58,7 @@ namespace VideoSearch.Utils
 
         public void SaveManualMark()
         {
-            if (_player == null || _videoId == null || _markList.Count == 0)
+            if (_player == null || _videoId == 0 || _markList.Count == 0)
                 return;
 
             List<ManualMark> newList = new List<ManualMark>();

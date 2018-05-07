@@ -45,6 +45,9 @@ namespace VideoSearch
             InitControls();
  
             SelectRoot();
+
+            // 检查服务
+            Globals.Instance.MainVM.checkService();
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)

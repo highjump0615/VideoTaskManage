@@ -61,9 +61,13 @@ namespace VideoSearch
             long dSpace = dDrv.AvailableFreeSpace;
 
             // 少于10G
-            if (dSpace < 100.0 * 1024 * 1024 * 1024)
+            if (dSpace < 10.0 * 1024 * 1024 * 1024)
             {
-                MessageBox.Show("D盘少于10G，这会影响到使用本应用", "可用空间不足", MessageBoxButton.OK, MessageBoxImage.Warning);
+                // UI Thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show(this, "D盘少于10G，这会影响到使用本应用", "可用空间不足", MessageBoxButton.OK, MessageBoxImage.Warning);
+                });                
             }
         }
 

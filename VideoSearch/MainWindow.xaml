@@ -9,7 +9,7 @@
         xmlns:ViewModel="clr-namespace:VideoSearch.ViewModel" 
         x:Class="VideoSearch.MainWindow"
         mc:Ignorable="d"
-        Height="700" Width="1224" MinWidth="1224" MinHeight="700"
+        Height="700" Width="1324" MinWidth="1224" MinHeight="700"
         WindowStyle="None" Background="#00000000"  
         Icon="Resources/Images/MainWindow/app_icon.ico" 
         Style="{DynamicResource ShadowNormalWindowStyle}"
@@ -87,7 +87,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <Grid x:Name="TitleBar">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8"/>
@@ -142,7 +142,9 @@
                                     OffsetWithImage="0" />
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" d:IsHidden="True" IsEnabled="{Binding TotalAreaEnabled}">
+
+            <!-- 操作区 -->
             <Grid Height="100" x:Name="Toolbar" VerticalAlignment="Top" Background="#FF312F29">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="181" />
@@ -182,7 +184,8 @@
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="6,4,0,0" x:Name="ToolbarMovieTaskSearch" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskSearch.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="3" Click="OnMovieTaskSearch" TextMode="Bottom" Text="视频检索" />
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="81,4,0,0" x:Name="ToolbarMovieTaskSummary" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskSummary.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="3" Click="OnMovieTaskOutline" TextMode="Bottom" Text="视频摘要" />
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="157,4,0,0" x:Name="ToolbarMovieTaskCompress" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskCompress.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="3" Click="OnMovieTaskCompress" TextMode="Bottom" Text="视频浓缩" />
-                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,4,6,0" x:Name="ToolbarMovieTaskFind" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskFind.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="3" Click="OnMovieTaskFind" TextMode="Right" Text="搜索" />
+                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,4,6,0" x:Name="ToolbarMovieTaskFind" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskFind.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="3" Click="OnMovieTaskFind" TextMode="Right" Text="搜索" Visibility="Collapsed" />
+                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,4,6,0"  x:Name="ToolbarMovieTaskDelete" NormalImage="Resources/Images/Toolbar/Toolbar02/btDeleteCamera.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="3" Click="OnMovieDeleteTask" TextMode="Right" Text="删除任务" />
                     <SkinControl:SkinButton HorizontalAlignment="Right" Margin="0,26,6,52" x:Name="ToolbarMovieTaskChargeList" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskChargeList.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" Width="78" Tag="3" Click="OnMovieTaskChargeList" Height="22" TextMode="Right" Text="任务列表" />
                     <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,48,6,0" x:Name="ToolbarMovieTaskFindAndPlay" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskFindAndPlay.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="3" Click="OnMovieTaskFindAndPlay" TextMode="Right" Text="放大播放" />
                 </Grid>
@@ -201,17 +204,19 @@
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Right" Margin="0,4,4,0" x:Name="ToolbarHelp" NormalImage="Resources/Images/Toolbar/Toolbar06/btHelp.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="54" Tag="6" Click="OnShowHelp" TextMode="Bottom" Text="关于" />
                 </Grid>
             </Grid>
-            
-            <Grid Margin="0,100,0,0" VerticalAlignment="Stretch">
+
+            <Grid Margin="0,100,0,0" VerticalAlignment="Stretch" d:IsHidden="True">
                 <!-- background of workview -->
                 <Grid.Background>
                     <SolidColorBrush Color="{StaticResource ColorWorkViewBg}" />
                 </Grid.Background>
-                
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="222*" />
-                    <ColumnDefinition Width="980*" MinWidth = "640"/>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="3*" MinWidth = "640"/>
                 </Grid.ColumnDefinitions>
+
+                <!-- 选择区 -->
                 <TreeView x:Name="treeView" ItemsSource="{Binding Source={StaticResource dataItems}}" Style="{DynamicResource {x:Type TreeView}}" SelectedItemChanged="OnTreeItemSelectionChanged">
                     <TreeView.Resources>
 
@@ -441,34 +446,36 @@
                         </Style>
                     </TreeView.Resources>
                 </TreeView>
-                
+
+                <!-- 工作区 -->
                 <Grid Grid.Column="1" Margin="0" x:Name="Work_Area">
                     <ContentControl 
                         x:Name="workView" 
                         Content="ContentControl" 
                         Grid.Column="1" 
                         Margin="0" />
-                    
+
                     <!-- loading mask -->
-                    <Grid Visibility="Collapsed">
+                    <Grid Name="ViewWorkMask" Visibility="{Binding VisibilityWorkMask}">
                         <Grid.Background>
                             <SolidColorBrush Color="{StaticResource LoadingMaskColor}" />
                         </Grid.Background>
-                        
+
                         <!-- loading mark -->
                         <StackPanel Orientation="Vertical"
                                     Width="300"
                                     VerticalAlignment="Center">
-                            <TextBlock Text="正在加载...." 
+                            <TextBlock Text="{Binding WorkMaskNotice}" 
                                        Foreground="White"
                                        TextAlignment="Center"
                                        FontSize="12pt"/>
                             <ProgressBar Height="12"
+                                         Visibility="{Binding VisibilityWorkMaskProgress}"
                                          IsIndeterminate="True"
                                          Margin="0 10 0 0"/>
                         </StackPanel>
                     </Grid>
-                    
+
                     <!-- move mark -->
                     <Image x:Name="imgHandle" 
                            HorizontalAlignment="Left" 
@@ -482,6 +489,28 @@
                 <GridSplitter HorizontalAlignment="Left" x:Name="Splitter" Width="10" Grid.Column="1" Background="#00000000" ShowsPreview="False" ResizeBehavior="PreviousAndCurrent" />
 
             </Grid>
+
+            <!-- loading mask -->
+            <Grid Name="ViewTotalMask" Visibility="{Binding VisibilityTotalMask}">
+                <Grid.Background>
+                    <SolidColorBrush Color="{StaticResource LoadingMaskColor}" />
+                </Grid.Background>
+
+                <!-- loading mark -->
+                <StackPanel Orientation="Vertical"
+                                    Width="300"
+                                    VerticalAlignment="Center">
+                    <TextBlock Text="{Binding TotalMaskNotice}" 
+                                       Foreground="White"
+                                       TextAlignment="Center"
+                                       FontSize="12pt"/>
+                    <ProgressBar Height="12"
+                                         Visibility="{Binding VisibilityTotalMaskProgress}"
+                                         IsIndeterminate="True"
+                                         Margin="0 10 0 0"/>
+                </StackPanel>
+            </Grid>
+            
         </Grid>
     </Grid>
 </Window>

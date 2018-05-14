@@ -8,6 +8,7 @@ using VideoSearch.VideoService;
 using VideoSearch.Windows;
 using System.Xml.Linq;
 using VideoSearch.Utils;
+using System.Threading.Tasks;
 
 namespace VideoSearch.Model
 {
@@ -29,7 +30,7 @@ namespace VideoSearch.Model
             ItemsTable = MovieTaskTable.Table;
         }
 
-        public MovieItem(DataItemBase parent, String id, String displayID, String videoId, String name, String cameraPos, String srcPath,
+        public MovieItem(DataItemBase parent, String id, String displayID, int videoId, String name, String cameraPos, String srcPath,
                         ConvertStatus state, String movieTask)
             : this(parent)
         {
@@ -44,8 +45,8 @@ namespace VideoSearch.Model
             State = state;
             MovieTask = movieTask;
 
-            if(VideoId != "0")
-                InitFromServer();
+            //if(VideoId != "0")
+            //    InitFromServer();
         }
 
         public MovieItem(DataItemBase parent, String srcPath) : this(parent)
@@ -53,40 +54,84 @@ namespace VideoSearch.Model
             SrcPath = srcPath;
             ID = String.Format("{0}", DateTime.Now.ToString("yyyyMMddHHmmssfff"));
             DisplayID = parent.GetItemDisplayID(ID);
-            VideoId = "0";
             Name = Path.GetFileNameWithoutExtension(srcPath);
             CameraPos = parent.ID;
             MovieLength = 0;
             State = ConvertStatus.ImportReady;
         }
 
-        protected void InitFromServer()
+        private void FillDataFromXml(XElement videoInfo, bool progessOnly = false)
         {
-            XElement videoInfo = ApiManager.Instance.GetQueryVideo(VideoId);
-            if(videoInfo != null)
+            if (!progessOnly)
             {
                 SubmitTime = GMTTimeToString(StringUtils.String2Int64(videoInfo.Element("SubmitTime").Value));
                 OrgPath = videoInfo.Element("FilePath").Value;
                 CvtPath = videoInfo.Element("CvtPath").Value;
                 ThumbnailPath = videoInfo.Element("FirstFrameBmp").Value;
                 MovieLength = StringUtils.String2UInt64(videoInfo.Element("FileSize").Value);
-                State = (ConvertStatus)StringUtils.String2Int(videoInfo.Element("TranscodeStatus").Value);
-                Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
 
-                if (State != ConvertStatus.PlayReady || Progress < 1.0)
+                State = (ConvertStatus)StringUtils.String2Int(videoInfo.Element("TranscodeStatus").Value);
+            }
+
+            // 转码百分比是10~100%
+            Progress = 0.1 + StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0 * 0.9;
+        }
+
+        /// <summary>
+        /// 获取视频信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task InitFromServer(bool FetchOnly = false)
+        {
+            // 还没提交的视频，退出
+            if (VideoId <= 0)
+            {
+                return;
+            }
+
+            // 已获取信息，退出
+            if (IsFetched())
+            {
+                if (!FetchOnly)
                 {
-                    if (State == ConvertStatus.ConvertReady)
-                        SubmitVideo();
-                    else
-                    {
-                        _monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
-                        _monitorThread.Start();
-                    }
+                    await StartMonitoring();
+                }
+
+                return;
+            }
+
+            XElement videoInfo = await ApiManager.Instance.GetQueryVideo(VideoId);
+            if(videoInfo != null)
+            {
+                FillDataFromXml(videoInfo);
+
+                if (!FetchOnly)
+                {
+                    await StartMonitoring();
                 }
             }
         }
 
-        protected override void DisposeItem()
+        private async Task StartMonitoring()
+        {
+            if (State != ConvertStatus.PlayReady || Progress < 1.0)
+            {
+                if (State == ConvertStatus.ConvertReady)
+                    await SubmitVideo();
+                else
+                {
+                    _monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
+                    _monitorThread.Start();
+                }
+            }
+        }
+
+        public bool IsFetched()
+        {
+            return MovieLength > 0;
+        }
+
+        public override void DisposeItem()
         {
             base.DisposeItem();
 
@@ -123,8 +168,8 @@ namespace VideoSearch.Model
 
         #region Property
 
-        private String _videoId = "0";
-        public String VideoId
+        private int _videoId = 0;
+        public int VideoId
         {
             get { return _videoId; }
             set
@@ -339,7 +384,7 @@ namespace VideoSearch.Model
             }
         }
 
-        private String _remark = "";
+        private String _remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
         public String Remark
         {
             get { return _remark; }
@@ -513,7 +558,6 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Hidden;
                         OperationPos = 0;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = true;
                         Progress = 0.0;
                     }
@@ -527,7 +571,6 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Visible;
                         OperationPos = 0;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = true;
                         Progress = 0.0;
                     }
@@ -541,9 +584,7 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Visible;
                         OperationPos = 1;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
-                        Progress = 0.0;
                     }
                     else if (_state == ConvertStatus.Converting)
                     {
@@ -557,7 +598,6 @@ namespace VideoSearch.Model
                         Opacity = 1.0;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
-                        Progress = 0.0;
                     }
                     else if (_state == ConvertStatus.ImportingPaused)
                     {
@@ -569,9 +609,7 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Visible;
                         OperationPos = 0;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = true;
-                        Progress = 0.0;
                     }
                     else
                     {
@@ -582,10 +620,7 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
                         OperationPos = 0;
-                        Opacity = 0.6;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImportReady.png";
                         IsEnabled = true;
-                        Progress = 0.0;
                     }
 
                     if (Table != null)
@@ -598,7 +633,7 @@ namespace VideoSearch.Model
         #region Override
         public override bool ClearFromDB()
         {
-            if(VideoId != "0")
+            if (VideoId > 0)
             {
                 if(ApiManager.Instance.DeleteVideo(VideoId))
                 {
@@ -639,7 +674,7 @@ namespace VideoSearch.Model
             else if (State == ConvertStatus.ConvertReady)
             {
                 State = ConvertStatus.Converting;
-                SubmitVideo();
+                var taskSubmit = SubmitVideo();
             }
             else if (State == ConvertStatus.Converting)
             {
@@ -704,7 +739,9 @@ namespace VideoSearch.Model
 
                         dstStream.Write(bytes, 0, read_len);
                         write_len += (UInt64)read_len;
-                        Progress = (double)write_len / (double)file_len;
+
+                        // 复制文件是至10%
+                        Progress = (double)write_len / (double)file_len * 0.1;
                     } while (write_len < file_len);
 
                     dstStream.Flush();
@@ -719,7 +756,7 @@ namespace VideoSearch.Model
                 State = ConvertStatus.Imported;
                 _importThread = null;
 
-                SubmitVideo();
+                var submitTask = SubmitVideo();
             }
         }
 
@@ -729,28 +766,30 @@ namespace VideoSearch.Model
             XElement videoInfo = null;
             do
             {
-                videoInfo = ApiManager.Instance.GetQueryVideo(VideoId);
-                if (videoInfo != null)
-                {
-                    status = (ConvertStatus)StringUtils.String2Int(videoInfo.Element("TranscodeStatus").Value);
+                Thread.Sleep(1000);
 
-                    Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
+                var taskQuery = ApiManager.Instance.GetQueryVideo(VideoId);
+                taskQuery.Wait();
+                videoInfo = taskQuery.Result;
+
+                FillDataFromXml(videoInfo, true);
+
+                status = (ConvertStatus)int.Parse(videoInfo.Element("TranscodeStatus").Value);
+                Console.WriteLine($"Convert status:{status}, Progress : {Progress}");
+
+                if (status == ConvertStatus.ConvertedFail)
+                {
+                    // 失败，退出
+                    break;
                 }
 
-                Thread.Sleep(2000);
             } while (status != ConvertStatus.ConvertedOk ||
                         Progress < 1.0);
 
             if (videoInfo != null && status == ConvertStatus.ConvertedOk)
             {
+                FillDataFromXml(videoInfo);
                 State = ConvertStatus.PlayReady;
-
-                SubmitTime = GMTTimeToString(StringUtils.String2Int64(videoInfo.Element("SubmitTime").Value));
-                OrgPath = videoInfo.Element("FilePath").Value;
-                CvtPath = videoInfo.Element("CvtPath").Value;
-                ThumbnailPath = videoInfo.Element("FirstFrameBmp").Value;
-                MovieLength = StringUtils.String2UInt64(videoInfo.Element("FileSize").Value);
-                Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
             }
             else
                 State = ConvertStatus.ConvertReady;
@@ -758,24 +797,19 @@ namespace VideoSearch.Model
             _monitorThread = null;
         }
 
-        protected void SubmitVideo()
+        protected async Task SubmitVideo()
         {
             String videoPath = "file://" + Parent.DisplayID + "/" + ID + "/" + ID;
-            XElement response = ApiManager.Instance.SubmitVideo(videoPath);
+            XElement response = await ApiManager.Instance.SubmitVideo(videoPath);
 
             if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
             {
-                VideoId = response.Element("VideoId").Value;
+                VideoId = int.Parse(response.Element("VideoId").Value);
 
-                XElement videoInfo = ApiManager.Instance.GetQueryVideo(VideoId);
+                XElement videoInfo = await ApiManager.Instance.GetQueryVideo(VideoId);
                 if (videoInfo != null)
                 {
-                    SubmitTime = GMTTimeToString(StringUtils.String2Int64(videoInfo.Element("SubmitTime").Value));
-                    OrgPath = videoInfo.Element("FilePath").Value;
-                    CvtPath = videoInfo.Element("CvtPath").Value;
-                    ThumbnailPath = videoInfo.Element("FirstFrameBmp").Value;
-                    MovieLength = StringUtils.String2UInt64(videoInfo.Element("FileSize").Value);
-                    Progress = StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0;
+                    FillDataFromXml(videoInfo);
 
                     State = ConvertStatus.Converting;
 
@@ -787,9 +821,8 @@ namespace VideoSearch.Model
             {
                 State = ConvertStatus.ConvertReady;
 
-                MessageBox.Show("SubmitVideo fail!");
+                MessageBox.Show("提交视频失败!");
             }
-
         }
 
         protected String GMTTimeToString(Int64 time)

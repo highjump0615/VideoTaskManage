@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using VideoSearch.Model;
+using VideoSearch.ViewModel.Base;
 
 namespace VideoSearch.ViewModel
 {
@@ -48,18 +49,44 @@ namespace VideoSearch.ViewModel
         }
     }
 
-    public class MovieTaskViewMainModel : INotifyPropertyChanged
+    public class MovieTaskViewMainModel : ViewModelBase
     {
+        public MovieItem movieItem;
+
         #region Constructor
         public MovieTaskViewMainModel(DataItemBase item, Object parentViewModel = null)
         {
             if (item != null && item.GetType() == typeof(MovieItem))
             {
-                MovieItem movie = (MovieItem)item;
+                movieItem = (MovieItem)item;
 
-                MovieTitle = movie.Name;
-                MoviePath = movie.PlayPath;
-                MovieID = movie.VideoId;
+                MovieTitle = movieItem.Name;
+
+                // 如果没导入完，显示加载中。。
+                if (movieItem.State != VideoService.ConvertStatus.ConvertedOk)
+                {
+                    String strNotice = "正在导入，请稍后";
+                    bool bProgress = true;
+                    switch (movieItem.State)
+                    {
+                        case VideoService.ConvertStatus.ConvertedFail:
+                            strNotice = "导入失败，请重新导入";
+                            bProgress = false;
+                            break;
+
+                        case VideoService.ConvertStatus.ImportReady:
+                            strNotice = "未导入，请导入视频转码";
+                            bProgress = false;
+                            break;
+                    }
+
+                    // 显示加载中提示
+                    Globals.Instance.MainVM.ShowWorkMask(strNotice, bProgress);
+
+                    // 不让用视频处理任务
+                    var viewMain = Globals.Instance.MainVM.View as MainWindow;
+                    viewMain.EnableMovieTaskMenu(false);
+                }
             }
 
             _parentViewModel = parentViewModel;
@@ -78,36 +105,7 @@ namespace VideoSearch.ViewModel
                 if (_movieTitle != value)
                 {
                     _movieTitle = value;
-                    OnPropertyChanged("MovieTitle");
-                }
-            }
-        }
-
-        private String _moviePath = "";
-
-        public String MoviePath
-        {
-            get { return _moviePath; }
-            set
-            {
-                if(_moviePath != value)
-                {
-                    _moviePath = value;
-                    OnPropertyChanged("MoviePath");
-                }
-            }
-        }
-
-        private String _movieID= "";
-        public String MovieID
-        {
-            get { return _movieID; }
-            set
-            {
-                if (_movieID != value)
-                {
-                    _movieID = value;
-                    OnPropertyChanged("MovieID");
+                    PropertyChanging("MovieTitle");
                 }
             }
         }
@@ -124,16 +122,6 @@ namespace VideoSearch.ViewModel
                 _markList = value;
             }
         }
-        #endregion
-
-        #region Notify
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
         #endregion
 
     }

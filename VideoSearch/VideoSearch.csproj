@@ -81,6 +81,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -104,6 +107,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.108.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -135,6 +139,7 @@
     <Compile Include="Database\MovieTable.cs" />
     <Compile Include="Database\MovieTaskTable.cs" />
     <Compile Include="Database\TableManager.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Model\ArticleItem.cs" />
     <Compile Include="Model\CameraItem.cs" />
     <Compile Include="Model\DataItemBase.cs" />
@@ -187,13 +192,16 @@
     <Compile Include="VideoService\VideoInfo.cs" />
     <Compile Include="ViewModel\Base\HostViewModel.cs" />
     <Compile Include="ViewModel\Base\ListViewModel.cs" />
+    <Compile Include="ViewModel\Base\ObservableObject.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\Base\RelayCommandEx.cs" />
+    <Compile Include="ViewModel\Base\ViewModelBase.cs" />
     <Compile Include="ViewModel\CameraViewDetailListModel.cs" />
     <Compile Include="ViewModel\CameraViewListModel.cs" />
     <Compile Include="ViewModel\CameraViewMapModel.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\EventViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MovieTaskViewListModel.cs" />
     <Compile Include="ViewModel\MovieTaskViewMainModel.cs" />
     <Compile Include="ViewModel\MovieViewAnalysisModel.cs" />
@@ -215,6 +223,7 @@
     <Compile Include="ViewModel\PlayView\PlayViewMainModel.cs" />
     <Compile Include="ViewModel\PlayView\PlayViewMediumModel.cs" />
     <Compile Include="ViewModel\PlayView\PlayViewSmallModel.cs" />
+    <Compile Include="Views\Base\UserControlBase.cs" />
     <Compile Include="Views\CameraViewDetailListView.xaml.cs">
       <DependentUpon>CameraViewDetailListView.xaml</DependentUpon>
     </Compile>
@@ -648,6 +657,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

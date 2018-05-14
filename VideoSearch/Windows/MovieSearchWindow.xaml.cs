@@ -185,6 +185,11 @@ namespace VideoSearch.Windows
         }
         #endregion
 
+        /// <summary>
+        /// 提交
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         #region Handler
         private void OnApply(object sender, RoutedEventArgs e)
         {

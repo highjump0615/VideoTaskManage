@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using VideoSearch.ViewModel;
 using vlcPlayerLib;
 
 namespace VideoSearch.Views
@@ -15,17 +17,6 @@ namespace VideoSearch.Views
         public PanelViewTaskCompressView()
         {
             InitializeComponent();
-
-            _vlcPlayer = new vlcPlayer();
-            _vlcPlayer.SetIntiTimeInfo(false);
-            _vlcPlayer.SetControlPanelTimer(false);
-            _vlcPlayer.SetManualMarkMode(true);
-
-            _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-            _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
-            _vlcPlayer.PlayerStopped += OnMovieStopped;
-
-            OnStop(this, null);
 
             Unloaded += OnUnLoad;
 
@@ -94,7 +85,7 @@ namespace VideoSearch.Views
         {
             ShowPlayer(true);
 
-            if (sender != null && e != null)
+            if (sender != null)
             {
                 _vlcPlayer.Play();
             }
@@ -146,25 +137,96 @@ namespace VideoSearch.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            String moviePath = MovieSource.Text;
-            if (moviePath != null && moviePath.Length > 0)
+            ////string moviepath = moviesource.text;
+            ////if (moviepath != null && moviepath.length > 0)
+            ////{
+            ////    var task = initplayerasync();
+            ////    //_vlcplayer.setvideoinfo(moviepath, true);
+
+            ////    //// 浓缩物体显示
+            ////    ////list<string> listpath = new list<string>();
+            ////    ////listpath.add(@"e:\work\project\video\test\1.xml");
+            ////    ////vlcplayer1.setwushibiaoinfo(true, listpath);
+
+            ////    //playerpanel.child = _vlcplayer;
+
+            ////    //onplay(sender, e);
+            ////}
+            ////else
+            ////{
+            ////    onstop(this, null);
+            ////    playbutton.isenabled = false;
+            ////}
+        }
+
+        /// <summary>
+        /// 初始化视频信息
+        /// </summary>
+        /// <returns></returns>
+        private async Task InitPlayerAsync()
+        {
+            // 显示加载中提示
+            Globals.Instance.ShowWaitCursor(true);
+
+            var vm = (PanelViewTaskCompressModel)this.DataContext;
+            if (!String.IsNullOrEmpty(vm.taskItem.CompressedPlayPath))
             {
-                _vlcPlayer.SetVideoInfo(moviePath, true);
 
-                // 浓缩物体显示
-                //List<string> listPath = new List<string>();
-                //listPath.Add(@"E:\Work\Project\video\test\1.xml");
-                //vlcPlayer1.SetWuShiBiaoInfo(true, listPath);
+                // 重新加载需要延迟
+                await Task.Delay(20);
 
-                PlayerPanel.Child = _vlcPlayer;
-
-                OnPlay(sender, e);
+                _vlcPlayer.SetVideoInfo(vm.taskItem.CompressedPlayPath, true);
+                OnPlay(this, null);
             }
-            else
-            {
+            else {
                 OnStop(this, null);
                 PlayButton.IsEnabled = false;
             }
+
+            Globals.Instance.ShowWaitCursor(false);
+        }
+
+        protected void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is PanelViewTaskCompressModel)
+            {
+                var vm = (PanelViewTaskCompressModel)e.NewValue;
+                vm.View = this;
+
+                var task = vm.InitTaskResult();
+            }
+        }
+
+        /// <summary>
+        /// 播放器初始化
+        /// </summary>
+        public void InitPlayer()
+        {
+            // 初始化播放器
+            ClearPlayer();
+
+            if (_vlcPlayer == null)
+            {
+                _vlcPlayer = new vlcPlayer();
+                _vlcPlayer.SetIntiTimeInfo(false);
+                _vlcPlayer.SetControlPanelTimer(false);
+
+                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
+                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
+                _vlcPlayer.PlayerStopped += OnMovieStopped;
+
+                PlayerPanel.Child = _vlcPlayer;
+            }
+
+            var taskInit = InitPlayerAsync();
+        }
+
+        /// <summary>
+        /// 清除播放器
+        /// </summary>
+        public void ClearPlayer()
+        {
+            OnStop(this, null);
         }
 
         protected void UpdateDuration(long pos)

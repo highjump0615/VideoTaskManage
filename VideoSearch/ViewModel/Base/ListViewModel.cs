@@ -9,14 +9,8 @@ using VideoSearch.Windows;
 
 namespace VideoSearch.ViewModel.Base
 {
-    public class ListViewModel : INotifyPropertyChanged
+    public class ListViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
 
         protected virtual void CommandHandler(DataItemBase sender, String command)
         {
@@ -64,7 +58,7 @@ namespace VideoSearch.ViewModel.Base
                 if (_visibility != value)
                 {
                     _visibility = value;
-                    OnPropertyChanged("Visibility");
+                    PropertyChanging("Visibility");
                 }
             }
         }
@@ -93,7 +87,9 @@ namespace VideoSearch.ViewModel.Base
 
             if (result == true)
             {
+                Globals.Instance.ShowWaitCursor(true);
                 _owner.DeleteSelectedItem();
+                Globals.Instance.ShowWaitCursor(false);
             }
         }
         #endregion

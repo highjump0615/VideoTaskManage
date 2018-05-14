@@ -138,8 +138,16 @@
                 <TextBlock Canvas.Left="10" Canvas.Top="10" Height="18" Text="{Binding Address}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" />
                 <TextBlock Canvas.Left="10" Canvas.Top="10" Height="18" Text="{Binding Coordinate}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Grid.Row="1"/>
             </Grid>
-            <Button Content="地图查看" Command="{Binding DataItemCommand}" CommandParameter="{Binding ShowMapCommand}" 
-                            Foreground="White" FontSize="12" Grid.Column="4" Width="70" Height="26" Focusable="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0" Style="{DynamicResource GreenButtonStyle}"/>
+            <Button Grid.Column="4" 
+                    Content="地图查看" 
+                    Command="{Binding DataContext.ShowItemMapCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    CommandParameter="{Binding}" 
+                    Foreground="White" FontSize="12" 
+                    Width="70" Height="26" 
+                    Focusable="False" 
+                    VerticalAlignment="Center" HorizontalAlignment="Right" 
+                    Margin="0,0,6,0" 
+                    Style="{DynamicResource GreenButtonStyle}"/>
         </Grid>
     </DataTemplate>
 
@@ -247,7 +255,6 @@
 
                 <ProgressBar Height="10" VerticalAlignment="Center" Style="{DynamicResource OrangeProgressBar}" Maximum="1" 
                              Value="{Binding Progress}"
-                             IsIndeterminate="{Binding IsIndeterminate}"
                              Grid.Column="0"
                              Visibility="{Binding ProgressBarVisibility}"/>
                 <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 
@@ -342,7 +349,6 @@
 
                 <ProgressBar Height="10" VerticalAlignment="Center" Style="{DynamicResource OrangeProgressBar}" Maximum="1" 
                              Value="{Binding Progress}"
-                             IsIndeterminate="{Binding IsIndeterminate}"
                              Grid.Column="{Binding ProgressPos}"
                              Visibility="{Binding ProgressBarVisibility}"/>
                 <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 

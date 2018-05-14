@@ -7,7 +7,8 @@
              xmlns:skinControl="clr-namespace:VideoSearch.SkinControl"
              mc:Ignorable="d" 
              d:DesignHeight="640" d:DesignWidth="980"
-             Loaded="OnLoaded">
+             Loaded="OnLoaded"
+             DataContextChanged="onDataContextChanged">
     <Grid Margin="20">
         <Grid x:Name="PlayerContainer">
             <Grid.RowDefinitions>
@@ -41,7 +42,6 @@
                     </Grid>
                 </Border>
 
-                <TextBlock x:Name="MovieSource" Text="{Binding Path=MoviePath}" Visibility="Hidden"/>
                 <WindowsFormsHost x:Name="PlayerPanel" Margin="1" Background="Black"/>
              
                 <Separator VerticalAlignment="Top" Background="#FF222222" Margin="0"/>

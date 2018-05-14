@@ -53,6 +53,9 @@ namespace VideoSearch.ViewModel
             }
         }
 
+        /// <summary>
+        /// 删除视频
+        /// </summary>
         public void DeleteSelectedMovies()
         {
             if (Owner == null)
@@ -67,8 +70,12 @@ namespace VideoSearch.ViewModel
 
             if (result == true)
             {
+                Globals.Instance.ShowWaitCursor(true);
+
                 updateList();
                 Owner.DeleteSelectedItem();
+
+                Globals.Instance.ShowWaitCursor(false);
             }
         }
 

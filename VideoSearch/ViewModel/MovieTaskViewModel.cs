@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using VideoSearch.Model;
 using VideoSearch.Utils;
@@ -13,7 +14,6 @@ namespace VideoSearch.ViewModel
         public MovieTaskViewModel(DataItemBase owner) : base(owner)
         {
             Contents = new MovieTaskViewMainModel(Owner);
-
         }
 
         #region utility function
@@ -27,16 +27,20 @@ namespace VideoSearch.ViewModel
             }
         }
 
-        public void MovieSearch()
+        /// <summary>
+        /// 提交视频搜索
+        /// </summary>
+        /// <returns></returns>
+        public async Task MovieSearch()
         {
-            updateList();
+            //updateList();
 
             if (Owner == null || Owner.GetType() != typeof(MovieItem))
                 return;
 
             MovieItem movieItem = (MovieItem)Owner;
 
-            if (movieItem.VideoId == null || movieItem.VideoId.Length == 0)
+            if (movieItem.VideoId <= 0)
                 return;
 
             MovieSearchWindow searchDlg = new MovieSearchWindow(movieItem);
@@ -44,20 +48,39 @@ namespace VideoSearch.ViewModel
             Nullable<bool> result = searchDlg.ShowDialog();
             if (result == true)
             {
-                XElement response = ApiManager.Instance.CreateSearchTask(movieItem.VideoId, searchDlg.Sensitivity, searchDlg.RegionType, searchDlg.Region, 
-                    searchDlg.ObjectType, searchDlg.Colors, searchDlg.AlarmInfo,
-                    searchDlg.RenXingPic, searchDlg.RenXingMaskPic, searchDlg.RenXingWaiJieRect);
+                Globals.Instance.ShowWaitCursor(true);
+
+                var response = await ApiManager.Instance.CreateSearchTask(
+                    movieItem.VideoId,
+                    searchDlg.Sensitivity,
+                    searchDlg.RegionType,
+                    searchDlg.Region,
+                    searchDlg.ObjectType,
+                    searchDlg.Colors,
+                    searchDlg.AlarmInfo,
+                    searchDlg.RenXingPic,
+                    searchDlg.RenXingMaskPic,
+                    searchDlg.RenXingWaiJieRect);
 
                 if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {
                     MovieTaskSearchItem item = new MovieTaskSearchItem(Owner, response.Element("TaskId").Value, searchDlg.TaskName, MovieTaskType.SearchTask);
                     Owner.AddItem(item);
                 }
+
+                Globals.Instance.ShowWaitCursor(false);
+
+                // 跳转到任务列表
+                ShowMovieChargeList();
             }
         }
 
-        public void MovieOutline()
-        {
+        /// <summary>
+        /// 提交视频摘要
+        /// </summary>
+        /// <returns></returns>
+        public async Task MovieOutline()
+        {           
             updateList();
 
             if (Owner == null || Owner.GetType() != typeof(MovieItem))
@@ -65,7 +88,7 @@ namespace VideoSearch.ViewModel
 
             MovieItem movieItem = (MovieItem)Owner;
 
-            if (movieItem.VideoId == null || movieItem.VideoId.Length == 0)
+            if (movieItem.VideoId <= 0)
                 return;
 
             MovieSummaryWindow outlineDlg = new MovieSummaryWindow(movieItem);
@@ -73,17 +96,31 @@ namespace VideoSearch.ViewModel
             Nullable<bool> result = outlineDlg.ShowDialog();
             if (result == true)
             {
-                XElement response = ApiManager.Instance.CreateSummaryTask(movieItem.VideoId, outlineDlg.Sensitivity, outlineDlg.RegionType, outlineDlg.Region);
+                Globals.Instance.ShowWaitCursor(true);
+
+                var response = await ApiManager.Instance.CreateSummaryTask(
+                    movieItem.VideoId, 
+                    outlineDlg.Sensitivity, 
+                    outlineDlg.RegionType, 
+                    outlineDlg.Region);
 
                 if(response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {
                     MovieTaskSummaryItem item = new MovieTaskSummaryItem(Owner, response.Element("TaskId").Value, outlineDlg.TaskName, MovieTaskType.OutlineTask);
                     Owner.AddItem(item);
                 }
+
+                Globals.Instance.ShowWaitCursor(false);
+
+                // 跳转到任务列表
+                ShowMovieChargeList();
             }
         }
 
-        public void MovieCompress()
+        /// <summary>
+        /// 提交视频浓缩
+        /// </summary>
+        public async Task MovieCompress()
         {
             updateList();
 
@@ -92,7 +129,7 @@ namespace VideoSearch.ViewModel
 
             MovieItem movieItem = (MovieItem)Owner;
 
-            if (movieItem.VideoId == null || movieItem.VideoId.Length == 0)
+            if (movieItem.VideoId <= 0)
                 return;
 
             MovieCompressWindow compressDlg = new MovieCompressWindow(movieItem);
@@ -100,7 +137,12 @@ namespace VideoSearch.ViewModel
             Nullable<bool> result = compressDlg.ShowDialog();
             if (result == true)
             {
-                XElement response = ApiManager.Instance.CreateCompressTask(movieItem.VideoId, compressDlg.Thickness, compressDlg.Sensitivity, compressDlg.RegionType, compressDlg.Region);
+                var response = await ApiManager.Instance.CreateCompressTask(
+                    movieItem.VideoId, 
+                    compressDlg.Thickness, 
+                    compressDlg.Sensitivity, 
+                    compressDlg.RegionType, 
+                    compressDlg.Region);
 
                 if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {
@@ -116,6 +158,28 @@ namespace VideoSearch.ViewModel
         public void ShowMovieChargeList()
         {
             Contents = new MovieTaskViewListModel(Owner);
+        }
+
+        /// <summary>
+        /// 删除已选的任务
+        /// </summary>
+        public async void DeleteSelectedMovieTasks()
+        {
+            if (Owner == null || !Owner.HasCheckedItem)
+                return;
+
+            ConfirmDeleteWindow deleteDlg = new ConfirmDeleteWindow();
+
+            Nullable<bool> result = deleteDlg.ShowDialog();
+
+            if (result == true)
+            {
+                Globals.Instance.ShowWaitCursor(true);
+
+                await Owner.DeleteSelectedItemAsync();
+
+                Globals.Instance.ShowWaitCursor(false);
+            }
         }
 
         public void MovieFindAndPlay()

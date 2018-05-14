@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using VideoSearch.Database;
@@ -39,6 +40,17 @@ namespace VideoSearch.Model
             Table = MovieTaskTable.Table;
         }
 
+        /// <summary>
+        /// init from DB
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="id"></param>
+        /// <param name="displayID"></param>
+        /// <param name="taskId"></param>
+        /// <param name="name"></param>
+        /// <param name="moviePos"></param>
+        /// <param name="taskType"></param>
+        /// <param name="state"></param>
         public MovieTaskItem(DataItemBase parent, String id, String displayID, String taskId, String name, String moviePos,
                         MovieTaskType taskType, MovieTaskState state) 
             : this(parent)
@@ -51,9 +63,16 @@ namespace VideoSearch.Model
             TaskType = taskType;
             State = state;
 
-            InitFromServer();
+            //InitFromServer();
         }
 
+        /// <summary>
+        /// init from new submit
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="taskId"></param>
+        /// <param name="name"></param>
+        /// <param name="taskType"></param>
         public MovieTaskItem(DataItemBase parent, String taskId, String name, MovieTaskType taskType) 
             : this(parent)
         {
@@ -66,30 +85,36 @@ namespace VideoSearch.Model
 
             State = MovieTaskState.CreateReady;
 
-            InitFromServer();
+            var taskQuery = InitFromServer();
         }
 
-        protected void InitFromServer()
+        public async Task InitFromServer()
         {
-            XElement response = ApiManager.Instance.GetQueryTask(TaskId);
-
-            if (response != null)
+            if (State != MovieTaskState.Created && State != MovieTaskState.CreateFail)
             {
-                SectionCount = StringUtils.String2Int(response.Element("SectionCount").Value);
-                Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
-                State = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
+                _monitorThread = new Thread(new ThreadStart(TaskProcess));
+                _monitorThread.Start();
 
-                if (State != MovieTaskState.Created && State != MovieTaskState.CreateFail)
+                return;
+            }
+
+            if (State == MovieTaskState.Created)
+            {
+                // 已获取信息，退出
+                if (IsFetched())
                 {
-                    _monitorThread = new Thread(new ThreadStart(TaskProcess));
-                    _monitorThread.Start();
+                    return;
                 }
-                else if (State == MovieTaskState.Created)
-                    UpdateProperty();
+
+                Globals.Instance.ShowWaitCursor(true);
+                await FetchResult();
+
+                UpdateProperty();
+                Globals.Instance.ShowWaitCursor(false);
             }
         }
         
-        protected override void DisposeItem()
+        public override void DisposeItem()
         {
             base.DisposeItem();
 
@@ -132,11 +157,11 @@ namespace VideoSearch.Model
         #endregion
 
         #region Override (ClearFromDB)
-        public override bool ClearFromDB()
+        public override async Task<bool> ClearFromDBAsync()
         {
             if (TaskId != "0")
             {
-                if(ApiManager.Instance.DeleteTask(TaskId))
+                if(await ApiManager.Instance.DeleteTask(TaskId))
                 {
                     return base.ClearFromDB();
                 }
@@ -268,7 +293,7 @@ namespace VideoSearch.Model
             }
         }
 
-        private String _remark = "";
+        private String _remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
         public String Remark
         {
             get { return _remark; }
@@ -410,7 +435,7 @@ namespace VideoSearch.Model
         }
 
 
-        private double _progress = 0.0;
+        private double _progress = 0.5;
         public double Progress
         {
             get { return _progress; }
@@ -444,7 +469,6 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Visible;
                         ProgressPos = 1;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
                         Progress = 0.0;
                     }
@@ -458,9 +482,7 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Visible;
                         ProgressPos = 0;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
-                        Progress = 0.0;
                     }
                     else if (_state == MovieTaskState.Created)
                     {
@@ -471,10 +493,7 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
                         ProgressPos = 0;
-                        Opacity = 0.6;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImportReady.png";
                         IsEnabled = true;
-                        Progress = 0.0;
                     }
                     else if(_state == MovieTaskState.CreateFail)
                     {
@@ -486,9 +505,7 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Hidden;
                         ProgressPos = 0;
                         Opacity = 1.0;
-                        Remark = "/VideoSearch;component/Resources/Images/Button/MovieImportReady.png";
                         IsEnabled = true;
-                        Progress = 0.0;
                     }
 
                     if (Table != null && TaskType != MovieTaskType.UnInitTask)
@@ -523,6 +540,9 @@ namespace VideoSearch.Model
         #region TaskProcess & Web API
         private Thread _monitorThread = null;
 
+        /// <summary>
+        /// Monitor thread for update progress
+        /// </summary>
         public void TaskProcess()
         {
             XElement response = null;
@@ -530,7 +550,11 @@ namespace VideoSearch.Model
 
             do
             {
-                response = ApiManager.Instance.GetQueryTask(TaskId);
+                Thread.Sleep(1000);
+
+                var taskGet = ApiManager.Instance.GetQueryTask(TaskId);
+                taskGet.Wait();
+                response = taskGet.Result;
 
                 if (response != null)
                 {
@@ -540,7 +564,6 @@ namespace VideoSearch.Model
                     Console.WriteLine("*** state = {0}, progress = {1}", state, Progress);
                 }
 
-                Thread.Sleep(2000);
             } while (state != MovieTaskState.Created && state != MovieTaskState.CreateFail);
 
             if (response != null && state == MovieTaskState.Created)
@@ -554,8 +577,15 @@ namespace VideoSearch.Model
             _monitorThread = null;
         }
 
+        public virtual Task FetchResult() => null;
+
         public virtual void UpdateProperty()
         {
+        }
+
+        public virtual bool IsFetched()
+        {
+            return true;
         }
 
         #endregion

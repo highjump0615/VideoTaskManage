@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using VideoSearch.Model;
+using VideoSearch.VideoService;
 using VideoSearch.ViewModel.Base;
 
 namespace VideoSearch.ViewModel
@@ -9,6 +10,23 @@ namespace VideoSearch.ViewModel
     {
         public PanelViewModel(DataItemBase owner) : base(owner)
         {
+            var taskItem = (MovieTaskItem)owner;
+            if (taskItem.State != MovieTaskState.Created)
+            {
+                String strNotice = "正在处理... 请稍后";
+                bool bProgress = true;
+                switch (taskItem.State)
+                {
+                    case MovieTaskState.Created:
+                        strNotice = "任务处理失败，请重新提交任务";
+                        bProgress = false;
+                        break;
+                }
+
+                // 显示加载中提示
+                Globals.Instance.MainVM.ShowWorkMask(strNotice, bProgress);
+            }
+
             ShowResult();
         }
 

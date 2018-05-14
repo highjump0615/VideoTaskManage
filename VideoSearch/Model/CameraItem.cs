@@ -172,9 +172,14 @@ namespace VideoSearch.Model
         #region Override & Update
         protected override void OnCommand(Object parameter)
         {
-            if (parameter != null && parameter.GetType() == typeof(String) && (String)parameter == UpdateCommand)
+            // 编辑指令
+            if (parameter.Equals(UpdateCommand))
             {
                 UpdateItem();
+            }
+            // 地图显示指令
+            if (parameter.Equals(ShowMapCommand))
+            {
             }
             else
                 base.OnCommand(parameter);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using VideoSearch.Model;
 
 namespace VideoSearch.ViewModel.Base
 {
@@ -9,6 +10,7 @@ namespace VideoSearch.ViewModel.Base
     {
         private readonly ActionEx _handler;
         private bool _isEnabled;
+        private Action<DataItemBase> showMap;
 
         public event EventHandler CanExecuteChanged;
 

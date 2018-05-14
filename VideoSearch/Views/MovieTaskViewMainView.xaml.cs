@@ -41,20 +41,17 @@ namespace VideoSearch.Views
         /// </summary>
         public void InitPlayer()
         {
-            if (_vlcPlayer == null)
-            {
-                _vlcPlayer = new vlcPlayer();
-                _vlcPlayer.SetIntiTimeInfo(false);
-                _vlcPlayer.SetControlPanelTimer(false);
-                _vlcPlayer.SetManualMarkMode(true);
+            _vlcPlayer = new vlcPlayer();
+            _vlcPlayer.SetIntiTimeInfo(false);
+            _vlcPlayer.SetControlPanelTimer(false);
+            _vlcPlayer.SetManualMarkMode(true);
 
-                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
-                _vlcPlayer.PlayerStopped += OnMovieStopped;
-                _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
+            _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
+            _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
+            _vlcPlayer.PlayerStopped += OnMovieStopped;
+            _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
 
-                PlayerPanel.Child = _vlcPlayer;
-            }
+            PlayerPanel.Child = _vlcPlayer;
 
             var taskInit = InitPlayerAsync();
 
@@ -435,6 +432,11 @@ namespace VideoSearch.Views
 
             GridManInfo.Visibility = Visibility.Collapsed;
             GridCarInfo.Visibility = Visibility.Collapsed;
+
+            if (_vlcPlayer != null)
+            {
+                _vlcPlayer.ClearAllManualMark();
+            }
         }
 
         private void OnSelectColor(object sender, RoutedEventArgs e)

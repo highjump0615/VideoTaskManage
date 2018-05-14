@@ -56,6 +56,9 @@ namespace VideoSearch.Utils
             return true;
         }
 
+        /// <summary>
+        /// 保存标注
+        /// </summary>
         public void SaveManualMark()
         {
             if (_player == null || _videoId == 0 || _markList.Count == 0)

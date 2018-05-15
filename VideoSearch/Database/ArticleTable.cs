@@ -42,57 +42,40 @@ namespace VideoSearch.Database
             if (row == null)
                 return null;
 
-            String strTargetType = String.Format("{0}", row["TargetType"]);
-            if (strTargetType == null || strTargetType.Length == 0)
-                return null;
-
-            DetailInfo info = null;
-            bool isHuman = true;
-
-            if (strTargetType.CompareTo("人") == 0)
-                info = new HumanInfo();
-            else
-            {
-                isHuman = false;
-                info = new CarInfo();
-            }
+            DetailInfo info = new DetailInfo();
 
             info.id = String.Format("{0}", row["ID"]);
             info.videoId = String.Format("{0}", row["VideoId"]);
+
             info.frame = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["Frame"])));
             info.x = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["X"])));
             info.y = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["Y"])));
             info.width = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["Width"])));
             info.height = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["Height"])));
+
             info.desc = String.Format("{0}", row["Description"]);
             info.keyword = String.Format("{0}", row["Keyword"]);
-            info.type = strTargetType;
+            info.type = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["TargetType"])));
 
-            if (isHuman)
-            {
-                HumanInfo hInfo = (HumanInfo)info;
+            // 人
+            info.pantsColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["PantsColor"])));
+            info.pantsKind = String.Format("{0}", row["PantsKind"]);
+            info.otherHumanSpec = String.Format("{0}", row["OtherHumanSpec"]);
+            info.coatColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["CoatColor"])));
+            info.coatKind = String.Format("{0}", row["CoatKind"]);
+            info.hasPack = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasPack"])));
+            info.hasCap = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasCap"])));
+            info.hasGlass = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasGlass"])));
+            info.name = String.Format("{0}", row["Name"]);
 
-                hInfo.pantsColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["PantsColor"])));
-                hInfo.pantsKind = String.Format("{0}", row["PantsKind"]);
-                hInfo.otherHumanSpec = String.Format("{0}", row["OtherHumanSpec"]);
-                hInfo.coatColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["CoatColor"])));
-                hInfo.coatKind = String.Format("{0}", row["CoatKind"]);
-                hInfo.hasPack = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasPack"])));
-                hInfo.hasCap = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasCap"])));
-                hInfo.hasGlass = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasGlass"])));
-                hInfo.name = String.Format("{0}", row["Name"]);
-            }
-            else
-            {
-                CarInfo cInfo = (CarInfo)info;
-
-                cInfo.carNumber = String.Format("{0}", row["CarNumber"]);
-                cInfo.carColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["CarColor"])));
-                cInfo.memberCount = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["MemberCount"])));
-                cInfo.driver = String.Format("{0}", row["Driver"]);
-                cInfo.carModel = String.Format("{0}", row["CarModel"]);
-                cInfo.otherCarSpec = String.Format("{0}", row["OtherCarSpec"]);
-            }
+            // 车
+            info.carNumber = String.Format("{0}", row["CarNumber"]);
+            info.carColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["CarColor"])));
+            info.memberCount = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["MemberCount"])));
+            info.driver = String.Format("{0}", row["Driver"]);
+            info.carModel = String.Format("{0}", row["CarModel"]);
+            info.otherCarSpec = String.Format("{0}", row["OtherCarSpec"]);
+            
 
             return new ArticleItem(parent, info);
         }
@@ -106,66 +89,42 @@ namespace VideoSearch.Database
             String sql = "insert into Article (ID, VideoId, Frame, X, Y, Width, Height, Description, Keyword, TargetType, ";
             String strVals = "values(@ID, @VideoId, @Frame, @X, @Y, @Width, @Height, @Description, @Keyword, @TargetType, ";
 
-            if (item.TargetType.CompareTo("人") == 0)
+            sql += "PantsColor, PantsKind, OtherHumanSpec, CoatColor, CoatKind, HasPack, HasCap, HasGlass, Name, CarNumber, CarColor, MemberCount, Driver, CarModel, OtherCarSpec)";
+            sql += strVals + "@PantsColor, @PantsKind, @OtherHumanSpec, @CoatColor, @CoatKind, @HasPack, @HasCap, @HasGlass, @Name, @CarNumber, @CarColor, @MemberCount, @Driver, @CarModel, @OtherCarSpec)";
+
+            param = new SQLiteParameter[]
             {
-                sql += "PantsColor, PantsKind, OtherHumanSpec, CoatColor, CoatKind, HasPack, HasCap, HasGlass, Name)";
-                sql += strVals + "@PantsColor, @PantsKind, @OtherHumanSpec, @CoatColor, @CoatKind, @HasPack, @HasCap, @HasGlass, @Name)";
+                new SQLiteParameter("@ID", info.id),
+                new SQLiteParameter("@VideoId", info.videoId),
+                new SQLiteParameter("@Frame", info.frame),
+                new SQLiteParameter("@X", info.x),
+                new SQLiteParameter("@Y", info.y),
+                new SQLiteParameter("@Width", info.width),
+                new SQLiteParameter("@Height", info.height),
+                new SQLiteParameter("@Description", info.desc),
+                new SQLiteParameter("@Keyword", info.keyword),
+                new SQLiteParameter("@TargetType", info.type),
 
-                HumanInfo hInfo = (HumanInfo)info;
+                // 人
+                new SQLiteParameter("@PantsColor",info.pantsColor),
+                new SQLiteParameter("@PantsKind",info.pantsKind),
+                new SQLiteParameter("@OtherHumanSpec",info.otherHumanSpec),
+                new SQLiteParameter("@CoatColor",info.coatColor),
+                new SQLiteParameter("@CoatKind",info.coatKind),
+                new SQLiteParameter("@HasPack",info.hasPack),
+                new SQLiteParameter("@HasCap",info.hasCap),
+                new SQLiteParameter("@HasGlass",info.hasGlass),
+                new SQLiteParameter("@Name",info.name),
 
-                param = new SQLiteParameter[]
-                {
-                    new SQLiteParameter("@ID", info.id),
-                    new SQLiteParameter("@VideoId", info.videoId),
-                    new SQLiteParameter("@Frame", info.frame),
-                    new SQLiteParameter("@X", info.x),
-                    new SQLiteParameter("@Y", info.y),
-                    new SQLiteParameter("@Width", info.width),
-                    new SQLiteParameter("@Height", info.height),
-                    new SQLiteParameter("@Description", info.desc),
-                    new SQLiteParameter("@Keyword", info.keyword),
-                    new SQLiteParameter("@TargetType", info.type),
+                // 车
+                new SQLiteParameter("@CarNumber",info.carNumber),
+                new SQLiteParameter("@CarColor",info.carColor),
+                new SQLiteParameter("@MemberCount",info.memberCount),
+                new SQLiteParameter("@Driver",info.driver),
+                new SQLiteParameter("@CarModel",info.carModel),
+                new SQLiteParameter("@OtherCarSpec",info.otherCarSpec),
+            };
 
-                    new SQLiteParameter("@PantsColor",hInfo.pantsColor),
-                    new SQLiteParameter("@PantsKind",hInfo.pantsKind),
-                    new SQLiteParameter("@OtherHumanSpec",hInfo.otherHumanSpec),
-                    new SQLiteParameter("@CoatColor",hInfo.coatColor),
-                    new SQLiteParameter("@CoatKind",hInfo.coatKind),
-                    new SQLiteParameter("@HasPack",hInfo.hasPack),
-                    new SQLiteParameter("@HasCap",hInfo.hasCap),
-                    new SQLiteParameter("@HasGlass",hInfo.hasGlass),
-                    new SQLiteParameter("@Name",hInfo.name),
-                };
-            }
-            else if (item.TargetType.CompareTo("车") == 0)
-            {
-                sql += "CarNumber, CarColor, MemberCount, Driver, CarModel, OtherCarSpec)";
-                sql += strVals + "@CarNumber, @CarColor, @MemberCount, @Driver, @CarModel, @OtherCarSpec)";
-
-                CarInfo cInfo = (CarInfo)info;
-
-                param = new SQLiteParameter[]
-                {
-                    new SQLiteParameter("@ID", info.id),
-                    new SQLiteParameter("@VideoId", info.videoId),
-                    new SQLiteParameter("@Frame", info.frame),
-                    new SQLiteParameter("@X", info.x),
-                    new SQLiteParameter("@Y", info.y),
-                    new SQLiteParameter("@Width", info.width),
-                    new SQLiteParameter("@Height", info.height),
-                    new SQLiteParameter("@Description", info.desc),
-                    new SQLiteParameter("@Keyword", info.keyword),
-                    new SQLiteParameter("@TargetType", info.type),
-
-                    new SQLiteParameter("@CarNumber",cInfo.carNumber),
-                    new SQLiteParameter("@CarColor",cInfo.carColor),
-                    new SQLiteParameter("@MemberCount",cInfo.memberCount),
-                    new SQLiteParameter("@Driver",cInfo.driver),
-                    new SQLiteParameter("@CarModel",cInfo.carModel),
-                    new SQLiteParameter("@OtherCarSpec",cInfo.otherCarSpec),
-                };
-
-            }
             return param == null ? 0 : DBManager.ExecuteCommand(sql, param);
         }
 
@@ -175,65 +134,42 @@ namespace VideoSearch.Database
             DetailInfo info = item.DetailInfo;
 
             String sql = "update Article set ID=@ID, VideoId=@VideoId, Frame=@Frame, X=@X, Y=@Y, Width=@Width, Height=@Height, Description=@Description, Keyword=@Keyword, TargetType=@TargetType, ";
+            sql += "PantsColor=@PantsColor, PantsKind=@PantsKind, OtherHumanSpec=@OtherHumanSpec, CoatColor=@CoatColor, CoatKind=@CoatKind, HasPack=@HasPack, HasCap=@HasCap, HasGlass=@HasGlass, Name=@Name, " +
+                "CarNumber=@CarNumber, CarColor=@CarColor, MemberCount=@MemberCount, Driver=@Driver, CarModel=@CarModel, OtherCarSpec=@OtherCarSpec where ID=@ID " +
+                "where ID=@ID";
 
-            if (item.TargetType.CompareTo("人") == 0)
+            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
             {
-                sql += "PantsColor=@PantsColor, PantsKind=@PantsKind, OtherHumanSpec=@OtherHumanSpec, CoatColor=@CoatColor, CoatKind=@CoatKind, HasPack=@HasPack, HasCap=@HasCap, HasGlass=@HasGlass, Name=@Name where ID=@ID";
-                HumanInfo hInfo = (HumanInfo)info;
+                new SQLiteParameter("@ID", info.id),
+                new SQLiteParameter("@VideoId", info.videoId),
+                new SQLiteParameter("@Frame", info.frame),
+                new SQLiteParameter("@X", info.x),
+                new SQLiteParameter("@Y", info.y),
+                new SQLiteParameter("@Width", info.width),
+                new SQLiteParameter("@Height", info.height),
+                new SQLiteParameter("@Description", info.desc),
+                new SQLiteParameter("@Keyword", info.keyword),
+                new SQLiteParameter("@TargetType", info.type),
 
-                return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
-                {
-                    new SQLiteParameter("@ID", info.id),
-                    new SQLiteParameter("@VideoId", info.videoId),
-                    new SQLiteParameter("@Frame", info.frame),
-                    new SQLiteParameter("@X", info.x),
-                    new SQLiteParameter("@Y", info.y),
-                    new SQLiteParameter("@Width", info.width),
-                    new SQLiteParameter("@Height", info.height),
-                    new SQLiteParameter("@Description", info.desc),
-                    new SQLiteParameter("@Keyword", info.keyword),
-                    new SQLiteParameter("@TargetType", info.type),
+                // 人
+                new SQLiteParameter("@PantsColor",info.pantsColor),
+                new SQLiteParameter("@PantsKind",info.pantsKind),
+                new SQLiteParameter("@OtherHumanSpec",info.otherHumanSpec),
+                new SQLiteParameter("@CoatColor",info.coatColor),
+                new SQLiteParameter("@CoatKind",info.coatKind),
+                new SQLiteParameter("@HasPack",info.hasPack),
+                new SQLiteParameter("@HasCap",info.hasCap),
+                new SQLiteParameter("@HasGlass",info.hasGlass),
+                new SQLiteParameter("@Name",info.name),
 
-                    new SQLiteParameter("@PantsColor",hInfo.pantsColor),
-                    new SQLiteParameter("@PantsKind",hInfo.pantsKind),
-                    new SQLiteParameter("@OtherHumanSpec",hInfo.otherHumanSpec),
-                    new SQLiteParameter("@CoatColor",hInfo.coatColor),
-                    new SQLiteParameter("@CoatKind",hInfo.coatKind),
-                    new SQLiteParameter("@HasPack",hInfo.hasPack),
-                    new SQLiteParameter("@HasCap",hInfo.hasCap),
-                    new SQLiteParameter("@HasGlass",hInfo.hasGlass),
-                    new SQLiteParameter("@Name",hInfo.name),
-                });
-
-            }
-            else if (item.TargetType.CompareTo("车") == 0)
-            {
-                sql += "CarNumber=@CarNumber, CarColor=@CarColor, MemberCount=@MemberCount, Driver=@Driver, CarModel=@CarModel, OtherCarSpec=@OtherCarSpec where ID=@ID";
-                CarInfo cInfo = (CarInfo)info;
-
-                return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
-                {
-                    new SQLiteParameter("@ID", info.id),
-                    new SQLiteParameter("@VideoId", info.videoId),
-                    new SQLiteParameter("@Frame", info.frame),
-                    new SQLiteParameter("@X", info.x),
-                    new SQLiteParameter("@Y", info.y),
-                    new SQLiteParameter("@Width", info.width),
-                    new SQLiteParameter("@Height", info.height),
-                    new SQLiteParameter("@Description", info.desc),
-                    new SQLiteParameter("@Keyword", info.keyword),
-                    new SQLiteParameter("@TargetType", info.type),
-
-                    new SQLiteParameter("@CarNumber",cInfo.carNumber),
-                    new SQLiteParameter("@CarColor",cInfo.carColor),
-                    new SQLiteParameter("@MemberCount",cInfo.memberCount),
-                    new SQLiteParameter("@Driver",cInfo.driver),
-                    new SQLiteParameter("@CarModel",cInfo.carModel),
-                    new SQLiteParameter("@OtherCarSpec",cInfo.otherCarSpec),
-                });
-            }
-
-            return 0;
+                // 车
+                new SQLiteParameter("@CarNumber",info.carNumber),
+                new SQLiteParameter("@CarColor",info.carColor),
+                new SQLiteParameter("@MemberCount", info.memberCount),
+                new SQLiteParameter("@Driver", info.driver),
+                new SQLiteParameter("@CarModel", info.carModel),
+                new SQLiteParameter("@OtherCarSpec", info.otherCarSpec),
+            });
         }
         #endregion
     }

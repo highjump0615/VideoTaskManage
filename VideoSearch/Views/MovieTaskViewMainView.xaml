@@ -322,7 +322,7 @@
                                         <TextBox
                                             Grid.Column="2"
                                             x:Name="TxtDetail"
-                                            Style="{StaticResource LabelTextboxStyle}"/>
+                                            Style="{StaticResource LabelTextboxStyle}" />
                                     </Grid>
                                 </Border>
 

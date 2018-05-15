@@ -10,18 +10,22 @@ namespace VideoSearch.Model
     {
         public String id;
         public String videoId;
+
+        // 标注位置大小
         public long frame;
         public int x;
         public int y;
         public int width;
         public int height;
+
+        // 基础信息
         public String desc;
         public String keyword;
-        public String type;
-    }
 
-    public class HumanInfo : DetailInfo
-    {
+        // 0 - 人， 1 - 车
+        public int type;
+
+        // 人信息
         public int pantsColor;
         public String pantsKind;
         public String otherHumanSpec;
@@ -31,10 +35,8 @@ namespace VideoSearch.Model
         public int hasCap;
         public int hasGlass;
         public String name;
-    }
 
-    public class CarInfo : DetailInfo
-    {
+        // 车辆信息
         public String carNumber;
         public int carColor;
         public int memberCount;
@@ -42,8 +44,6 @@ namespace VideoSearch.Model
         public String carModel;
         public String otherCarSpec;
     }
-
-    
 
     public class ArticleItem : DataItemBase
     {

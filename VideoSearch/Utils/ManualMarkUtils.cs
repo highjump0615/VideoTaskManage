@@ -57,6 +57,21 @@ namespace VideoSearch.Utils
         }
 
         /// <summary>
+        /// 获取标注
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public ManualMark getMarkAt(int index)
+        {
+            if (_markList.Count > 0)
+            {
+                return _markList[0];
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// 保存标注
         /// </summary>
         public void SaveManualMark()
@@ -88,8 +103,8 @@ namespace VideoSearch.Utils
             _player.AddManualMarks(_lastIndex, newList);
             //_player.DelManualMarks(_lastIndex);
 
-            String path = String.Format("{0}\\{1}.xml", _path, _lastIndex);
-            WriteMarkToXML(markList, path);
+            //String path = String.Format("{0}\\{1}.xml", _path, _lastIndex);
+            //WriteMarkToXML(markList, path);
 
             _markList.Clear();
         }

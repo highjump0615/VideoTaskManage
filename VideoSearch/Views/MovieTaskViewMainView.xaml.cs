@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using VideoSearch.Model;
 using VideoSearch.Utils;
 using VideoSearch.ViewModel;
 using vlcPlayerLib;
@@ -311,6 +312,60 @@ namespace VideoSearch.Views
         private void OnSave(object sender, RoutedEventArgs e)
         {
             _markUtils.SaveManualMark();
+
+            //
+            // 收集标注相关信息
+            //
+            DetailInfo markInfo = new DetailInfo();
+            try
+            {                
+                // 轨迹说明
+                markInfo.desc = TxtDetail.Text;
+                // 关键词
+                markInfo.keyword = TxtMainKey.Text;
+                // 目标类型
+                markInfo.type = CboTargetType.SelectedIndex;
+
+                // 裤子颜色
+                // 裤子种类
+                markInfo.pantsKind = CboPantsKind.Text;
+                // 其它体貌特征
+                markInfo.otherHumanSpec = TxtOtherHumanSpec.Text;
+                // 上衣颜色
+                // 上衣种类
+                markInfo.coatKind = TxtCoatKind.Text;
+                // 是否背包
+                markInfo.hasPack = Convert.ToInt32(ChkHasPack.IsChecked);
+                // 是否戴帽子
+                markInfo.hasCap = Convert.ToInt32(ChkHasCap.IsChecked);
+                // 是否戴眼镜
+                markInfo.hasGlass = Convert.ToInt32(ChkHasGlass.IsChecked);
+                // 姓名
+                markInfo.name = TxtName.Text;
+
+                // 车牌
+                markInfo.carNumber = TxtCarNumber.Text;
+                // 车身颜色
+                // 乘客数量
+                markInfo.memberCount = Convert.ToInt32(TxtMemberCount.Text);
+                // 驾驶人
+                markInfo.driver = TxtDriver.Text;
+                // 品牌型号
+                markInfo.carModel = TxtCarModel.Text;
+                // 其他车身特征
+                markInfo.otherCarSpec = TxtOtherCarSpec.Text;
+            }
+            catch (Exception)
+            {
+            }
+
+
+            // 保存到数据库
+            var vm = (MovieTaskViewMainModel)this.DataContext;
+            vm.saveMarkInfo(_markUtils.getMarkAt(0), markInfo);
+
+
+
             Reset();
         }
 

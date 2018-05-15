@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using VideoSearch.Database;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
+using vlcPlayerLib;
 
 namespace VideoSearch.ViewModel
 {
@@ -124,5 +126,20 @@ namespace VideoSearch.ViewModel
         }
         #endregion
 
+        public void saveMarkInfo(ManualMark mark, DetailInfo info)
+        {
+            // 位置&大小
+            info.frame = MarkList[0].Frame;
+            info.x = MarkList[0].X0;
+            info.y = MarkList[0].Y0;
+            info.width = MarkList[0].X1;
+            info.height = MarkList[0].Y1;
+
+            info.videoId = movieItem.ID;
+
+            ArticleItem item = new ArticleItem(movieItem, info);
+            // 保存到数据库
+            ArticleTable.Table.Add(item);
+        }
     }
 }

@@ -44,7 +44,8 @@ namespace VideoSearch.Database
 
             DetailInfo info = new DetailInfo();
 
-            info.id = String.Format("{0}", row[$"{pfxField}ID"]);
+            info.id = String.Format("{0}", row[$"ArticleID"]);
+
             info.videoId = String.Format("{0}", row[$"{pfxField}VideoId"]);
 
             info.frame = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}Frame"])));

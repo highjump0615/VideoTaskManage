@@ -142,7 +142,7 @@
                                     OffsetWithImage="0" />
         </Grid>
 
-        <Grid Grid.Row="1" d:IsHidden="True" IsEnabled="{Binding TotalAreaEnabled}">
+        <Grid Grid.Row="1"  d:IsHidden="True" IsEnabled="{Binding TotalAreaEnabled}">
 
             <!-- 操作区 -->
             <Grid Height="100" x:Name="Toolbar" VerticalAlignment="Top" Background="#FF312F29">
@@ -194,6 +194,7 @@
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="6,4,0,0" x:Name="ToolbarPanelPreview" NormalImage="Resources/Images/Toolbar/Toolbar05/btPanelPreview.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="1" Click="OnPanelPreview" TextMode="Bottom" Text="标记结果" />
                     <SkinControl:SkinButton HorizontalAlignment="Right" Margin="0,4,6,74" x:Name="ToolbarPanelShowPath" NormalImage="Resources/Images/Toolbar/Toolbar05/btPanelShowPath.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" Width="80" Tag="1" Click="OnPanelShowPath" Height="22" TextMode="Right" Text="轨迹查看" />
                     <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,26,6,0" x:Name="ToolbarPanelExport" NormalImage="Resources/Images/Toolbar/Toolbar05/btPanelExport.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="80" Tag="1" Click="OnPanelExport" TextMode="Right" Text="标记导出" />
+                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,48,6,0" x:Name="ToolbarMarkDelete" NormalImage="Resources/Images/Toolbar/Toolbar01/btDeleteEvent.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="88" Tag="1" Click="OnDeleteMark" TextMode="Right" Text="删除" />
                 </Grid>
                 <Grid Grid.Column="5">
                     <SkinControl:SkinButtonGroup x:Name="HelpGroup" Title="" Bottom_Normal="#FF434341" Bottom_Selected="#FF434341" IsEnabled="False" IsHitTestVisible="False">

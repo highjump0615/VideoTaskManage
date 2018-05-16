@@ -135,6 +135,7 @@ namespace VideoSearch.ViewModel
             info.width = MarkList[0].X1;
             info.height = MarkList[0].Y1;
 
+            info.id = movieItem.AutoID;
             info.videoId = movieItem.ID;
 
             ArticleItem item = new ArticleItem(movieItem, info);

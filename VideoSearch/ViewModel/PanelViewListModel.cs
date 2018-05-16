@@ -1,8 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using VideoSearch.Database;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
+using VideoSearch.Windows;
 
 namespace VideoSearch.ViewModel
 {
@@ -71,7 +74,7 @@ namespace VideoSearch.ViewModel
             EventItem itemEvent = (EventItem)Owner;
 
             // 加载标注信息
-            var sql = "select Camera.*, Article.* " +
+            var sql = "select Camera.*, Article.*, Article.ID as ArticleID " +
                 "from Article " +
                 "join Movie on Movie.id = Article.videoId " +
                 "join Camera on Camera.id = Movie.cameraPos " +
@@ -139,6 +142,38 @@ namespace VideoSearch.ViewModel
             FilterKeyword = "";
 
             LoadArticles();
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        public override void DeleteSelectedItems()
+        {
+            var articlesRemove = Articles.Where(x => x.IsChecked == true).ToList();
+
+            // 没有已选择的，推出
+            if (articlesRemove.Count <= 0)
+            {
+                return;
+            }
+
+            ConfirmDeleteWindow deleteDlg = new ConfirmDeleteWindow();
+
+            Nullable<bool> result = deleteDlg.ShowDialog();
+
+            if (result == true)
+            {
+                Globals.Instance.ShowWaitCursor(true);
+                
+                foreach (var article in articlesRemove)
+                {
+                    ArticleTable.Table.Remove(article);
+                    Articles.Remove(article);
+                }
+
+                Globals.Instance.ShowWaitCursor(false);
+                updateGridIndex();
+            }
         }
     }
 }

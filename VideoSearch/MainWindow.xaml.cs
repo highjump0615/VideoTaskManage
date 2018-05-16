@@ -261,6 +261,7 @@ namespace VideoSearch
             PanelGroup.Children.Add(ToolbarPanelPreview);
             PanelGroup.Children.Add(ToolbarPanelShowPath);
             PanelGroup.Children.Add(ToolbarPanelExport);
+            PanelGroup.Children.Add(ToolbarMarkDelete);
         }
 
         private void SelectTabWithLevel(int level)
@@ -637,6 +638,29 @@ namespace VideoSearch
             Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(PanelViewModel))
                 ((PanelViewModel)viewContents).Export();
+        }
+
+        /// <summary>
+        /// 删除标注
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDeleteMark(object sender, RoutedEventArgs e)
+        {
+            OnTabChanged(sender, e);
+
+            Object viewContents = workView.Content;
+            if (viewContents.GetType() == typeof(CameraViewModel))
+            {
+                var vmWork = (CameraViewModel)viewContents;
+
+                // 删除操作只有在列表页面上有效
+                if (vmWork.Contents is PanelViewListModel)
+                {
+                    var vmChild = (PanelViewListModel)vmWork.Contents;
+                    vmChild.DeleteSelectedItems();
+                }
+            }
         }
 
         /////////////////////////////////////////////////////////

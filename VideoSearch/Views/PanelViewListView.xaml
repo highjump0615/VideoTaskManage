@@ -19,17 +19,45 @@
                 <Grid>
                     <!-- TargetType -->
                     <TextBlock Height="18" Text="目标类型" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="16,0,0,0" HorizontalAlignment="Left" />
-                    <ComboBox Height="26" Width="126" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="100,0,0,0" HorizontalAlignment="Left" Style="{DynamicResource BlueFrameComboBox}">
+                    <ComboBox Height="26" Width="126" 
+                              FontSize="14" 
+                              Foreground="White" 
+                              VerticalAlignment="Center" 
+                              Margin="100,0,0,0" 
+                              HorizontalAlignment="Left" 
+                              Style="{DynamicResource BlueFrameComboBox}"
+                              SelectedIndex="{Binding FilterTargetType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBoxItem Content="人" />
                         <ComboBoxItem Content="车" />
                     </ComboBox>
 
                     <!-- Keyword -->
                     <TextBlock Height="18" Text="关键字" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="290,0,0,0" HorizontalAlignment="Left" />
-                    <Border Height="26" Width="126" VerticalAlignment="Center" Margin="360,0,0,0" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="#FF302F2B" Background="#FF646361" />
+                    <Border Height="26" Width="126" VerticalAlignment="Center" Margin="360,0,0,0" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="#FF302F2B" Background="#FF646361">
+                        <TextBox Background="{x:Null}"
+                                 Foreground="White"
+                                 Padding="3"
+                                 Text="{Binding FilterKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Border>
 
-                    <Button Content="查询" Width="85" Height="26" Foreground="White" FontSize="12" Focusable="False" HorizontalAlignment="Right" Margin="0,0,114,0" Style="{DynamicResource GreenFrameButtonStyle}"/>
-                    <Button Content="重置" Width="85" Height="26" Foreground="White" FontSize="12" Focusable="False" HorizontalAlignment="Right" Margin="0,0,14,0" Style="{DynamicResource BlueFrameButtonStyle}"/>
+                    <Button Content="查询" 
+                            Width="85" Height="26" 
+                            Foreground="White" 
+                            FontSize="12" 
+                            Focusable="False" 
+                            HorizontalAlignment="Right" 
+                            Margin="0,0,114,0" 
+                            Style="{DynamicResource GreenFrameButtonStyle}"
+                            Command="{Binding FilterCommand}" />
+                    <Button Content="重置" 
+                            Width="85" Height="26" 
+                            Foreground="White" 
+                            FontSize="12" 
+                            Focusable="False" 
+                            HorizontalAlignment="Right" 
+                            Margin="0,0,14,0" 
+                            Style="{DynamicResource BlueFrameButtonStyle}"
+                            Command="{Binding ResetCommand}" />
                 </Grid>
             </Border>
 

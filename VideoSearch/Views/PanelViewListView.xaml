@@ -39,7 +39,7 @@
 
                 <DataGrid x:Name="EventDataGrid" BorderBrush="Black"
 					        ColumnHeaderHeight="58" RowHeight="42" 
-					        ItemsSource="{Binding Path=Owner, UpdateSourceTrigger=PropertyChanged}" 
+					        ItemsSource="{Binding Path=Articles, UpdateSourceTrigger=PropertyChanged}" 
 					        HeadersVisibility="Column" 
 					        FontSize="14" Foreground="White" 
 					        ScrollViewer.CanContentScroll="False" 
@@ -49,9 +49,9 @@
 					        CanUserResizeRows="False" CanUserAddRows="False">
 
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn  Header="" Width="71*"
+                        <DataGridTemplateColumn  Header="" Width="40"
 							CellTemplate="{StaticResource CheckColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="序号" Width="71*"
+                        <DataGridTemplateColumn  Header="序号" Width="50"
 							CellTemplate="{StaticResource OrderColumnTemplate}" />
                         <DataGridTemplateColumn  Header="摄像头名称" Width="131*"
 							CellTemplate="{StaticResource ArticleCameraNameColumnTemplate}" />

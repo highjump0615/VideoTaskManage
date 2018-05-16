@@ -42,7 +42,14 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Order}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Order}" 
+                       VerticalAlignment="Center" 
+                       Foreground="White" 
+                       FontSize="16" 
+                       Height="18" 
+                       TextAlignment="Center" 
+                       Margin="4,0" 
+                       TextTrimming="CharacterEllipsis" />
         </Grid>
     </DataTemplate>
 
@@ -389,7 +396,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding CameraName}" VerticalAlignment="Center" 
+            <TextBlock Text="{Binding Parent.Parent.Name}" VerticalAlignment="Center" 
                        Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
                        Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>
@@ -399,7 +406,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding CameraPos}" VerticalAlignment="Center" 
+            <TextBlock Text="{Binding Parent.Parent.Coordinate}" VerticalAlignment="Center" 
                        Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
                        Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>
@@ -409,7 +416,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding MovieName}" VerticalAlignment="Center" 
+            <TextBlock Text="{Binding Parent.Name}" VerticalAlignment="Center" 
                        Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
                        Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>
@@ -429,7 +436,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding CameraName}" VerticalAlignment="Center" 
+            <TextBlock Text="{Binding FrameInfo}" VerticalAlignment="Center" 
                        Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
                        Margin="4,0" TextTrimming="CharacterEllipsis" />
         </Grid>

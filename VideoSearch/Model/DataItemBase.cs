@@ -266,7 +266,7 @@ namespace VideoSearch.Model
         #region for DB & Table's common member
 
         private String _order = "";
-        public String Order
+        public virtual String Order
         {
             get
             {
@@ -288,7 +288,6 @@ namespace VideoSearch.Model
                     _order = value;
 
                     OnPropertyChanged(new PropertyChangedEventArgs("Order"));
-                    OnPropertyChanged(new PropertyChangedEventArgs("CheckerName"));
                 }
             }
         }

@@ -37,44 +37,44 @@ namespace VideoSearch.Database
 
         }
 
-        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
+        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent, String pfxField = "")
         {
             if (row == null)
                 return null;
 
             DetailInfo info = new DetailInfo();
 
-            info.id = String.Format("{0}", row["ID"]);
-            info.videoId = String.Format("{0}", row["VideoId"]);
+            info.id = String.Format("{0}", row[$"{pfxField}ID"]);
+            info.videoId = String.Format("{0}", row[$"{pfxField}VideoId"]);
 
-            info.frame = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["Frame"])));
-            info.x = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["X"])));
-            info.y = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["Y"])));
-            info.width = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["Width"])));
-            info.height = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["Height"])));
+            info.frame = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}Frame"])));
+            info.x = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}X"])));
+            info.y = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}Y"])));
+            info.width = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}Width"])));
+            info.height = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}Height"])));
 
-            info.desc = String.Format("{0}", row["Description"]);
-            info.keyword = String.Format("{0}", row["Keyword"]);
-            info.type = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["TargetType"])));
+            info.desc = String.Format("{0}", row[$"{pfxField}Description"]);
+            info.keyword = String.Format("{0}", row[$"{pfxField}Keyword"]);
+            info.type = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}TargetType"])));
 
             // 人
-            info.pantsColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["PantsColor"])));
-            info.pantsKind = String.Format("{0}", row["PantsKind"]);
-            info.otherHumanSpec = String.Format("{0}", row["OtherHumanSpec"]);
-            info.coatColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["CoatColor"])));
-            info.coatKind = String.Format("{0}", row["CoatKind"]);
-            info.hasPack = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasPack"])));
-            info.hasCap = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasCap"])));
-            info.hasGlass = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["HasGlass"])));
-            info.name = String.Format("{0}", row["Name"]);
+            info.pantsColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}PantsColor"])));
+            info.pantsKind = String.Format("{0}", row[$"{pfxField}PantsKind"]);
+            info.otherHumanSpec = String.Format("{0}", row[$"{pfxField}OtherHumanSpec"]);
+            info.coatColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}CoatColor"])));
+            info.coatKind = String.Format("{0}", row[$"{pfxField}CoatKind"]);
+            info.hasPack = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}HasPack"])));
+            info.hasCap = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}HasCap"])));
+            info.hasGlass = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}HasGlass"])));
+            info.name = String.Format("{0}", row[$"{pfxField}Name"]);
 
             // 车
-            info.carNumber = String.Format("{0}", row["CarNumber"]);
-            info.carColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["CarColor"])));
-            info.memberCount = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row["MemberCount"])));
-            info.driver = String.Format("{0}", row["Driver"]);
-            info.carModel = String.Format("{0}", row["CarModel"]);
-            info.otherCarSpec = String.Format("{0}", row["OtherCarSpec"]);
+            info.carNumber = String.Format("{0}", row[$"{pfxField}CarNumber"]);
+            info.carColor = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}CarColor"])));
+            info.memberCount = Decimal.ToInt32(Decimal.Parse(String.Format("{0}", row[$"{pfxField}MemberCount"])));
+            info.driver = String.Format("{0}", row[$"{pfxField}Driver"]);
+            info.carModel = String.Format("{0}", row[$"{pfxField}CarModel"]);
+            info.otherCarSpec = String.Format("{0}", row[$"{pfxField}OtherCarSpec"]);
             
 
             return new ArticleItem(parent, info);

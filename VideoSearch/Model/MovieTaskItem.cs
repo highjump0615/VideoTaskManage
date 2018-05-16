@@ -530,11 +530,6 @@ namespace VideoSearch.Model
             }
         }
 
-        public override double CheckerWidth
-        {
-            get { return 40.0; }
-        }
-
         #endregion
 
         #region TaskProcess & Web API

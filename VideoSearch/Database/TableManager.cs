@@ -22,7 +22,7 @@ namespace VideoSearch.Database
 
         }
 
-        public virtual DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
+        public virtual DataItemBase DataItemWithRow(DataRow row, DataItemBase parent, String pfxField = "")
         {
             return null;
         }

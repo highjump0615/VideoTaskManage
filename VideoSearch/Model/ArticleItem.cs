@@ -49,6 +49,15 @@ namespace VideoSearch.Model
     {
         public static int LEVEL = 4;
 
+        public override String Order { get; set; }
+
+        public String TargetType {
+            get
+            {
+                return DetailInfo.type == 0 ? "人" : "车";
+            }
+        }
+
         #region Constructor & Init
 
         public ArticleItem(DataItemBase parent = null)
@@ -98,88 +107,15 @@ namespace VideoSearch.Model
 
         public DetailInfo DetailInfo = null;
 
-        private String _cameraName = "";
-        public String CameraName
-        {
-            get { return _cameraName; }
-            set
-            {
-                if (_cameraName != value)
-                {
-                    _cameraName = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("CameraName"));
-                }
-            }
-        }
-
-        private String _cameraPos = "";
-        public String CameraPos
-        {
-            get { return _cameraPos; }
-            set
-            {
-                if (_cameraPos != value)
-                {
-                    _cameraPos = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("CameraPos"));
-                }
-            }
-        }
-
-        private String _movieName = "";
-        public String MovieName
-        {
-            get { return _movieName; }
-            set
-            {
-                if (_movieName != value)
-                {
-                    _movieName = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("MovieName"));
-                }
-            }
-        }
-
-        private String _targetType = "";
-        public String TargetType
-        {
-            get { return _targetType; }
-            set
-            {
-                if (_targetType != value)
-                {
-                    _targetType = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("TargetType"));
-                }
-            }
-        }
-
         private String _frameInfo = "";
         public String FrameInfo
         {
-            get { return _frameInfo; }
-            set
-            {
-                if (_frameInfo != value)
-                {
-                    _frameInfo = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("FrameInfo"));
-                }
-            }
+            get { return $"{DetailInfo.frame}"; }
         }
 
-        private String _description = "";
         public String Description
         {
-            get { return _description; }
-            set
-            {
-                if (_description != value)
-                {
-                    _description = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("Description"));
-                }
-            }
+            get { return DetailInfo.desc; }
         }
         #endregion
 
@@ -198,11 +134,6 @@ namespace VideoSearch.Model
 
                 return String.Format("{0,2:d2}", (index + 1));
             }
-        }
-
-        public override double CheckerWidth
-        {
-            get { return 40.0; }
         }
 
         #endregion

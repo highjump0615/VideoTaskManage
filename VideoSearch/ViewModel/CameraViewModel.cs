@@ -123,7 +123,7 @@ namespace VideoSearch.ViewModel
         /// </summary>
         public void ShowLabelTracking()
         {
-            Contents = new PanelViewPathModel(this);
+            Contents = new PanelViewPathModel(Owner, this);
         }
 
         #endregion

@@ -9,9 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Margin="5">
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
-            <Image x:Name="image" Source="/VideoSearch;component/Resources/Images/View/Map/PathMap.png" Stretch="None"/>
-        </ScrollViewer>
+        <WebBrowser Name="webBrowser"  />
 
         <Border BorderBrush="Black" BorderThickness="2">
             <Grid Height="50" x:Name="grid1" VerticalAlignment="Top" Background="#993F3E3C" OpacityMask="Black">

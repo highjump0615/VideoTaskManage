@@ -107,16 +107,16 @@ namespace VideoSearch.Windows
             set { Address.Text = value; }
         }
 
-        public String CameraLongitude
+        public double CameraLongitude
         {
-            get { return Longitude.Text; }
-            set { Longitude.Text = value; }
+            get { return Double.Parse(this.Longitude.Text); }
+            set { this.Longitude.Text = value.ToString(); }
         }
 
-        public String CameraLatitude
+        public double CameraLatitude
         {
-            get { return Latitude.Text; }
-            set { Latitude.Text = value; }
+            get { return Double.Parse(this.Latitude.Text); }
+            set { this.Latitude.Text = value.ToString(); }
         }
 
         public String CameraType
@@ -141,7 +141,17 @@ namespace VideoSearch.Windows
         #region Handler
         private void OnSelectCoordinateFromMap(object sender, RoutedEventArgs e)
         {
+            MapAddLocationWindow mapDlg = new MapAddLocationWindow(this.CameraLatitude, this.CameraLongitude);
+            mapDlg.Owner = this;
 
+            mapDlg.ShowDialog();
+            if (mapDlg.DialogResult == false)
+            {
+                return;
+            }
+
+            this.CameraLongitude = mapDlg.Longitude;
+            this.CameraLatitude = mapDlg.Latitude;
         }
 
         private void OnCreateOrUpdateClick(object sender, RoutedEventArgs e)

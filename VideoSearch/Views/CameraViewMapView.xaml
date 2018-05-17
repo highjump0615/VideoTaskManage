@@ -7,9 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Margin="5">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-            <Image x:Name="image" Source="/VideoSearch;component/Resources/Images/View/Map/CameraMap.png" Stretch="None"/>
-        </ScrollViewer>
+        <WebBrowser Name="webBrowser"  />
         <Border BorderBrush="Black" BorderThickness="2"/>
     </Grid>
 </UserControl>

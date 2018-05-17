@@ -14,7 +14,7 @@
         <SkinFrame:DialogFrame x:Name="mainFrame" Margin="0,0,1,0" BkColor="#FF403F3A" HasTitlebar="False" BorderSize="1" BorderColor="#FF262626" />
         <Grid>
             <Grid Height="24" Margin="114,26,114,0" VerticalAlignment="Top">
-                <TextBlock Height="23" Margin="0" Name="Msg" Text="确认要删除吗 ?" VerticalAlignment="Center" HorizontalAlignment="Right" Width="152" FontFamily="Arial" FontSize="22" Foreground="White" />
+                <TextBlock Height="23" Margin="0" Name="Msg" Text="确认要删除吗 ?" VerticalAlignment="Center" HorizontalAlignment="Right" Width="152" FontSize="22" Foreground="White" />
                 <Image HorizontalAlignment="Left" Name="Icon" Stretch="Fill" Width="24" Height="24" VerticalAlignment="Center" Source="/VideoSearch;component/Resources/Images/View/ConfirmDelete/delete_icon.png" />
             </Grid>
             <Grid HorizontalAlignment="Center" Margin="0,0,0,16" Name="grid2" Width="190" Height="33" VerticalAlignment="Bottom">
@@ -23,8 +23,8 @@
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="85*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="取消" Name="btnCancel" Foreground="White" FontFamily="Arial" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}"/>
-                <Button Content="确认" Name="btnSave" Foreground="White" FontFamily="Arial" FontSize="14" Grid.Column="2" Focusable="False" IsCancel="True" Click="btnOk_Click" Style="{DynamicResource GreenButtonStyle}"/>
+                <Button Content="取消" Name="btnCancel" Foreground="White" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}"/>
+                <Button Content="确认" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" IsCancel="True" Click="btnOk_Click" Style="{DynamicResource GreenButtonStyle}"/>
             </Grid>
 
         </Grid>

@@ -8,4 +8,7 @@
     <system:Double x:Key="WidthTitlebarButtonImg">13</system:Double>
     <system:Double x:Key="WidthTitlebarButton">35</system:Double>
 
+    <!-- 标注信息 -->
+    <GridLength x:Key="LabelInfoNameWidth">90</GridLength>
+
 </ResourceDictionary>

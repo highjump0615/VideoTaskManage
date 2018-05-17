@@ -39,7 +39,7 @@ namespace VideoSearch.Database
                 });
         }
 
-        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
+        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent, String pfxField = "")
         {
             if (row == null)
                 return null;
@@ -50,8 +50,8 @@ namespace VideoSearch.Database
                                   string.Format("{0}", row["DisplayID"]),
                                   string.Format("{0}", row["Name"]),
                                   string.Format("{0}", row["Address"]),
-                                  string.Format("{0}", row["Longitude"]),
-                                  string.Format("{0}", row["Latitude"]),
+                                  Convert.ToDouble(row["Longitude"]),
+                                  Convert.ToDouble(row["Latitude"]),
                                   string.Format("{0}", row["CameraType"]),
                                   string.Format("{0}", row["CameraSource"]),
                                   string.Format("{0}", row["PortCount"]));

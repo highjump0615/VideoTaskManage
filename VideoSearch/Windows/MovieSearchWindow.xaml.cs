@@ -109,6 +109,9 @@ namespace VideoSearch.Windows
         {
             get
             {
+                if (_image == null)
+                    return null;
+
                 String filePath = _image.UriSource.AbsolutePath;
 
                 return Base64EncodedData(filePath);
@@ -182,6 +185,11 @@ namespace VideoSearch.Windows
         }
         #endregion
 
+        /// <summary>
+        /// 提交
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         #region Handler
         private void OnApply(object sender, RoutedEventArgs e)
         {
@@ -273,6 +281,11 @@ namespace VideoSearch.Windows
             puppetWindow.Owner = this;
 
             var ret = puppetWindow.ShowDialog();
+
+            if (puppetWindow.Thumbnail == null)
+            {
+                return;
+            }
 
             _image = puppetWindow.Thumbnail.Clone();
             if (ret == true)

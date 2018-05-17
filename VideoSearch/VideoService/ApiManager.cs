@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using VideoSearch.Utils;
@@ -32,25 +33,16 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public XElement GetQueryVideo(String videoId)
+        public async Task<XElement> GetQueryVideo(int videoId)
         {
-            return sendToServiceByGet(API_PATH + "/QueryVideo?VideoId=" + videoId);
-        }
-
-        /// <summary>
-        /// Queries all video info
-        /// </summary>
-        /// <returns></returns>
-        public XElement GetQueryVideoList()
-        {
-            return sendToServiceByGet(API_PATH + "/QueryVideoList");
+            return await sendToServiceByGet($"{API_PATH}/QueryVideo?VideoId={videoId}");
         }
 
         /// <summary>
         /// Submit video
         /// </summary>
         /// <returns></returns>
-        public XElement SubmitVideo(String videoPath)
+        public Task<XElement> SubmitVideo(String videoPath)
         {
             return sendToServiceByGet(API_PATH + "/SubmitVideo?OrgPath=" + videoPath + "&Transcode=1");
         }
@@ -60,11 +52,13 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public bool DeleteVideo(String videoId)
+        public bool DeleteVideo(int videoId)
         {
-            XElement response = sendToServiceByGet(API_PATH + "/DeleteVideo?VideoId=" + videoId);
+            var taskGet = sendToServiceByGet(API_PATH + "/DeleteVideo?VideoId=" + videoId);
+            taskGet.Wait();
+            var response = taskGet.Result;
 
-            if(response != null)
+            if (response != null)
                 return true;
 
             return false;
@@ -73,31 +67,13 @@ namespace VideoSearch.VideoService
 
         #region Task Management
         /// <summary>
-        /// Queries all tasks info
-        /// </summary>
-        /// <returns></returns>
-        public XElement GetQueryTaskList()
-        {
-            return sendToServiceByGet(API_PATH + "/QueryTaskList");
-        }
-
-        /// <summary>
         /// Query task info
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public XElement GetQueryTask(String taskId)
+        public async Task<XElement> GetQueryTask(String taskId)
         {
-            return sendToServiceByGet(API_PATH + "/QueryTask?TaskId=" + taskId);
-        }
-
-        /// <summary>
-        /// Query tasklist detail...
-        /// </summary>
-        /// <returns></returns>
-        public XElement GetQueryListDetail()
-        {
-            return sendToServiceByGet(API_PATH + "/QueryListDetail");
+            return await sendToServiceByGet(API_PATH + "/QueryTask?TaskId=" + taskId);
         }
 
         /// <summary>
@@ -108,9 +84,9 @@ namespace VideoSearch.VideoService
         /// <param name="sensitivity"></param>
         /// <param name="nRegionType"></param>
         /// <param name="region"></param>
-        public XElement CreateSummaryTask(String videoId, String sensitivity, int nRegionType, Rect region)
+        public async Task<XElement> CreateSummaryTask(int videoId, String sensitivity, int nRegionType, Rect region)
         {
-            return SubmitTask("1", videoId, sensitivity, nRegionType, region, -1);
+            return await SubmitTask("1", videoId, sensitivity, nRegionType, region, -1);
         }
 
         /// <summary>
@@ -122,9 +98,9 @@ namespace VideoSearch.VideoService
         /// <param name="nRegionType"></param>
         /// <param name="region"></param>
         /// <param name="thickness"></param>
-        public XElement CreateCompressTask(String videoId, int thickness, String sensitivity, int nRegionType, Rect region)
+        public async Task<XElement> CreateCompressTask(int videoId, int thickness, String sensitivity, int nRegionType, Rect region)
         {
-            return SubmitTask("2", videoId, sensitivity, nRegionType, region, thickness);
+            return await SubmitTask("2", videoId, sensitivity, nRegionType, region, thickness);
         }
 
         /// <summary>
@@ -141,9 +117,9 @@ namespace VideoSearch.VideoService
         /// <param name="renxingPic"></param>
         /// <param name="renxingMaskPic"></param>
         /// <param name="renxingWaijieRect"></param>
-        public XElement CreateSearchTask(String videoId, String sensitivity, int nRegionType, Rect region, String objType, String colors, String alarmInfo, char[] renxingPic, char[] renxingMaskPic, Rect renxingWaijieRect)
+        public async Task<XElement> CreateSearchTask(int videoId, String sensitivity, int nRegionType, Rect region, String objType, String colors, String alarmInfo, char[] renxingPic, char[] renxingMaskPic, Rect renxingWaijieRect)
         {
-            return SubmitTask("3", videoId, sensitivity, nRegionType, region, -1, objType, colors, alarmInfo, renxingPic, renxingMaskPic, renxingWaijieRect);
+            return await SubmitTask("3", videoId, sensitivity, nRegionType, region, -1, objType, colors, alarmInfo, renxingPic, renxingMaskPic, renxingWaijieRect);
         }
 
         /// <summary>
@@ -162,7 +138,7 @@ namespace VideoSearch.VideoService
         /// <param name="renxingMaskPic"></param>
         /// <param name="renxingWaijieRect"></param>
         /// <returns></returns>
-        public XElement SubmitTask(String taskType, String videoId, String sensitivity, int nRegionType, Rect region, int thickness, String objType = "", String colors = "", String alarmInfo = "", char[] renxingPic = null, char[] renxingMaskPic = null, Rect renxingWaijieRect = new Rect())
+        public async Task<XElement> SubmitTask(String taskType, int videoId, String sensitivity, int nRegionType, Rect region, int thickness, String objType = "", String colors = "", String alarmInfo = "", char[] renxingPic = null, char[] renxingMaskPic = null, Rect renxingWaijieRect = new Rect())
         {
             int left, top, right, bottom;
 
@@ -202,10 +178,9 @@ namespace VideoSearch.VideoService
                     String strRenxingMaskPic = new string(renxingMaskPic);
                     postData += String.Format("&RenXingPic={0}&RenXingMaskPic={1}&RenXingWaiJieRect={2}", strRenxingPic, strRenxingMaskPic, strRenXingWaiJieRect);
                 }
-
             }
 
-            return sendToServiceByPost(API_PATH + "/SubmitTask", postData);
+            return await sendToServiceByPost(API_PATH + "/SubmitTask", postData);
         }
 
         /// <summary>
@@ -213,9 +188,9 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public bool DeleteTask(String taskId)
+        public async Task<bool> DeleteTask(String taskId)
         {
-            XElement response = sendToServiceByGet(API_PATH + "/DeleteTask?TaskId=" + taskId);
+            var response = await sendToServiceByGet(API_PATH + "/DeleteTask?TaskId=" + taskId);
 
             if (response != null)
                 return true;
@@ -228,9 +203,9 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public XElement GetTaskSnapshot(String taskId)
+        public async Task<XElement> GetTaskSnapshot(String taskId)
         {
-            return sendToServiceByGet(API_PATH + "/GetTaskSnapshot?TaskId=" + taskId);
+            return await sendToServiceByGet(API_PATH + "/GetTaskSnapshot?TaskId=" + taskId);
         }
 
         /// <summary>
@@ -238,9 +213,9 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public XElement GetVideoSummary(String taskId)
+        public async Task<XElement> GetVideoSummary(String taskId)
         {
-            return sendToServiceByGet(API_PATH + "/GetVideoSummary?TaskId=" + taskId);
+            return await sendToServiceByGet(API_PATH + "/GetVideoSummary?TaskId=" + taskId);
         }
         #endregion
 
@@ -250,13 +225,13 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        protected XElement sendToServiceByGet(string url)
+        protected async Task<XElement> sendToServiceByGet(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
             try
             {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                var response = await request.GetResponseAsync();
                 using (var sr = new System.IO.StreamReader(response.GetResponseStream()))
                 {
                     XDocument xmlDoc = new XDocument();
@@ -287,7 +262,7 @@ namespace VideoSearch.VideoService
         /// <param name="url"></param>
         /// <param name="postData"></param>
         /// <returns></returns>
-        protected XElement sendToServiceByPost(string url, string postData)
+        protected async Task<XElement> sendToServiceByPost(string url, string postData)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "POST";
@@ -305,7 +280,7 @@ namespace VideoSearch.VideoService
 
             try
             {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                var response = await request.GetResponseAsync();
                 using (var sr = new System.IO.StreamReader(response.GetResponseStream()))
                 {
                     XDocument xmlDoc = new XDocument();

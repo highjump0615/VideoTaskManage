@@ -1,14 +1,16 @@
 ﻿using System;
+using VideoSearch.Model;
+using VideoSearch.ViewModel.Base;
 
 namespace VideoSearch.ViewModel
 {
-    public class CameraViewMapModel
+    public class CameraViewMapModel : ListViewModel
     {
-        public CameraViewMapModel()
+        public CameraViewMapModel(DataItemBase owner) : base(owner, null)
         {
         }
 
-        public CameraViewMapModel(String longitude, String latitude)
+        public CameraViewMapModel(double longitude, double latitude) : base(null, null)
         {
 
         }

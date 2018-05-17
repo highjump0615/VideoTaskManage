@@ -25,11 +25,11 @@
                 <Border Background="#FF464646" BorderBrush="#FF262626" BorderThickness="0,1" />
 
                 <Grid Height="32" Margin="140,0">
-                    <TextBlock HorizontalAlignment="Left" Text="视频任务"  FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Left" Text="视频任务" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
                     <TextBox Name="TaskNameEditor" Text=""
                              Padding="8" Width="356"  
                              TextAlignment="Left" HorizontalAlignment="Right"
-                             FontFamily="Arial" FontSize="14" 
+                             FontSize="14" 
                              Background="#FF646361" BorderBrush="#FF262626" Foreground="White"  />
                 </Grid>
             </Grid>
@@ -40,7 +40,7 @@
                     <Image Margin="1" Source="/VideoSearch;component/Resources/Images/View/MovieProcess/Default_Movie.png" Stretch="UniformToFill" />
                     <Border BorderBrush="#FF262626" BorderThickness="1" />
                     <SkinControl:RegionEditor x:Name="RegionEditor"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,15,0,0" Text="09月15日 14时22分58秒 - 14时22分59秒" VerticalAlignment="Top" FontFamily="Arial" FontSize="12" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,15,0,0" Text="09月15日 14时22分58秒 - 14时22分59秒" VerticalAlignment="Top" FontSize="12" Foreground="White"/>
                 </Grid>
 
                 <Grid Margin="20,20,0,20" Width="270" HorizontalAlignment="Left">
@@ -58,7 +58,7 @@
                     <!-- left : Compress Setting -->
                     <Grid >
                         <Border BorderBrush="#FF262626" BorderThickness="1" Margin="0,7,0,0" />
-                        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="浓缩参数" VerticalAlignment="Top" FontFamily="Arial" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="浓缩参数" VerticalAlignment="Top" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
 
                         <Grid Margin="40,10,15,0" VerticalAlignment="Center" Height="26">
 
@@ -70,12 +70,12 @@
                     <!-- left : Setting -->
                     <Grid Grid.Row="2">
                         <Border BorderBrush="#FF262626" BorderThickness="1" Margin="0,7,0,0" />
-                        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="参数设定" VerticalAlignment="Top" FontFamily="Arial" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="参数设定" VerticalAlignment="Top" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
 
                         <Grid Margin="40,10,15,0" VerticalAlignment="Center" Height="26">
 
-                            <TextBlock Text="场景模式" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                            <ComboBox Name="CboSensitivity" FontFamily="Arial" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueFrameComboBox}" 
+                            <TextBlock Text="场景模式" FontSize="14" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <ComboBox Name="CboSensitivity" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueFrameComboBox}" 
                                       Grid.Column="2" Grid.Row="7"  Grid.ColumnSpan="4" SelectedIndex="0" Width="126" HorizontalAlignment="Right">
                                 <ComboBoxItem Content="晴天" />
                                 <ComboBoxItem Content="阴天" />
@@ -88,11 +88,11 @@
                     <!-- left : Search Region -->
                     <Grid Grid.Row="4">
                         <Border BorderBrush="#FF262626" BorderThickness="1" Margin="0,7,0,0" />
-                        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="检索区域" VerticalAlignment="Top" FontFamily="Arial" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="检索区域" VerticalAlignment="Top" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
 
                         <Button VerticalAlignment="Center" HorizontalAlignment="Center" 
                                 Width="86" Height="26" Margin="0,10,0,0" 
-                                Foreground="White" FontFamily="Arial" FontSize="14" 
+                                Foreground="White" FontSize="14" 
                                 Style="{DynamicResource BlueFrameButtonStyle}" 
                                 Content="重画" Click="OnResetRegion" />
                     </Grid>
@@ -100,10 +100,10 @@
                     <!-- left : Region Setting -->
                     <Grid Grid.Row="6">
                         <Border BorderBrush="#FF262626" BorderThickness="1" Margin="0,7,0,0" />
-                        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="区域设置" VerticalAlignment="Top" FontFamily="Arial" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="区域设置" VerticalAlignment="Top" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
 
-                        <CheckBox x:Name="ChkInclude" Checked="OnSelectRegionType" VerticalContentAlignment="Center" HorizontalAlignment="Right" Content="包含" Foreground="White" FontFamily="Arial" FontSize="14" Padding="4,-1,0,0" Margin="0,10,96,0" VerticalAlignment="Center"/>
-                        <CheckBox x:Name="ChkExclude" Checked="OnSelectRegionType" VerticalContentAlignment="Center" HorizontalAlignment="Right" Content="排除" Foreground="White" FontFamily="Arial" FontSize="14" Padding="4,-1,0,0" Margin="0,10,26,0" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="ChkInclude" Checked="OnSelectRegionType" VerticalContentAlignment="Center" HorizontalAlignment="Right" Content="包含" Foreground="White" FontSize="14" Padding="4,-1,0,0" Margin="0,10,96,0" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="ChkExclude" Checked="OnSelectRegionType" VerticalContentAlignment="Center" HorizontalAlignment="Right" Content="排除" Foreground="White" FontSize="14" Padding="4,-1,0,0" Margin="0,10,26,0" VerticalAlignment="Center"/>
                     </Grid>
 
                     <!-- left : Dialog Buttons -->
@@ -113,9 +113,9 @@
                             <ColumnDefinition Width="20*" />
                             <ColumnDefinition Width="85*" />
                         </Grid.ColumnDefinitions>
-                        <Button Content="取消" Name="btnCancel" Foreground="White" FontFamily="Arial" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}">
+                        <Button Content="取消" Name="btnCancel" Foreground="White" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}">
                         </Button>
-                        <Button Content="提交" Name="btnSave" Foreground="White" FontFamily="Arial" FontSize="14" Grid.Column="2" Focusable="False" Click="OnApply" Style="{DynamicResource GreenButtonStyle}">
+                        <Button Content="提交" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" Click="OnApply" Style="{DynamicResource GreenButtonStyle}">
                         </Button>
                     </Grid>
 

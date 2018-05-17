@@ -28,7 +28,7 @@
 
         <!-- Title-->
         <Grid x:Name="TitleGrid">
-            <TextBlock x:Name="MediaTitle" FontFamily="Arial" FontSize="16" 
+            <TextBlock x:Name="MediaTitle" FontSize="16" 
                                Height="18" Margin="80,0" Foreground="White" 
                                TextAlignment="Center" TextTrimming="CharacterEllipsis" 
                                VerticalAlignment="Center" IsHitTestVisible="False" />

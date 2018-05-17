@@ -128,7 +128,8 @@ namespace VideoSearch.Windows
 
         private void OnStop(object sender, RoutedEventArgs e)
         {
-            _vlcPlayer.Stop();
+            if (_vlcPlayer != null)
+                _vlcPlayer.Stop();
 
             ShowPlayer(false);
 

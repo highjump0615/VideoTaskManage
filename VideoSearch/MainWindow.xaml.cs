@@ -8,6 +8,10 @@ using System.Collections.ObjectModel;
 using VideoSearch.SkinControl;
 using System.Windows.Input;
 using System.Windows.Shell;
+using VideoSearch.Views;
+using VideoSearch.ViewModel.Base;
+using System.IO;
+using System.Threading;
 
 namespace VideoSearch
 {
@@ -30,6 +34,12 @@ namespace VideoSearch
         {
             InitializeComponent();
             _mainWindow = this;
+
+            MainViewModel mainVM = new MainViewModel();
+            mainVM.View = this;
+            Globals.Instance.MainVM = mainVM;
+
+            this.DataContext = mainVM;
         }
         
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -37,6 +47,28 @@ namespace VideoSearch
             InitControls();
  
             SelectRoot();
+
+            new Thread(new ThreadStart(checkServiceThread)).Start();            
+        }
+
+        private void checkServiceThread()
+        {
+            // 检查服务
+            Globals.Instance.MainVM.checkService();
+
+            // 检查d盘剩余容量
+            var dDrv = new DriveInfo("D");
+            long dSpace = dDrv.AvailableFreeSpace;
+
+            // 少于10G
+            if (dSpace < 10.0 * 1024 * 1024 * 1024)
+            {
+                // UI Thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show(this, "D盘少于10G，这会影响到使用本应用", "可用空间不足", MessageBoxButton.OK, MessageBoxImage.Warning);
+                });                
+            }
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -45,6 +77,8 @@ namespace VideoSearch
             {
                 m_searchWindow.Close();
             }
+
+            workView.Content = null;
         }
 
         protected override void OnClosed(EventArgs e)
@@ -114,23 +148,47 @@ namespace VideoSearch
         // Process command from TreeView
         /////////////////////////////////////////////////////////
 
+        /// <summary>
+        /// 更新工作区内容
+        /// </summary>
+        /// <param name="selectedItem"></param>
         private void UpdateContentsWithSelectedItem(DataItemBase selectedItem)
         {
             if (_selectedItem != selectedItem)
             {
                 _selectedItem = selectedItem;
 
+                // 隐藏加载中提示
+                var viewModelMain = (MainViewModel)this.DataContext;
+                viewModelMain.HideWorkMask();
+
                 int level = _selectedItem == null ? 0 : _selectedItem.Level;
-                if (level == 0)
+
+                // 案件管理
+                if (level < EventItem.LEVEL)
+                {
                     workView.Content = new EventViewModel(VideoData.AppVideoData);
-                else if (level == 1)
+                }
+                // 摄像头管理
+                else if (level == EventItem.LEVEL)
+                {
                     workView.Content = new CameraViewModel(_selectedItem);
-                else if (level == 2)
+                }
+                // 视频文件管理
+                else if (level == CameraItem.LEVEL)
+                {
                     workView.Content = new MovieViewModel(_selectedItem);
-                else if (level == 3)
+                }
+                // 视频任务管理
+                else if (level == MovieItem.LEVEL)
+                {
                     workView.Content = new MovieTaskViewModel(_selectedItem);
-                else if (level == 4)
+                }
+                // 视频任务详情
+                else if (level == MovieTaskItem.LEVEL)
+                {
                     workView.Content = new PanelViewModel(_selectedItem);
+                }
             }
         }
 
@@ -138,10 +196,27 @@ namespace VideoSearch
         {
             DataItemBase selectedItem = (DataItemBase)treeView.SelectedItem;
 
+            DataItemBase itemOld = (DataItemBase)e.OldValue;
+            DataItemBase itemNew = (DataItemBase)e.NewValue;
+
+            Console.WriteLine("Tree Changed, old: {0}, new: {1}", 
+                itemOld == null ? "" : itemOld.Name,
+                itemNew == null ? "" : itemNew.Name);
+
+            // 树选项不变，不更新界面，直接退出
+            if (selectedItem == e.OldValue)
+            {
+                return;
+            }
+
             if (selectedItem != null)
+            {
                 SelectTabWithLevel(selectedItem.Level);
+            }
             else
+            {
                 SelectRoot();
+            }
 
             UpdateContentsWithSelectedItem(selectedItem);
         }
@@ -149,7 +224,7 @@ namespace VideoSearch
         /////////////////////////////////////////////////////////
         // utility fuctions...
         /////////////////////////////////////////////////////////
-        
+
         private void InitControls()
         {
             _groupList = new ObservableCollection<Control>();
@@ -179,12 +254,14 @@ namespace VideoSearch
             MovieTaskGroup.Children.Add(ToolbarMovieTaskSummary);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskCompress);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskFind);
+            MovieTaskGroup.Children.Add(ToolbarMovieTaskDelete);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskChargeList);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskFindAndPlay);
 
             PanelGroup.Children.Add(ToolbarPanelPreview);
             PanelGroup.Children.Add(ToolbarPanelShowPath);
             PanelGroup.Children.Add(ToolbarPanelExport);
+            PanelGroup.Children.Add(ToolbarMarkDelete);
         }
 
         private void SelectTabWithLevel(int level)
@@ -192,18 +269,24 @@ namespace VideoSearch
             for (int i = 0; i < 5; i++)
             {
                 SkinButtonGroup control = (SkinButtonGroup)_groupList[i];
-                if (i <= level)
+                control.IsEnabled = false;
+                control.IsSelected = false;
+
+                int nTag = getTag(control);
+
+                // 
+                // 启用下一级功能
+                // 
+                if (level >= nTag)
+                {
                     control.IsEnabled = true;
-                else
-                    control.IsEnabled = false;
+                }
 
-                if (i == level)
+                if (level == nTag)
+                {
                     control.IsSelected = true;
-                else
-                    control.IsSelected = false;
+                }
             }
-
-            Level = level+1;
         }
 
         protected void SelectRoot()
@@ -223,8 +306,6 @@ namespace VideoSearch
                     control.IsSelected = false;
                 }
             }
-
-            Level = 1;
 
             UpdateContentsWithSelectedItem(null);
         }
@@ -254,32 +335,30 @@ namespace VideoSearch
             return false;
         }
 
+        /// <summary>
+        /// tag转int
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+        private int getTag(object sender)
+        {
+            Decimal senderTag = Decimal.Parse(String.Concat(((FrameworkElement)sender).Tag));
+
+            return Decimal.ToInt32(senderTag);
+        }
+
         protected void OnTabChanged(object sender, RoutedEventArgs e)
         {
             if (sender != null)
             {
-                Decimal senderTag = Decimal.Parse(String.Concat(((FrameworkElement)sender).Tag));
-
-                int nTag = Decimal.ToInt32(senderTag);
+                int nTag = getTag(sender);
 
                 DataItemBase selectedItem = (DataItemBase)treeView.SelectedItem;
-                if (!SelectParentItem(nTag - 1, selectedItem))
+                if (!SelectParentItem(nTag, selectedItem))
                 {
                     if(selectedItem != null)
                         selectedItem.IsSelected = false;
                     SelectRoot();
-                }
-            }
-        }
-
-        public int Level
-        {
-            get { return _level; }
-            set
-            {
-                if(_level != value)
-                {
-                    _level = value;
                 }
             }
         }
@@ -345,9 +424,18 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(CameraViewModel))
-                ((CameraViewModel)viewContents).DeleteSelectedItems();
+            {
+                var vmWork = (CameraViewModel)viewContents;
+
+                // 删除操作只有在列表页面上有效
+                if (vmWork.Contents is CameraViewListModel ||
+                    vmWork.Contents is CameraViewDetailListModel)
+                {
+                    ((CameraViewModel)viewContents).DeleteSelectedItems();
+                }
+            }
         }
 
         private void OnShowCameraMap(object sender, RoutedEventArgs e)
@@ -357,7 +445,6 @@ namespace VideoSearch
             Object viewContents = workView.Content; ;
             if (viewContents.GetType() == typeof(CameraViewModel))
             {
-                ((CameraViewModel)viewContents).DeleteSelectedItems();
                 ((CameraViewModel)viewContents).ShowCameraMap();
             }
         }
@@ -386,11 +473,16 @@ namespace VideoSearch
                 ((MovieViewModel)viewContents).ImportMovie();
         }
 
+        /// <summary>
+        /// 删除视频
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMovieDelete(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
             {
                 ((MovieViewModel)viewContents).DeleteSelectedMovies();
@@ -427,7 +519,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
                 ((MovieViewModel)viewContents).ShowMovieAnalysis();
         }
@@ -440,10 +532,10 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
-                ((MovieTaskViewModel)viewContents).MovieSearch();
+                var taskSearch = ((MovieTaskViewModel)viewContents).MovieSearch();
             }
         }
 
@@ -451,10 +543,10 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
-                ((MovieTaskViewModel)viewContents).MovieOutline();
+                var taskOutline = ((MovieTaskViewModel)viewContents).MovieOutline();
             }
         }
 
@@ -465,10 +557,15 @@ namespace VideoSearch
             Object viewContents = workView.Content; ;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
-                ((MovieTaskViewModel)viewContents).MovieCompress();
+                var taskCompress = ((MovieTaskViewModel)viewContents).MovieCompress();
             }
         }
 
+        /// <summary>
+        /// 视频任务搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMovieTaskFind(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
@@ -480,7 +577,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
                 ((MovieTaskViewModel)viewContents).ShowMovieChargeList();
@@ -502,22 +599,36 @@ namespace VideoSearch
         // Process command from Toolbar5
         /////////////////////////////////////////////////////////
 
+        /// <summary>
+        /// 打开标注列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPanelPreview(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
 
             Object viewContents = workView.Content;
-            if (viewContents.GetType() == typeof(PanelViewModel))
-                ((PanelViewModel)viewContents).ShowResult();
+            if (viewContents is CameraViewModel)
+            {
+                ((CameraViewModel)viewContents).ShowLabelList();
+            }
         }
 
+        /// <summary>
+        /// 打开轨迹查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPanelShowPath(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
 
             Object viewContents = workView.Content;
-            if (viewContents.GetType() == typeof(PanelViewModel))
-                ((PanelViewModel)viewContents).ShowPath();
+            if (viewContents is CameraViewModel)
+            {
+                ((CameraViewModel)viewContents).ShowLabelTracking();
+            }
         }
 
         private void OnPanelExport(object sender, RoutedEventArgs e)
@@ -527,6 +638,29 @@ namespace VideoSearch
             Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(PanelViewModel))
                 ((PanelViewModel)viewContents).Export();
+        }
+
+        /// <summary>
+        /// 删除标注
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDeleteMark(object sender, RoutedEventArgs e)
+        {
+            OnTabChanged(sender, e);
+
+            Object viewContents = workView.Content;
+            if (viewContents.GetType() == typeof(CameraViewModel))
+            {
+                var vmWork = (CameraViewModel)viewContents;
+
+                // 删除操作只有在列表页面上有效
+                if (vmWork.Contents is PanelViewListModel)
+                {
+                    var vmChild = (PanelViewListModel)vmWork.Contents;
+                    vmChild.DeleteSelectedItems();
+                }
+            }
         }
 
         /////////////////////////////////////////////////////////
@@ -540,6 +674,27 @@ namespace VideoSearch
             helpWindow.Owner = this;
             helpWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             helpWindow.ShowDialog();
+        }
+
+        public void EnableMovieTaskMenu(bool enable)
+        {
+            MovieTaskGroup.IsEnabled = enable;
+        }
+
+        /// <summary>
+        /// 删除视频任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnMovieDeleteTask(object sender, RoutedEventArgs e)
+        {
+            OnTabChanged(sender, e);
+
+            Object viewContents = workView.Content;
+            if (viewContents is MovieTaskViewModel)
+            {
+                ((MovieTaskViewModel)viewContents).DeleteSelectedMovieTasks();
+            }
         }
     }
 }

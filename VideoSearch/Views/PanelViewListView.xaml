@@ -7,139 +7,99 @@
              mc:Ignorable="d" 
              d:DesignHeight="408" d:DesignWidth="980">
     <Grid>
-        <!-- Header -->
-        <Border Background="#FF868686" BorderBrush="Black" Height="48" VerticalAlignment="Top" Margin="20" BorderThickness="1,1,1,0" >
-            <Grid>
-                <!-- TargetType -->
-                <TextBlock Height="18" Text="目标类型" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="16,0,0,0" HorizontalAlignment="Left" />
-                <ComboBox Height="26" Width="126" FontFamily="Arial" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="100,0,0,0" HorizontalAlignment="Left" Style="{DynamicResource BlueFrameComboBox}">
-                    <ComboBoxItem Content="全部" />
-                    <ComboBoxItem Content="人" />
-                    <ComboBoxItem Content="人形" />
-                    <ComboBoxItem Content="车" />
-                    <ComboBoxItem Content="其他" />
-                </ComboBox>
 
-                <!-- Keyword -->
-                <TextBlock Height="18" Text="关键字" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="290,0,0,0" HorizontalAlignment="Left" />
-                <Border Height="26" Width="126" VerticalAlignment="Center" Margin="360,0,0,0" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="#FF302F2B" Background="#FF646361" />
+        <Grid Background="#FF686868" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-                <Button Content="查询" Width="85" Height="26" Foreground="White" FontFamily="Arial" FontSize="12" Focusable="False" HorizontalAlignment="Right" Margin="0,0,114,0" Style="{DynamicResource GreenFrameButtonStyle}"/>
-                <Button Content="重置" Width="85" Height="26" Foreground="White" FontFamily="Arial" FontSize="12" Focusable="False" HorizontalAlignment="Right" Margin="0,0,14,0" Style="{DynamicResource BlueFrameButtonStyle}"/>
-            </Grid>
-        </Border>
-        
-        <!-- Table -->
-        <Grid Background="#FF686868" Height="320" VerticalAlignment="Top" Margin="20, 68, 20, 20">
-            <Grid Height="268" Name="Table" VerticalAlignment="Top" Margin="0,0,0,0" Background="#FF4F4F4E">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="71*" />
-                    <ColumnDefinition Width="71*" />
-                    <ColumnDefinition Width="131*" />
-                    <ColumnDefinition Width="131*" />
-                    <ColumnDefinition Width="131*" />
-                    <ColumnDefinition Width="131*" />
-                    <ColumnDefinition Width="162*" />
-                    <ColumnDefinition Width="112*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="58*" />
-                    <RowDefinition Height="42*" />
-                    <RowDefinition Height="42*" />
-                    <RowDefinition Height="42*" />
-                    <RowDefinition Height="42*" />
-                    <RowDefinition Height="42*" />
-                </Grid.RowDefinitions>
+            <!-- Header -->
+            <Border Background="#FF868686" BorderBrush="Black" Height="48" VerticalAlignment="Top" BorderThickness="1,1,1,0" >
+                <Grid>
+                    <!-- TargetType -->
+                    <TextBlock Height="18" Text="目标类型" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="16,0,0,0" HorizontalAlignment="Left" />
+                    <ComboBox Height="26" Width="126" 
+                              FontSize="14" 
+                              Foreground="White" 
+                              VerticalAlignment="Center" 
+                              Margin="100,0,0,0" 
+                              HorizontalAlignment="Left" 
+                              Style="{DynamicResource BlueFrameComboBox}"
+                              SelectedIndex="{Binding FilterTargetType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem Content="人" />
+                        <ComboBoxItem Content="车" />
+                    </ComboBox>
 
-                <Canvas Grid.ColumnSpan="8" Margin="0" Background="#FF3B3B3A" />
+                    <!-- Keyword -->
+                    <TextBlock Height="18" Text="关键字" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="290,0,0,0" HorizontalAlignment="Left" />
+                    <Border Height="26" Width="126" VerticalAlignment="Center" Margin="360,0,0,0" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="#FF302F2B" Background="#FF646361">
+                        <TextBox Background="{x:Null}"
+                                 Foreground="White"
+                                 Padding="3"
+                                 Text="{Binding FilterKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Border>
 
-                <!--Table Header-->
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_01" Padding="0" Text="" TextAlignment="Center" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_02" Padding="0" Text="序号" TextAlignment="Center" Grid.Column="1" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_03" Padding="0" Text="摄像头名称" TextAlignment="Center" Grid.Column="2" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_04" Padding="0" Text="摄像头位置" TextAlignment="Center" Grid.Column="3" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_05" Padding="0" Text="视频名称" TextAlignment="Center" Grid.Column="4" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_06" Padding="0" Text="目标对象" TextAlignment="Center" Grid.Column="5" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_07" Padding="0" Text="时间点" TextAlignment="Center" Grid.Column="6" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-                <TextBlock FontFamily="Arial" FontSize="16" Foreground="White" Margin="2,0" Name="tb_header_08" Padding="0" Text="线索内容" TextAlignment="Center" Grid.Column="7" TextTrimming="CharacterEllipsis" Height="18" VerticalAlignment="Center" />
-
-                <Grid Grid.ColumnSpan="8" Grid.Row="1" Visibility="{Binding Path=ItemsInPage[0].Visibility}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="71*" />
-                        <ColumnDefinition Width="71*" />
-                        <ColumnDefinition Width="131*" />
-                        <ColumnDefinition Width="131*" />
-                        <ColumnDefinition Width="131*" />
-                        <ColumnDefinition Width="131*" />
-                        <ColumnDefinition Width="162*" />
-                        <ColumnDefinition Width="112*" />
-                    </Grid.ColumnDefinitions>
-                    <!-- Selector -->
-                    <Canvas Grid.ColumnSpan="8" Visibility="{Binding Path=ItemsInPage[0].SelectorVisibility}">
-                        <Canvas.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF75B9FB" Offset="0" />
-                                <GradientStop Color="#FF2179D0" Offset="1" />
-                            </LinearGradientBrush>
-                        </Canvas.Background>
-                    </Canvas>
-                    <!-- CheckBox -->
-                    <CheckBox Height="16" Width="16" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=ItemsInPage[0].IsChecked, Mode=TwoWay}"/>
-                    <!-- Order -->
-                    <TextBlock Grid.Column="1" Height="18" Text="{Binding Path=ItemsInPage[0].Order}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
-                    <!--CameraName-->
-                    <TextBlock Grid.Column="2" Height="18" Text="{Binding Path=ItemsInPage[0].ID}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
-                    <!--CameraPosition-->
-                    <TextBlock Grid.Column="3" Height="18" Text="{Binding Path=ItemsInPage[0].Name}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
-                    <!--VideoName-->
-                    <TextBlock Grid.Column="4" Height="18" Text="{Binding Path=ItemsInPage[0].Type}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
-                    <!--Target-->
-                    <TextBlock Grid.Column="5" Height="18" Text="{Binding Path=ItemsInPage[0].Source}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
-                    <!--TimeRange-->
-                    <Button Content="地图查看" Grid.Column="6" 
-                            Command="{Binding ShowMapCommand}" CommandParameter="{Binding ItemsInPage[0]}" 
-                            Foreground="White" FontFamily="Arial" FontSize="12" Height="26" Focusable="False" VerticalAlignment="Center" Margin="4,0" Style="{DynamicResource GreenButtonStyle}"/>
-                    <!--KeyContents-->
-                    <TextBlock Grid.Column="7" Height="18" Text="{Binding Path=ItemsInPage[0].Operation}" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <Button Content="查询" 
+                            Width="85" Height="26" 
+                            Foreground="White" 
+                            FontSize="12" 
+                            Focusable="False" 
+                            HorizontalAlignment="Right" 
+                            Margin="0,0,114,0" 
+                            Style="{DynamicResource GreenFrameButtonStyle}"
+                            Command="{Binding FilterCommand}" />
+                    <Button Content="重置" 
+                            Width="85" Height="26" 
+                            Foreground="White" 
+                            FontSize="12" 
+                            Focusable="False" 
+                            HorizontalAlignment="Right" 
+                            Margin="0,0,14,0" 
+                            Style="{DynamicResource BlueFrameButtonStyle}"
+                            Command="{Binding ResetCommand}" />
                 </Grid>
+            </Border>
 
-                <!--Separator (horizontal & vertical)-->
-                <Canvas Background="Black" Height="1" Name="sep_hor_top" VerticalAlignment="Top" Grid.ColumnSpan="8" Margin="0" />
-                <Canvas Background="Black" Height="1" Name="sep_hor_01" VerticalAlignment="Bottom" Grid.ColumnSpan="8" Margin="0" />
-                <Canvas Background="Black" Height="1" Name="sep_hor_02" VerticalAlignment="Bottom" Grid.Row="1" Grid.ColumnSpan="8" />
-                <Canvas Background="Black" Height="1" Name="sep_hor_03" VerticalAlignment="Bottom" Grid.Row="2" Grid.ColumnSpan="8" />
-                <Canvas Background="Black" Height="1" Name="sep_hor_04" VerticalAlignment="Bottom" Grid.Row="3" Grid.ColumnSpan="8" />
-                <Canvas Background="Black" Height="1" Name="sep_hor_05" VerticalAlignment="Bottom" Grid.Row="4" Grid.ColumnSpan="8" />
-                <Canvas Background="Black" Height="1" Name="sep_hor_bottom" VerticalAlignment="Bottom" Grid.Row="5" Grid.ColumnSpan="8" Margin="0" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Right" Name="sep_ver_left" Width="1" Margin="0" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Right" Name="sep_ver_01" Width="1" Grid.Column="1" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Right" Name="sep_ver_02" Width="1" Grid.Column="2" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Right" Name="sep_ver_03" Width="1" Grid.Column="3" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Right" Name="sep_ver_04" Width="1" Grid.Column="4" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Right" Name="sep_ver_05" Width="1" Grid.Column="5" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Right" Name="sep_ver_06" Width="1" Grid.Column="6" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Right" Name="sep_ver_07" Width="1" Grid.Column="7" />
-                <Canvas Background="Black" Grid.RowSpan="6" HorizontalAlignment="Left" Name="sep_ver_right" Width="1" Margin="0" />
-            </Grid>
-            <Grid HorizontalAlignment="Right" Margin="0,0,0,12" Name="grid1" Width="180" Height="24" VerticalAlignment="Bottom">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24*" />
-                    <ColumnDefinition Width="62*" />
-                    <ColumnDefinition Width="24*" />
-                    <ColumnDefinition Width="10*" />
-                    <ColumnDefinition Width="60*" />
-                </Grid.ColumnDefinitions>
-                <Button IsEnabled="{Binding Path=IsEnabledPrevPage}" Command="{Binding PrevPageCommand}"
-                        Height="24" Width="24" Style="{DynamicResource ImageButtonStyle}" >
-                    <Image Source="/VideoSearch;component/Resources/Images/View/Page/prev_normal.png" Stretch="None" />
-                </Button>
-                <Button IsEnabled="{Binding Path=IsEnabledNextPage}" Command="{Binding NextPageCommand}"
-                        Height="24" Width="24"  Grid.Column="2" Style="{DynamicResource ImageButtonStyle}" >
-                    <Image Source="/VideoSearch;component/Resources/Images/View/Page/next_normal.png" Stretch="None" />
-                </Button>
-                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=PageNumber}" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" />
-                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=ItemCount}" VerticalAlignment="Center" Grid.Column="4" FlowDirection="RightToLeft" />
+            <!-- Table -->
+
+            <Grid Name="Table" Grid.Row="1" Margin="0,0,0,0" Background="#FF4F4F4E">
+
+                <DataGrid x:Name="EventDataGrid" BorderBrush="Black"
+					        ColumnHeaderHeight="58" RowHeight="42" 
+					        ItemsSource="{Binding Path=Articles, UpdateSourceTrigger=PropertyChanged}" 
+					        HeadersVisibility="Column" 
+					        FontSize="14" Foreground="White" 
+					        ScrollViewer.CanContentScroll="False" 
+					        VerticalScrollBarVisibility="Auto" 
+					        HorizontalScrollBarVisibility="Disabled" 
+					        AutoGenerateColumns="False" 
+					        CanUserResizeRows="False" CanUserAddRows="False">
+
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn  Header="" Width="40"
+							CellTemplate="{StaticResource CheckColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="序号" Width="50"
+							CellTemplate="{StaticResource OrderColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="摄像头名称" Width="131*"
+							CellTemplate="{StaticResource ArticleCameraNameColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="摄像头位置" Width="131*"
+							CellTemplate="{StaticResource ArticleCameraPosColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="视频名称" Width="131*"
+							CellTemplate="{StaticResource ArticleMovieNameColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="目标对象" Width="131*"
+							CellTemplate="{StaticResource ArticleTargetTypeColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="时间点" Width="162*"
+							CellTemplate="{StaticResource ArticleFrameColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="线索内容" Width="112*"
+							CellTemplate="{StaticResource ArticleDescriptionTemplate}" />
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
             </Grid>
         </Grid>
+
+
     </Grid>
 </UserControl>

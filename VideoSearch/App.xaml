@@ -8,18 +8,17 @@
              xmlns:viewModel="clr-namespace:VideoSearch.ViewModel"
              xmlns:playerModel="clr-namespace:VideoSearch.ViewModel.Player"
              xmlns:PlayViewModel="clr-namespace:VideoSearch.ViewModel.PlayView"
-
              StartupUri="MainWindow.xaml">
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Colors.xaml" />
-                <ResourceDictionary Source="/Resources/Styles.xaml" />
                 <ResourceDictionary Source="/Resources/Values.xaml" />
                 <ResourceDictionary Source="/Resources/MoviePlayerDataGridColumn.xaml" />
                 <ResourceDictionary Source="/Resources/VideoDataGrid.xaml" />
                 <ResourceDictionary Source="/Resources/VideoDataGridColumn.xaml" />
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!-- ViewModels -->
@@ -73,7 +72,7 @@
             <DataTemplate DataType="{x:Type viewModel:MovieTaskViewMainModel}">
                 <views:MovieTaskViewMainView />
             </DataTemplate>
-            
+
             <DataTemplate DataType="{x:Type viewModel:MovieTaskViewListModel}">
                 <views:MovieTaskViewListView />
             </DataTemplate>
@@ -124,6 +123,24 @@
             <DataTemplate DataType="{x:Type PlayViewModel:PlayViewSmallModel}">
                 <playViews:PlayViewSmall/>
             </DataTemplate>
+
+
+            <!-- 对话框按钮 -->
+            <Style x:Key="DlgButCancelStyle" TargetType="Button" BasedOn="{StaticResource BrownButtonStyle}">
+                <Setter Property="Height" Value="33" />
+                <Setter Property="Width" Value="88" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            <Style x:Key="DlgButOkStyle" TargetType="Button" BasedOn="{StaticResource GreenButtonStyle}">
+                <Setter Property="Height" Value="33" />
+                <Setter Property="Width" Value="88" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            
         </ResourceDictionary>
 
     </Application.Resources>

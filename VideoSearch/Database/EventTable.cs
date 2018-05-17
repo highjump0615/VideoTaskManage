@@ -33,7 +33,7 @@ namespace VideoSearch.Database
             Load(parent, sql);
         }
 
-        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
+        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent, String pfxField = "")
         {
             if (row == null)
                 return null;

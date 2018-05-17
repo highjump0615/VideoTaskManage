@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using VideoSearch.ViewModel.Base;
 
 namespace VideoSearch.Views
 {
@@ -10,6 +12,11 @@ namespace VideoSearch.Views
         public MovieViewListView()
         {
             InitializeComponent();
+
+            if (this.DataContext != null)
+            {
+                Unloaded += (s, e1) => ((ViewModelBase)this.DataContext).Dispose();
+            }
         }
     }
 }

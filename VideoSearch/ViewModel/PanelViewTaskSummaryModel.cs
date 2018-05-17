@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using VideoSearch.Model;
+using VideoSearch.ViewModel.Base;
 
 namespace VideoSearch.ViewModel
 {
-    public class PanelViewTaskSummaryModel
+    public class PanelViewTaskSummaryModel : ObservableObject
     {
         private MovieTaskSummaryItem _owner = null;
 
@@ -14,27 +16,46 @@ namespace VideoSearch.ViewModel
             {
                 MovieTaskSummaryItem summaryItem = (MovieTaskSummaryItem)item;
 
-                _snapshots = summaryItem.Snapshots;
-                _title = _snapshots.Count > 0 ? String.Format("{0}张图片", _snapshots.Count) : "";
                 _owner = summaryItem;
 
                 DisplayType = _owner.DisplayType;
                 ItemSizeIndex = _owner.ItemSizeIndex;
+
+                var task = InitTaskResult();
              }
         }
+
+        public async Task InitTaskResult()
+        {
+            await _owner.InitFromServer();
+
+            Snapshots = _owner.Snapshots;
+            Title = _snapshots.Count > 0 ? String.Format("{0}张图片", _snapshots.Count) : "";
+        }
+
         #region Property
 
         private List<TaskSnapshot> _snapshots = null;
         public List<TaskSnapshot> Snapshots
         {
             get { return _snapshots; }
+            set
+            {
+                _snapshots = value;
+                PropertyChanging("Snapshots");
+            }
         }
 
         private String _title = "";
 
         public String Title
         {
-            get { return _title; }            
+            get { return _title; }
+            set
+            {
+                _title = value;
+                PropertyChanging("Title");
+            }
         }
 
         private int _displayType = 0;

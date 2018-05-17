@@ -7,11 +7,65 @@
         <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/ProgressBarStyles.xaml" />
+        <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/SliderStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/TextBoxStyles.xaml" />
         <ResourceDictionary Source="/Resources/Styles/WindowStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!-- datagrid 样式 -->
+    <Style x:Key="GridRowStyle" TargetType="DataGridRow">
+        <Setter Property="Background" Value="{x:Null}" />
+
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource DataGridSelection}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="GridCellStyle" TargetType="DataGridCell">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{x:Null}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!-- 标注信息样式 -->
+    <Style x:Key="LabelInfoItemStyle" TargetType="Border">
+        <Setter Property="BorderThickness" Value="0 0 0 1" />
+        <Setter Property="BorderBrush" Value="Black" />
+    </Style>
+    <Style x:Key="LabelInfoNameStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#ccc" />
+        <Setter Property="Margin" Value="8 4" />
+    </Style>
+    <Style x:Key="LabelVertBorderStyle" TargetType="Border">
+        <Setter Property="Width" Value="1" />
+        <Setter Property="Background" Value="Black" />
+    </Style>
+    <Style x:Key="LabelTextboxStyle" TargetType="TextBox">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="Padding" Value="5 5" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style x:Key="LabelCheckboxStyle" TargetType="CheckBox">
+        <Setter Property="Margin" Value="8 0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
 
 </ResourceDictionary>

@@ -38,7 +38,7 @@ namespace VideoSearch.Database
 
         }
 
-        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent)
+        public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent, String pfxField = "")
         {
             if (row == null)
                 return null;
@@ -46,7 +46,7 @@ namespace VideoSearch.Database
             return new MovieItem(parent,
                                  string.Format("{0}", row["ID"]),
                                  string.Format("{0}", row["DisplayID"]),
-                                 string.Format("{0}", row["VideoId"]),
+                                 int.Parse(row["VideoId"].ToString()),
                                  string.Format("{0}", row["Name"]),
                                  string.Format("{0}", row["CameraPos"]),
                                  string.Format("{0}", row["SrcPath"]),

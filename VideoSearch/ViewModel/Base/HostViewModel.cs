@@ -5,14 +5,8 @@ using VideoSearch.Model;
 
 namespace VideoSearch.ViewModel.Base
 {
-    public class HostViewModel : INotifyPropertyChanged
+    public class HostViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(PropertyChangedEventArgs propertyChangedEventArgs)
-        {
-            PropertyChanged?.Invoke(this, propertyChangedEventArgs);
-        }
-
         private DataItemBase _owner;
         public DataItemBase Owner
         {
@@ -33,7 +27,7 @@ namespace VideoSearch.ViewModel.Base
                 if(_contents == null || _contents.GetType() != value.GetType())
                 {
                     _contents = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("Contents"));
+                    PropertyChanging("Contents");
                 }
             }
         }

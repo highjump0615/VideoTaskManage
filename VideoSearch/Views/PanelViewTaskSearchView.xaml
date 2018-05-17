@@ -28,7 +28,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="{Binding Path=Title}"
-                           FontFamily="Arial" FontSize="16" 
+                           FontSize="16" 
                            Height="18" Margin="20,0" Foreground="White" 
                            TextAlignment="Left" 
                            VerticalAlignment="Center" IsHitTestVisible="False" />
@@ -48,7 +48,7 @@
                             <Grid Margin="4,0" HorizontalAlignment="Stretch">
                                 <Image HorizontalAlignment="Left" Source="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail_Full.png" Stretch="None"/>
                                 <TextBlock Text="全景" Margin="26,0,0,0"
-                                           FontFamily="Arial" FontSize="12" 
+                                           FontSize="12" 
                                            Height="14" Foreground="White" 
                                            TextAlignment="Left" 
                                            VerticalAlignment="Center" IsHitTestVisible="False" />
@@ -58,7 +58,7 @@
                             <Grid Margin="4,0" HorizontalAlignment="Stretch">
                                 <Image HorizontalAlignment="Left" Source="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail_Sub.png" Stretch="None"/>
                                 <TextBlock Text="特写" Margin="26,0,0,0"
-                                           FontFamily="Arial" FontSize="12" 
+                                           FontSize="12" 
                                            Height="14" Foreground="White" 
                                            TextAlignment="Left" 
                                            VerticalAlignment="Center" IsHitTestVisible="False" />
@@ -143,7 +143,7 @@
                                         </Border>
 
                                         <TextBlock Grid.Row="2" Text="{Binding PicTitle}"
-                                               FontFamily="Arial" FontSize="16" 
+                                               FontSize="16" 
                                                Height="18" Margin="8,8" Foreground="White" 
                                                TextAlignment="Center" 
                                                VerticalAlignment="Center" IsHitTestVisible="False" />

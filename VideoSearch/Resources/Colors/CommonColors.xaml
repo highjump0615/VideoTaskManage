@@ -9,5 +9,7 @@
     <Color x:Key="BorderLightkColor">#ff484847</Color>
     <Color x:Key="BorderDarkColor">#ff2a2a28</Color>
 
+    <Color x:Key="LoadingMaskColor">#90000000</Color>
+
 
 </ResourceDictionary>

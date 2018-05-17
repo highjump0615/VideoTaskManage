@@ -13,7 +13,7 @@
 					        ColumnHeaderHeight="58" RowHeight="42" 
 					        ItemsSource="{Binding Path=Owner, UpdateSourceTrigger=PropertyChanged}" 
 					        HeadersVisibility="Column" 
-					        FontFamily="Arial" FontSize="14" Foreground="White" 
+					        FontSize="14" Foreground="White" 
 					        ScrollViewer.CanContentScroll="False" 
 					        VerticalScrollBarVisibility="Hidden" 
 					        HorizontalScrollBarVisibility="Disabled" 
@@ -39,25 +39,6 @@
 							CellTemplate="{StaticResource OperationColumnTemplate}" />
                     </DataGrid.Columns>
                 </DataGrid>
-            </Grid>
-            <Grid HorizontalAlignment="Right" Margin="0,0,0,12" Name="grid1" Width="180" Height="24" VerticalAlignment="Bottom">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24*" />
-                    <ColumnDefinition Width="62*" />
-                    <ColumnDefinition Width="24*" />
-                    <ColumnDefinition Width="10*" />
-                    <ColumnDefinition Width="60*" />
-                </Grid.ColumnDefinitions>
-                <Button IsEnabled="{Binding Path=IsEnabledPrevPage}" Command="{Binding PrevPageCommand}"
-                        Height="24" Width="24" Style="{DynamicResource ImageButtonStyle}" >
-                    <Image Source="/VideoSearch;component/Resources/Images/View/Page/prev_normal.png" Stretch="None" />
-                </Button>
-                <Button IsEnabled="{Binding Path=IsEnabledNextPage}" Command="{Binding NextPageCommand}"
-                        Height="24" Width="24"  Grid.Column="2" Style="{DynamicResource ImageButtonStyle}" >
-                    <Image Source="/VideoSearch;component/Resources/Images/View/Page/next_normal.png" Stretch="None" />
-                </Button>
-                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=PageNumber}" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" />
-                <TextBlock FontFamily="Arial" Foreground="White" Text="{Binding Path=ItemCount}" VerticalAlignment="Center" Grid.Column="4" FlowDirection="RightToLeft" />
             </Grid>
         </Grid>
     </Grid>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using VideoSearch.Database;
+using System.Threading.Tasks;
 
 namespace VideoSearch.Model
 {
@@ -43,7 +44,7 @@ namespace VideoSearch.Model
             DisposeItem();
         }
 
-        protected virtual void DisposeItem()
+        public virtual void DisposeItem()
         {
             foreach(DataItemBase item in Items)
                 item.Dispose();
@@ -265,7 +266,7 @@ namespace VideoSearch.Model
         #region for DB & Table's common member
 
         private String _order = "";
-        public String Order
+        public virtual String Order
         {
             get
             {
@@ -287,7 +288,6 @@ namespace VideoSearch.Model
                     _order = value;
 
                     OnPropertyChanged(new PropertyChangedEventArgs("Order"));
-                    OnPropertyChanged(new PropertyChangedEventArgs("CheckerName"));
                 }
             }
         }
@@ -508,6 +508,25 @@ namespace VideoSearch.Model
 
             return true;
         }
+
+        public virtual async Task<bool> DeleteSelectedItemAsync()
+        {
+            for (int i = Items.Count - 1; i >= 0; i--)
+            {
+                DataItemBase item = Items[i];
+
+                if (item.IsChecked)
+                {
+                    if (ItemsTable != null && ItemsTable.Remove(item) == 1)
+                    {
+                        RemoveAt(i);
+                        await item.ClearFromDBAsync();
+                    }
+                }
+            }
+
+            return true;
+        }
         #endregion
 
         #region Utility for DataTable (LoadItems, ClearFromDB)
@@ -526,6 +545,18 @@ namespace VideoSearch.Model
             foreach (DataItemBase item in Items)
             {
                 if (item.ClearFromDB() && Table != null)
+                    Table.Remove(item);
+                else
+                    return false;
+            }
+            return true;
+        }
+
+        public virtual async Task<bool> ClearFromDBAsync()
+        {
+            foreach (DataItemBase item in Items)
+            {
+                if (await item.ClearFromDBAsync() && Table != null)
                     Table.Remove(item);
                 else
                     return false;

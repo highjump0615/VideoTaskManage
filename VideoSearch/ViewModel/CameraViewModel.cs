@@ -86,25 +86,46 @@ namespace VideoSearch.ViewModel
 
             if (result == true)
             {
-                updateList();
+                Globals.Instance.ShowWaitCursor(true);
                 Owner.DeleteSelectedItem();
+                Globals.Instance.ShowWaitCursor(false);
             }
         }
 
         public void ShowCameraMap()
         {
-            Contents = new CameraViewMapModel();
+            Contents = new CameraViewMapModel(this.Owner);
         }
 
-        public void ShowCameraMap(String longitude, String latitude)
+        public void ShowCameraMap(double longitude, double latitude)
         {
             Contents = new CameraViewMapModel(longitude, latitude);
         }
 
+        /// <summary>
+        /// 打开摄像头列表
+        /// </summary>
         public void ShowCameraDetailList()
         {
             Contents = new CameraViewDetailListModel(Owner, this);
         }
+
+        /// <summary>
+        /// 打开标注列表
+        /// </summary>
+        public void ShowLabelList()
+        {
+            Contents = new PanelViewListModel(Owner, this);
+        }
+
+        /// <summary>
+        /// 打开轨迹查询
+        /// </summary>
+        public void ShowLabelTracking()
+        {
+            Contents = new PanelViewPathModel(Owner, this);
+        }
+
         #endregion
     }
 }

@@ -19,7 +19,7 @@
         <!-- Title-->
         <Grid x:Name="TitleGrid">
             <TextBlock Text="{Binding Path=Title}" 
-                       Height="18" FontFamily="Arial" FontSize="16" Foreground="White" Margin="8,0" TextAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                       Height="18" FontSize="16" Foreground="White" Margin="8,0" TextAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
         </Grid>
         <!-- Player-->
         <Grid x:Name="PlayerGrid" Grid.Row="1">

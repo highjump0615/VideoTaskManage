@@ -8,6 +8,8 @@ namespace VideoSearch.Model
 {
     public class EventItem : DataItemBase
     {
+        public static int LEVEL = 1;
+
         #region Property
 
         private String _date = "";

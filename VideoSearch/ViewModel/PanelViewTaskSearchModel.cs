@@ -89,6 +89,11 @@ namespace VideoSearch.ViewModel
                 {
                     _itemSizeIndex = value;
 
+                    if (_snapshots == null)
+                    {
+                        return;
+                    }
+
                     foreach (TaskSnapshot snapshot in _snapshots)
                     {
                         snapshot.ItemSizeIndex = _itemSizeIndex;

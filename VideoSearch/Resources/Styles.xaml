@@ -67,5 +67,31 @@
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
+    
+    <!-- 添加案件窗口 -->
+    <Style x:Key="DialogInputBorder" TargetType="Border">
+        <Setter Property="BorderBrush" Value="#FF302F2B" />
+        <Setter Property="Background" Value="#FF646361" />
+    </Style>
+    <Style x:Key="DialogInputText" TargetType="TextBox">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="DialogTextLabelStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="DialogTextInputStyle" TargetType="TextBox">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="6 3" />
+        <Setter Property="BorderBrush" Value="#FF302F2B" />
+        <Setter Property="Background" Value="#FF646361" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
 
 </ResourceDictionary>

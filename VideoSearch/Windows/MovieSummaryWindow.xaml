@@ -24,14 +24,12 @@
             <Grid>
                 <Border Background="#FF464646" BorderBrush="#FF262626" BorderThickness="0,1" />
 
-                <Grid Height="32" Margin="140,0">
-
+                <Grid Margin="140,0" VerticalAlignment="Center">
                     <TextBlock HorizontalAlignment="Left" Text="视频任务" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
-                    <TextBox Name="TaskNameEditor" Text=""
-                             Padding="8" Width="356"  
-                             TextAlignment="Left" HorizontalAlignment="Right"
-                             FontSize="14" 
-                             Background="#FF646361" BorderBrush="#FF262626" Foreground="White"  />
+                    <TextBox Name="TaskNameEditor" 
+                             Style="{StaticResource DialogTextInputStyle}"
+                             Width="356"  
+                             HorizontalAlignment="Right" />
                 </Grid>
             </Grid>
 

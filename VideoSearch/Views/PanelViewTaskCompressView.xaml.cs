@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -176,6 +177,19 @@ namespace VideoSearch.Views
                 await Task.Delay(20);
 
                 _vlcPlayer.SetVideoInfo(vm.taskItem.CompressedPlayPath, true);
+
+                // 浓缩物体显示
+                List<string> listPath = new List<string>();
+                if (!String.IsNullOrEmpty(vm.taskItem.CompresseInfoXmlPath))
+                {
+                    listPath.Add(vm.taskItem.CompresseInfoXmlPath);
+                }                
+                _vlcPlayer.SetWuShiBiaoInfo(true, listPath);
+
+                // 物标、时标
+                //vlcPlayer1.SetWubiaoShow(false);
+                //vlcPlayer1.SetShibiaoShow(false);
+
                 OnPlay(this, null);
             }
             else {
@@ -188,9 +202,8 @@ namespace VideoSearch.Views
 
         protected void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is PanelViewTaskCompressModel)
+            if (e.NewValue is PanelViewTaskCompressModel vm)
             {
-                var vm = (PanelViewTaskCompressModel)e.NewValue;
                 vm.View = this;
 
                 var task = vm.InitTaskResult();
@@ -278,6 +291,50 @@ namespace VideoSearch.Views
         private void OnSave(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ChkTarget_Checked(object sender, RoutedEventArgs e)
+        {
+            setPlayerTargetShow(true);
+        }
+
+        private void ChkTarget_Unchecked(object sender, RoutedEventArgs e)
+        {
+            setPlayerTargetShow(false);
+        }
+
+        /// <summary>
+        /// 显示/隐藏物标
+        /// </summary>
+        /// <param name="show"></param>
+        private void setPlayerTargetShow(bool show)
+        {
+            if (_vlcPlayer != null)
+            {
+                _vlcPlayer.SetWubiaoShow(show);
+            }
+        }
+
+        private void ChkTime_Unchecked(object sender, RoutedEventArgs e)
+        {
+            setPlayerTimeShow(false);
+        }
+
+        private void ChkTime_Checked(object sender, RoutedEventArgs e)
+        {
+            setPlayerTimeShow(true);
+        }
+
+        /// <summary>
+        /// 显示/隐藏时标
+        /// </summary>
+        /// <param name="show"></param>
+        private void setPlayerTimeShow(bool show)
+        {
+            if (_vlcPlayer != null)
+            {
+                _vlcPlayer.SetShibiaoShow(show);
+            }
         }
     }
 }

@@ -179,10 +179,14 @@
 
                         <CheckBox x:Name="ChkTarget" Content="物标" 
                                   VerticalContentAlignment="Bottom" HorizontalAlignment="Right" 
-                                  Foreground="White" FontSize="12"/>
+                                  Foreground="White" FontSize="12"
+                                  IsChecked="True" 
+                                  Checked="ChkTarget_Checked" Unchecked="ChkTarget_Unchecked" />
                         <CheckBox x:Name="ChkTime" Content="时标" Grid.Row="1"
                                   VerticalContentAlignment="Bottom" HorizontalAlignment="Right" 
-                                  Foreground="White" FontSize="12"/>
+                                  Foreground="White" FontSize="12"
+                                  IsChecked="True" 
+                                  Unchecked="ChkTime_Unchecked" Checked="ChkTime_Checked" />
                     </Grid>
                 </Grid>
             </Grid>

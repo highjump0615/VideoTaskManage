@@ -398,31 +398,6 @@ namespace VideoSearch.Model
 
         #endregion
 
-        #region Notify Reference
-        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            base.OnCollectionChanged(e);
-
-            SendCollectionChangedNotification(this);
-        }
-
-        public void SendCollectionChangedNotification(DataItemBase item)
-        {
-            if(item != this)
-            {
-                int index = IndexOf(item);
-
-                if (index >= 0)
-                {
-                    Remove(item);
-                    Insert(index, item);
-                }
-            }
-                    
-            if (Parent != null)
-                Parent.SendCollectionChangedNotification(this);
-        }
-        #endregion
 
         #region Common function
 

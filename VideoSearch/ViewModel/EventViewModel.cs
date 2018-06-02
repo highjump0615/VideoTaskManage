@@ -28,6 +28,9 @@ namespace VideoSearch.ViewModel
             if (result == true)
             {
                 Owner.AddItem(new EventItem(createDlg.NewEvent));
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
         #endregion

@@ -17,7 +17,6 @@ namespace VideoSearch
 {
     public partial class MainWindow : Window
     {
-        private int _level = 0;
         private DataItemBase _selectedItem = new DataItemBase();
 
         private SearchWindow m_searchWindow = null;
@@ -655,9 +654,8 @@ namespace VideoSearch
                 var vmWork = (CameraViewModel)viewContents;
 
                 // 删除操作只有在列表页面上有效
-                if (vmWork.Contents is PanelViewListModel)
+                if (vmWork.Contents is PanelViewListModel vmChild)
                 {
-                    var vmChild = (PanelViewListModel)vmWork.Contents;
                     vmChild.DeleteSelectedItems();
                 }
             }

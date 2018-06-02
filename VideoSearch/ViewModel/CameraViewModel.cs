@@ -69,6 +69,9 @@ namespace VideoSearch.ViewModel
                         ReParent.AddItem(item);
                     }
                 }
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -89,6 +92,9 @@ namespace VideoSearch.ViewModel
                 Globals.Instance.ShowWaitCursor(true);
                 Owner.DeleteSelectedItem();
                 Globals.Instance.ShowWaitCursor(false);
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 

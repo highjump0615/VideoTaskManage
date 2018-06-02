@@ -72,6 +72,9 @@ namespace VideoSearch.ViewModel
 
                 // 跳转到任务列表
                 ShowMovieChargeList();
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -114,6 +117,9 @@ namespace VideoSearch.ViewModel
 
                 // 跳转到任务列表
                 ShowMovieChargeList();
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -137,6 +143,8 @@ namespace VideoSearch.ViewModel
             Nullable<bool> result = compressDlg.ShowDialog();
             if (result == true)
             {
+                Globals.Instance.ShowWaitCursor(true);
+
                 var response = await ApiManager.Instance.CreateCompressTask(
                     movieItem.VideoId, 
                     compressDlg.Thickness, 
@@ -149,6 +157,14 @@ namespace VideoSearch.ViewModel
                     MovieTaskCompressItem item = new MovieTaskCompressItem(Owner, response.Element("TaskId").Value, compressDlg.TaskName, MovieTaskType.CompressTask);
                     Owner.AddItem(item);
                 }
+
+                Globals.Instance.ShowWaitCursor(false);
+
+                // 跳转到任务列表
+                ShowMovieChargeList();
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -179,6 +195,9 @@ namespace VideoSearch.ViewModel
                 await Owner.DeleteSelectedItemAsync();
 
                 Globals.Instance.ShowWaitCursor(false);
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 

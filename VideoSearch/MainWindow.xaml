@@ -218,7 +218,11 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- 选择区 -->
-                <TreeView x:Name="treeView" ItemsSource="{Binding Source={StaticResource dataItems}}" Style="{DynamicResource {x:Type TreeView}}" SelectedItemChanged="OnTreeItemSelectionChanged">
+                <TreeView x:Name="treeView" 
+                          ItemsSource="{Binding Source={StaticResource dataItems}}" 
+                          Style="{DynamicResource {x:Type TreeView}}" 
+                          SelectedItemChanged="OnTreeItemSelectionChanged">
+                    
                     <TreeView.Resources>
 
                         <!-- TreeView style -->

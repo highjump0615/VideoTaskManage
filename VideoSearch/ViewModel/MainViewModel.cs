@@ -190,5 +190,14 @@ namespace VideoSearch.ViewModel
         {
             VisibilityTotalMask = Visibility.Collapsed;
         }
+
+        /// <summary>
+        /// 更新导航列表
+        /// </summary>
+        public void updateTreeList()
+        {
+            var viewMain = View as MainWindow;
+            viewMain.treeView.Items.Refresh();
+        }
     }
 }

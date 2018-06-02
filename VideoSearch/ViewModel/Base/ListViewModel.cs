@@ -90,6 +90,9 @@ namespace VideoSearch.ViewModel.Base
                 Globals.Instance.ShowWaitCursor(true);
                 _owner.DeleteSelectedItem();
                 Globals.Instance.ShowWaitCursor(false);
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
         #endregion

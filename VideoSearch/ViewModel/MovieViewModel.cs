@@ -50,6 +50,9 @@ namespace VideoSearch.ViewModel
                 {
                     Owner.AddItem(new MovieItem(Owner, filePath));
                 }
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -76,6 +79,9 @@ namespace VideoSearch.ViewModel
                 Owner.DeleteSelectedItem();
 
                 Globals.Instance.ShowWaitCursor(false);
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 

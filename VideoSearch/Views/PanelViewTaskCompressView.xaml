@@ -1,10 +1,11 @@
-﻿<UserControl x:Class="VideoSearch.Views.PanelViewTaskCompressView"
+﻿<local:PlayerViewBase x:Class="VideoSearch.Views.PanelViewTaskCompressView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VideoSearch.Views"
+             xmlns:local="clr-namespace:VideoSearch.Views.PlayView"
              xmlns:skinControl="clr-namespace:VideoSearch.SkinControl"
+                      xmlns:player="clr-namespace:VideoSearch.Views.Player"
              mc:Ignorable="d" 
              d:DesignHeight="640" d:DesignWidth="980"
              Loaded="OnLoaded"
@@ -141,7 +142,8 @@
                     </Grid.ColumnDefinitions>
 
                     <Button x:Name="CutButton"
-                            Style="{DynamicResource BlueButtonStyle}">
+                            Style="{DynamicResource BlueButtonStyle}"
+                            Click="onButScreenshot">
                         <Grid Width="63" Height="24" Margin="0">
                             <Image HorizontalAlignment="Left" Margin="8,0,0,0"
                             Source="/VideoSearch;component/Resources/Images/Player/player_icon_cut.png" Stretch="None" />
@@ -152,7 +154,8 @@
                     </Button>
 
                     <Button x:Name="SearchButton" Grid.Column="2"
-                            Style="{DynamicResource BlueButtonStyle}">
+                            Style="{DynamicResource BlueButtonStyle}"
+                            Click="onButMagnifier">
                         <Grid Width="74" Height="24" Margin="0">
                             <Image HorizontalAlignment="Left" Margin="8,0,0,0"
                             Source="/VideoSearch;component/Resources/Images/Player/player_icon_search.png" Stretch="None" />
@@ -161,15 +164,9 @@
                         </Grid>
                     </Button>
 
-                    <Button x:Name="ResultButton" Grid.Column="4"
-                            Style="{DynamicResource BlueButtonStyle}">
-                        <Grid Width="57" Height="24" Margin="0">
-                            <Image HorizontalAlignment="Right" Margin="0,0,8,0"
-                            Source="/VideoSearch;component/Resources/Images/Player/player_icon_popup.png" Stretch="None" />
-
-                            <TextBlock Text="效果" VerticalAlignment="Center" Foreground="#FFE0E0E0" FontSize="12" Height="14" TextAlignment="Left" Margin="8,0,0,0" />
-                        </Grid>
-                    </Button>
+                    <Grid Grid.Column="4" >
+                        <player:PlayEffectCombo x:Name="controlEffect" />
+                    </Grid>
 
                     <Grid Grid.Column="6">
                         <Grid.RowDefinitions>
@@ -193,4 +190,4 @@
         </Grid>
 
     </Grid>
-</UserControl>
+</local:PlayerViewBase>

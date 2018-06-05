@@ -6,13 +6,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using VideoSearch.ViewModel;
+using VideoSearch.Views.PlayView;
 using vlcPlayerLib;
 
 namespace VideoSearch.Views
 {
-    public partial class PanelViewTaskCompressView : UserControl
+    public partial class PanelViewTaskCompressView : PlayerViewBase
     {
-        private vlcPlayer _vlcPlayer = null;
         private long _curPos = 0;
 
         public PanelViewTaskCompressView()
@@ -230,6 +230,8 @@ namespace VideoSearch.Views
 
                 PlayerPanel.Child = _vlcPlayer;
             }
+
+            controlEffect.initEffect(this);
 
             var taskInit = InitPlayerAsync();
         }

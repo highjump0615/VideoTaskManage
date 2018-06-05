@@ -11,15 +11,15 @@ using System.Windows.Threading;
 using VideoSearch.Model;
 using VideoSearch.Utils;
 using VideoSearch.ViewModel;
+using VideoSearch.Views.PlayView;
 using vlcPlayerLib;
 
 namespace VideoSearch.Views
 {
     public delegate void UpdateDurationDelegate(long pos);
 
-    public partial class MovieTaskViewMainView : UserControlBase
+    public partial class MovieTaskViewMainView : PlayerViewBase
     {
-        private vlcPlayer _vlcPlayer = null;
         private ManualMarkUtils _markUtils = null;
         private long _curPos = 0;
 
@@ -102,6 +102,7 @@ namespace VideoSearch.Views
             {
                 // 初始化
                 InitPlayer();
+                controlEffect.initEffect(this);
             }            
         }
 

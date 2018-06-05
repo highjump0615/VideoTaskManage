@@ -34,7 +34,7 @@
                            VerticalAlignment="Center" IsHitTestVisible="False" />
 
                     <ComboBox Name="CboItemSize" Height="26"
-                              FontFamily="Arial" FontSize="14" Foreground="#FFDEDCDB" Text="" Style="{DynamicResource BlueComboBox}" 
+                              FontSize="14" Foreground="#FFDEDCDB" Style="{DynamicResource BlueComboBox}" 
                                       Grid.Column="2" SelectedIndex="{Binding Path=ItemSizeIndex, Mode=TwoWay}" >
                         <ComboBoxItem Content="小图片" />
                         <ComboBoxItem Content="中图片" />

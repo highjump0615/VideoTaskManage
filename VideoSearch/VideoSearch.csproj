@@ -301,9 +301,13 @@
     <Compile Include="Views\Player\MiniPlayerView.xaml.cs">
       <DependentUpon>MiniPlayerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Player\PlayEffectCombo.xaml.cs">
+      <DependentUpon>PlayEffectCombo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Player\PlayerView.xaml.cs">
       <DependentUpon>PlayerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PlayView\PlayerViewBase.cs" />
     <Compile Include="Views\PlayView\PlayViewLarge.xaml.cs">
       <DependentUpon>PlayViewLarge.xaml</DependentUpon>
     </Compile>
@@ -586,6 +590,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Player\MiniPlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Player\PlayEffectCombo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

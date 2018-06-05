@@ -202,7 +202,17 @@
                             <SolidColorBrush />
                         </SkinControl:SkinButtonGroup.Separator_Normal>
                     </SkinControl:SkinButtonGroup>
-                    <SkinControl:SkinButton Height="67" HorizontalAlignment="Right" Margin="0,4,4,0" x:Name="ToolbarHelp" NormalImage="Resources/Images/Toolbar/Toolbar06/btHelp.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="54" Tag="6" Click="OnShowHelp" TextMode="Bottom" Text="关于" />
+                    <SkinControl:SkinButton 
+                        Height="67" Width="54" 
+                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        Margin="0,4,4,0" 
+                        x:Name="ToolbarHelp" 
+                        NormalImage="Resources/Images/Toolbar/Toolbar06/btHelp.png" 
+                        OverColor="#FF3F3E3A" PressedColor="#FF373631" 
+                        Tag="6" 
+                        Click="OnShowHelp" 
+                        TextMode="Bottom" 
+                        Text="关于" />
                 </Grid>
             </Grid>
 

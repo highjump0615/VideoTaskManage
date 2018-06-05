@@ -893,6 +893,7 @@
     <Content Include="Map\pathMapView.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <SplashScreen Include="Resources\Images\splash.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

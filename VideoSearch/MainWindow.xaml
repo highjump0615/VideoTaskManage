@@ -15,7 +15,7 @@
         Style="{DynamicResource ShadowNormalWindowStyle}"
         WindowStartupLocation="CenterScreen"
         Loaded="WindowLoaded" 
-        Unloaded="Window_Unloaded">
+        Unloaded="Window_Unloaded" Closing="onClosing">
 
     <Window.Resources>
 

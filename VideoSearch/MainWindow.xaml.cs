@@ -694,5 +694,20 @@ namespace VideoSearch
                 ((MovieTaskViewModel)viewContents).DeleteSelectedMovieTasks();
             }
         }
+
+        private void onClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ConfirmDeleteWindow confirmDlg = new ConfirmDeleteWindow();
+            confirmDlg.setMessage("确定要推出程序吗？");
+
+            if (confirmDlg.ShowDialog() == true)
+            {
+                // 推出
+                return;
+            }
+
+            // 取消
+            e.Cancel = true;
+        }
     }
 }

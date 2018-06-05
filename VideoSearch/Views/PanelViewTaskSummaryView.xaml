@@ -92,7 +92,7 @@
                                     <WrapPanel Orientation="Horizontal"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Center">
-                                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                        <ScrollViewer>
                                             <ItemsPresenter/>
                                         </ScrollViewer>
                                     </WrapPanel>

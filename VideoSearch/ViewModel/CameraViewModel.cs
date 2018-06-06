@@ -12,7 +12,7 @@ namespace VideoSearch.ViewModel
         public CameraViewModel(DataItemBase owner)
             : base(owner)
         {
-            Contents = new CameraViewListModel(owner, this);
+            Contents = new CameraViewDetailListModel(owner, this);
         }
 
         #region utility function
@@ -20,7 +20,7 @@ namespace VideoSearch.ViewModel
         {
             if (Contents == null || Contents.GetType() == typeof(CameraViewMapModel))
             {
-                Contents = new CameraViewListModel(Owner, this);
+                Contents = new CameraViewDetailListModel(Owner, this);
             }
         }
 
@@ -103,9 +103,9 @@ namespace VideoSearch.ViewModel
             Contents = new CameraViewMapModel(this.Owner);
         }
 
-        public void ShowCameraMap(double longitude, double latitude)
+        public void ShowCameraMap(CameraItem item)
         {
-            Contents = new CameraViewMapModel(longitude, latitude);
+            Contents = new CameraViewMapModel(item);
         }
 
         /// <summary>

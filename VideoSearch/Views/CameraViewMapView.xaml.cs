@@ -28,12 +28,22 @@ namespace VideoSearch.Views
             var vm = (CameraViewMapModel)this.DataContext;
             var cameras = new List<CameraSimple>();
 
-            foreach (DataItemBase data in vm.Owner)
+            if (vm.Owner is CameraItem cItem)
             {
-                var cameraData = (CameraItem)data;
-
-                var simpleCam = new CameraSimple(cameraData);
+                // 单摄像头
+                var simpleCam = new CameraSimple(cItem);
                 cameras.Add(simpleCam);
+            }
+            else
+            {
+                // 摄像头列表
+                foreach (DataItemBase data in vm.Owner)
+                {
+                    var cameraData = (CameraItem)data;
+
+                    var simpleCam = new CameraSimple(cameraData);
+                    cameras.Add(simpleCam);
+                }
             }
 
             var jsonCameraList = new JavaScriptSerializer().Serialize(cameras.ToArray());

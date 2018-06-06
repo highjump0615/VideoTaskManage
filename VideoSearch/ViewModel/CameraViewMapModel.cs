@@ -9,10 +9,5 @@ namespace VideoSearch.ViewModel
         public CameraViewMapModel(DataItemBase owner) : base(owner, null)
         {
         }
-
-        public CameraViewMapModel(double longitude, double latitude) : base(null, null)
-        {
-
-        }
     }
 }

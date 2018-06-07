@@ -225,7 +225,7 @@ namespace VideoSearch.ViewModel
                     csv.AppendLine(newLine);
                 }
 
-                File.WriteAllText(filename, csv.ToString());
+                File.WriteAllText(filename, csv.ToString(), Encoding.UTF8);
 
                 Globals.Instance.ShowWaitCursor(false);
             }

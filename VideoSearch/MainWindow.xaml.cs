@@ -441,7 +441,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(CameraViewModel))
             {
                 ((CameraViewModel)viewContents).ShowCameraMap();
@@ -452,7 +452,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(CameraViewModel))
             {
                 ((CameraViewModel)viewContents).ShowCameraDetailList();
@@ -467,7 +467,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
                 ((MovieViewModel)viewContents).ImportMovie();
         }
@@ -500,7 +500,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
                 ((MovieViewModel)viewContents).PlaySelectedMovies();
         }
@@ -509,7 +509,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
                 ((MovieViewModel)viewContents).ShowMovieList();
         }
@@ -553,7 +553,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
                 var taskCompress = ((MovieTaskViewModel)viewContents).MovieCompress();
@@ -587,7 +587,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
                 ((MovieTaskViewModel)viewContents).MovieFindAndPlay();
@@ -635,8 +635,13 @@ namespace VideoSearch
             OnTabChanged(sender, e);
 
             Object viewContents = workView.Content;
-            if (viewContents.GetType() == typeof(PanelViewModel))
-                ((PanelViewModel)viewContents).Export();
+            if (viewContents is CameraViewModel vmWork)
+            {
+                if (vmWork.Contents is PanelViewListModel vmChild)
+                {
+                    vmChild.Export();
+                }
+            }
         }
 
         /// <summary>

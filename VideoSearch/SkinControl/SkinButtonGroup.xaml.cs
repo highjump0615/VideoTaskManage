@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace VideoSearch.SkinControl
 {
@@ -22,12 +23,27 @@ namespace VideoSearch.SkinControl
         private Brush m_sepSelected = Brushes.Transparent;
 
         private ObservableCollection<Control> m_children = null;
+        private ObservableCollection<bool> mchildrenEnabled = new ObservableCollection<bool>();
 
         public event RoutedEventHandler GroupSelected = null;
 
         public SkinButtonGroup()
         {
             InitializeComponent();
+
+            Children.CollectionChanged += OnChildrenChanged;
+        }
+
+        private void OnChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                // save control enabled status
+                foreach (Control item in e.NewItems)
+                {
+                    mchildrenEnabled.Add(item.IsEnabled);
+                }                
+            }
         }
 
         public ObservableCollection<Control> Children
@@ -195,8 +211,18 @@ namespace VideoSearch.SkinControl
 
         private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            foreach (Control control in Children)
-                control.IsEnabled = IsEnabled;
+            for (var i = 0; i < Children.Count; i++)
+            {
+                var control = Children[i];
+                if (IsEnabled)
+                {
+                    control.IsEnabled = mchildrenEnabled[i];
+                }
+                else
+                {
+                    control.IsEnabled = false;
+                }
+            }
         }
     }
 }

@@ -14,6 +14,8 @@ namespace VideoSearch.Model
 
     public class DataItemBase : ObservableCollection<DataItemBase>, INotifyPropertyChanged, IDisposable
     {
+        public event PropertyChangedEventHandler PropertyChangedEvent;
+
         #region Constructor & Init & Destructor
         public DataItemBase()
         {
@@ -502,6 +504,16 @@ namespace VideoSearch.Model
 
             return true;
         }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+
+            var handler = PropertyChangedEvent;
+            if (handler != null)
+                handler(this, e);
+        }
+
         #endregion
 
         #region Utility for DataTable (LoadItems, ClearFromDB)

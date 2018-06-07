@@ -43,21 +43,6 @@ namespace VideoSearch.ViewModel
             else
                 Contents = new PanelViewListModel(Owner);
         }
-        
-        public void Export()
-        {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "Export";
-            dlg.DefaultExt = ".avi";
-            dlg.Filter = "Text documents (.avi)|*.AVI";
-
-            Nullable<bool> result = dlg.ShowDialog();
-
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-            }
-        }
 
         #endregion
     }

@@ -132,6 +132,32 @@ namespace VideoSearch.ViewModel
             Contents = new PanelViewPathModel(Owner, this);
         }
 
+        /// <summary>
+        /// 更新工具栏
+        /// </summary>
+        private void updateToolbar()
+        {
+            var viewMain = Globals.Instance.MainVM.View as MainWindow;
+
+            // 导出&删除
+            viewMain.ToolbarPanelExport.IsEnabled = false;
+            viewMain.ToolbarMarkDelete.IsEnabled = false;
+
+            // 标注列表
+            if (Contents is PanelViewListModel)
+            {
+                viewMain.ToolbarPanelExport.IsEnabled = true;
+            }
+        }
+
+        public override void contentChanged()
+        {
+            base.contentChanged();
+
+            // 更新工具栏
+            updateToolbar();
+        }
+
         #endregion
     }
 }

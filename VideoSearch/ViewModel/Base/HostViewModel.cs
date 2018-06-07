@@ -28,8 +28,14 @@ namespace VideoSearch.ViewModel.Base
                 {
                     _contents = value;
                     PropertyChanging("Contents");
+
+                    contentChanged();
                 }
             }
+        }
+
+        public virtual void contentChanged()
+        {
         }
     }
 }

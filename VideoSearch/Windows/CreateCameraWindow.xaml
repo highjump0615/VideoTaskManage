@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VideoSearch.Windows"
         xmlns:SkinFrame="clr-namespace:VideoSearch.SkinFrame" 
         mc:Ignorable="d"
-        Title="添加摄像头" Height="484" Width="754" 
+        Title="添加摄像头" Height="464" Width="754" 
         ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" 
         Background="#00000000" AllowsTransparency="True" 
         WindowStartupLocation="CenterScreen" Topmost="False">
@@ -14,59 +14,102 @@
     <Grid Name="WindowContent">
         <SkinFrame:DialogFrame Margin="0" x:Name="windowFrame" />
         <Grid Margin="0,25,0,0" Name="ContentView">
-            <Grid Height="326" Margin="140,23,140,0" Name="grid1" VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="96*" />
-                    <ColumnDefinition Width="354*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock1" Text="所属案件" VerticalAlignment="Center" Foreground="White" FontSize="14" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock2" Text="摄像头编号" VerticalAlignment="Center" Grid.Row="2" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock3" Text="摄像头名称" VerticalAlignment="Center" Grid.Row="4" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock4" Text="摄像头地址" VerticalAlignment="Center" Grid.Row="6" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock5" Text="摄像头坐标" VerticalAlignment="Center" Grid.Row="8" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock6" Text="摄像头类型" VerticalAlignment="Center" Grid.Row="10" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock7" Text="所属视频源" VerticalAlignment="Center" Grid.Row="12" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock8" Text="摄像头通道号" VerticalAlignment="Center" Grid.Row="14" />
-
-                <ComboBox Grid.Column="1" Name="cboEvent" FontSize="14" Foreground="White" Text="" Style="{DynamicResource BlueFrameComboBox}">
-                </ComboBox>
-
-
-                <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Name="ID" Padding="6" Text="" TextAlignment="Left" Grid.Column="1" Grid.Row="2" MaxLines="4" IsReadOnly="True"/>
-                <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Margin="0" Name="Name" Padding="6" Text="" TextAlignment="Left" Grid.Column="1" Grid.Row="4" IsReadOnly="False" MaxLines="4" />
-                <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Name="Address" Padding="6" Text="" TextAlignment="Left" Grid.Column="1" Grid.Row="6" MaxLines="4" />
-                <Grid Name="gridPortCoodinate" Grid.Column="1" Grid.Row="8" >
+            <StackPanel Margin="140,23,140,0">
+                <!-- 所属案件 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120*" />
-                        <ColumnDefinition Width="10*" />
-                        <ColumnDefinition Width="120*" />
-                        <ColumnDefinition Width="20*" />
-                        <ColumnDefinition Width="86*" />
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Margin="0" Name="Longitude" Padding="6" TextAlignment="Left" MaxLines="4"
-                             Text="0.00000" 
-                             IsReadOnly="True" />
-                    <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Name="Latitude" Padding="6" TextAlignment="Left" Grid.Column="2" MaxLines="4" 
-                             Text="0.00000" 
-                             IsReadOnly="True" />
-                    <Button Content="选择坐标" 
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="所属案件" />
+                    <ComboBox Grid.Column="1" Name="cboEvent" FontSize="14" Foreground="White" Text="" Style="{DynamicResource BlueFrameComboBox}" />
+                </Grid>
+
+                <!-- 摄像头编号 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="摄像头编号" />
+                    <TextBox Grid.Column="1" 
+                         Style="{StaticResource DialogTextInputStyle}"
+                         Name="ID"
+                         IsReadOnly="True"/>
+                </Grid>
+
+                <!-- 摄像头名称 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="摄像头名称" />
+                    <TextBox Grid.Column="1" 
+                         Style="{StaticResource DialogTextInputStyle}"
+                         Name="Name" />
+                </Grid>
+
+                <!-- 摄像头地址 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="摄像头地址" />
+                    <TextBox Grid.Column="1" 
+                         Style="{StaticResource DialogTextInputStyle}"
+                         Name="Address" />
+                </Grid>
+
+                <!-- 摄像头坐标 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="摄像头坐标" />
+                    <Grid Name="gridPortCoodinate" Grid.Column="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="120*" />
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="86*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0"
+                                 Style="{StaticResource DialogTextInputStyle}"
+                                 Name="Longitude"
+                                 Text="0.00000" 
+                                 IsReadOnly="True" />
+                        <TextBox
+                            Grid.Column="2"
+                            Style="{StaticResource DialogTextInputStyle}"
+                            Name="Latitude"
+                            Text="0.00000" 
+                            IsReadOnly="True" />
+                        
+                        <Button Content="选择坐标" 
                             Focusable="False" 
                             FontSize="14" 
                             Foreground="White" 
@@ -75,24 +118,73 @@
                             Grid.Column="4" 
                             Click="OnSelectCoordinateFromMap" 
                             Style="{DynamicResource BlueButtonStyle}">
-                    </Button>
+                        </Button>
+                    </Grid>
                 </Grid>
-                <Grid Name="gridPortCount" Grid.Column="1" Grid.Row="14" >
+
+                <!-- 摄像头通道号 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120*" />
-                        <ColumnDefinition Width="16*" />
-                        <ColumnDefinition Width="220*" />
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Margin="0" Name="PortCount" FontSize="14" BorderBrush="#FF302F2B" Background="#FF646361" Text="" TextAlignment="Left" Foreground="White" Padding="6" MaxLines="4" />
-                    <TextBlock FontSize="14" Foreground="#FF8CB4FC" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock9" Text="'-1' 表示下载时可手动输入" VerticalAlignment="Center" Grid.Column="2" />
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="摄像头通道号" />
+                    <Grid Name="gridPortCount" Grid.Column="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120*" />
+                            <ColumnDefinition Width="16*" />
+                            <ColumnDefinition Width="220*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Style="{StaticResource DialogTextInputStyle}"
+                            Name="PortCount" />
+                        <TextBlock 
+                            Grid.Column="2"
+                            FontSize="14" 
+                            Foreground="#FF8CB4FC" 
+                            Name="textBlock9" 
+                            Text="'-1' 表示下载时可手动输入" 
+                            VerticalAlignment="Center"  />
+                    </Grid>
                 </Grid>
-                <ComboBox Name="cboType" Grid.Column="1" Grid.Row="10" FontSize="14" Foreground="White" Style="{DynamicResource BlueFrameComboBox}" SelectedIndex="0">
-                    <ComboBoxItem Content="球机" />
-                    <ComboBoxItem Content="枪机" />
-                </ComboBox>
-                <ComboBox Name="cboSource" Padding="0" Grid.Column="1" Grid.Row="12" FontSize="14" Foreground="White" Style="{DynamicResource BlueFrameComboBox}">
-                </ComboBox>
-            </Grid>
+
+                <!-- 摄像头类型 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="摄像头类型" />
+                    <ComboBox Name="cboType" Grid.Column="1" FontSize="14" Foreground="White" Style="{DynamicResource BlueFrameComboBox}" SelectedIndex="0">
+                        <ComboBoxItem Content="球机" />
+                        <ComboBoxItem Content="枪机" />
+                    </ComboBox>
+                </Grid>
+
+                <!-- 所属视频源 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="所属视频源" />
+                    <ComboBox Name="cboSource" Padding="0" Grid.Column="1" Grid.Row="12" FontSize="14" Foreground="White" Style="{DynamicResource BlueFrameComboBox}" />
+                </Grid>
+
+            </StackPanel>
+            
             <Grid HorizontalAlignment="Center" Margin="0,0,0,16" Name="grid2" Width="190" Height="33" VerticalAlignment="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="81*" />

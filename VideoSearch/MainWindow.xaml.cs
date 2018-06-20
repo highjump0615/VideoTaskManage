@@ -57,17 +57,31 @@ namespace VideoSearch
 
             // 检查d盘剩余容量
             var dDrv = new DriveInfo("D");
-            long dSpace = dDrv.AvailableFreeSpace;
-
-            // 少于10G
-            if (dSpace < 10.0 * 1024 * 1024 * 1024)
+            try
             {
-                // UI Thread
-                Application.Current.Dispatcher.Invoke(() =>
+                long dSpace = dDrv.AvailableFreeSpace;
+
+                // 少于10G
+                if (dSpace < 10.0 * 1024 * 1024 * 1024)
                 {
-                    MessageBox.Show(this, "D盘少于10G，这会影响到使用本应用", "可用空间不足", MessageBoxButton.OK, MessageBoxImage.Warning);
-                });                
+                    // UI Thread
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show(this, "D盘少于10G，这会影响到使用本应用", "可用空间不足", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+                if (ex is DriveNotFoundException)
+                {
+                    // UI Thread
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show(this, "此计算机无D分区，无法使用系统功能", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    });
+                }
+            }            
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)

@@ -42,17 +42,19 @@ namespace VideoSearch.Views
         /// </summary>
         public void InitPlayer()
         {
-            _vlcPlayer = new vlcPlayer();
-            _vlcPlayer.SetIntiTimeInfo(false);
-            _vlcPlayer.SetControlPanelTimer(false);
-            _vlcPlayer.SetManualMarkMode(true);
+            if (_vlcPlayer == null)
+            {
+                _vlcPlayer = new vlcPlayer();
+                _vlcPlayer.SetIntiTimeInfo(false);
+                _vlcPlayer.SetControlPanelTimer(false);
 
-            _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-            _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
-            _vlcPlayer.PlayerStopped += OnMovieStopped;
-            _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
+                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
+                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
+                _vlcPlayer.PlayerStopped += OnMovieStopped;
+                _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
 
-            PlayerPanel.Child = _vlcPlayer;
+                PlayerPanel.Child = _vlcPlayer;
+            }
 
             var taskInit = InitPlayerAsync();
 
@@ -65,7 +67,7 @@ namespace VideoSearch.Views
             Globals.Instance.ShowWaitCursor(true);
 
             // 重新加载需要延迟
-            await Task.Delay(20);
+            await Task.Delay(100);
 
             var vm = (MovieTaskViewMainModel)this.DataContext;
 
@@ -78,6 +80,7 @@ namespace VideoSearch.Views
             if (!String.IsNullOrEmpty(vm.movieItem.PlayPath))
             {
                 _vlcPlayer.SetVideoInfo(vm.movieItem.PlayPath, true);
+                _vlcPlayer.SetManualMarkMode(true);
                 _markUtils = new ManualMarkUtils(_vlcPlayer, vm.movieItem.VideoId);
 
                 OnPlay(this, null);
@@ -110,8 +113,8 @@ namespace VideoSearch.Views
         {
             Unloaded -= OnUnLoad;
 
-            ClearPlayer();
-            _vlcPlayer = null;
+            //ClearPlayer();
+            //_vlcPlayer = null;
         }
 
         /// <summary>

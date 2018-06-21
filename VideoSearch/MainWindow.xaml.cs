@@ -82,6 +82,7 @@ namespace VideoSearch
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         MessageBox.Show(this, "此计算机无D分区，无法使用系统功能", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        Application.Current.Shutdown();
                     });
                 }
             }            

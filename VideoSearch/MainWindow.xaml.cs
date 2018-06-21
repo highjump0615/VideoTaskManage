@@ -47,7 +47,10 @@ namespace VideoSearch
  
             SelectRoot();
 
-            new Thread(new ThreadStart(checkServiceThread)).Start();            
+            new Thread(new ThreadStart(checkServiceThread)).Start();
+
+            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
         }
 
         private void checkServiceThread()

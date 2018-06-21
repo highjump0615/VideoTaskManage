@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,7 +21,6 @@ namespace VideoSearch.Views
             InitializeComponent();
 
             Unloaded += OnUnLoad;
-
         }
 
         public void OnUnLoad(object sender, RoutedEventArgs e)
@@ -138,26 +138,6 @@ namespace VideoSearch.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            ////string moviepath = moviesource.text;
-            ////if (moviepath != null && moviepath.length > 0)
-            ////{
-            ////    var task = initplayerasync();
-            ////    //_vlcplayer.setvideoinfo(moviepath, true);
-
-            ////    //// 浓缩物体显示
-            ////    ////list<string> listpath = new list<string>();
-            ////    ////listpath.add(@"e:\work\project\video\test\1.xml");
-            ////    ////vlcplayer1.setwushibiaoinfo(true, listpath);
-
-            ////    //playerpanel.child = _vlcplayer;
-
-            ////    //onplay(sender, e);
-            ////}
-            ////else
-            ////{
-            ////    onstop(this, null);
-            ////    playbutton.isenabled = false;
-            ////}
         }
 
         /// <summary>
@@ -172,32 +152,47 @@ namespace VideoSearch.Views
             var vm = (PanelViewTaskCompressModel)this.DataContext;
             if (!String.IsNullOrEmpty(vm.taskItem.CompressedPlayPath))
             {
-
-                // 重新加载需要延迟
-                await Task.Delay(20);
-
-                _vlcPlayer.SetVideoInfo(vm.taskItem.CompressedPlayPath, true);
-
-                // 浓缩物体显示
-                List<string> listPath = new List<string>();
-                if (!String.IsNullOrEmpty(vm.taskItem.CompresseInfoXmlPath))
+                // 检查视频文件是否存在
+                if (!File.Exists(vm.taskItem.CompressedPath))
                 {
-                    listPath.Add(vm.taskItem.CompresseInfoXmlPath);
-                }                
-                _vlcPlayer.SetWuShiBiaoInfo(true, listPath);
+                    // 显示提示
+                    Globals.Instance.MainVM.ShowWorkMask("浓缩视频不存在", false);
 
-                // 物标、时标
-                //vlcPlayer1.SetWubiaoShow(false);
-                //vlcPlayer1.SetShibiaoShow(false);
+                    DisablePlayer();
+                }
+                else
+                {
+                    // 重新加载需要延迟
+                    await Task.Delay(100);
 
-                OnPlay(this, null);
+                    _vlcPlayer.SetVideoInfo(vm.taskItem.CompressedPlayPath, true);
+
+                    // 浓缩物体显示
+                    List<string> listPath = new List<string>();
+                    if (!String.IsNullOrEmpty(vm.taskItem.CompresseInfoXmlPath))
+                    {
+                        listPath.Add(vm.taskItem.CompresseInfoXmlPath);
+                    }
+                    _vlcPlayer.SetWuShiBiaoInfo(true, listPath);
+
+                    // 物标、时标
+                    //vlcPlayer1.SetWubiaoShow(false);
+                    //vlcPlayer1.SetShibiaoShow(false);
+
+                    OnPlay(this, null);
+                }
             }
             else {
-                OnStop(this, null);
-                PlayButton.IsEnabled = false;
+                DisablePlayer();
             }
 
             Globals.Instance.ShowWaitCursor(false);
+        }
+
+        private void DisablePlayer()
+        {
+            OnStop(this, null);
+            PlayButton.IsEnabled = false;
         }
 
         protected void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

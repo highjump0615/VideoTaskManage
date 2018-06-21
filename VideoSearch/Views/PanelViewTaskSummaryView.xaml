@@ -78,14 +78,16 @@
                     <Separator Background="Black" Margin="0"/>
                     <Separator Background="#FF3B3B3B" Margin="0" Grid.Row="1"/>
                     <Border CornerRadius="0,0,3,3" Background="#FF323232" BorderThickness="0" Grid.Row="2">
-
+                        <TextBlock Style="{StaticResource TaskResultNoticeStyle}"
+                                   Text="无摘要结果，请使用有效视频再试" 
+                                   Visibility="{Binding NoticeVisible}"/>
                     </Border>
                     <ItemsControl Margin="15,0"
                                 Grid.Row="2"
                               ItemsSource="{Binding Path=Snapshots}" 
                               HorizontalContentAlignment="Stretch" 
-                              VerticalContentAlignment="Stretch" 
-                              VerticalAlignment="Center" HorizontalAlignment="Center">
+                              VerticalContentAlignment="Stretch"
+                                  Visibility="{Binding GridVisible}">
                         <ItemsControl.Template>
                             <ControlTemplate TargetType="ItemsControl">
                                 <Border>

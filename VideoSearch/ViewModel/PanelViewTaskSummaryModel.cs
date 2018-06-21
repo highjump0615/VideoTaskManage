@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
 
@@ -9,6 +10,36 @@ namespace VideoSearch.ViewModel
     public class PanelViewTaskSummaryModel : ObservableObject
     {
         private MovieTaskSummaryItem _owner = null;
+
+        /// <summary>
+        /// 结果列表是否显示
+        /// </summary>
+        public Visibility GridVisible
+        {
+            get
+            {
+                if (Snapshots == null || Snapshots.Count == 0)
+                {
+                    return Visibility.Collapsed;
+                }
+                return Visibility.Visible;
+            }
+        }
+
+        /// <summary>
+        /// 无结果提示是否显示
+        /// </summary>
+        public Visibility NoticeVisible
+        {
+            get
+            {
+                if (Snapshots == null || Snapshots.Count > 0)
+                {
+                    return Visibility.Collapsed;
+                }
+                return Visibility.Visible;
+            }
+        }
 
         public PanelViewTaskSummaryModel(DataItemBase item)
         {

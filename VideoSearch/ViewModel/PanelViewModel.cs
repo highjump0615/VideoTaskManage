@@ -17,7 +17,7 @@ namespace VideoSearch.ViewModel
                 bool bProgress = true;
                 switch (taskItem.State)
                 {
-                    case MovieTaskState.Created:
+                    case MovieTaskState.CreateFail:
                         strNotice = "任务处理失败，请重新提交任务";
                         bProgress = false;
                         break;

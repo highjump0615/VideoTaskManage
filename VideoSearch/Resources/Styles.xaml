@@ -93,5 +93,15 @@
         <Setter Property="Background" Value="#FF646361" />
         <Setter Property="Foreground" Value="White" />
     </Style>
+    
+    <!-- 任务结果提示 -->
+    <Style x:Key="TaskResultNoticeStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Opacity" Value="0.5" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="0 90" />
+    </Style>
 
 </ResourceDictionary>

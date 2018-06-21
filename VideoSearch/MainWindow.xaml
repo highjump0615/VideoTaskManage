@@ -285,7 +285,6 @@
                                                 <SolidColorBrush Color="{DynamicResource TreeBackgroundColor}" />
                                             </Border.Background>
                                             <ScrollViewer Focusable="False"
-                                                          CanContentScroll="False"
                                                           Padding="4">
                                                 <ItemsPresenter />
                                             </ScrollViewer>

@@ -166,6 +166,7 @@
     <Compile Include="Model\MovieItem.cs" />
     <Compile Include="Model\MovieTaskCompressItem.cs" />
     <Compile Include="Model\MovieTaskItem.cs" />
+    <Compile Include="Model\MovieTaskListItemBase.cs" />
     <Compile Include="Model\MovieTaskSummaryItem.cs" />
     <Compile Include="Model\MovieTaskSearchItem.cs" />
     <Compile Include="Model\SearchResult.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="ViewModel\PanelViewListModel.cs" />
     <Compile Include="ViewModel\PanelViewPathModel.cs" />
     <Compile Include="ViewModel\PanelViewModel.cs" />
+    <Compile Include="ViewModel\PanelViewSummaryBaseModel.cs" />
     <Compile Include="ViewModel\PanelViewTaskCompressModel.cs" />
     <Compile Include="ViewModel\PanelViewTaskSummaryModel.cs" />
     <Compile Include="ViewModel\PanelViewTaskSearchModel.cs" />

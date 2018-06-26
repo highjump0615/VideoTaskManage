@@ -138,12 +138,12 @@
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
             <Grid Margin="8,0,95,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="21*" />
-                    <RowDefinition Height="21*" />
-                </Grid.RowDefinitions>
-                <TextBlock Canvas.Left="10" Canvas.Top="10" Height="18" Text="{Binding Address}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" />
-                <TextBlock Canvas.Left="10" Canvas.Top="10" Height="18" Text="{Binding Coordinate}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Grid.Row="1"/>
+                <TextBlock
+                    Text="{Binding AddressDesc}" 
+                    VerticalAlignment="Center" 
+                    FontSize="16" 
+                    Foreground="White" 
+                    TextAlignment="Center" />
             </Grid>
             <Button Grid.Column="4" 
                     Content="地图查看" 

@@ -142,7 +142,7 @@
                                     OffsetWithImage="0" />
         </Grid>
 
-        <Grid Grid.Row="1"  d:IsHidden="True" IsEnabled="{Binding TotalAreaEnabled}">
+        <Grid Grid.Row="1"  IsEnabled="{Binding TotalAreaEnabled}">
 
             <!-- 操作区 -->
             <Grid Height="100" x:Name="Toolbar" VerticalAlignment="Top" Background="#FF312F29">
@@ -166,17 +166,70 @@
                 <Grid Margin="0,0,1,0" Grid.Column="1">
                     <SkinControl:SkinButtonGroup x:Name="CameraGroup" Margin="0,0,0,0" Title="2 摄像头管理" Tag="1" GroupSelected="OnTabChanged" />
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="7,4,0,0" x:Name="ToolbarNewCamera" NormalImage="Resources/Images/Toolbar/Toolbar02/btNewCamera.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="80" Tag="1" Click="OnNewCamera" TextMode="Bottom" Text="添加摄像头" />
-                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Left" Margin="92,4,0,0" x:Name="ToolbarDeleteCamera" NormalImage="Resources/Images/Toolbar/Toolbar02/btDeleteCamera.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="60" Tag="1" Click="OnDeleteCamera" TextMode="Right" Text="删除" />
+                    <SkinControl:SkinButton 
+                        Height="22" 
+                        HorizontalAlignment="Left" 
+                        Margin="92,4,0,0" 
+                        x:Name="ToolbarDeleteCamera" 
+                        NormalImage="Resources/Images/Toolbar/Toolbar03/btDeleteMovie.png" 
+                        OverColor="#FF3F3E3A" 
+                        PressedColor="#FF373631" 
+                        VerticalAlignment="Top" 
+                        Width="60" 
+                        Tag="1" 
+                        Click="OnDeleteCamera" 
+                        TextMode="Right" 
+                        Text="删除" />
                     <SkinControl:SkinButton HorizontalAlignment="Right" Margin="0,4,5,74" x:Name="ToolbarShowCameraMap" NormalImage="Resources/Images/Toolbar/Toolbar02/btShowCameraMap.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" Width="78" Tag="1" Click="OnShowCameraMap" Height="22" TextMode="Right" Text="地图查看" />
                     <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,26,5,0" x:Name="ToolbarShowCameraList" NormalImage="Resources/Images/Toolbar/Toolbar02/btShowCameraList.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="1" Click="OnShowCameraList" TextMode="Right" Text="列表查看" />
                 </Grid>
                 <Grid Grid.Column="2" Margin="0,0,1,0">
                     <SkinControl:SkinButtonGroup x:Name="MovieGroup" Margin="0,0,0,0" Title="3 文件导入" Tag="2" GroupSelected="OnTabChanged" />
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="6,4,0,0" x:Name="ToolbarMovieImport" NormalImage="Resources/Images/Toolbar/Toolbar03/btMovieImport.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="2" Click="OnMovieImport" TextMode="Bottom" Text="文件导入" />
-                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Left" Margin="76,4,0,0" x:Name="ToolbarMovieDelete" NormalImage="Resources/Images/Toolbar/Toolbar03/btDeleteMovie.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="60" Tag="2" Click="OnMovieDelete" TextMode="Right" Text="删除" />
-                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,26,5,0" x:Name="ToolbarMovieAutoAnalysis" NormalImage="Resources/Images/Toolbar/Toolbar03/btAutoAnaysisMovie.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" IsEnabled="False" Tag="2" Click="OnMovieAutioAnalysis" TextMode="Right" Text="自动分析" />
+                    <SkinControl:SkinButton 
+                        Height="22" 
+                        HorizontalAlignment="Left" 
+                        Margin="76,4,0,0" 
+                        x:Name="ToolbarMovieDelete" 
+                        NormalImage="Resources/Images/Toolbar/Toolbar03/btDeleteMovie.png" 
+                        OverColor="#FF3F3E3A" 
+                        PressedColor="#FF373631" 
+                        VerticalAlignment="Top" 
+                        Width="60" 
+                        Tag="2" 
+                        Click="OnMovieDelete" 
+                        TextMode="Right" 
+                        Text="删除" />
+                    <SkinControl:SkinButton 
+                        Height="22" 
+                        HorizontalAlignment="Right" 
+                        Margin="0,26,5,0" 
+                        x:Name="ToolbarMovieAutoAnalysis" 
+                        NormalImage="Resources/Images/Toolbar/Toolbar03/btAutoAnaysisMovie.png" 
+                        OverColor="#FF3F3E3A" 
+                        PressedColor="#FF373631" 
+                        VerticalAlignment="Top" 
+                        Width="78" 
+                        IsEnabled="False" 
+                        Tag="2" 
+                        Click="OnMovieAutioAnalysis" 
+                        TextMode="Right" 
+                        Text="自动分析" />
                     <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,4,5,0" x:Name="ToolbarMovieShowList" NormalImage="Resources/Images/Toolbar/Toolbar03/btShowMovieList.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="2" Click="OnMovieShowList" TextMode="Right" Text="列表查看" />
-                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Left" Margin="76,26,0,0" x:Name="ToolbarMovieFind" NormalImage="Resources/Images/Toolbar/Toolbar03/btFindMovie.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="60" Tag="2" Click="OnMovieFind" TextMode="Right" Text="搜索" />
+                    <SkinControl:SkinButton 
+                        Height="22" 
+                        HorizontalAlignment="Left" 
+                        Margin="76,26,0,0" 
+                        x:Name="ToolbarMovieFind" 
+                        NormalImage="/Resources/Images/Toolbar/Toolbar03/btFindMovie.png" 
+                        OverColor="#FF3F3E3A" 
+                        PressedColor="#FF373631" 
+                        VerticalAlignment="Top" 
+                        Width="60" 
+                        Tag="2" 
+                        Click="OnMovieFind" 
+                        TextMode="Right" 
+                        Text="搜索" />
                     <SkinControl:SkinButton Height="22" HorizontalAlignment="Left" Margin="76,48,0,0" x:Name="ToolbarMoviePlay" NormalImage="Resources/Images/Toolbar/Toolbar03/btPlayMovie.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="60" Tag="2" Click="OnMoviePlay" TextMode="Right" Text="播放" />
                 </Grid>
                 <Grid Margin="0,0,1,0" Grid.Column="3">
@@ -185,7 +238,20 @@
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="81,4,0,0" x:Name="ToolbarMovieTaskSummary" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskSummary.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="3" Click="OnMovieTaskOutline" TextMode="Bottom" Text="视频摘要" />
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="157,4,0,0" x:Name="ToolbarMovieTaskCompress" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskCompress.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="3" Click="OnMovieTaskCompress" TextMode="Bottom" Text="视频浓缩" />
                     <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,4,6,0" x:Name="ToolbarMovieTaskFind" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskFind.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="3" Click="OnMovieTaskFind" TextMode="Right" Text="搜索" Visibility="Collapsed" />
-                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,4,6,0"  x:Name="ToolbarMovieTaskDelete" NormalImage="Resources/Images/Toolbar/Toolbar02/btDeleteCamera.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="3" Click="OnMovieDeleteTask" TextMode="Right" Text="删除任务" />
+                    <SkinControl:SkinButton 
+                        Height="22" 
+                        HorizontalAlignment="Right" 
+                        Margin="0,4,6,0"  
+                        x:Name="ToolbarMovieTaskDelete" 
+                        NormalImage="Resources/Images/Toolbar/Toolbar03/btDeleteMovie.png" 
+                        OverColor="#FF3F3E3A" 
+                        PressedColor="#FF373631" 
+                        VerticalAlignment="Top" 
+                        Width="78" 
+                        Tag="3" 
+                        Click="OnMovieDeleteTask" 
+                        TextMode="Right" 
+                        Text="删除任务" />
                     <SkinControl:SkinButton HorizontalAlignment="Right" Margin="0,26,6,52" x:Name="ToolbarMovieTaskChargeList" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskChargeList.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" Width="78" Tag="3" Click="OnMovieTaskChargeList" Height="22" TextMode="Right" Text="任务列表" />
                     <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,48,6,0" x:Name="ToolbarMovieTaskFindAndPlay" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskFindAndPlay.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="3" Click="OnMovieTaskFindAndPlay" TextMode="Right" Text="放大播放" />
                 </Grid>
@@ -537,7 +603,8 @@
             </Grid>
 
             <!-- loading mask -->
-            <Grid Name="ViewTotalMask" Visibility="{Binding VisibilityTotalMask}">
+            <Grid Name="ViewTotalMask" 
+                  Visibility="Collapsed">
                 <Grid.Background>
                     <SolidColorBrush Color="{StaticResource LoadingMaskColor}" />
                 </Grid.Background>

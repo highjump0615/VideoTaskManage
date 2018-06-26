@@ -730,14 +730,12 @@
     <Resource Include="Resources\Images\Toolbar\Toolbar01\btSearchEvent.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Toolbar\Toolbar02\btDeleteCamera.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar02\btNewCamera.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar02\btShowCameraList.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar02\btShowCameraMap.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Toolbar\Toolbar03\btAutoAnaysisMovie.png" />
-    <Resource Include="Resources\Images\Toolbar\Toolbar03\btDeleteMovie.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar03\btFindMovie.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar03\btMovieImport.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar03\btPlayMovie.png" />
@@ -895,6 +893,7 @@
     <Content Include="Map\pathMapView.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\btDeleteMovie.png" />
     <SplashScreen Include="Resources\Images\splash.png" />
   </ItemGroup>
   <ItemGroup>

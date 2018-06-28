@@ -33,6 +33,7 @@
         return document.getElementById(id);
     }
 
+    var gstrMarkPath = "camera.png";
     var map = new BMap.Map("l-map");
     map.enableScrollWheelZoom();
 
@@ -56,7 +57,7 @@
         for (var i = 0; i < cameras.length; i++) {
             //console.log(cameras[i]);
 
-            var icon = new BMap.Icon("camera.png", new BMap.Size(69, 74));
+            var icon = new BMap.Icon(gstrMarkPath, new BMap.Size(69, 74));
             var pt = new BMap.Point(cameras[i].Longitude, cameras[i].Latitude);
             var marker = new BMap.Marker(pt, {icon: icon});  // 创建标注
             map.addOverlay(marker)
@@ -86,5 +87,9 @@
         var pt = new BMap.Point(p.getPosition().lng, p.getPosition().lat)
         var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象 
         map.openInfoWindow(infoWindow, pt); //开启信息窗口
+    }
+
+    function setMarkerImg(imgPath) {
+        gstrMarkPath = imgPath;
     }
 </script>

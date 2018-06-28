@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Script.Serialization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using VideoSearch.Model;
@@ -18,7 +19,12 @@ namespace VideoSearch.Views
         {
             InitializeComponent();
 
-            webBrowser.Navigate(Path.Combine(Environment.CurrentDirectory, "Map\\pathMapView.html"));
+            // Load HTML document as a stream
+            Uri uri = new Uri(@"pack://application:,,,/Map/pathMapView.html", UriKind.Absolute);
+            Stream source = Application.GetResourceStream(uri).Stream;
+            // Navigate to HTML document stream
+            this.webBrowser.NavigateToStream(source);
+
             webBrowser.LoadCompleted += new LoadCompletedEventHandler(BrowserLoadCompleted);
         }
 

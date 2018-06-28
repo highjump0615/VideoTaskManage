@@ -878,21 +878,15 @@
     <Resource Include="Resources\Images\Button\dlg_minimize_pressed.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Map\addLocation.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Map\addLocation.html" />
     <Content Include="Map\camera.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Map\cameraMapView.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Map\cameraMapView.html" />
     <Content Include="Map\map-marker.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Map\pathMapView.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Map\pathMapView.html" />
     <Resource Include="Resources\Images\Toolbar\Toolbar03\btDeleteMovie.png" />
     <SplashScreen Include="Resources\Images\splash.png" />
   </ItemGroup>

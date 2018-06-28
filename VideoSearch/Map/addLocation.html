@@ -88,7 +88,7 @@
     </div>
 
     <!-- mark -->
-    <img id="img-mark" src="map-marker.png" />
+    <img id="img-mark" />
     <div id="l-map"></div>
     <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
 </body>
@@ -169,5 +169,10 @@
         else {
             map.centerAndZoom("北京", 15);                   // 初始化地图,设置城市和地图级别。
         }
+    }
+
+    function setMarkerImg(imgPath) {
+        var img = document.getElementById("img-mark");
+        img.src = imgPath;
     }
 </script>

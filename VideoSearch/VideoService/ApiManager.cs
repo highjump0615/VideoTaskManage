@@ -44,7 +44,7 @@ namespace VideoSearch.VideoService
         /// <returns></returns>
         public Task<XElement> SubmitVideo(String videoPath)
         {
-            return sendToServiceByGet(API_PATH + "/SubmitVideo?OrgPath=" + videoPath + "&Transcode=1");
+            return sendToServiceByGet(API_PATH + "/SubmitVideo?OrgPath=" + videoPath + "&Transcode=0");
         }
 
         /// <summary>

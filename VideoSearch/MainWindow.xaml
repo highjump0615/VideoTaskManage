@@ -603,8 +603,7 @@
             </Grid>
 
             <!-- loading mask -->
-            <Grid Name="ViewTotalMask" 
-                  Visibility="Collapsed">
+            <Grid Name="ViewTotalMask"  Visibility="{Binding VisibilityTotalMask}">
                 <Grid.Background>
                     <SolidColorBrush Color="{StaticResource LoadingMaskColor}" />
                 </Grid.Background>

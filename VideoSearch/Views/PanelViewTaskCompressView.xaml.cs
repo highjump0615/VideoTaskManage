@@ -153,7 +153,7 @@ namespace VideoSearch.Views
             if (!String.IsNullOrEmpty(vm.taskItem.CompressedPlayPath))
             {
                 // 检查视频文件是否存在
-                if (!File.Exists(vm.taskItem.CompressedPath))
+                if (!File.Exists(vm.taskItem.CompressedPlayPath))
                 {
                     // 显示提示
                     Globals.Instance.MainVM.ShowWorkMask("浓缩视频不存在", false);

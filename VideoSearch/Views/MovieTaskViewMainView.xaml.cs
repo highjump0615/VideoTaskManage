@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -203,6 +204,16 @@ namespace VideoSearch.Views
             if (sender != null)
             {
                 _vlcPlayer.Play();
+
+                //
+                // 保存截图，任务对话框用
+                //
+                var vm = (MovieTaskViewMainModel)this.DataContext;
+
+                if (!File.Exists(vm.movieItem.ThumbnailPath))
+                {
+                    _vlcPlayer.SnapShot(vm.movieItem.ThumbnailPath);
+                }
             }
         }
 

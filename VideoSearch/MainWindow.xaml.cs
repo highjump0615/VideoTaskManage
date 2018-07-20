@@ -556,6 +556,11 @@ namespace VideoSearch
             }
         }
 
+        /// <summary>
+        /// 视频任务摘要
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMovieTaskOutline(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
@@ -567,6 +572,11 @@ namespace VideoSearch
             }
         }
 
+        /// <summary>
+        /// 视频任务浓缩
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMovieTaskCompress(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);

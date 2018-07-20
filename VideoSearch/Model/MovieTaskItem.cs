@@ -151,6 +151,9 @@ namespace VideoSearch.Model
             {
                 // delete
                 Parent.DeleteItem(this);
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 

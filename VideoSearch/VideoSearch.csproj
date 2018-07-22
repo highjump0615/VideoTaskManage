@@ -204,6 +204,7 @@
       <DependentUpon>DialogFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\BitConvert.cs" />
+    <Compile Include="Utils\CFSystem.cs" />
     <Compile Include="Utils\ExceptionUtils.cs" />
     <Compile Include="Utils\ManualMarkUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />

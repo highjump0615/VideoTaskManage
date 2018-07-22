@@ -55,6 +55,16 @@ namespace VideoSearch
 
         private void checkServiceThread()
         {
+            if (!Globals.Instance.MainVM.checkUsbToken())
+            {
+                // UI Thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show(this, "无授权加密狗，无法使用系统功能", "提示", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    //Application.Current.Shutdown();
+                });
+            }
+
             // 检查服务
             Globals.Instance.MainVM.checkService();
 

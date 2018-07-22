@@ -33,16 +33,27 @@
                 Text="版本号: 2017.2.6.78" 
                 IsHitTestVisible="False" 
                 Opacity="0.8" />
-            <TextBlock 
-                FontSize="12" 
-                Foreground="White" 
-                HorizontalAlignment="Left" VerticalAlignment="Top"
-                Margin="0,100,0,0" 
-                x:Name="txtCreator" 
-                Text="授权状态: 已授权" 
+            <StackPanel 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
+                Margin="0,100,0,0"
                 IsHitTestVisible="False" 
-                Opacity="0.8" />
-            
+                Opacity="0.8">
+                <TextBlock 
+                    FontSize="12" 
+                    Foreground="White" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top"                    
+                    x:Name="txtCreator" 
+                    Text="授权状态: 已授权"  />
+                <TextBlock 
+                    Name="txtExpire"
+                    FontSize="11"
+                    Text="（至2018-09-08）"
+                    Foreground="White"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+
             <Separator Height="5" Margin="0,122,0,0" x:Name="separator1" VerticalAlignment="Top" IsHitTestVisible="False" />
             
             <TextBlock 

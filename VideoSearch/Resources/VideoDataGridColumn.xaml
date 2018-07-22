@@ -30,6 +30,7 @@
 
             <CheckBox Height="16" HorizontalAlignment="Center" VerticalAlignment="Center"
                       Width="{Binding CheckerWidth}"
+                      Opacity="{Binding OpacityCheck}"
                       IsEnabled="{Binding IsEnabled}"
                       Content="{Binding CheckerName}" 
                       Foreground="White" FontSize="16"

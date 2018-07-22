@@ -462,6 +462,14 @@ namespace VideoSearch.Model
             }
         }
 
+        public double OpacityCheck
+        {
+            get
+            {
+                return Opacity == 1.0 ? 1.0 : 0.5;
+            }
+        }
+
         private Thickness _opNameMargin = new Thickness(24, 0, 8, 0);
         public Thickness OpNameMargin
         {
@@ -578,7 +586,7 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Hidden;
                         ProgressBarVisibility = Visibility.Visible;
                         OperationPos = 1;
-                        Opacity = 1.0;
+                        Opacity = 0.7;
                         IsEnabled = false;
                     }
                     else if (_state == ConvertStatus.Converting)
@@ -590,7 +598,7 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Visible;
                         OperationPos = 0;
-                        Opacity = 1.0;
+                        Opacity = 0.7;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
                     }
@@ -615,6 +623,7 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
                         OperationPos = 0;
+                        Opacity = 1.0;
                         IsEnabled = true;
                     }
 
@@ -625,12 +634,12 @@ namespace VideoSearch.Model
         }
         #endregion
 
-        #region Override
-        public override bool ClearFromDB()
+        #region Override (ClearFromDB)
+        public override async Task<bool> ClearFromDBAsync()
         {
             if (VideoId > 0)
             {
-                if(ApiManager.Instance.DeleteVideo(VideoId))
+                if (await ApiManager.Instance.DeleteVideo(VideoId))
                 {
                     return base.ClearFromDB();
                 }

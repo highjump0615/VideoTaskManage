@@ -52,11 +52,9 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public bool DeleteVideo(int videoId)
+        public async Task<bool> DeleteVideo(int videoId)
         {
-            var taskGet = sendToServiceByGet(API_PATH + "/DeleteVideo?VideoId=" + videoId);
-            taskGet.Wait();
-            var response = taskGet.Result;
+            var response = await sendToServiceByGet(API_PATH + "/DeleteVideo?VideoId=" + videoId);
 
             if (response != null)
                 return true;

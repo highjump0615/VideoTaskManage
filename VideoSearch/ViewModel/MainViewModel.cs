@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using VideoSearch.ViewModel.Base;
@@ -199,8 +200,17 @@ namespace VideoSearch.ViewModel
         /// </summary>
         public void updateTreeList()
         {
-            var viewMain = View as MainWindow;
-            viewMain.treeView.Items.Refresh();
+            // 非阻塞模式
+            new Thread(() => 
+            {
+                // UI Thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var viewMain = View as MainWindow;
+                    viewMain.treeView.Items.Refresh();
+                });                
+            })
+            .Start();
         }
 
         public bool checkUsbToken()

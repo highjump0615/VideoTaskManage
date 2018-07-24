@@ -283,7 +283,6 @@ namespace VideoSearch
             MovieTaskGroup.Children.Add(ToolbarMovieTaskFind);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskDelete);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskChargeList);
-            MovieTaskGroup.Children.Add(ToolbarMovieTaskFindAndPlay);
 
             PanelGroup.Children.Add(ToolbarPanelPreview);
             PanelGroup.Children.Add(ToolbarPanelShowPath);

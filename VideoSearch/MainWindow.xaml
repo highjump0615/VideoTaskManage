@@ -253,7 +253,6 @@
                         TextMode="Right" 
                         Text="删除任务" />
                     <SkinControl:SkinButton HorizontalAlignment="Right" Margin="0,26,6,52" x:Name="ToolbarMovieTaskChargeList" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskChargeList.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" Width="78" Tag="3" Click="OnMovieTaskChargeList" Height="22" TextMode="Right" Text="任务列表" />
-                    <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,48,6,0" x:Name="ToolbarMovieTaskFindAndPlay" NormalImage="Resources/Images/Toolbar/Toolbar04/btMovieTaskFindAndPlay.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="78" Tag="3" Click="OnMovieTaskFindAndPlay" TextMode="Right" Text="放大播放" />
                 </Grid>
                 <Grid Grid.Column="4" Margin="0,0,1,0">
                     <SkinControl:SkinButtonGroup x:Name="PanelGroup" Margin="0,0,0,0" Title="5 标注结果" Tag="1" GroupSelected="OnTabChanged" />

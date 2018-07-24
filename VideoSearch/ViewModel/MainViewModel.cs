@@ -237,7 +237,7 @@ namespace VideoSearch.ViewModel
             // 利用expireTime来判断程序开启，这个字段里如果有时间，开启程序，否则返回
             if (DateTime.TryParse(temp, out dtDate))
             {
-                mstrExpireDate = temp;
+                mstrExpireDate = temp.Replace("\0", "");
                 return true;
             }
 

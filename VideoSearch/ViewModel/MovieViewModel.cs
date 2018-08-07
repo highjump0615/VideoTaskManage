@@ -67,6 +67,26 @@ namespace VideoSearch.ViewModel
             if (Owner == null || !Owner.HasCheckedItem)
                 return;
 
+            var bHasChildren = false;
+            foreach (MovieItem mv in Owner)
+            {
+                if (mv.IsChecked && mv.Children.Count > 0)
+                {
+                    bHasChildren = true;
+                    break;
+                }
+            }
+
+            if (bHasChildren)
+            {
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "此视频内含任务，无法删除有内容的视频",
+                    "提示",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
             ConfirmDeleteWindow deleteDlg = new ConfirmDeleteWindow();
 
             Nullable<bool> result = deleteDlg.ShowDialog();

@@ -587,7 +587,7 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Visible;
                         OperationPos = 1;
                         Opacity = 0.7;
-                        IsEnabled = false;
+                        IsEnabled = true;
                     }
                     else if (_state == ConvertStatus.Converting)
                     {

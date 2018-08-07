@@ -24,7 +24,7 @@ namespace VideoSearch.ViewModel
             }
         }
 
-        public void AddNewItem()
+        public async void AddNewItemAsync()
         {
             if (Owner == null)
                 return;
@@ -43,7 +43,7 @@ namespace VideoSearch.ViewModel
                 CameraItem item = new CameraItem(createDlg.NewCamera);
 
                 if(item.EventPos == Owner.ID)
-                    Owner.AddItem(item);
+                    await Owner.AddItemAsync(item);
                 else
                 {
                     DataItemBase ReParent = Owner.FindFriendItem(item.EventPos);
@@ -66,7 +66,7 @@ namespace VideoSearch.ViewModel
                         item.IsChecked = false;
                         item.IsSelected = false;
 
-                        ReParent.AddItem(item);
+                        await ReParent.AddItemAsync(item);
                     }
                 }
 

@@ -27,7 +27,7 @@ namespace VideoSearch.ViewModel
             }
         }
 
-        public void ImportMovie()
+        public async void ImportMovie()
         {
             if (Owner == null)
                 return;
@@ -48,7 +48,7 @@ namespace VideoSearch.ViewModel
                 
                 foreach (String filePath in filenames)
                 {
-                    Owner.AddItem(new MovieItem(Owner, filePath));
+                    await Owner.AddItemAsync(new MovieItem(Owner, filePath));
                 }
 
                 // update tree

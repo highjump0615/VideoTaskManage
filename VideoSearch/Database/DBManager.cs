@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 using System.Windows;
 using VideoSearch.Utils;
 
@@ -17,7 +18,7 @@ namespace VideoSearch.Database
         public const String MovieTable = "Movie";
         public const String MovieTaskTable = "MovieTask";
         public const String ArticleTable = "Article";
-        #endregion
+        #endregion        
 
         #region Property
 
@@ -169,7 +170,7 @@ namespace VideoSearch.Database
             }
         }
 
-        public static int ExecuteCommand(String sql, params SQLiteParameter[] sqliteParameter)
+        public static async Task<int> ExecuteCommandAsync(String sql, params SQLiteParameter[] sqliteParameter)
         {
             int result = 0;
             try
@@ -177,7 +178,7 @@ namespace VideoSearch.Database
                 SQLiteCommand cmd = new SQLiteCommand(sql, Connection);
                 if (sqliteParameter != null)
                     cmd.Parameters.AddRange(sqliteParameter);
-                result = cmd.ExecuteNonQuery();
+                result = await cmd.ExecuteNonQueryAsync();
                 cmd.Dispose();
             }
             catch (Exception exception)

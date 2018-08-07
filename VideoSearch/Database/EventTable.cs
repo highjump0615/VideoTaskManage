@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 using VideoSearch.Model;
 
 namespace VideoSearch.Database
@@ -30,7 +31,7 @@ namespace VideoSearch.Database
         {
             String sql = "select * from Event order by ID Asc";
 
-            Load(parent, sql);
+            LoadAsync(parent, sql);
         }
 
         public override DataItemBase DataItemWithRow(DataRow row, DataItemBase parent, String pfxField = "")
@@ -46,11 +47,11 @@ namespace VideoSearch.Database
                                 string.Format("{0}", row["Remark"]), false);
         }
 
-        public override int Add(DataItemBase newItem)
+        public override async Task<int> Add(DataItemBase newItem)
         {
             EventItem item = (EventItem)newItem;
             String sql = "insert into Event (ID,DisplayID,Name,Date,Remark) values (@ID,@DisplayID,@Name,@Date,@Remark)";
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
                 {
                     new SQLiteParameter("@ID",item.ID),
                     new SQLiteParameter("@DisplayID",item.DisplayID),
@@ -60,12 +61,12 @@ namespace VideoSearch.Database
                 });
         }
 
-        public override int Update(DataItemBase newItem)
+        public override async Task<int> Update(DataItemBase newItem)
         {
             EventItem item = (EventItem)newItem;
 
             String sql = "update Event set ID=@ID,DisplayID=@DisplayID,Name=@Name,Date=@Date,Remark=@Remark where ID=@ID";
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
             {
                     new SQLiteParameter("@ID",item.ID),
                     new SQLiteParameter("@DisplayID",item.DisplayID),

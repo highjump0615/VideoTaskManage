@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 using VideoSearch.Model;
 using VideoSearch.VideoService;
 
@@ -31,7 +32,7 @@ namespace VideoSearch.Database
         {
             String sql = "select * from MovieTask where MoviePos=@MoviePos order by DisplayID Asc";
 
-            Load(parent, sql, new SQLiteParameter[]
+            LoadAsync(parent, sql, new SQLiteParameter[]
                 {
                     new SQLiteParameter("@MoviePos",parent.ID)
                 });
@@ -77,11 +78,11 @@ namespace VideoSearch.Database
             return null;
         }
 
-        public override int Add(DataItemBase newItem)
+        public override async Task<int> Add(DataItemBase newItem)
         {
             MovieTaskItem item = (MovieTaskItem)newItem;
             String sql = "insert into MovieTask (ID,DisplayID,TaskId,Name,MoviePos,TaskType,State) values (@ID,@DisplayID,@TaskId,@Name,@MoviePos,@TaskType,@State)";
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
                 {
                     new SQLiteParameter("@ID",item.ID),
                     new SQLiteParameter("@DisplayID",item.DisplayID),
@@ -93,12 +94,12 @@ namespace VideoSearch.Database
                 });
         }
 
-        public override int Update(DataItemBase newItem)
+        public override async Task<int> Update(DataItemBase newItem)
         {
             MovieTaskItem item = (MovieTaskItem)newItem;
 
             String sql = "update MovieTask set ID=@ID,DisplayID=@DisplayID,TaskId=@TaskId,Name=@Name,MoviePos=@MoviePos,TaskType=@TaskType,State=@State where ID=@ID";
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
             {
                     new SQLiteParameter("@ID",item.ID),
                     new SQLiteParameter("@DisplayID",item.DisplayID),

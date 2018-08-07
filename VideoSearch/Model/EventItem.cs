@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using VideoSearch.Database;
 using VideoSearch.Windows;
@@ -96,13 +97,13 @@ namespace VideoSearch.Model
         {
             if (parameter != null && parameter.GetType() == typeof(String) && (String)parameter == UpdateCommand)
             {
-                UpdateItem();
+                var updateTask = UpdateItemAsync();
             }
             else
                 base.OnCommand(parameter);
         }
 
-        protected void UpdateItem()
+        protected async Task UpdateItemAsync()
         {
             CreateEventWindow createDlg = new CreateEventWindow(this);
 
@@ -111,7 +112,7 @@ namespace VideoSearch.Model
             {
                 EventItem newItem = createDlg.NewEvent;
 
-                if(Table != null && Table.Update(newItem) != 0)
+                if(Table != null && await Table.Update(newItem) != 0)
                 {
                     SetItem(newItem);
                 }

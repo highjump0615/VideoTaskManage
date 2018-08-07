@@ -80,6 +80,9 @@ namespace VideoSearch.Views
 
             if (!String.IsNullOrEmpty(vm.movieItem.PlayPath))
             {
+                // set video path
+                Console.WriteLine($"video play path: {vm.movieItem.PlayPath}");
+                
                 _vlcPlayer.SetVideoInfo(vm.movieItem.PlayPath, true);
                 _vlcPlayer.SetManualMarkMode(true);
                 _markUtils = new ManualMarkUtils(_vlcPlayer, vm.movieItem.VideoId);

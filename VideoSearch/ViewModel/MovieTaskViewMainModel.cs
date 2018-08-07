@@ -126,7 +126,7 @@ namespace VideoSearch.ViewModel
         }
         #endregion
 
-        public void saveMarkInfo(ManualMark mark, DetailInfo info)
+        public async void saveMarkInfo(ManualMark mark, DetailInfo info)
         {
             // 位置&大小
             info.frame = MarkList[0].Frame;
@@ -140,7 +140,7 @@ namespace VideoSearch.ViewModel
 
             ArticleItem item = new ArticleItem(movieItem, info);
             // 保存到数据库
-            ArticleTable.Table.Add(item);
+            await ArticleTable.Table.Add(item);
         }
     }
 }

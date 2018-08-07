@@ -14,7 +14,7 @@ namespace VideoSearch.ViewModel
 
         #region override
 
-        public override void AddNewItem()
+        public override async void AddNewItemAsync()
         {
             if (Owner == null)
                 return;
@@ -27,7 +27,7 @@ namespace VideoSearch.ViewModel
             Nullable<bool> result = createDlg.ShowDialog();
             if (result == true)
             {
-                Owner.AddItem(new EventItem(createDlg.NewEvent));
+                await Owner.AddItemAsync(new EventItem(createDlg.NewEvent));
 
                 // update tree
                 Globals.Instance.MainVM.updateTreeList();

@@ -627,8 +627,7 @@ namespace VideoSearch.Model
                         IsEnabled = true;
                     }
 
-                    if (Table != null)
-                        Table.Update(this);
+                    updateTable();
                 }
             }
         }
@@ -689,7 +688,17 @@ namespace VideoSearch.Model
             {
                 Console.WriteLine("=== Import PlayReady ===");
 
-                PlayerWindow.PlayMovie(Name, PlayPath);
+                //PlayerWindow.PlayMovie(Name, PlayPath);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    // 非阻塞模式
+                    new Thread(() =>
+                    {
+                        State = i < 9 ? ConvertStatus.ConvertedFail : ConvertStatus.ConvertedOk;
+                    })
+                    .Start();
+                }
             }
             Console.WriteLine("=== Import End ===");
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 using System.Windows;
 using VideoSearch.Model;
 
@@ -27,20 +28,22 @@ namespace VideoSearch.Database
             return null;
         }
 
-
-        public virtual int Add(DataItemBase newItem)
+        public virtual async Task<int> Add(DataItemBase newItem)
         {
+            await Task.FromResult(0);
             return 0;
         }
 
-        public virtual int Update(DataItemBase newItem)
+        public virtual async Task<int> Update(DataItemBase newItem)
         {
+            await Task.FromResult(0);
             return 0;
         }
+
         #endregion
 
         #region Internal (Load, Remove)
-        public void Load(DataItemBase parent, String sql, SQLiteParameter[] parameters = null)
+        public async void LoadAsync(DataItemBase parent, String sql, SQLiteParameter[] parameters = null)
         {
             if (parent == null || _tableName == null || sql == null)
                 return;
@@ -51,7 +54,7 @@ namespace VideoSearch.Database
                 DataItemBase item = DataItemWithRow(row, parent);
 
                 if (item != null)
-                    parent.AddItem(item, false);
+                    await parent.AddItemAsync(item, false);
             }
         }
 

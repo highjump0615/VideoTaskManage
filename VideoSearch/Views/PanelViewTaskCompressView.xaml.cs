@@ -195,7 +195,7 @@ namespace VideoSearch.Views
             PlayButton.IsEnabled = false;
         }
 
-        protected void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        protected void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue is PanelViewTaskCompressModel vm)
             {

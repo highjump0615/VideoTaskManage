@@ -65,7 +65,7 @@ namespace VideoSearch.ViewModel
                 if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {
                     MovieTaskSearchItem item = new MovieTaskSearchItem(Owner, response.Element("TaskId").Value, searchDlg.TaskName, MovieTaskType.SearchTask);
-                    Owner.AddItem(item);
+                    await Owner.AddItemAsync(item);
                 }
 
                 Globals.Instance.ShowWaitCursor(false);
@@ -110,7 +110,7 @@ namespace VideoSearch.ViewModel
                 if(response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {
                     MovieTaskSummaryItem item = new MovieTaskSummaryItem(Owner, response.Element("TaskId").Value, outlineDlg.TaskName, MovieTaskType.OutlineTask);
-                    Owner.AddItem(item);
+                    await Owner.AddItemAsync(item);
                 }
 
                 Globals.Instance.ShowWaitCursor(false);
@@ -155,7 +155,7 @@ namespace VideoSearch.ViewModel
                 if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {
                     MovieTaskCompressItem item = new MovieTaskCompressItem(Owner, response.Element("TaskId").Value, compressDlg.TaskName, MovieTaskType.CompressTask);
-                    Owner.AddItem(item);
+                    await Owner.AddItemAsync(item);
                 }
 
                 Globals.Instance.ShowWaitCursor(false);

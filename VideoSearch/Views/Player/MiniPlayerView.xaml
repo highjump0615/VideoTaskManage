@@ -23,19 +23,6 @@
         </Grid>
         <!-- Player-->
         <Grid x:Name="PlayerGrid" Grid.Row="1">
-            <Border BorderBrush="#FF222222" BorderThickness="1,0" >
-                <Border.Background>
-                    <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Player/PlayerBg.png" Stretch="UniformToFill"/>
-                </Border.Background>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="76*"/>
-                        <RowDefinition Height="86*" MinHeight="48"/>
-                        <RowDefinition Height="76*"/>
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="1" Source="/VideoSearch;component/Resources/Images/Player/PlayerLogo.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
-            </Border>
 
             <TextBlock x:Name="MovieSource" Text="{Binding Path=Source}" Visibility="Hidden"/>
             <WindowsFormsHost x:Name="PlayerPanel" Margin="1" Background="Black"/>

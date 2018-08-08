@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
 using VideoSearch.Windows;
@@ -24,7 +25,7 @@ namespace VideoSearch.ViewModel
             }
         }
 
-        public void AddNewItem()
+        public async void AddNewItemAsync()
         {
             if (Owner == null)
                 return;
@@ -43,7 +44,7 @@ namespace VideoSearch.ViewModel
                 CameraItem item = new CameraItem(createDlg.NewCamera);
 
                 if(item.EventPos == Owner.ID)
-                    Owner.AddItem(item);
+                    await Owner.AddItemAsync(item);
                 else
                 {
                     DataItemBase ReParent = Owner.FindFriendItem(item.EventPos);
@@ -66,7 +67,7 @@ namespace VideoSearch.ViewModel
                         item.IsChecked = false;
                         item.IsSelected = false;
 
-                        ReParent.AddItem(item);
+                        await ReParent.AddItemAsync(item);
                     }
                 }
 
@@ -82,6 +83,26 @@ namespace VideoSearch.ViewModel
 
             if (Owner == null || !Owner.HasCheckedItem)
                 return;
+
+            var bHasChildren = false;
+            foreach (CameraItem cm in Owner)
+            {
+                if (cm.IsChecked && cm.Children.Count > 0)
+                {
+                    bHasChildren = true;
+                    break;
+                }
+            }
+
+            if (bHasChildren)
+            {
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "此摄像头内含视频，无法删除有内容的摄像头",
+                    "提示",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
 
             ConfirmDeleteWindow deleteDlg = new ConfirmDeleteWindow();
 

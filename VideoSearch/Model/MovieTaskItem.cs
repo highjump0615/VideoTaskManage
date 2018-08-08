@@ -512,7 +512,7 @@ namespace VideoSearch.Model
                     }
 
                     if (Table != null && TaskType != MovieTaskType.UnInitTask)
-                        Table.Update(this);
+                        updateTable();
                 }
             }
         }

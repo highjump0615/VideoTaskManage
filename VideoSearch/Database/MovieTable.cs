@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 using VideoSearch.Model;
 using VideoSearch.VideoService;
 
@@ -31,7 +32,7 @@ namespace VideoSearch.Database
         {
             String sql = "select * from Movie where CameraPos=@CameraPos order by DisplayID Asc";
 
-            Load(parent, sql, new SQLiteParameter[]
+            LoadAsync(parent, sql, new SQLiteParameter[]
                 {
                     new SQLiteParameter("@CameraPos",parent.ID)
                 });
@@ -54,11 +55,11 @@ namespace VideoSearch.Database
                                  string.Format("{0}", row["MovieTask"]));
         }
 
-        public override int Add(DataItemBase newItem)
+        override public async Task<int> Add(DataItemBase newItem)
         {
             MovieItem item = (MovieItem)newItem;
             String sql = "insert into Movie (ID,DisplayID,VideoId,Name,CameraPos,SrcPath,State,MovieTask) values (@ID,@DisplayID,@VideoId,@Name,@CameraPos,@SrcPath,@State,@MovieTask)";
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
                 {
                     new SQLiteParameter("@ID",item.ID),
                     new SQLiteParameter("@DisplayID",item.DisplayID),
@@ -71,12 +72,12 @@ namespace VideoSearch.Database
                 });
         }
 
-        public override int Update(DataItemBase newItem)
+        public override async Task<int> Update(DataItemBase newItem)
         {
             MovieItem item = (MovieItem)newItem;
 
             String sql = "update Movie set ID=@ID,DisplayID=@DisplayID,VideoId=@VideoId,Name=@Name,CameraPos=@CameraPos,SrcPath=@SrcPath,State=@State,MovieTask=@MovieTask where ID=@ID";
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
             {
                     new SQLiteParameter("@ID",item.ID),
                     new SQLiteParameter("@DisplayID",item.DisplayID),

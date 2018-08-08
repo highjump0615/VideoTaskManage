@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 using VideoSearch.Model;
 
 namespace VideoSearch.Database
@@ -33,7 +34,7 @@ namespace VideoSearch.Database
 
             String sql = "select * from Camera where EventPos=@EventPos order by DisplayID Asc";
 
-            Load(parent, sql, new SQLiteParameter[]
+            LoadAsync(parent, sql, new SQLiteParameter[]
                 {
                     new SQLiteParameter("@EventPos",parent.ID)
                 });
@@ -57,11 +58,11 @@ namespace VideoSearch.Database
                                   string.Format("{0}", row["PortCount"]));
         }
 
-        public override int Add(DataItemBase newItem)
+        public override async Task<int> Add(DataItemBase newItem)
         {
             CameraItem item = (CameraItem)newItem;
             String sql = "insert into Camera (ID,DisplayID,Name,EventPos,Address,Longitude,Latitude,CameraType,CameraSource,PortCount) values (@ID,@DisplayID,@Name,@EventPos,@Address,@Longitude,@Latitude,@CameraType,@CameraSource,@PortCount)";
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
                 {
                     new SQLiteParameter("@ID",item.ID),
                     new SQLiteParameter("@DisplayID",item.DisplayID),
@@ -76,12 +77,12 @@ namespace VideoSearch.Database
                 });
         }
 
-        public override int Update(DataItemBase newItem)
+        public override async Task<int> Update(DataItemBase newItem)
         {
             CameraItem item = (CameraItem)newItem;
 
             String sql = "update Camera set ID=@ID,DisplayID=@DisplayID,Name=@Name,EventPos=@EventPos,Address=@Address,Longitude=@Longitude,Latitude=@Latitude,CameraType=@CameraType,CameraSource=@CameraSource,PortCount=@PortCount where ID=@ID and EventPos=@EventPos";
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
             {
                     new SQLiteParameter("@ID", item.ID),
                     new SQLiteParameter("@DisplayID",item.DisplayID),

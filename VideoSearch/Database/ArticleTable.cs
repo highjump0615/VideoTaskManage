@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 using VideoSearch.Model;
 
 namespace VideoSearch.Database
@@ -30,7 +31,7 @@ namespace VideoSearch.Database
         {
             String sql = "select * from Article where VideoID=@VideoID order by ID Asc";
 
-            Load(parent, sql, new SQLiteParameter[]
+            LoadAsync(parent, sql, new SQLiteParameter[]
                 {
                     new SQLiteParameter("@VideoID",parent.ID)
                 });
@@ -81,7 +82,7 @@ namespace VideoSearch.Database
             return new ArticleItem(parent, info);
         }
 
-        public override int Add(DataItemBase newItem)
+        public override async Task<int> Add(DataItemBase newItem)
         {
             ArticleItem item = (ArticleItem)newItem;
             DetailInfo info = item.DetailInfo;
@@ -126,10 +127,15 @@ namespace VideoSearch.Database
                 new SQLiteParameter("@OtherCarSpec",info.otherCarSpec),
             };
 
-            return param == null ? 0 : DBManager.ExecuteCommand(sql, param);
+            if (param == null)
+            {
+                return 0;
+            }
+
+            return await DBManager.ExecuteCommandAsync(sql, param);
         }
 
-        public override int Update(DataItemBase newItem)
+        public override async Task<int> Update(DataItemBase newItem)
         {
             ArticleItem item = (ArticleItem)newItem;
             DetailInfo info = item.DetailInfo;
@@ -139,7 +145,7 @@ namespace VideoSearch.Database
                 "CarNumber=@CarNumber, CarColor=@CarColor, MemberCount=@MemberCount, Driver=@Driver, CarModel=@CarModel, OtherCarSpec=@OtherCarSpec where ID=@ID " +
                 "where ID=@ID";
 
-            return DBManager.ExecuteCommand(sql, new SQLiteParameter[]
+            return await DBManager.ExecuteCommandAsync(sql, new SQLiteParameter[]
             {
                 new SQLiteParameter("@ID", info.id),
                 new SQLiteParameter("@VideoId", info.videoId),

@@ -414,7 +414,7 @@ namespace VideoSearch
 
             Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(EventViewModel))
-                ((EventViewModel)viewContents).AddNewItem();
+                ((EventViewModel)viewContents).AddNewItemAsync();
         }
 
         private void OnDeleteEvent(object sender, RoutedEventArgs e)
@@ -443,7 +443,7 @@ namespace VideoSearch
 
             Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(CameraViewModel))
-                ((CameraViewModel)viewContents).AddNewItem();
+                ((CameraViewModel)viewContents).AddNewItemAsync();
         }
 
         private void OnDeleteCamera(object sender, RoutedEventArgs e)

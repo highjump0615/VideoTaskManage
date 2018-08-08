@@ -437,7 +437,7 @@ namespace VideoSearch.Model
             return null;
         }
 
-        public bool AddItem(DataItemBase newItem, bool needsUpdateDB = true)
+        public async Task<bool> AddItemAsync(DataItemBase newItem, bool needsUpdateDB = true)
         {
             if (newItem == null)
                 return false;
@@ -445,7 +445,7 @@ namespace VideoSearch.Model
             if (GetItem(newItem.ID) != null)
                 return false;
 
-            if (needsUpdateDB && (ItemsTable == null || ItemsTable.Add(newItem) == 0))
+            if (needsUpdateDB && (ItemsTable == null || await ItemsTable.Add(newItem) == 0))
                 return false;
 
             newItem.Parent = this;
@@ -552,6 +552,12 @@ namespace VideoSearch.Model
         }
 
         #endregion
+
+        protected async void updateTable()
+        {
+            if (Table != null)
+                await Table.Update(this);
+        }
 
         #region Utility for Search (GetSearchText)
 

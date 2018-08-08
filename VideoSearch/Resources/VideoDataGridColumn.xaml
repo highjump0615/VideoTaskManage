@@ -16,6 +16,15 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
+    <Style x:Key="ColumnTextStyle" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Margin" Value="4,0" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
     <!-- 
     ******************
     * Common columns *
@@ -43,14 +52,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Order}" 
-                       VerticalAlignment="Center" 
-                       Foreground="White" 
-                       FontSize="16" 
-                       Height="18" 
-                       TextAlignment="Center" 
-                       Margin="4,0" 
-                       TextTrimming="CharacterEllipsis" />
+            <TextBlock Style="{StaticResource ColumnTextStyle}" Text="{Binding Order}" />
         </Grid>
     </DataTemplate>
 
@@ -59,7 +61,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding DisplayID}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Style="{StaticResource ColumnTextStyle}" Text="{Binding DisplayID}"  />
         </Grid>
     </DataTemplate>
 
@@ -68,7 +70,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Name}" Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -83,7 +85,7 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch" >
                 <Grid>
-                    <TextBlock Text="编辑" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="编辑" Style="{StaticResource ColumnTextStyle}" />
                 </Grid>
             </Button>
         </Grid>
@@ -100,7 +102,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Date}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Style="{StaticResource ColumnTextStyle}" Text="{Binding Date}" />
         </Grid>
     </DataTemplate>
 
@@ -109,7 +111,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Remark}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Remark}" Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -139,12 +141,7 @@
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
             <Grid Margin="8,0,95,0">
-                <TextBlock
-                    Text="{Binding AddressDesc}" 
-                    VerticalAlignment="Center" 
-                    FontSize="16" 
-                    Foreground="White" 
-                    TextAlignment="Center" />
+                <TextBlock Text="{Binding AddressDesc}" Style="{StaticResource ColumnTextStyle}" />
             </Grid>
             <Button Grid.Column="4" 
                     Content="地图查看" 
@@ -164,7 +161,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Type}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Type}" Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -173,7 +170,7 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Source}" VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Source}" Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -189,7 +186,10 @@
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
             <Grid Margin="15,0" Opacity="{Binding Opacity}">
-                <TextBlock Height="18" Text="{Binding Name}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="0,0,20,0" TextTrimming="CharacterEllipsis" />
+                <TextBlock 
+                    Text="{Binding Name}" 
+                    Style="{StaticResource ColumnTextStyle}" 
+                    Margin="0,0,20,0" />
                 <Image Width="16" Height="16" Source="{Binding Remark}" HorizontalAlignment="Right"/>
             </Grid>
         </Grid>
@@ -200,10 +200,10 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Height="18" 
-                       Text="{Binding CameraDisplayPos}" 
-                       Opacity="{Binding Opacity}"
-                       VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock
+                Text="{Binding CameraDisplayPos}" 
+                Opacity="{Binding Opacity}"
+                Style="{StaticResource ColumnTextStyle}"  />
         </Grid>
     </DataTemplate>
 
@@ -212,8 +212,10 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding DisplaySubmitTime}" Opacity="{Binding Opacity}" 
-                       VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock 
+                Text="{Binding DisplaySubmitTime}" 
+                Opacity="{Binding Opacity}" 
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
     
@@ -222,9 +224,10 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" 
-                               Text="{Binding MovieSize}" 
-                               Opacity="{Binding Opacity}" />
+            <TextBlock 
+                Style="{StaticResource ColumnTextStyle}"  
+                Text="{Binding MovieSize}" 
+                Opacity="{Binding Opacity}" />
         </Grid>
     </DataTemplate>
     
@@ -233,9 +236,10 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" 
-                               Text="{Binding MovieTask}" 
-                               Opacity="{Binding Opacity}" />
+            <TextBlock 
+                Style="{StaticResource ColumnTextStyle}"  
+                Text="{Binding MovieTask}" 
+                Opacity="{Binding Opacity}" />
         </Grid>
     </DataTemplate>
  
@@ -265,7 +269,7 @@
                              Value="{Binding Progress}"
                              Grid.Column="0"
                              Visibility="{Binding ProgressBarVisibility}"/>
-                <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 
+                <TextBlock VerticalAlignment="Center" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 
                            TextAlignment="{Binding OperationAlignment}" 
                            Grid.Column="{Binding OperationPos}"        
                            Text="{Binding Operation}" 
@@ -284,9 +288,10 @@
                      <Grid Width="64" Height="20">
                         <Image Margin="7,0,0,0" Width="16" Height="16" HorizontalAlignment="Left" 
                                        Source="{Binding OpIcon}"/>
-                        <TextBlock Height="16" VerticalAlignment="Center" FontSize="14" Foreground="White" TextAlignment="Center" 
-                                           Margin="{Binding OpNameMargin}" 
-                                           Text="{Binding OpName}" />
+                        <TextBlock 
+                            VerticalAlignment="Center" FontSize="14" Foreground="White" TextAlignment="Center" 
+                            Margin="{Binding OpNameMargin}" 
+                            Text="{Binding OpName}" />
                     </Grid>
                 </Button>
             </Grid>
@@ -305,7 +310,10 @@
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
             <Grid Margin="15,0" Opacity="{Binding Opacity}">
-                <TextBlock Height="18" Text="{Binding Name}" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="0,0,20,0" TextTrimming="CharacterEllipsis" />
+                <TextBlock 
+                    Style="{StaticResource ColumnTextStyle}"  
+                    Text="{Binding Name}" 
+                    Margin="0,0,20,0" />
                 <Image Width="16" Height="16" Source="{Binding Remark}" HorizontalAlignment="Right"/>
             </Grid>
         </Grid>
@@ -316,10 +324,10 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Height="18" 
-                       Text="{Binding MovieDisplayPos}" 
-                       Opacity="{Binding Opacity}"
-                       VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock
+                Text="{Binding MovieDisplayPos}" 
+                Opacity="{Binding Opacity}"
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -328,8 +336,10 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding DisplayWorkingTime}" Opacity="{Binding Opacity}" 
-                       VerticalAlignment="Center" Foreground="White" FontSize="16" Height="18" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock 
+                Text="{Binding DisplayWorkingTime}" 
+                Opacity="{Binding Opacity}" 
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -338,9 +348,10 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextAlignment="Center" Margin="4,0" TextTrimming="CharacterEllipsis" 
-                               Text="{Binding TaskTypeName}" 
-                               Opacity="{Binding Opacity}" />
+            <TextBlock
+                Text="{Binding TaskTypeName}" 
+                Opacity="{Binding Opacity}"
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -359,7 +370,7 @@
                              Value="{Binding Progress}"
                              Grid.Column="{Binding ProgressPos}"
                              Visibility="{Binding ProgressBarVisibility}"/>
-                <TextBlock Height="18" VerticalAlignment="Center" FontSize="16" Foreground="White" TextTrimming="CharacterEllipsis" 
+                <TextBlock Style="{StaticResource ColumnTextStyle}"  
                            TextAlignment="Left" 
                            Text="{Binding Operation}" 
                            Grid.Column="0"
@@ -397,9 +408,9 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Parent.Parent.Name}" VerticalAlignment="Center" 
-                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
-                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock 
+                Text="{Binding Parent.Parent.Name}"
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -407,9 +418,9 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Parent.Parent.Coordinate}" VerticalAlignment="Center" 
-                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
-                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock 
+                Text="{Binding Parent.Parent.Coordinate}"
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -417,9 +428,9 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Parent.Name}" VerticalAlignment="Center" 
-                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
-                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock 
+                Text="{Binding Parent.Name}"
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -427,9 +438,9 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding TargetType}" VerticalAlignment="Center" 
-                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
-                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock 
+                Text="{Binding TargetType}"
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 
@@ -437,9 +448,9 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding FrameInfo}" VerticalAlignment="Center" 
-                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
-                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock 
+                Text="{Binding FrameInfo}"
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
     
@@ -447,9 +458,9 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <TextBlock Text="{Binding Description}" VerticalAlignment="Center" 
-                       Foreground="White" FontSize="16" Height="18" TextAlignment="Center" 
-                       Margin="4,0" TextTrimming="CharacterEllipsis" />
+            <TextBlock 
+                Text="{Binding Description}"
+                Style="{StaticResource ColumnTextStyle}" />
         </Grid>
     </DataTemplate>
 

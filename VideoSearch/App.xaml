@@ -15,7 +15,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Colors.xaml" />
                 <ResourceDictionary Source="/Resources/Values.xaml" />
-                <ResourceDictionary Source="/Resources/MoviePlayerDataGridColumn.xaml" />
                 <ResourceDictionary Source="/Resources/VideoDataGrid.xaml" />
                 <ResourceDictionary Source="/Resources/VideoDataGridColumn.xaml" />
                 <ResourceDictionary Source="/Resources/Styles.xaml" />

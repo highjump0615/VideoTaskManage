@@ -360,40 +360,65 @@
         <Grid Margin="-1">
             <Canvas Background="{DynamicResource DataGridSelection}"
                     Visibility="{Binding SelectorVisibility}" />
-            <Grid Margin="50,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140*" />
-                    <ColumnDefinition Width="95" />
-                </Grid.ColumnDefinitions>
+            <Grid Margin="12,0">
 
-                <ProgressBar Height="10" VerticalAlignment="Center" Style="{DynamicResource OrangeProgressBar}" Maximum="1" 
-                             Value="{Binding Progress}"
-                             Grid.Column="{Binding ProgressPos}"
-                             Visibility="{Binding ProgressBarVisibility}"/>
-                <TextBlock Style="{StaticResource ColumnTextStyle}"  
-                           TextAlignment="Left" 
+                <!-- 进行中 -->
+                <Grid 
+                    VerticalAlignment="Center"
+                    Visibility="{Binding ProgressBarVisibility}">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <ProgressBar 
+                        Height="10" 
+                        Grid.Column="0"
+                        Style="{DynamicResource OrangeProgressBar}" 
+                        Maximum="1" 
+                        Margin="0 0 8 0"
+                        Value="{Binding Progress}" />
+                    <TextBlock 
+                        Text="{Binding ProgressFull}"
+                        Width="40"
+                        TextAlignment="Right"
+                        Grid.Column="1"/>
+                </Grid>
+
+                <!-- 完成，异常 -->
+                <Grid 
+                    VerticalAlignment="Center"
+                    Visibility="{Binding ButtonVisibility}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Style="{StaticResource ColumnTextStyle}"  
                            Text="{Binding Operation}" 
                            Grid.Column="0"
                            Opacity="{Binding Opacity}" />
 
-                <Button Style="{DynamicResource GreenButtonStyle}"
-                        IsEnabled="{Binding IsEnabled}"
-                        Command="{Binding DataItemCommand}" 
-                        CommandParameter="{Binding MovieTaskCommand}" 
-                        Visibility="{Binding ButtonVisibility}"
-                        Grid.Column="1"
-                        Focusable="False"  Margin="4,0" Width="70" Height="26"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Right" >
+                    <Button Style="{DynamicResource GreenButtonStyle}"
+                            IsEnabled="{Binding IsEnabled}"
+                            Command="{Binding DataItemCommand}" 
+                            CommandParameter="{Binding MovieTaskCommand}"                             
+                            Grid.Column="1"
+                            Focusable="False"  Margin="4,0" Width="70" Height="26"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right" >
 
-                    <Grid Width="64" Height="20">
-                        <Image Margin="7,0,0,0" Width="16" Height="16" HorizontalAlignment="Left" 
-                                       Source="{Binding OpIcon}"/>
-                        <TextBlock Height="16" VerticalAlignment="Center" FontSize="14" Foreground="White" TextAlignment="Center" 
-                                           Margin="{Binding OpNameMargin}" 
-                                           Text="{Binding OpName}" />
-                    </Grid>
-                </Button>
+                        <Grid Width="64" Height="20">
+                            <Image Margin="7,0,0,0" Width="16" Height="16" HorizontalAlignment="Left" 
+                                           Source="{Binding OpIcon}"/>
+                            <TextBlock Height="16" VerticalAlignment="Center" FontSize="14" Foreground="White" TextAlignment="Center" 
+                                               Margin="{Binding OpNameMargin}" 
+                                               Text="{Binding OpName}" />
+                        </Grid>
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
     </DataTemplate>

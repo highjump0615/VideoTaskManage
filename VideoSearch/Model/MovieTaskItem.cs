@@ -408,35 +408,6 @@ namespace VideoSearch.Model
             }
         }
 
-        private int _progressPos = 0;
-        public int ProgressPos
-        {
-            get { return _progressPos; }
-            set
-            {
-                if (_progressPos != value)
-                {
-                    _progressPos = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("ProgressPos"));
-                    OnPropertyChanged(new PropertyChangedEventArgs("IsIndeterminate"));
-                    OnPropertyChanged(new PropertyChangedEventArgs("OperationAlignment"));
-                }
-            }
-        }
-
-        public TextAlignment OperationAlignment
-        {
-            get
-            {
-                return (_progressPos == 1) ? TextAlignment.Center : TextAlignment.Left;
-            }
-        }
-
-        public bool IsIndeterminate
-        {
-            get { return (ProgressPos == 1) ? true : false; }
-        }
-
 
         private double _progress = 0.5;
         public double Progress
@@ -448,7 +419,16 @@ namespace VideoSearch.Model
                 {
                     _progress = value;
                     OnPropertyChanged(new PropertyChangedEventArgs("Progress"));
+                    OnPropertyChanged(new PropertyChangedEventArgs("ProgressFull"));
                 }
+            }
+        }
+
+        public string ProgressFull
+        {
+            get
+            {
+                return $"{Progress * 100} %";
             }
         }
 
@@ -470,7 +450,6 @@ namespace VideoSearch.Model
                         OpName = "开始导入";
                         ButtonVisibility = Visibility.Hidden;
                         ProgressBarVisibility = Visibility.Visible;
-                        ProgressPos = 1;
                         Opacity = 1.0;
                         IsEnabled = false;
                         Progress = 0.0;
@@ -481,9 +460,8 @@ namespace VideoSearch.Model
                         Operation = "";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
                         OpName = "取消";
-                        ButtonVisibility = Visibility.Visible;
+                        ButtonVisibility = Visibility.Hidden;
                         ProgressBarVisibility = Visibility.Visible;
-                        ProgressPos = 0;
                         Opacity = 1.0;
                         IsEnabled = false;
                     }
@@ -495,7 +473,6 @@ namespace VideoSearch.Model
                         OpName = "查看";
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
-                        ProgressPos = 0;
                         IsEnabled = true;
                     }
                     else if(_state == MovieTaskState.CreateFail)
@@ -506,7 +483,6 @@ namespace VideoSearch.Model
                         OpName = "删除";
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
-                        ProgressPos = 0;
                         Opacity = 1.0;
                         IsEnabled = true;
                     }

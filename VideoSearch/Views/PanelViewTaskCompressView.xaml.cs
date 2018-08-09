@@ -26,7 +26,7 @@ namespace VideoSearch.Views
         public void OnUnLoad(object sender, RoutedEventArgs e)
         {
             Unloaded -= OnUnLoad;
-            _vlcPlayer.Stop();
+            OnStop(sender, e);
         }
 
         #region Utility

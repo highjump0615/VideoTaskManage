@@ -22,17 +22,19 @@
 					        CanUserResizeRows="False" CanUserAddRows="False">
 
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn  Header="序号" Width="121*"
+                        <DataGridTemplateColumn  Header="" Width="50"
 							CellTemplate="{StaticResource CheckColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="任务名称" Width="121*"
+                        <DataGridTemplateColumn  Header="序号" Width="50"
+							CellTemplate="{StaticResource OrderColumnTemplate}" />
+                        <DataGridTemplateColumn  Header="任务名称" Width="251*"
 							CellTemplate="{StaticResource MovieTaskNameColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="对应视频" Width="121*"
+                        <DataGridTemplateColumn  Header="对应视频" Width="160*"
 							CellTemplate="{StaticResource MovieTaskMoviePosColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="视频时长" Width="121*"
+                        <DataGridTemplateColumn  Header="视频时长" Width="120"
 							CellTemplate="{StaticResource MovieTaskWorkingTimeColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="任务类别" Width="121*"
+                        <DataGridTemplateColumn  Header="任务类别" Width="120"
 							CellTemplate="{StaticResource MovieTaskTypeColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="操作" Width="335*"
+                        <DataGridTemplateColumn  Header="操作" Width="205"
 							CellTemplate="{StaticResource MovieTaskOperationColumnTemplate}" />
                     </DataGrid.Columns>
                 </DataGrid>

@@ -91,9 +91,7 @@
         <Grid x:Name="TitleBar">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8"/>
-                <ColumnDefinition Width="24"/>
-                <ColumnDefinition Width="8"/>
-                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="8"/>
                 <ColumnDefinition />
                 <ColumnDefinition Width="8"/>
@@ -103,10 +101,15 @@
                 <ColumnDefinition Width="4"/>
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="1" Source="Resources/Images/MainWindow/app_icon.ico" />
-            <Image Grid.Column="3" Source="Resources/Images/MainWindow/mainframe_icon.png"/>
+            <Image Grid.Column="1" Source="/VideoSearch;component/Resources/Images/View/Help/HelpIcon.png" />
+            <TextBlock 
+                Grid.Column="3" 
+                Text="VDEC鹰探369视频检索软件"
+                Foreground="#dddddd" 
+                HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            
             <SkinControl:SkinButton x:Name="btMinimize" Width="32" Height="24" 
-                                    Grid.Column="7" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                    Grid.Column="5" VerticalAlignment="Top" HorizontalAlignment="Center"
                                     NormalImage="/VideoSearch;component/Resources/Images/SystemButton/min_normal.png" 
                                     OverImage="/VideoSearch;component/Resources/Images/SystemButton/min_over.png"
                                     PressedImage="/VideoSearch;component/Resources/Images/SystemButton/min_pressed.png" 
@@ -116,7 +119,7 @@
                                     Padding="0" 
                                     OffsetWithImage="0" />
             <SkinControl:SkinButton x:Name="btRestore" Width="32" Height="24" 
-                                    Grid.Column="8" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                    Grid.Column="6" VerticalAlignment="Top" HorizontalAlignment="Center"
                                     NormalImage="/VideoSearch;component/Resources/Images/SystemButton/max_normal.png" 
                                     OverImage="/VideoSearch;component/Resources/Images/SystemButton/max_over.png" 
                                     PressedImage="/VideoSearch;component/Resources/Images/SystemButton/max_pressed.png" 
@@ -130,7 +133,7 @@
                                     OffsetWithImage="0" 
                                     Click="OnRestore"/>
             <SkinControl:SkinButton x:Name="btClose" Width="32" Height="24" 
-                                    Grid.Column="9" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                    Grid.Column="7" VerticalAlignment="Top" HorizontalAlignment="Center"
                                     NormalImage="/VideoSearch;component/Resources/Images/SystemButton/close_normal.png" 
                                     OverImage="/VideoSearch;component/Resources/Images/SystemButton/close_over.png" 
                                     PressedImage="/VideoSearch;component/Resources/Images/SystemButton/close_pressed.png" 

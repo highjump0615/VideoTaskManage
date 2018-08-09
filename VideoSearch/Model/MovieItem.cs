@@ -695,7 +695,8 @@ namespace VideoSearch.Model
                     // 非阻塞模式
                     new Thread(() =>
                     {
-                        State = i < 9 ? ConvertStatus.ConvertedFail : ConvertStatus.ConvertedOk;
+                        var sss = i % 6;
+                        State = i < 9 ? (ConvertStatus)sss : ConvertStatus.ConvertedOk;
                     })
                     .Start();
                 }

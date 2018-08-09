@@ -94,8 +94,21 @@
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="85*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="取消" Name="btnCancel" Foreground="White" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}"/>
-                <Button Content="保存" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" Click="btnSave_Click" Style="{DynamicResource GreenButtonStyle}"/>
+                <Button 
+                    Content="保存" 
+                    Name="btnSave" 
+                    Foreground="White" 
+                    FontSize="14" 
+                    Click="btnSave_Click" 
+                    Style="{DynamicResource GreenButtonStyle}"/>
+                <Button 
+                    Content="取消" 
+                    Name="btnCancel" 
+                    Foreground="White" 
+                    FontSize="14" 
+                    Grid.Column="2" 
+                    IsCancel="True" 
+                    Style="{DynamicResource BrownButtonStyle}"/>
             </Grid>
             <Calendar Height="170" HorizontalAlignment="Right" Margin="0,150,100,0" Name="EventCalendar" VerticalAlignment="Top" Width="180" SelectedDatesChanged="EventCalendar_SelectedDatesChanged" Visibility="Hidden" />
         </Grid>

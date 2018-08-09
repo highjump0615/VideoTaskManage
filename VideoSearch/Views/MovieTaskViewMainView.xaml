@@ -34,7 +34,7 @@
                        VerticalAlignment="Center" IsHitTestVisible="False" />
 
             <!-- Player-->
-            <Grid x:Name="PlayerGrid" Grid.Row="1">
+            <Grid x:Name="PlayerGrid" Grid.Row="1" Background="Black">
 
                 <WindowsFormsHost x:Name="PlayerPanel" Margin="1" Background="Black"/>
 

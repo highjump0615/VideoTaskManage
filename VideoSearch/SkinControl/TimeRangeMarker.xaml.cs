@@ -30,7 +30,7 @@ namespace VideoSearch.SkinControl
         {
             set
             {
-                calcDisplayTimes((long)value.TotalSeconds);
+                calcDisplayTimes((long)value.TotalMilliseconds);
             }
         }
 
@@ -43,7 +43,7 @@ namespace VideoSearch.SkinControl
 
             for (int i = 0; i <= 11; i++)
             {
-                TimeSpan t = TimeSpan.FromSeconds(step * i);
+                TimeSpan t = TimeSpan.FromMilliseconds(step * i);
                 var strTime = t.TotalHours >= 1 ? t.ToString(@"h\:mm\:ss") : t.ToString(@"mm\:ss");
                 FormattedText fmtText = new FormattedText(strTime,
                             CultureInfo.GetCultureInfo("en-us"),

@@ -195,8 +195,10 @@ namespace VideoSearch.Views
             PlayButton.IsEnabled = false;
         }
 
-        protected void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        protected new void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            base.onDataContextChanged(sender, e);
+
             if (e.NewValue is PanelViewTaskCompressModel vm)
             {
                 vm.View = this;
@@ -252,7 +254,7 @@ namespace VideoSearch.Views
 
         private void OnMovieDurationChanged(object sender, long duration)
         {
-            TimeMarker.Duration = new TimeSpan(duration);
+            TimeMarker.Duration = TimeSpan.FromMilliseconds(duration);
 
             DurationSlider.IsEnabled = true;
             DurationSlider.SmallChange = 500;

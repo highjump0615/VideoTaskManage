@@ -30,7 +30,7 @@ namespace VideoSearch.SkinControl
         {
             set
             {
-                calcDisplayTimes(value.Ticks);
+                calcDisplayTimes((long)value.TotalSeconds);
             }
         }
 
@@ -41,14 +41,14 @@ namespace VideoSearch.SkinControl
 
             _times.Clear();
 
-            for (int i = 1; i < 11; i++)
+            for (int i = 0; i <= 11; i++)
             {
-                TimeSpan t = new TimeSpan(step * i);
-                FormattedText fmtText = new FormattedText(t.ToString(@"mm\:ss\:ff"),
+                TimeSpan t = TimeSpan.FromSeconds(step * i);
+                var strTime = t.TotalHours >= 1 ? t.ToString(@"h\:mm\:ss") : t.ToString(@"mm\:ss");
+                FormattedText fmtText = new FormattedText(strTime,
                             CultureInfo.GetCultureInfo("en-us"),
                             FlowDirection.LeftToRight,
                             new Typeface("Arial"), 12, timeBrush);
-
 
                 _times.Add(fmtText);
                 InvalidateVisual();
@@ -62,30 +62,23 @@ namespace VideoSearch.SkinControl
 
             double w = ActualWidth;
             double h = ActualHeight;
-            double step = w / 53;
+            double step = w / 55;
 
             Point start_large = new Point(0, 0);
             Point start = new Point(-1, h - 10);
             Point end = new Point(-1, h - 4);
             Point textPos = new Point(0, h - 30);
             int nIndex = 0;
-            bool bDrawText = (_times.Count == 10) ? true : false;
 
-                for (int i=0; i<55; i++)
+            for (int i = 0; i <= 55; i++)
             {
-                if (i == 0)
-                    continue;
-
                 if(i % 5 == 0)
                 {
                     drawingContext.DrawLine(pen, start_large, end);
 
-                    if(bDrawText)
-                    {
-                        FormattedText text = _times[nIndex++];
-                        textPos.X = start_large.X - text.Width/2;
-                        drawingContext.DrawText(text, textPos);
-                    }
+                    FormattedText text = _times[nIndex++];
+                    textPos.X = start_large.X - text.Width/2;
+                    drawingContext.DrawText(text, textPos);
                 }
                 else
                     drawingContext.DrawLine(pen, start, end);

@@ -277,7 +277,7 @@ namespace VideoSearch.Views
 
         private void OnMovieDurationChanged(object sender, long duration)
         {
-            TimeMarker.Duration = new TimeSpan(duration);
+            TimeMarker.Duration = TimeSpan.FromMilliseconds(duration);
 
             DurationSlider.IsEnabled = true;
             DurationSlider.SmallChange = 500;

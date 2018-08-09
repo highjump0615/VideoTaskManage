@@ -163,7 +163,19 @@
                     <SkinControl:SkinButtonGroup x:Name="EventGroup" Margin="0,0,0,0" Title="1 案件管理" Tag="0" GroupSelected="OnTabChanged" />
                     <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="7,4,0,0" x:Name="ToolbarNewEvent" VerticalAlignment="Top" Width="67" PressedColor="#FF373631" OverColor="#FF3F3E3A" NormalImage="Resources/Images/Toolbar/Toolbar01/btNewEvent.png" Tag="0" Click="OnNewEvent" Text="新建案件" TextMode="Bottom" />
                     <SkinControl:SkinButton Height="22" HorizontalAlignment="Right" Margin="0,4,5,0" x:Name="ToolbarDeleteEvent" NormalImage="Resources/Images/Toolbar/Toolbar01/btDeleteEvent.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="100" Tag="1" Click="OnDeleteEvent" TextMode="Right" Text="删除" />
-                    <SkinControl:SkinButton Height="32" HorizontalAlignment="Right" Margin="0,26,5,0" x:Name="ToolbarSearchEvent" NormalImage="Resources/Images/Toolbar/Toolbar01/btSearchEvent.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="100" Tag="1" Click="OnSearchEvent" TextMode="Center" Text="搜索视频" OffsetX="-10" OffsetY="1" />
+                    <SkinControl:SkinButton 
+                        Height="32" Width="100" 
+                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        Margin="0,26,5,0" 
+                        x:Name="ToolbarSearchEvent" 
+                        NormalImage="Resources/Images/Toolbar/Toolbar01/btSearchEvent.png" 
+                        OverColor="#FF3F3E3A" 
+                        PressedColor="#FF373631" 
+                        Tag="1" 
+                        Click="OnSearchEvent" 
+                        TextMode="Center" 
+                        Text="搜索" 
+                        OffsetX="-10" OffsetY="1" />
                     <Grid Height="100" HorizontalAlignment="Left" Margin="0,106,0,0" x:Name="grid3" VerticalAlignment="Top" Width="200" />
                 </Grid>
                 <Grid Margin="0,0,1,0" Grid.Column="1">

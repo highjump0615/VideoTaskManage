@@ -191,9 +191,26 @@
                     <ColumnDefinition Width="12*" />
                     <ColumnDefinition Width="81*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="取消" Name="btnCancel" Foreground="White" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}">
-                </Button>
-                <Button Content="确定" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" Click="OnCreateOrUpdateClick" Style="{DynamicResource GreenButtonStyle}"/>
+                
+                <Button 
+                    Content="确定" 
+                    Name="btnSave" 
+                    Foreground="White" 
+                    FontSize="14"                     
+                    Focusable="False"
+                    Click="OnCreateOrUpdateClick" 
+                    Style="{DynamicResource GreenButtonStyle}"/>
+                
+                <Button 
+                    Grid.Column="2" 
+                    Content="取消" 
+                    Name="btnCancel" 
+                    Foreground="White" 
+                    FontSize="14" 
+                    Focusable="False" 
+                    IsCancel="True" 
+                    Style="{DynamicResource BrownButtonStyle}" />
+                
             </Grid>
         </Grid>
     </Grid>

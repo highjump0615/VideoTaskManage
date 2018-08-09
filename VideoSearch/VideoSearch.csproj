@@ -208,6 +208,7 @@
     <Compile Include="Utils\ExceptionUtils.cs" />
     <Compile Include="Utils\ManualMarkUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\AppUtils.cs" />
     <Compile Include="VideoService\ApiManager.cs" />
     <Compile Include="VideoService\Base64Decoder.cs" />
     <Compile Include="VideoService\Base64Encoder.cs" />

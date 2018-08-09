@@ -5,6 +5,7 @@ using System.Windows;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
 using VideoSearch.Windows;
+using VideoSearch.Utils;
 
 namespace VideoSearch.ViewModel
 {
@@ -121,12 +122,24 @@ namespace VideoSearch.ViewModel
 
         public void ShowCameraMap()
         {
-            Contents = new CameraViewMapModel(this.Owner);
+            ShowCameraMap(null);
         }
 
         public void ShowCameraMap(CameraItem item)
         {
-            Contents = new CameraViewMapModel(item);
+            if (AppUtils.CheckForInternetConnection())
+            {
+                var c = item ?? this.Owner;
+                Contents = new CameraViewMapModel(c);
+            }
+            else
+            {
+                // 提示
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "连接不到网络，无法显示地图", 
+                    "请链接网络",
+                    MessageBoxButton.OK, MessageBoxImage.Stop);
+            }
         }
 
         /// <summary>
@@ -150,7 +163,18 @@ namespace VideoSearch.ViewModel
         /// </summary>
         public void ShowLabelTracking()
         {
-            Contents = new PanelViewPathModel(Owner, this);
+            if (AppUtils.CheckForInternetConnection())
+            {
+                Contents = new PanelViewPathModel(Owner, this);
+            }
+            else
+            {
+                // 提示
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "连接不到网络，无法显示地图",
+                    "请链接网络",
+                    MessageBoxButton.OK, MessageBoxImage.Stop);
+            }            
         }
 
         /// <summary>

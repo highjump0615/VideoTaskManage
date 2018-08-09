@@ -39,7 +39,7 @@ namespace VideoSearch.Views
 
         private void ShowPlayer(bool isShow)
         {
-            PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
+            //PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
 
             PlayButton.IsEnabled = !isShow;
             PauseButton.IsEnabled = isShow;

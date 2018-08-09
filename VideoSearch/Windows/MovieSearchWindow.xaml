@@ -110,7 +110,6 @@
                                 <ComboBoxItem Content="人" />
                                 <ComboBoxItem Content="人形" />
                                 <ComboBoxItem Content="车" />
-                                <ComboBoxItem Content="其他" />
                             </ComboBox>
 
                             <Border x:Name="SelectedColor1" Grid.Column="2" Grid.Row="2" BorderBrush="#FF262626" BorderThickness="1" CornerRadius="2">

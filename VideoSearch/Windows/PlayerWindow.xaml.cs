@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using vlcPlayerLib;
@@ -98,6 +100,19 @@ namespace VideoSearch.Windows
             _vlcPlayer.SetVideoInfo(_moviePath, true);
 
             PlayerPanel.Child = _vlcPlayer;
+
+            PlayVideoAsync();
+        }
+
+        private async void PlayVideoAsync()
+        {
+            Globals.Instance.ShowWaitCursor(true);
+            // 加载需要延迟
+            await Task.Delay(400);
+
+            OnPlay(null, null);
+
+            Globals.Instance.ShowWaitCursor(false);
         }
 
         private void OnClosed(object sender, EventArgs e)
@@ -145,12 +160,8 @@ namespace VideoSearch.Windows
 
         private void OnPlay(object sender, RoutedEventArgs e)
         {
-            if(sender != null && e != null)
-            {
-                ShowPlayer(true);
-                _vlcPlayer.Play();
-            }
-
+            ShowPlayer(true);
+            _vlcPlayer.Play();
 
             PlayButton.IsEnabled = false;
             PauseButton.IsEnabled = true;

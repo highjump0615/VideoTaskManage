@@ -121,7 +121,7 @@ namespace VideoSearch.ViewModel
 
             if(movieList.Count == 0)
             {
-                MessageBox.Show("Please check the movie now, you want to play!");
+                MessageBox.Show("无选择视频，请勾选要播放的视频", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

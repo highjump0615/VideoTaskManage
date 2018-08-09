@@ -22,7 +22,7 @@
                        Height="18" FontSize="16" Foreground="White" Margin="8,0" TextAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
         </Grid>
         <!-- Player-->
-        <Grid x:Name="PlayerGrid" Grid.Row="1">
+        <Grid x:Name="PlayerGrid" Grid.Row="1" Background="Black">
 
             <TextBlock x:Name="MovieSource" Text="{Binding Path=Source}" Visibility="Hidden"/>
             <WindowsFormsHost x:Name="PlayerPanel" Margin="1" Background="Black"/>

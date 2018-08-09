@@ -688,18 +688,7 @@ namespace VideoSearch.Model
             {
                 Console.WriteLine("=== Import PlayReady ===");
 
-                //PlayerWindow.PlayMovie(Name, PlayPath);
-
-                for (int i = 0; i < 10; i++)
-                {
-                    // 非阻塞模式
-                    new Thread(() =>
-                    {
-                        var sss = i % 6;
-                        State = i < 9 ? (ConvertStatus)sss : ConvertStatus.ConvertedOk;
-                    })
-                    .Start();
-                }
+                PlayerWindow.PlayMovie(Name, PlayPath);
             }
             Console.WriteLine("=== Import End ===");
         }

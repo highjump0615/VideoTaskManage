@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using VideoSearch.Database;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace VideoSearch.Model
 {
@@ -57,6 +58,8 @@ namespace VideoSearch.Model
 
         #region Backend property
         private bool _isEnabled = true;
+        private SemaphoreSlim semaphoreDb = new SemaphoreSlim(1, 1);
+
         public bool IsEnabled
         {
             get { return _isEnabled; }
@@ -555,8 +558,14 @@ namespace VideoSearch.Model
 
         protected async void updateTable()
         {
-            if (Table != null)
-                await Table.Update(this);
+            if (Table == null)
+            {
+                return;
+            }
+
+            await semaphoreDb.WaitAsync();
+            await Table.Update(this);
+            semaphoreDb.Release();
         }
 
         #region Utility for Search (GetSearchText)

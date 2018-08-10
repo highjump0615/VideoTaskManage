@@ -271,7 +271,7 @@
                 </Grid>
                 <Grid Grid.Column="4" Margin="0,0,1,0">
                     <SkinControl:SkinButtonGroup x:Name="PanelGroup" Margin="0,0,0,0" Title="5 标注结果" Tag="1" GroupSelected="OnTabChanged" />
-                    <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="6,4,0,0" x:Name="ToolbarPanelPreview" NormalImage="Resources/Images/Toolbar/Toolbar05/btPanelPreview.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="1" Click="OnPanelPreview" TextMode="Bottom" Text="标记结果" />
+                    <SkinControl:SkinButton Height="67" HorizontalAlignment="Left" Margin="6,4,0,0" x:Name="ToolbarPanelPreview" NormalImage="Resources/Images/Toolbar/Toolbar05/btPanelPreview.png" OverColor="#FF3F3E3A" PressedColor="#FF373631" VerticalAlignment="Top" Width="65" Tag="1" Click="OnPanelPreview" TextMode="Bottom" Text="标注结果" />
                     <SkinControl:SkinButton 
                         HorizontalAlignment="Right" 
                         Margin="0,4,6,74" 
@@ -293,7 +293,7 @@
                         Tag="1" 
                         Click="OnPanelExport" 
                         TextMode="Right" 
-                        Text="标记导出"
+                        Text="标注导出"
                         IsEnabled="False" />
                     <SkinControl:SkinButton 
                         Height="22" Width="88" 

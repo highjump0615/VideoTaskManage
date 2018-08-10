@@ -59,9 +59,21 @@
                         <Border BorderBrush="#FF262626" BorderThickness="1" Margin="0,7,0,0" />
                         <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="浓缩参数" VerticalAlignment="Top" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
 
-                        <Grid Margin="40,10,15,0" VerticalAlignment="Center" Height="26">
+                        <Grid Margin="40,10,15,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
 
-                            <Slider x:Name="ThicknessSlider" 
+                            <TextBlock
+                                Grid.Column="0"
+                                Text="稀疏"
+                                VerticalAlignment="Center"
+                                Foreground="#aaaaaa" />
+                            <Slider Grid.Column="1"
+                                    x:Name="ThicknessSlider" 
+                                    Margin="8 0"
                                     TickPlacement="BottomRight" 
                                     Style="{DynamicResource SettingSlider}" 
                                     Maximum="20" 
@@ -69,7 +81,12 @@
                                     IsMoveToPointEnabled="True" 
                                     IsSnapToTickEnabled="True" 
                                     LargeChange="5" 
-                                    Value="20" />
+                                    Value="12" />
+                            <TextBlock
+                                Grid.Column="3"
+                                Text="周密"
+                                VerticalAlignment="Center"
+                                Foreground="#eeeeee" />
 
                         </Grid>
                     </Grid>

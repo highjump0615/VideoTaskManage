@@ -18,8 +18,13 @@
         </Setter>
     </Style>
 
+    <Style x:Key="DialgButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
     <!-- BrownButton -->
-    <Style x:Key="BrownButtonStyle" TargetType="Button">
+    <Style x:Key="BrownButtonStyle" TargetType="Button" BasedOn="{StaticResource DialgButtonStyle}">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="MinHeight" Value="16" />
@@ -189,7 +194,7 @@
     </Style>
 
     <!-- GreenButton -->
-    <Style x:Key="GreenButtonStyle" TargetType="Button">
+    <Style x:Key="GreenButtonStyle" TargetType="Button" BasedOn="{StaticResource DialgButtonStyle}">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="MinHeight" Value="16" />

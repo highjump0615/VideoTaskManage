@@ -97,15 +97,11 @@
                 <Button 
                     Content="保存" 
                     Name="btnSave" 
-                    Foreground="White" 
-                    FontSize="14" 
                     Click="btnSave_Click" 
                     Style="{DynamicResource GreenButtonStyle}"/>
                 <Button 
                     Content="取消" 
                     Name="btnCancel" 
-                    Foreground="White" 
-                    FontSize="14" 
                     Grid.Column="2" 
                     IsCancel="True" 
                     Style="{DynamicResource BrownButtonStyle}"/>

@@ -11,6 +11,9 @@ namespace VideoSearch.Views.PlayView
     public class PlayerViewBase : UserControlBase
     {
         protected vlcPlayer _vlcPlayer = null;
+        protected AxEventTrackBarXLib.AxEventTrackBarX _trackBar;
+
+        private long mlDuration;
 
         /// <summary>
         /// 应用播放效果
@@ -56,6 +59,16 @@ namespace VideoSearch.Views.PlayView
                     break;
             }
 
+        }
+
+        protected void initTrackBar(long duration = -1)
+        {
+            if (duration > 0)
+            {
+                mlDuration = duration;
+            }
+
+            _trackBar.SetFrameCount(UInt32.Parse(mlDuration.ToString()));
         }
 
         /// <summary>
@@ -114,6 +127,13 @@ namespace VideoSearch.Views.PlayView
             {
                 _vlcPlayer.SetLocalEnlarged(true);
             }
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Console.WriteLine("MovieTaskViewMainView --- OnSizeChanged");
+
+            initTrackBar();
         }
     }
 }

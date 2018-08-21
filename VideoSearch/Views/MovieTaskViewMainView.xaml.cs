@@ -22,7 +22,7 @@ namespace VideoSearch.Views
     public partial class MovieTaskViewMainView : PlayerViewBase
     {
         private ManualMarkUtils _markUtils = null;
-        private long _curPos = 0;
+        private long _curPos = 0;        
 
         public MovieTaskViewMainView()
         {
@@ -36,6 +36,7 @@ namespace VideoSearch.Views
         #region Delegate
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("MovieTaskViewMainView --- onLoad");
         }
 
         /// <summary>
@@ -55,6 +56,10 @@ namespace VideoSearch.Views
                 _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
 
                 PlayerPanel.Child = _vlcPlayer;
+
+                // init track bar
+                _trackBar = new AxEventTrackBarXLib.AxEventTrackBarX();
+                TrackBarPanel.Child = _trackBar;
             }
 
             var taskInit = InitPlayerAsync();
@@ -277,13 +282,16 @@ namespace VideoSearch.Views
 
         private void OnMovieDurationChanged(object sender, long duration)
         {
-            TimeMarker.Duration = TimeSpan.FromMilliseconds(duration);
+            //TimeMarker.Duration = TimeSpan.FromMilliseconds(duration);
 
-            DurationSlider.IsEnabled = true;
-            DurationSlider.SmallChange = 500;
-            DurationSlider.LargeChange = 5000;
-            DurationSlider.Minimum = 0;
-            DurationSlider.Maximum = duration;
+            //DurationSlider.IsEnabled = true;
+            //DurationSlider.SmallChange = 500;
+            //DurationSlider.LargeChange = 5000;
+            //DurationSlider.Minimum = 0;
+            //DurationSlider.Maximum = duration;
+
+            // track bar
+            initTrackBar(duration);
         }
 
         private void OnMovieStopped(object sender, EventArgs e)
@@ -546,6 +554,7 @@ namespace VideoSearch.Views
                 GridCarInfo.Visibility = Visibility.Visible;
             }
         }
+        
     }
 
 }

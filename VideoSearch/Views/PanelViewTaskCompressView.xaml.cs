@@ -37,8 +37,10 @@ namespace VideoSearch.Views
         }
 
 
-        private void ShowPlayer(bool isShow)
+        protected override void ShowPlayer(bool isShow)
         {
+            base.ShowPlayer(isShow);
+
             //PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
 
             PlayButton.IsEnabled = !isShow;
@@ -69,17 +71,6 @@ namespace VideoSearch.Views
 
             PlayButton.IsEnabled = true;
             PauseButton.IsEnabled = false;
-        }
-
-        private void OnStop(object sender, RoutedEventArgs e)
-        {
-            if (_vlcPlayer != null)
-                _vlcPlayer.Stop();
-
-            DurationSlider.Value = 0;
-            DurationSlider.IsEnabled = false;
-
-            ShowPlayer(false);
         }
 
         private void OnPlay(object sender, RoutedEventArgs e)
@@ -175,10 +166,6 @@ namespace VideoSearch.Views
                     }
                     _vlcPlayer.SetWuShiBiaoInfo(true, listPath);
 
-                    // 物标、时标
-                    //vlcPlayer1.SetWubiaoShow(false);
-                    //vlcPlayer1.SetShibiaoShow(false);
-
                     OnPlay(this, null);
                 }
             }
@@ -210,23 +197,15 @@ namespace VideoSearch.Views
         /// <summary>
         /// 播放器初始化
         /// </summary>
-        public void InitPlayer()
+        public override void InitPlayer()
         {
             // 初始化播放器
             ClearPlayer();
 
-            if (_vlcPlayer == null)
-            {
-                _vlcPlayer = new vlcPlayer();
-                _vlcPlayer.SetIntiTimeInfo(false);
-                _vlcPlayer.SetControlPanelTimer(false);
+            base.InitPlayer();
 
-                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
-                _vlcPlayer.PlayerStopped += OnMovieStopped;
-
-                PlayerPanel.Child = _vlcPlayer;
-            }
+            PlayerPanel.Child = _vlcPlayer;
+            TrackBarPanel.Child = _trackBar;
 
             controlEffect.initEffect(this);
 
@@ -247,27 +226,6 @@ namespace VideoSearch.Views
             DurationSlider.Value = pos;
         }
 
-        private void OnMoviePosChanged(object sender, long pos)
-        {
-            DurationSlider.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new UpdateDurationDelegate(UpdateDuration), pos);
-        }
-
-        private void OnMovieDurationChanged(object sender, long duration)
-        {
-            TimeMarker.Duration = TimeSpan.FromMilliseconds(duration);
-
-            DurationSlider.IsEnabled = true;
-            DurationSlider.SmallChange = 500;
-            DurationSlider.LargeChange = 5000;
-            DurationSlider.Minimum = 0;
-            DurationSlider.Maximum = duration;
-        }
-
-        private void OnMovieStopped(object sender, EventArgs e)
-        {
-            DurationSlider.Value = DurationSlider.Maximum;
-            OnStop(sender, null);
-        }
         #endregion
 
         private void OnDurationChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -280,16 +238,6 @@ namespace VideoSearch.Views
                         _vlcPlayer.SetPlayerPositionForOuterControl((long)DurationSlider.Value);
                 }
             }
-        }
-
-        private void OnClear(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnSave(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void ChkTarget_Checked(object sender, RoutedEventArgs e)

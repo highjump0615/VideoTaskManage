@@ -42,25 +42,14 @@ namespace VideoSearch.Views
         /// <summary>
         /// 播放器初始化
         /// </summary>
-        public void InitPlayer()
+        public override void InitPlayer()
         {
-            if (_vlcPlayer == null)
-            {
-                _vlcPlayer = new vlcPlayer();
-                _vlcPlayer.SetIntiTimeInfo(false);
-                _vlcPlayer.SetControlPanelTimer(false);
+            base.InitPlayer();
 
-                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
-                _vlcPlayer.PlayerStopped += OnMovieStopped;
-                _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
+            _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
 
-                PlayerPanel.Child = _vlcPlayer;
-
-                // init track bar
-                _trackBar = new AxEventTrackBarXLib.AxEventTrackBarX();
-                TrackBarPanel.Child = _trackBar;
-            }
+            PlayerPanel.Child = _vlcPlayer;
+            TrackBarPanel.Child = _trackBar;
 
             var taskInit = InitPlayerAsync();
 
@@ -160,8 +149,10 @@ namespace VideoSearch.Views
         }
 
 
-        private void ShowPlayer(bool isShow)
+        protected override void ShowPlayer(bool isShow)
         {
+            base.ShowPlayer(isShow);
+
             //PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
 
             PlayButton.IsEnabled = !isShow;
@@ -173,14 +164,14 @@ namespace VideoSearch.Views
             SpeedUpButton.IsEnabled = isShow;
             SpeedDownButton.IsEnabled = isShow;
 
-            DurationSlider.IsEnabled = isShow;
+            //DurationSlider.IsEnabled = isShow;
 
-            if(!isShow)
-            {
-                DurationSlider.Minimum = 0;
-                DurationSlider.Maximum = 1;
-                DurationSlider.Value = 0;
-            }
+            //if(!isShow)
+            //{
+            //    DurationSlider.Minimum = 0;
+            //    DurationSlider.Maximum = 1;
+            //    DurationSlider.Value = 0;
+            //}
         }
 
         #endregion
@@ -192,17 +183,6 @@ namespace VideoSearch.Views
 
             PlayButton.IsEnabled = true;
             PauseButton.IsEnabled = false;
-        }
-
-        private void OnStop(object sender, RoutedEventArgs e)
-        {
-            if (_vlcPlayer != null)
-                _vlcPlayer.Stop();
-
-            DurationSlider.Value = 0;
-            DurationSlider.IsEnabled = false;
-
-            ShowPlayer(false);
         }
 
         private void OnPlay(object sender, RoutedEventArgs e)
@@ -272,33 +252,9 @@ namespace VideoSearch.Views
         protected void UpdateDuration(long pos)
         {
             _curPos = pos;
-            DurationSlider.Value = pos;
+            //DurationSlider.Value = pos;
         }
-
-        private void OnMoviePosChanged(object sender, long pos)
-        {
-            DurationSlider.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new UpdateDurationDelegate(UpdateDuration), pos);
-        }
-
-        private void OnMovieDurationChanged(object sender, long duration)
-        {
-            //TimeMarker.Duration = TimeSpan.FromMilliseconds(duration);
-
-            //DurationSlider.IsEnabled = true;
-            //DurationSlider.SmallChange = 500;
-            //DurationSlider.LargeChange = 5000;
-            //DurationSlider.Minimum = 0;
-            //DurationSlider.Maximum = duration;
-
-            // track bar
-            initTrackBar(duration);
-        }
-
-        private void OnMovieStopped(object sender, EventArgs e)
-        {
-            DurationSlider.Value = DurationSlider.Maximum;
-            OnStop(sender, null);
-        }
+        
         #endregion
 
         private void OnDurationChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

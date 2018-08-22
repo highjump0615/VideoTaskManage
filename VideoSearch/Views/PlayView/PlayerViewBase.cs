@@ -61,14 +61,84 @@ namespace VideoSearch.Views.PlayView
 
         }
 
+        public virtual void InitPlayer()
+        {
+            if (_vlcPlayer == null)
+            {
+                _vlcPlayer = new vlcPlayer();
+                _vlcPlayer.SetIntiTimeInfo(false);
+                _vlcPlayer.SetControlPanelTimer(false);
+
+                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
+                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
+                _vlcPlayer.PlayerStopped += OnMovieStopped;
+
+                // init track bar
+                _trackBar = new AxEventTrackBarXLib.AxEventTrackBarX();
+                _trackBar.FirePlayTicChange += new AxEventTrackBarXLib._DEventTrackBarXEvents_FirePlayTicChangeEventHandler(OnTrackBarFirePlayTicChange);
+            }            
+        }
+
         protected void initTrackBar(long duration = -1)
         {
+            if (_trackBar == null)
+            {
+                return;
+            }
+
             if (duration > 0)
             {
                 mlDuration = duration;
             }
 
             _trackBar.SetFrameCount(UInt32.Parse(mlDuration.ToString()));
+        }
+
+        private void OnTrackBarFirePlayTicChange(object sender, AxEventTrackBarXLib._DEventTrackBarXEvents_FirePlayTicChangeEvent e)
+        {
+            _vlcPlayer.SetPlayerPositionForOuterControl(e.nPlayTicPosition);
+        }
+
+        private void OnMovieDurationChanged(object sender, long duration)
+        {
+            //TimeMarker.Duration = TimeSpan.FromMilliseconds(duration);
+
+            //DurationSlider.IsEnabled = true;
+            //DurationSlider.SmallChange = 500;
+            //DurationSlider.LargeChange = 5000;
+            //DurationSlider.Minimum = 0;
+            //DurationSlider.Maximum = duration;
+
+            // track bar
+            initTrackBar(duration);
+        }
+
+        protected void OnMoviePosChanged(object sender, long pos)
+        {
+            _trackBar.SetPlayPosition(UInt32.Parse(pos.ToString()));
+
+            //DurationSlider.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new UpdateDurationDelegate(UpdateDuration), pos);
+        }
+
+        protected void OnStop(object sender, RoutedEventArgs e)
+        {
+            if (_vlcPlayer != null)
+                _vlcPlayer.Stop();
+
+            //DurationSlider.Value = 0;
+            //DurationSlider.IsEnabled = false;
+
+            ShowPlayer(false);
+        }
+
+        protected void OnMovieStopped(object sender, EventArgs e)
+        {
+            //DurationSlider.Value = DurationSlider.Maximum;
+            OnStop(sender, null);
+        }
+
+        protected virtual void ShowPlayer(bool isShow)
+        {
         }
 
         /// <summary>

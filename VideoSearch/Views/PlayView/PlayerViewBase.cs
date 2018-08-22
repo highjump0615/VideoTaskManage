@@ -101,14 +101,6 @@ namespace VideoSearch.Views.PlayView
 
         private void OnMovieDurationChanged(object sender, long duration)
         {
-            //TimeMarker.Duration = TimeSpan.FromMilliseconds(duration);
-
-            //DurationSlider.IsEnabled = true;
-            //DurationSlider.SmallChange = 500;
-            //DurationSlider.LargeChange = 5000;
-            //DurationSlider.Minimum = 0;
-            //DurationSlider.Maximum = duration;
-
             // track bar
             initTrackBar(duration);
         }
@@ -124,9 +116,6 @@ namespace VideoSearch.Views.PlayView
         {
             if (_vlcPlayer != null)
                 _vlcPlayer.Stop();
-
-            //DurationSlider.Value = 0;
-            //DurationSlider.IsEnabled = false;
 
             ShowPlayer(false);
         }

@@ -163,15 +163,6 @@ namespace VideoSearch.Views
             GotoEndButton.IsEnabled = isShow;
             SpeedUpButton.IsEnabled = isShow;
             SpeedDownButton.IsEnabled = isShow;
-
-            //DurationSlider.IsEnabled = isShow;
-
-            //if(!isShow)
-            //{
-            //    DurationSlider.Minimum = 0;
-            //    DurationSlider.Maximum = 1;
-            //    DurationSlider.Value = 0;
-            //}
         }
 
         #endregion
@@ -256,15 +247,6 @@ namespace VideoSearch.Views
         }
         
         #endregion
-
-        private void OnDurationChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (_vlcPlayer != null && _vlcPlayer.VideoTime > 0)
-            {
-                if(DurationSlider.Value != _curPos)
-                    _vlcPlayer.SetPlayerPositionForOuterControl((long)DurationSlider.Value);
-            }
-        }
 
         /// <summary>
         /// 清空标注

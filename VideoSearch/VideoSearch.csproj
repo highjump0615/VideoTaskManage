@@ -198,9 +198,6 @@
     <Compile Include="SkinControl\SkinFrame.xaml.cs">
       <DependentUpon>SkinFrame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SkinControl\TimeRangeMarker.xaml.cs">
-      <DependentUpon>TimeRangeMarker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SkinFrame\AssistFrame.xaml.cs">
       <DependentUpon>AssistFrame.xaml</DependentUpon>
     </Compile>
@@ -502,10 +499,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SkinControl\SkinFrame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SkinControl\TimeRangeMarker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

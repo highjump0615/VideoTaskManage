@@ -55,14 +55,6 @@
                     </WindowsFormsHost>
                 </Grid>
 
-                <!-- TimeRangeMarker-->
-                <skinControl:TimeRangeMarker x:Name="TimeMarker" Margin="6,0,6,16" Visibility="Hidden"/>
-                <!-- Progressbar-->
-                <Slider x:Name="DurationSlider" VerticalAlignment="Bottom"
-                        ValueChanged="OnDurationChanged" 
-                        Visibility="Hidden"
-                        Style="{DynamicResource TimeRangeSlider}"/>
-
                 <!-- Control Buttons-->
                 <Grid 
                     Margin="32,0" 

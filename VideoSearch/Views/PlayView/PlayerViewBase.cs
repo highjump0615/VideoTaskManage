@@ -12,6 +12,7 @@ namespace VideoSearch.Views.PlayView
     {
         protected vlcPlayer _vlcPlayer = null;
         protected AxEventTrackBarXLib.AxEventTrackBarX _trackBar;
+        protected int mnTrackBarEventCount = 0;
 
         private long mlDuration;
 
@@ -108,8 +109,6 @@ namespace VideoSearch.Views.PlayView
         protected void OnMoviePosChanged(object sender, long pos)
         {
             _trackBar.SetPlayPosition(UInt32.Parse(pos.ToString()));
-
-            //DurationSlider.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new UpdateDurationDelegate(UpdateDuration), pos);
         }
 
         protected void OnStop(object sender, RoutedEventArgs e)
@@ -122,7 +121,6 @@ namespace VideoSearch.Views.PlayView
 
         protected void OnMovieStopped(object sender, EventArgs e)
         {
-            //DurationSlider.Value = DurationSlider.Maximum;
             OnStop(sender, null);
         }
 
@@ -193,6 +191,25 @@ namespace VideoSearch.Views.PlayView
             Console.WriteLine("MovieTaskViewMainView --- OnSizeChanged");
 
             initTrackBar();
+        }
+
+        /// <summary>
+        /// 添加标注至时间轴
+        /// </summary>
+        /// <param name="obj"></param>
+        protected void axEventBarAddEvent(string id, string description, string startframe, string endframe)
+        {
+            _trackBar.AddEvent(string.Format("{0};{1};{2};{3}", id, description, startframe, endframe));
+
+            mnTrackBarEventCount++;
+        }
+
+        protected void axEventBarClearEvent()
+        {
+            for (int i = 0; i < mnTrackBarEventCount; i++)
+            {
+                _trackBar.RemoveEvent((i + 1).ToString());
+            }
         }
     }
 }

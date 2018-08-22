@@ -243,7 +243,6 @@ namespace VideoSearch.Views
         protected void UpdateDuration(long pos)
         {
             _curPos = pos;
-            //DurationSlider.Value = pos;
         }
         
         #endregion

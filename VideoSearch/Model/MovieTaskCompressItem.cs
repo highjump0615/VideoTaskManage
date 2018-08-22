@@ -52,7 +52,7 @@ namespace VideoSearch.Model
             public Int64 sumVideoStartTimeStamp;
             public Int64 sumVideoEndTimeStamp;
         }
-        List<OBJ_INFO> objInfos = new List<OBJ_INFO>();
+        public List<OBJ_INFO> objInfos = new List<OBJ_INFO>();
 
         #region Constructor & Init
 
@@ -132,11 +132,9 @@ namespace VideoSearch.Model
                 _tbiPath = response.Element("TbiPath").Value;
 
                 // 是否已解析tbi文件
-                if (!File.Exists(CompresseInfoXmlPath))
-                {
-                    // 解析
-                    JiuLingDatParse(basePath + _tbiPath, CompresseInfoXmlPath);
-                }
+
+                // 解析
+                JiuLingDatParse(basePath + _tbiPath, CompresseInfoXmlPath, !File.Exists(CompresseInfoXmlPath));
             }
         }
 
@@ -152,8 +150,10 @@ namespace VideoSearch.Model
         /// </summary>
         /// <param name="srcFilePath"></param>
         /// <param name="destFilePath"></param>
-        public void JiuLingDatParse(string srcFilePath, string destFilePath)
+        public void JiuLingDatParse(string srcFilePath, string destFilePath, bool writeFile = true)
         {
+            objInfos.Clear();
+
             Stream flstr = new FileStream(srcFilePath, FileMode.Open);
             BinaryReader sr = new BinaryReader(flstr, Encoding.Unicode);
 
@@ -208,28 +208,39 @@ namespace VideoSearch.Model
             }
             finally
             {
-                XmlTextWriter xmlWriter;
-                xmlWriter = new XmlTextWriter(destFilePath, Encoding.UTF8);
-                xmlWriter.Formatting = Formatting.Indented;
-                xmlWriter.WriteStartElement("标注集合");
+                XmlTextWriter xmlWriter = null;
+
+                if (writeFile)
+                {
+                    xmlWriter = new XmlTextWriter(destFilePath, Encoding.UTF8);
+                    xmlWriter.Formatting = Formatting.Indented;
+                    xmlWriter.WriteStartElement("标注集合");
+                }
+                
                 //tbi.tubeInfos
                 foreach (FRM_INFO_T frm_info in frm_infos)
                 {
-                    xmlWriter.WriteStartElement("标注");
-                    xmlWriter.WriteAttributeString("时间戳", (frm_info.frmIdx * 40).ToString());
+                    if (writeFile)
+                    {
+                        xmlWriter.WriteStartElement("标注");
+                        xmlWriter.WriteAttributeString("时间戳", (frm_info.frmIdx * 40).ToString());
+                    }
 
                     foreach (OBJ_MARKER_INFO_T objMarkerInfo in frm_info.objInfos)
                     {
-                        xmlWriter.WriteStartElement("物标");
-                        xmlWriter.WriteAttributeString("左上角横坐标", objMarkerInfo.bbULXInSumV.ToString());
-                        xmlWriter.WriteAttributeString("左上角纵坐标", objMarkerInfo.bbULYInSumV.ToString());
-                        xmlWriter.WriteAttributeString("右下角横坐标", (objMarkerInfo.bbULXInSumV + objMarkerInfo.bbWidth).ToString());
-                        xmlWriter.WriteAttributeString("右下角纵坐标", (objMarkerInfo.bbULYInSumV + objMarkerInfo.bbHeight).ToString());
-                        xmlWriter.WriteAttributeString("颜色", "0");
-                        xmlWriter.WriteAttributeString("时标", (objMarkerInfo.orgVFrmIdx * 40).ToString());
-                        xmlWriter.WriteAttributeString("原始开始时间", objMarkerInfo.orgVideoStartTimeStamp.ToString());
-                        xmlWriter.WriteAttributeString("原始结束时间", objMarkerInfo.orgVideoEndTimeStamp.ToString());
-                        xmlWriter.WriteEndElement();
+                        if (writeFile)
+                        {
+                            xmlWriter.WriteStartElement("物标");
+                            xmlWriter.WriteAttributeString("左上角横坐标", objMarkerInfo.bbULXInSumV.ToString());
+                            xmlWriter.WriteAttributeString("左上角纵坐标", objMarkerInfo.bbULYInSumV.ToString());
+                            xmlWriter.WriteAttributeString("右下角横坐标", (objMarkerInfo.bbULXInSumV + objMarkerInfo.bbWidth).ToString());
+                            xmlWriter.WriteAttributeString("右下角纵坐标", (objMarkerInfo.bbULYInSumV + objMarkerInfo.bbHeight).ToString());
+                            xmlWriter.WriteAttributeString("颜色", "0");
+                            xmlWriter.WriteAttributeString("时标", (objMarkerInfo.orgVFrmIdx * 40).ToString());
+                            xmlWriter.WriteAttributeString("原始开始时间", objMarkerInfo.orgVideoStartTimeStamp.ToString());
+                            xmlWriter.WriteAttributeString("原始结束时间", objMarkerInfo.orgVideoEndTimeStamp.ToString());
+                            xmlWriter.WriteEndElement();
+                        }
 
                         OBJ_INFO objInfo = new OBJ_INFO();
                         objInfo.objId = objMarkerInfo.objId;
@@ -253,28 +264,18 @@ namespace VideoSearch.Model
                             objInfos.Add(objInfo);
                         }
                     }
-                    xmlWriter.WriteEndElement();
-                }
-                xmlWriter.WriteEndElement();
-                xmlWriter.Close();
 
-                //////////
-                //                 FileStream fs;
-                //                 fs = new FileStream(@"D:\test.txt", FileMode.Create);
-                //                 StreamWriter bw = new StreamWriter(fs);
-                //                 for (int i = 0; i < objInfos.Count; i++)
-                //                 {
-                //                     bw.Write(objInfos[i].objId);
-                //                     bw.Write(" ");
-                //                     bw.Write(objInfos[i].compntId);
-                //                     bw.Write(" ");
-                //                     bw.Write(objInfos[i].sumVideoStartTimeStamp);
-                //                     bw.Write(" ");
-                //                     bw.Write(objInfos[i].sumVideoEndTimeStamp);
-                //                     bw.Write("\r\n");
-                //                 }
-                //                 bw.Close();
-                //                 fs.Close();
+                    if (writeFile)
+                    {
+                        xmlWriter.WriteEndElement();
+                    }
+                }
+
+                if (writeFile)
+                {
+                    xmlWriter.WriteEndElement();
+                    xmlWriter.Close();
+                }
             }
         }
 

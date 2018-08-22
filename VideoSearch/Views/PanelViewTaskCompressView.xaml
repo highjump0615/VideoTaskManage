@@ -47,12 +47,13 @@
                 </Grid.RowDefinitions>
 
                 <!-- Event Track bar -->
-                <Grid Grid.Row="0">
+                <Grid 
+                    Grid.Row="0"
+                    Margin="1" 
+                    Background="Black">
                     <WindowsFormsHost 
-                        x:Name="TrackBarPanel" 
-                        Margin="1" 
-                        Background="{x:Null}">
-                    </WindowsFormsHost>
+                        x:Name="TrackBarPanel"                         
+                        Background="{x:Null}" />
                 </Grid>
 
                 <!-- Control Buttons-->

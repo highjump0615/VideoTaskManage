@@ -149,6 +149,23 @@ namespace VideoSearch.Views
 
                     _vlcPlayer.SetVideoInfo(vm.taskItem.CompressedPlayPath, true);
 
+                    //
+                    // 时间轴加载标注信息
+                    //
+                    axEventBarClearEvent();
+
+                    for (int i = 0; i < vm.taskItem.objInfos.Count; i++)
+                    {
+                        if (vm.taskItem.objInfos[i].sumVideoStartTimeStamp != vm.taskItem.objInfos[i].sumVideoEndTimeStamp)
+                        {
+                            axEventBarAddEvent((i + 1).ToString(), 
+                                "", 
+                                (vm.taskItem.objInfos[i].sumVideoStartTimeStamp).ToString(), 
+                                (vm.taskItem.objInfos[i].sumVideoEndTimeStamp).ToString());
+                        }
+                    }
+                    
+
                     // 浓缩物体显示
                     List<string> listPath = new List<string>();
                     if (!String.IsNullOrEmpty(vm.taskItem.CompresseInfoXmlPath))

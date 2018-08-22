@@ -58,8 +58,7 @@
                     <WindowsFormsHost 
                         x:Name="TrackBarPanel" 
                         Margin="1" 
-                        Background="{x:Null}">
-                    </WindowsFormsHost>
+                        Background="Black" />
                 </Grid>
 
                 <!-- Control Buttons-->

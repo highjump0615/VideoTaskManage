@@ -28,6 +28,8 @@ namespace VideoSearch.Model
 
         protected string basePath = "D:\\VideoInvestigationDataDB\\AnalysisFile";
 
+        public int MovieId;
+
         #region Constructor & Init
 
         public MovieTaskItem(DataItemBase parent = null)

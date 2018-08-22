@@ -70,8 +70,8 @@ namespace VideoSearch.Views.PlayView
                 _vlcPlayer.SetIntiTimeInfo(false);
                 _vlcPlayer.SetControlPanelTimer(false);
 
-                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
+                _vlcPlayer.VideoDurationChanged += new vlcPlayer.DurationChangedHandle(OnMovieDurationChanged);
+                _vlcPlayer.VideoPositionChanged += new vlcPlayer.PositionChangedHandle(OnMoviePosChanged);
                 _vlcPlayer.PlayerStopped += OnMovieStopped;
 
                 // init track bar
@@ -210,6 +210,8 @@ namespace VideoSearch.Views.PlayView
             {
                 _trackBar.RemoveEvent((i + 1).ToString());
             }
+
+            mnTrackBarEventCount = 0;
         }
     }
 }

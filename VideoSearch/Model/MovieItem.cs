@@ -652,6 +652,9 @@ namespace VideoSearch.Model
         private Thread _importThread = null;
         private Thread _monitorThread = null;
 
+        /// <summary>
+        /// 视频列表操作
+        /// </summary>
         public void Import()
         {
             Console.WriteLine("=== Import start ===");

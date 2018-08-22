@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using VideoSearch.Model;
 using VideoSearch.ViewModel;
 using VideoSearch.Views.PlayView;
+using VideoSearch.Windows;
 using vlcPlayerLib;
 
 namespace VideoSearch.Views
@@ -212,12 +214,37 @@ namespace VideoSearch.Views
 
             base.InitPlayer();
 
+            // 针对视频标注框内任意视频单独播放
+            _vlcPlayer.OrgVideoStartEndTime += new vlcPlayer.OrgVideoHandle(OnOrgVideoStartEndTime);
+
             PlayerPanel.Child = _vlcPlayer;
             TrackBarPanel.Child = _trackBar;
 
             controlEffect.initEffect(this);
 
             var taskInit = InitPlayerAsync();
+        }
+
+        private async void OnOrgVideoStartEndTime(long orgVideoStartTime, long orgVideoEndTime)
+        {
+            // 暂停播放
+            OnPause(null, null);
+
+            Console.WriteLine($"PanelViewTaskCompressView --- OnOrgVideoStartEndTime ({orgVideoStartTime}, {orgVideoEndTime})");
+
+            // 获取所属视频
+            var vm = (PanelViewTaskCompressModel)this.DataContext;
+            var movie = vm.taskItem.Parent as MovieItem;
+
+            // 是否已获取
+            if (!movie.IsFetched())
+            {
+                await movie.InitFromServer(true);
+            }
+
+            PlayerWindow.PlayMovie(movie.Name, movie.PlayPath, orgVideoStartTime, orgVideoEndTime);
+
+            // 播放对话框关闭，继续播放
         }
 
         /// <summary>

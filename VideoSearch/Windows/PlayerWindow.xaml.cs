@@ -11,7 +11,7 @@ namespace VideoSearch.Windows
     {
         #region static acces
         private static PlayerWindow _player = null;
-        private vlcPlayer _vlcPlayer = null;
+        public vlcPlayer _vlcPlayer = null;
 
         public static PlayerWindow Player
         {
@@ -26,12 +26,20 @@ namespace VideoSearch.Windows
             }
         }
 
-        public static void PlayMovie(String name, String path)
+        public static void PlayMovie(String name, String path, long startTime = -1, long endTime = -1)
         {
             CloseMovie();
 
             Player.MovieTitle = name;
             Player.MoviePath = path;
+
+            if (startTime > 0 && endTime > 0)
+            {
+                if (Player._vlcPlayer != null)
+                {
+                    Player._vlcPlayer.SetUserDefiendPlayTime(true, startTime, endTime);
+                }
+            }
 
             Player.ShowDialog();
         }
@@ -80,7 +88,6 @@ namespace VideoSearch.Windows
             _vlcPlayer = new vlcPlayer();
             _vlcPlayer.SetIntiTimeInfo(false);
             _vlcPlayer.SetControlPanelTimer(false);
-            _vlcPlayer.SetManualMarkMode(true);
 
             _vlcPlayer.PlayerStopped += OnMovieStopped;
 

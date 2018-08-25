@@ -228,7 +228,6 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MovieTaskViewListModel.cs" />
     <Compile Include="ViewModel\MovieTaskViewMainModel.cs" />
-    <Compile Include="ViewModel\MovieViewAnalysisModel.cs" />
     <Compile Include="ViewModel\MovieViewListModel.cs" />
     <Compile Include="ViewModel\MovieTaskViewModel.cs" />
     <Compile Include="ViewModel\MovieViewModel.cs" />
@@ -275,9 +274,6 @@
     </Compile>
     <Compile Include="Views\MovieView.xaml.cs">
       <DependentUpon>MovieView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MovieViewAnalysisView.xaml.cs">
-      <DependentUpon>MovieViewAnalysisView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MovieViewListView.xaml.cs">
       <DependentUpon>MovieViewListView.xaml</DependentUpon>
@@ -550,10 +546,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MovieViewAnalysisView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MovieViewListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -730,7 +722,6 @@
     <Resource Include="Resources\Images\Toolbar\Toolbar02\btShowCameraMap.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Toolbar\Toolbar03\btAutoAnaysisMovie.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar03\btFindMovie.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar03\btMovieImport.png" />
     <Resource Include="Resources\Images\Toolbar\Toolbar03\btPlayMovie.png" />
@@ -873,6 +864,8 @@
     <Resource Include="Resources\Images\Button\dlg_minimize_pressed.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\butCheckBoxChecked.png" />
+    <Resource Include="Resources\Images\Toolbar\Toolbar03\butCheckBoxUnChecked.png" />
     <Resource Include="Map\addLocation.html" />
     <Content Include="Map\camera.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

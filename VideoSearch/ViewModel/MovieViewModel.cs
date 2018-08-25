@@ -20,8 +20,7 @@ namespace VideoSearch.ViewModel
         protected void updateList()
         {
             if (Contents == null || 
-                Contents.GetType() == typeof(MovieViewPlayModel) ||
-                Contents.GetType() == typeof(MovieViewAnalysisModel))
+                Contents.GetType() == typeof(MovieViewPlayModel))
             {
                 Contents = new MovieViewListModel(Owner);
             }
@@ -135,7 +134,6 @@ namespace VideoSearch.ViewModel
 
         public void ShowMovieAnalysis()
         {
-            Contents = new MovieViewAnalysisModel();
         }
         #endregion
     }

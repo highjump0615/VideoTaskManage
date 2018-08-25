@@ -276,6 +276,7 @@ namespace VideoSearch
             MovieGroup.Children.Add(ToolbarMovieFind);
             MovieGroup.Children.Add(ToolbarMoviePlay);
             MovieGroup.Children.Add(ToolbarMovieShowList);
+            MovieGroup.Children.Add(ToolbarMovieAutoAnalysis); 
 
             MovieTaskGroup.Children.Add(ToolbarMovieTaskSearch);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskSummary);
@@ -543,11 +544,14 @@ namespace VideoSearch
 
         private void OnMovieAutioAnalysis(object sender, RoutedEventArgs e)
         {
-            OnTabChanged(sender, e);
+            var button = sender as SkinButton;
+            button.IsSelected = !button.IsSelected;
 
-            Object viewContents = workView.Content;
-            if (viewContents.GetType() == typeof(MovieViewModel))
-                ((MovieViewModel)viewContents).ShowMovieAnalysis();
+            //OnTabChanged(sender, e);
+
+            //Object viewContents = workView.Content;
+            //if (viewContents.GetType() == typeof(MovieViewModel))
+            //    ((MovieViewModel)viewContents).ShowMovieAnalysis();
         }
 
         /////////////////////////////////////////////////////////

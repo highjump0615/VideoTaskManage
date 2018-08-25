@@ -63,10 +63,6 @@
                 <views:MovieViewPlayView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:MovieViewAnalysisModel}">
-                <views:MovieViewAnalysisView />
-            </DataTemplate>
-
             <!-- ViewModels for MovieTaskView-->
             <DataTemplate DataType="{x:Type viewModel:MovieTaskViewMainModel}">
                 <views:MovieTaskViewMainView />

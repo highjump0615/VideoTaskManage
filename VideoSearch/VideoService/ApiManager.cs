@@ -168,7 +168,7 @@ namespace VideoSearch.VideoService
                 {
                     left = (int)renxingWaijieRect.Left;
                     top = (int)renxingWaijieRect.Top;
-                    right = (int)renxingWaijieRect.Right;
+                    right = (int)renxingWaijieRect.Right; 
                     bottom = (int)renxingWaijieRect.Bottom;
 
                     String strRenXingWaiJieRect = String.Format("{0},{1},{2},{3}", left, top, right, bottom);

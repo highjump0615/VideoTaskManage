@@ -821,6 +821,13 @@ namespace VideoSearch.Model
 
                     State = ConvertStatus.ConvertedOk;
 
+                    // 自动分析时，开始摘要任务
+                    var viewMain = Globals.Instance.MainVM.View as MainWindow;
+                    if (viewMain.ToolbarMovieAutoAnalysis.IsSelected)
+                    {
+                        await CreateTaskOutlineAuto();
+                    }                    
+
                     //_monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
                     //_monitorThread.Start();
                 }
@@ -871,5 +878,36 @@ namespace VideoSearch.Model
             return length.ToString() + "B";
         }
         #endregion
+
+        public async Task CreateTaskOutline(string sensitivity, int regionType, Rect region, string name)
+        {
+            Globals.Instance.ShowWaitCursor(true);
+
+            var response = await ApiManager.Instance.CreateSummaryTask(VideoId, sensitivity, regionType, region);
+
+            if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
+            {
+                MovieTaskSummaryItem item = new MovieTaskSummaryItem(this, 
+                    response.Element("TaskId").Value, 
+                    name,
+                    MovieTaskType.OutlineTask);
+                await AddItemAsync(item);
+            }
+
+            Globals.Instance.ShowWaitCursor(false);
+        }
+
+        private async Task CreateTaskOutlineAuto()
+        {            
+            await CreateTaskOutline(
+                "2",    // 白天
+                0,
+                new Rect(),
+                ""      // 名称，默认
+            );
+
+            // update tree
+            Globals.Instance.MainVM.updateTreeList();
+        }
     }
 }

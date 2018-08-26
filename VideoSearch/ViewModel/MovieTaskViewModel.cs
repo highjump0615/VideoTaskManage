@@ -99,21 +99,11 @@ namespace VideoSearch.ViewModel
             Nullable<bool> result = outlineDlg.ShowDialog();
             if (result == true)
             {
-                Globals.Instance.ShowWaitCursor(true);
-
-                var response = await ApiManager.Instance.CreateSummaryTask(
-                    movieItem.VideoId, 
-                    outlineDlg.Sensitivity, 
-                    outlineDlg.RegionType, 
-                    outlineDlg.Region);
-
-                if(response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
-                {
-                    MovieTaskSummaryItem item = new MovieTaskSummaryItem(Owner, response.Element("TaskId").Value, outlineDlg.TaskName, MovieTaskType.OutlineTask);
-                    await Owner.AddItemAsync(item);
-                }
-
-                Globals.Instance.ShowWaitCursor(false);
+                await movieItem.CreateTaskOutline(
+                    outlineDlg.Sensitivity,
+                    outlineDlg.RegionType,
+                    outlineDlg.Region,
+                    outlineDlg.TaskName);
 
                 // 跳转到任务列表
                 ShowMovieChargeList();

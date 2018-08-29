@@ -17,7 +17,6 @@ namespace VideoSearch
 {
     public partial class MainWindow : Window
     {
-        private int _level = 0;
         private DataItemBase _selectedItem = new DataItemBase();
 
         private SearchWindow m_searchWindow = null;
@@ -48,27 +47,55 @@ namespace VideoSearch
  
             SelectRoot();
 
-            new Thread(new ThreadStart(checkServiceThread)).Start();            
+            new Thread(new ThreadStart(checkServiceThread)).Start();
+
+            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
         }
 
         private void checkServiceThread()
         {
+            if (!Globals.Instance.MainVM.checkUsbToken())
+            {
+                // UI Thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show(this, "无授权加密狗，无法使用系统功能", "提示", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    //Application.Current.Shutdown();
+                });
+            }
+
             // 检查服务
             Globals.Instance.MainVM.checkService();
 
             // 检查d盘剩余容量
             var dDrv = new DriveInfo("D");
-            long dSpace = dDrv.AvailableFreeSpace;
-
-            // 少于10G
-            if (dSpace < 10.0 * 1024 * 1024 * 1024)
+            try
             {
-                // UI Thread
-                Application.Current.Dispatcher.Invoke(() =>
+                long dSpace = dDrv.AvailableFreeSpace;
+
+                // 少于10G
+                if (dSpace < 10.0 * 1024 * 1024 * 1024)
                 {
-                    MessageBox.Show(this, "D盘少于10G，这会影响到使用本应用", "可用空间不足", MessageBoxButton.OK, MessageBoxImage.Warning);
-                });                
+                    // UI Thread
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show(this, "D盘少于10G，这会影响到使用本应用", "可用空间不足", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+                if (ex is DriveNotFoundException)
+                {
+                    // UI Thread
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show(this, "此计算机无D分区，无法使用系统功能", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        Application.Current.Shutdown();
+                    });
+                }
+            }            
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -249,6 +276,7 @@ namespace VideoSearch
             MovieGroup.Children.Add(ToolbarMovieFind);
             MovieGroup.Children.Add(ToolbarMoviePlay);
             MovieGroup.Children.Add(ToolbarMovieShowList);
+            MovieGroup.Children.Add(ToolbarMovieAutoAnalysis); 
 
             MovieTaskGroup.Children.Add(ToolbarMovieTaskSearch);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskSummary);
@@ -256,7 +284,6 @@ namespace VideoSearch
             MovieTaskGroup.Children.Add(ToolbarMovieTaskFind);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskDelete);
             MovieTaskGroup.Children.Add(ToolbarMovieTaskChargeList);
-            MovieTaskGroup.Children.Add(ToolbarMovieTaskFindAndPlay);
 
             PanelGroup.Children.Add(ToolbarPanelPreview);
             PanelGroup.Children.Add(ToolbarPanelShowPath);
@@ -388,7 +415,7 @@ namespace VideoSearch
 
             Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(EventViewModel))
-                ((EventViewModel)viewContents).AddNewItem();
+                ((EventViewModel)viewContents).AddNewItemAsync();
         }
 
         private void OnDeleteEvent(object sender, RoutedEventArgs e)
@@ -417,7 +444,7 @@ namespace VideoSearch
 
             Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(CameraViewModel))
-                ((CameraViewModel)viewContents).AddNewItem();
+                ((CameraViewModel)viewContents).AddNewItemAsync();
         }
 
         private void OnDeleteCamera(object sender, RoutedEventArgs e)
@@ -442,7 +469,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(CameraViewModel))
             {
                 ((CameraViewModel)viewContents).ShowCameraMap();
@@ -453,7 +480,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(CameraViewModel))
             {
                 ((CameraViewModel)viewContents).ShowCameraDetailList();
@@ -468,7 +495,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
                 ((MovieViewModel)viewContents).ImportMovie();
         }
@@ -501,7 +528,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
                 ((MovieViewModel)viewContents).PlaySelectedMovies();
         }
@@ -510,18 +537,21 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieViewModel))
                 ((MovieViewModel)viewContents).ShowMovieList();
         }
 
         private void OnMovieAutioAnalysis(object sender, RoutedEventArgs e)
         {
-            OnTabChanged(sender, e);
+            var button = sender as SkinButton;
+            button.IsSelected = !button.IsSelected;
 
-            Object viewContents = workView.Content;
-            if (viewContents.GetType() == typeof(MovieViewModel))
-                ((MovieViewModel)viewContents).ShowMovieAnalysis();
+            //OnTabChanged(sender, e);
+
+            //Object viewContents = workView.Content;
+            //if (viewContents.GetType() == typeof(MovieViewModel))
+            //    ((MovieViewModel)viewContents).ShowMovieAnalysis();
         }
 
         /////////////////////////////////////////////////////////
@@ -539,6 +569,11 @@ namespace VideoSearch
             }
         }
 
+        /// <summary>
+        /// 视频任务摘要
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMovieTaskOutline(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
@@ -550,11 +585,16 @@ namespace VideoSearch
             }
         }
 
+        /// <summary>
+        /// 视频任务浓缩
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMovieTaskCompress(object sender, RoutedEventArgs e)
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
                 var taskCompress = ((MovieTaskViewModel)viewContents).MovieCompress();
@@ -588,7 +628,7 @@ namespace VideoSearch
         {
             OnTabChanged(sender, e);
 
-            Object viewContents = workView.Content; ;
+            Object viewContents = workView.Content;
             if (viewContents.GetType() == typeof(MovieTaskViewModel))
             {
                 ((MovieTaskViewModel)viewContents).MovieFindAndPlay();
@@ -636,8 +676,13 @@ namespace VideoSearch
             OnTabChanged(sender, e);
 
             Object viewContents = workView.Content;
-            if (viewContents.GetType() == typeof(PanelViewModel))
-                ((PanelViewModel)viewContents).Export();
+            if (viewContents is CameraViewModel vmWork)
+            {
+                if (vmWork.Contents is PanelViewListModel vmChild)
+                {
+                    vmChild.Export();
+                }
+            }
         }
 
         /// <summary>
@@ -655,9 +700,8 @@ namespace VideoSearch
                 var vmWork = (CameraViewModel)viewContents;
 
                 // 删除操作只有在列表页面上有效
-                if (vmWork.Contents is PanelViewListModel)
+                if (vmWork.Contents is PanelViewListModel vmChild)
                 {
-                    var vmChild = (PanelViewListModel)vmWork.Contents;
                     vmChild.DeleteSelectedItems();
                 }
             }
@@ -695,6 +739,21 @@ namespace VideoSearch
             {
                 ((MovieTaskViewModel)viewContents).DeleteSelectedMovieTasks();
             }
+        }
+
+        private void onClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ConfirmDeleteWindow confirmDlg = new ConfirmDeleteWindow();
+            confirmDlg.setMessage("确定要推出程序吗？");
+
+            if (confirmDlg.ShowDialog() == true)
+            {
+                // 推出
+                return;
+            }
+
+            // 取消
+            e.Cancel = true;
         }
     }
 }

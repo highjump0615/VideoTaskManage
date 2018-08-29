@@ -44,7 +44,7 @@ namespace VideoSearch.VideoService
         /// <returns></returns>
         public Task<XElement> SubmitVideo(String videoPath)
         {
-            return sendToServiceByGet(API_PATH + "/SubmitVideo?OrgPath=" + videoPath + "&Transcode=1");
+            return sendToServiceByGet(API_PATH + "/SubmitVideo?OrgPath=" + videoPath + "&Transcode=0");
         }
 
         /// <summary>
@@ -52,11 +52,9 @@ namespace VideoSearch.VideoService
         /// </summary>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public bool DeleteVideo(int videoId)
+        public async Task<bool> DeleteVideo(int videoId)
         {
-            var taskGet = sendToServiceByGet(API_PATH + "/DeleteVideo?VideoId=" + videoId);
-            taskGet.Wait();
-            var response = taskGet.Result;
+            var response = await sendToServiceByGet(API_PATH + "/DeleteVideo?VideoId=" + videoId);
 
             if (response != null)
                 return true;
@@ -170,7 +168,7 @@ namespace VideoSearch.VideoService
                 {
                     left = (int)renxingWaijieRect.Left;
                     top = (int)renxingWaijieRect.Top;
-                    right = (int)renxingWaijieRect.Right;
+                    right = (int)renxingWaijieRect.Right; 
                     bottom = (int)renxingWaijieRect.Bottom;
 
                     String strRenXingWaiJieRect = String.Format("{0},{1},{2},{3}", left, top, right, bottom);

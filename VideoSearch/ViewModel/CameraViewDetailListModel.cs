@@ -28,10 +28,10 @@ namespace VideoSearch.ViewModel
         /// <param name="sender"></param>
         public void ShowMap(Object parameter)
         {
-            //CameraItem item = (CameraItem)parameter;
+            CameraItem item = (CameraItem)parameter;
 
-            //if (ParentViewModel != null && ParentViewModel.GetType() == typeof(CameraViewModel))
-            //    ((CameraViewModel)ParentViewModel).ShowCameraMap(item.Longitude, item.Latitude);
+            if (ParentViewModel != null && ParentViewModel.GetType() == typeof(CameraViewModel))
+                ((CameraViewModel)ParentViewModel).ShowCameraMap(item);
         }
     }
 }

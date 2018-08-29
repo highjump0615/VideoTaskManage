@@ -1,9 +1,11 @@
-﻿using System;
+﻿using DongleDemo;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using VideoSearch.ViewModel.Base;
@@ -12,6 +14,8 @@ namespace VideoSearch.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
+        public string mstrExpireDate;
+
         /// <summary>
         /// 是否显示加载提示
         /// </summary>
@@ -108,7 +112,7 @@ namespace VideoSearch.ViewModel
         }
 
         public MainViewModel()
-        {
+        {            
         }
 
         /// <summary>
@@ -189,6 +193,55 @@ namespace VideoSearch.ViewModel
         public void HideTotalMask()
         {
             VisibilityTotalMask = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 更新导航列表
+        /// </summary>
+        public void updateTreeList()
+        {
+            // 非阻塞模式
+            new Thread(() => 
+            {
+                // UI Thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var viewMain = View as MainWindow;
+                    viewMain.treeView.Items.Refresh();
+                });                
+            })
+            .Start();
+        }
+
+        public bool checkUsbToken()
+        {
+            CFSystem.CFProductInfo productInfo = new CFSystem.CFProductInfo();
+            productInfo = CFSystem.GetCFProductInfo(productInfo);
+            DateTime dtDate; // 时间判断参数
+
+            // 无视productInfo和freeUpdateTime字段，全部根据下面的expireTime字段来判断
+            string temp = "";
+            for (int i = 0; i < productInfo.tryTimeEnd.Count(); i++)
+            {
+                Char a = Convert.ToChar(productInfo.tryTimeEnd[i]);
+                if (i != 0)
+                {
+                    temp += a;
+                }
+                else
+                {
+                    temp = "" + a + "";
+                }
+            }
+
+            // 利用expireTime来判断程序开启，这个字段里如果有时间，开启程序，否则返回
+            if (DateTime.TryParse(temp, out dtDate))
+            {
+                mstrExpireDate = temp.Replace("\0", "");
+                return true;
+            }
+
+            return false;
         }
     }
 }

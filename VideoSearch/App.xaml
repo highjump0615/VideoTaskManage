@@ -15,7 +15,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Colors.xaml" />
                 <ResourceDictionary Source="/Resources/Values.xaml" />
-                <ResourceDictionary Source="/Resources/MoviePlayerDataGridColumn.xaml" />
                 <ResourceDictionary Source="/Resources/VideoDataGrid.xaml" />
                 <ResourceDictionary Source="/Resources/VideoDataGridColumn.xaml" />
                 <ResourceDictionary Source="/Resources/Styles.xaml" />
@@ -62,10 +61,6 @@
 
             <DataTemplate DataType="{x:Type viewModel:MovieViewPlayModel}">
                 <views:MovieViewPlayView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModel:MovieViewAnalysisModel}">
-                <views:MovieViewAnalysisView />
             </DataTemplate>
 
             <!-- ViewModels for MovieTaskView-->

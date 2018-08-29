@@ -44,21 +44,7 @@
         </Grid>
 
         <!-- Player-->
-        <Grid x:Name="PlayerGrid" Grid.Row="1" IsHitTestVisible="False">
-            <Border BorderBrush="#FF222222" BorderThickness="1,0" >
-                <Border.Background>
-                    <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/Player/PlayerBg.png" Stretch="UniformToFill"/>
-                </Border.Background>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30*"/>
-                        <RowDefinition Height="20*"/>
-                        <RowDefinition Height="30*"/>
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="1" Source="/VideoSearch;component/Resources/Images/Player/PlayerLogo.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
-            </Border>
-
+        <Grid x:Name="PlayerGrid" Grid.Row="1" IsHitTestVisible="False" Background="Black">
             <WindowsFormsHost x:Name="PlayerPanel" Margin="1" Background="Black"/>
 
             <Separator VerticalAlignment="Top" Background="#FF222222" Margin="0"/>

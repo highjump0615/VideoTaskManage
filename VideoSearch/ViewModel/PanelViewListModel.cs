@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Text;
 using VideoSearch.Database;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
@@ -110,10 +114,24 @@ namespace VideoSearch.ViewModel
                     }
                 }
 
+                item.PropertyChangedEvent += OnArticlePropertyChanged;
+
                 Articles.Add(item);
             }
 
             updateGridIndex();
+        }
+
+        private void OnArticlePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsChecked")
+            {
+                // 选择项有变化，更新删除按钮
+                var countSelected = Articles.Where(x => x.IsChecked == true).Count();
+
+                var viewMain = Globals.Instance.MainVM.View as MainWindow;
+                viewMain.ToolbarMarkDelete.IsEnabled = countSelected > 0;
+            }
         }
 
         private void updateGridIndex()
@@ -173,6 +191,43 @@ namespace VideoSearch.ViewModel
 
                 Globals.Instance.ShowWaitCursor(false);
                 updateGridIndex();
+            }
+        }
+
+        /// <summary>
+        /// 导出
+        /// </summary>
+        public void Export()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "Export";
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "CSV documents|*.csv";
+
+            if (dlg.ShowDialog() == true)
+            {
+                string filename = dlg.FileName;
+
+                // 保存
+                Globals.Instance.ShowWaitCursor(true);
+
+                var csv = new StringBuilder();
+
+                // 字段名
+                var newLine = "ID, 视频ID, 时间点, X, Y, 长度, 宽度, 轨迹说明, 关键词, 目标类型";
+                csv.AppendLine(newLine);
+
+                foreach (ArticleItem item in Articles)
+                {
+                    newLine = $"{item.ID}, {item.DetailInfo.videoId}, {item.DetailInfo.frame}, {item.DetailInfo.x}, {item.DetailInfo.y}, {item.DetailInfo.width}, {item.DetailInfo.height}";
+                    newLine += $"{item.DetailInfo.desc}, {item.DetailInfo.keyword}, {item.TargetType}";
+
+                    csv.AppendLine(newLine);
+                }
+
+                File.WriteAllText(filename, csv.ToString(), Encoding.UTF8);
+
+                Globals.Instance.ShowWaitCursor(false);
             }
         }
     }

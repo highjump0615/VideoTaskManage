@@ -14,38 +14,97 @@
     <Grid Name="WindowContent">
         <SkinFrame:DialogFrame Margin="0" x:Name="DialogFrame" />
         <Grid Margin="0,25,0,0" Name="ContentView">
-            <Grid Height="158" Margin="100,35,100,100" Name="grid1" VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="32*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="96*" />
-                    <ColumnDefinition Width="292*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock1" Text="案件编号" VerticalAlignment="Center" Foreground="White" FontSize="14" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock2" Text="案件名称" VerticalAlignment="Center" Grid.Row="2" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock3" Text="创建日期" VerticalAlignment="Center" Grid.Row="4" />
-                <TextBlock FontSize="14" Foreground="White" Height="16" HorizontalAlignment="Left" Margin="0" Name="textBlock4" Text="备注" VerticalAlignment="Center" Grid.Row="6" />
-                <SkinControl:SkinButton Grid.Column="1" Grid.Row="4" Height="26" HorizontalAlignment="Right" Margin="0" x:Name="btnCalendar" VerticalAlignment="Center" Width="24" NormalImage="/VideoSearch;component/Resources/Images/View/CreateNewEvent/calendar_normal.png" OverImage="/VideoSearch;component/Resources/Images/View/CreateNewEvent/calendar_over.png" PressedImage="/VideoSearch;component/Resources/Images/View/CreateNewEvent/calendar_pressed.png" Click="btnCalendar_Click" />
-                <TextBox Grid.Column="1" Margin="0" Name="m_eventID" FontSize="14" BorderBrush="#FF302F2B" Background="#FF646361" Text="" TextAlignment="Left" Foreground="White" Padding="6"  IsReadOnly="True"/>
-                <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Name="m_eventName" Padding="6" Text="" TextAlignment="Left" Grid.Column="1" Grid.Row="2"/>
-                <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Margin="0,0,37,0" Name="m_eventDate" Padding="6" Text="" TextAlignment="Left" Grid.Column="1" Grid.Row="4" IsReadOnly="True" />
-                <TextBox Background="#FF646361" BorderBrush="#FF302F2B" FontSize="14" Foreground="White" Name="m_eventRemark" Padding="6" Text="" TextAlignment="Left" Grid.Column="1" Grid.Row="6" />
-            </Grid>
+
+            <StackPanel Margin="100,35,100, 0">
+                <!-- 案件编号 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="案件编号" />
+                    <TextBox Grid.Column="1" Style="{StaticResource DialogTextInputStyle}" Name="m_eventID" IsReadOnly="True" />
+                </Grid>
+
+                <!-- 案件名称 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="案件名称" />
+                    <TextBox Grid.Column="1" Style="{StaticResource DialogTextInputStyle}" Name="m_eventName" />
+                </Grid>
+
+                <!-- 创建日期 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="创建日期" />
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="34" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Style="{StaticResource DialogTextInputStyle}" Name="m_eventDate" />
+                        <SkinControl:SkinButton Grid.Column="1" Height="26" 
+                                                HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                                x:Name="btnCalendar" 
+                                                NormalImage="/VideoSearch;component/Resources/Images/View/CreateNewEvent/calendar_normal.png" 
+                                                OverImage="/VideoSearch;component/Resources/Images/View/CreateNewEvent/calendar_over.png" 
+                                                PressedImage="/VideoSearch;component/Resources/Images/View/CreateNewEvent/calendar_pressed.png" 
+                                                Click="btnCalendar_Click" />
+                    </Grid>
+                </Grid>
+
+                <!-- 备注 -->
+                <Grid>
+                    <Grid.Margin>
+                        <Thickness Bottom="{StaticResource TopMarginAddDlg}" />
+                    </Grid.Margin>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource WidthAddDlgItemLabel}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource DialogTextLabelStyle}" Text="备注" />
+                    <TextBox Grid.Column="1" Style="{StaticResource DialogTextInputStyle}" Name="m_eventRemark" />
+                </Grid>
+
+            </StackPanel>
+
             <Grid HorizontalAlignment="Center" Margin="0,0,0,16" Name="grid2" Width="190" Height="33" VerticalAlignment="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="85*" />
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="85*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="取消" Name="btnCancel" Foreground="White" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}"/>
-                <Button Content="保存" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" Click="btnSave_Click" Style="{DynamicResource GreenButtonStyle}"/>
+                <Button 
+                    Content="保存" 
+                    Name="btnSave" 
+                    Click="btnSave_Click" 
+                    Style="{DynamicResource GreenButtonStyle}"/>
+                <Button 
+                    Content="取消" 
+                    Name="btnCancel" 
+                    Grid.Column="2" 
+                    IsCancel="True" 
+                    Style="{DynamicResource BrownButtonStyle}"/>
             </Grid>
             <Calendar Height="170" HorizontalAlignment="Right" Margin="0,150,100,0" Name="EventCalendar" VerticalAlignment="Top" Width="180" SelectedDatesChanged="EventCalendar_SelectedDatesChanged" Visibility="Hidden" />
         </Grid>

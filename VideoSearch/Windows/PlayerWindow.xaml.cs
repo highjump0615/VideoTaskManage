@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using vlcPlayerLib;
@@ -9,7 +11,7 @@ namespace VideoSearch.Windows
     {
         #region static acces
         private static PlayerWindow _player = null;
-        private vlcPlayer _vlcPlayer = null;
+        public vlcPlayer _vlcPlayer = null;
 
         public static PlayerWindow Player
         {
@@ -24,12 +26,20 @@ namespace VideoSearch.Windows
             }
         }
 
-        public static void PlayMovie(String name, String path)
+        public static void PlayMovie(String name, String path, long startTime = -1, long endTime = -1)
         {
             CloseMovie();
 
             Player.MovieTitle = name;
             Player.MoviePath = path;
+
+            if (startTime > 0 && endTime > 0)
+            {
+                if (Player._vlcPlayer != null)
+                {
+                    Player._vlcPlayer.SetUserDefiendPlayTime(true, startTime, endTime);
+                }
+            }
 
             Player.ShowDialog();
         }
@@ -78,7 +88,6 @@ namespace VideoSearch.Windows
             _vlcPlayer = new vlcPlayer();
             _vlcPlayer.SetIntiTimeInfo(false);
             _vlcPlayer.SetControlPanelTimer(false);
-            _vlcPlayer.SetManualMarkMode(true);
 
             _vlcPlayer.PlayerStopped += OnMovieStopped;
 
@@ -98,6 +107,19 @@ namespace VideoSearch.Windows
             _vlcPlayer.SetVideoInfo(_moviePath, true);
 
             PlayerPanel.Child = _vlcPlayer;
+
+            PlayVideoAsync();
+        }
+
+        private async void PlayVideoAsync()
+        {
+            Globals.Instance.ShowWaitCursor(true);
+            // 加载需要延迟
+            await Task.Delay(400);
+
+            OnPlay(null, null);
+
+            Globals.Instance.ShowWaitCursor(false);
         }
 
         private void OnClosed(object sender, EventArgs e)
@@ -145,12 +167,8 @@ namespace VideoSearch.Windows
 
         private void OnPlay(object sender, RoutedEventArgs e)
         {
-            if(sender != null && e != null)
-            {
-                ShowPlayer(true);
-                _vlcPlayer.Play();
-            }
-
+            ShowPlayer(true);
+            _vlcPlayer.Play();
 
             PlayButton.IsEnabled = false;
             PauseButton.IsEnabled = true;

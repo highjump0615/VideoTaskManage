@@ -175,7 +175,7 @@ namespace VideoSearch.Model
             // 编辑指令
             if (parameter.Equals(UpdateCommand))
             {
-                UpdateItem();
+                UpdateItemAsync();
             }
             // 地图显示指令
             if (parameter.Equals(ShowMapCommand))
@@ -185,7 +185,7 @@ namespace VideoSearch.Model
                 base.OnCommand(parameter);
         }
 
-        protected void UpdateItem()
+        protected async void UpdateItemAsync()
         {
             // 
             // 弹出摄像头添加对话框
@@ -199,7 +199,7 @@ namespace VideoSearch.Model
 
                 if( newItem.EventPos == EventPos)
                 {
-                    if (Table != null && Table.Update(newItem) != 0)
+                    if (Table != null && await Table.Update(newItem) != 0)
                         SetItem(newItem);
                 }
                 else if(Parent != null)
@@ -224,7 +224,7 @@ namespace VideoSearch.Model
                         newItem.IsChecked = false;
                         newItem.IsSelected = false;
 
-                        ReParent.AddItem(new CameraItem(newItem));
+                        await ReParent.AddItemAsync(new CameraItem(newItem));
                     }
                 }
              }

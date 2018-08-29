@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
 using VideoSearch.Windows;
+using VideoSearch.Utils;
 
 namespace VideoSearch.ViewModel
 {
@@ -12,7 +14,7 @@ namespace VideoSearch.ViewModel
         public CameraViewModel(DataItemBase owner)
             : base(owner)
         {
-            Contents = new CameraViewListModel(owner, this);
+            Contents = new CameraViewDetailListModel(owner, this);
         }
 
         #region utility function
@@ -20,11 +22,11 @@ namespace VideoSearch.ViewModel
         {
             if (Contents == null || Contents.GetType() == typeof(CameraViewMapModel))
             {
-                Contents = new CameraViewListModel(Owner, this);
+                Contents = new CameraViewDetailListModel(Owner, this);
             }
         }
 
-        public void AddNewItem()
+        public async void AddNewItemAsync()
         {
             if (Owner == null)
                 return;
@@ -43,7 +45,7 @@ namespace VideoSearch.ViewModel
                 CameraItem item = new CameraItem(createDlg.NewCamera);
 
                 if(item.EventPos == Owner.ID)
-                    Owner.AddItem(item);
+                    await Owner.AddItemAsync(item);
                 else
                 {
                     DataItemBase ReParent = Owner.FindFriendItem(item.EventPos);
@@ -66,9 +68,12 @@ namespace VideoSearch.ViewModel
                         item.IsChecked = false;
                         item.IsSelected = false;
 
-                        ReParent.AddItem(item);
+                        await ReParent.AddItemAsync(item);
                     }
                 }
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -80,6 +85,26 @@ namespace VideoSearch.ViewModel
             if (Owner == null || !Owner.HasCheckedItem)
                 return;
 
+            var bHasChildren = false;
+            foreach (CameraItem cm in Owner)
+            {
+                if (cm.IsChecked && cm.Children.Count > 0)
+                {
+                    bHasChildren = true;
+                    break;
+                }
+            }
+
+            if (bHasChildren)
+            {
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "此摄像头内含视频，无法删除有内容的摄像头",
+                    "提示",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
             ConfirmDeleteWindow deleteDlg = new ConfirmDeleteWindow();
 
             Nullable<bool> result = deleteDlg.ShowDialog();
@@ -89,17 +114,32 @@ namespace VideoSearch.ViewModel
                 Globals.Instance.ShowWaitCursor(true);
                 Owner.DeleteSelectedItem();
                 Globals.Instance.ShowWaitCursor(false);
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
         public void ShowCameraMap()
         {
-            Contents = new CameraViewMapModel(this.Owner);
+            ShowCameraMap(null);
         }
 
-        public void ShowCameraMap(double longitude, double latitude)
+        public void ShowCameraMap(CameraItem item)
         {
-            Contents = new CameraViewMapModel(longitude, latitude);
+            if (AppUtils.CheckForInternetConnection())
+            {
+                var c = item ?? this.Owner;
+                Contents = new CameraViewMapModel(c);
+            }
+            else
+            {
+                // 提示
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "连接不到网络，无法显示地图", 
+                    "请链接网络",
+                    MessageBoxButton.OK, MessageBoxImage.Stop);
+            }
         }
 
         /// <summary>
@@ -123,7 +163,44 @@ namespace VideoSearch.ViewModel
         /// </summary>
         public void ShowLabelTracking()
         {
-            Contents = new PanelViewPathModel(Owner, this);
+            if (AppUtils.CheckForInternetConnection())
+            {
+                Contents = new PanelViewPathModel(Owner, this);
+            }
+            else
+            {
+                // 提示
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "连接不到网络，无法显示地图",
+                    "请链接网络",
+                    MessageBoxButton.OK, MessageBoxImage.Stop);
+            }            
+        }
+
+        /// <summary>
+        /// 更新工具栏
+        /// </summary>
+        private void updateToolbar()
+        {
+            var viewMain = Globals.Instance.MainVM.View as MainWindow;
+
+            // 导出&删除
+            viewMain.ToolbarPanelExport.IsEnabled = false;
+            viewMain.ToolbarMarkDelete.IsEnabled = false;
+
+            // 标注列表
+            if (Contents is PanelViewListModel)
+            {
+                viewMain.ToolbarPanelExport.IsEnabled = true;
+            }
+        }
+
+        public override void contentChanged()
+        {
+            base.contentChanged();
+
+            // 更新工具栏
+            updateToolbar();
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,17 +12,17 @@ using System.Windows.Threading;
 using VideoSearch.Model;
 using VideoSearch.Utils;
 using VideoSearch.ViewModel;
+using VideoSearch.Views.PlayView;
 using vlcPlayerLib;
 
 namespace VideoSearch.Views
 {
     public delegate void UpdateDurationDelegate(long pos);
 
-    public partial class MovieTaskViewMainView : UserControlBase
+    public partial class MovieTaskViewMainView : PlayerViewBase
     {
-        private vlcPlayer _vlcPlayer = null;
         private ManualMarkUtils _markUtils = null;
-        private long _curPos = 0;
+        private long _curPos = 0;        
 
         public MovieTaskViewMainView()
         {
@@ -35,24 +36,20 @@ namespace VideoSearch.Views
         #region Delegate
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("MovieTaskViewMainView --- onLoad");
         }
 
         /// <summary>
         /// 播放器初始化
         /// </summary>
-        public void InitPlayer()
+        public override void InitPlayer()
         {
-            _vlcPlayer = new vlcPlayer();
-            _vlcPlayer.SetIntiTimeInfo(false);
-            _vlcPlayer.SetControlPanelTimer(false);
-            _vlcPlayer.SetManualMarkMode(true);
+            base.InitPlayer();
 
-            _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-            _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
-            _vlcPlayer.PlayerStopped += OnMovieStopped;
             _vlcPlayer.ManualMarkAdded += ManualMarkAdded;
 
             PlayerPanel.Child = _vlcPlayer;
+            TrackBarPanel.Child = _trackBar;
 
             var taskInit = InitPlayerAsync();
 
@@ -65,7 +62,7 @@ namespace VideoSearch.Views
             Globals.Instance.ShowWaitCursor(true);
 
             // 重新加载需要延迟
-            await Task.Delay(20);
+            await Task.Delay(400);
 
             var vm = (MovieTaskViewMainModel)this.DataContext;
 
@@ -77,7 +74,11 @@ namespace VideoSearch.Views
 
             if (!String.IsNullOrEmpty(vm.movieItem.PlayPath))
             {
+                // set video path
+                Console.WriteLine($"video play path: {vm.movieItem.PlayPath}");
+                
                 _vlcPlayer.SetVideoInfo(vm.movieItem.PlayPath, true);
+                _vlcPlayer.SetManualMarkMode(true);
                 _markUtils = new ManualMarkUtils(_vlcPlayer, vm.movieItem.VideoId);
 
                 OnPlay(this, null);
@@ -102,6 +103,7 @@ namespace VideoSearch.Views
             {
                 // 初始化
                 InitPlayer();
+                controlEffect.initEffect(this);
             }            
         }
 
@@ -109,8 +111,8 @@ namespace VideoSearch.Views
         {
             Unloaded -= OnUnLoad;
 
-            ClearPlayer();
-            _vlcPlayer = null;
+            //ClearPlayer();
+            //_vlcPlayer = null;
         }
 
         /// <summary>
@@ -147,9 +149,11 @@ namespace VideoSearch.Views
         }
 
 
-        private void ShowPlayer(bool isShow)
+        protected override void ShowPlayer(bool isShow)
         {
-            PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
+            base.ShowPlayer(isShow);
+
+            //PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
 
             PlayButton.IsEnabled = !isShow;
             PauseButton.IsEnabled = isShow;
@@ -159,15 +163,6 @@ namespace VideoSearch.Views
             GotoEndButton.IsEnabled = isShow;
             SpeedUpButton.IsEnabled = isShow;
             SpeedDownButton.IsEnabled = isShow;
-
-            DurationSlider.IsEnabled = isShow;
-
-            if(!isShow)
-            {
-                DurationSlider.Minimum = 0;
-                DurationSlider.Maximum = 1;
-                DurationSlider.Value = 0;
-            }
         }
 
         #endregion
@@ -181,17 +176,6 @@ namespace VideoSearch.Views
             PauseButton.IsEnabled = false;
         }
 
-        private void OnStop(object sender, RoutedEventArgs e)
-        {
-            if (_vlcPlayer != null)
-                _vlcPlayer.Stop();
-
-            DurationSlider.Value = 0;
-            DurationSlider.IsEnabled = false;
-
-            ShowPlayer(false);
-        }
-
         private void OnPlay(object sender, RoutedEventArgs e)
         {
             ShowPlayer(true);
@@ -199,6 +183,16 @@ namespace VideoSearch.Views
             if (sender != null)
             {
                 _vlcPlayer.Play();
+
+                //
+                // 保存截图，任务对话框用
+                //
+                var vm = (MovieTaskViewMainModel)this.DataContext;
+
+                if (!File.Exists(vm.movieItem.ThumbnailPath))
+                {
+                    _vlcPlayer.SnapShot(vm.movieItem.ThumbnailPath);
+                }
             }
         }
 
@@ -249,40 +243,9 @@ namespace VideoSearch.Views
         protected void UpdateDuration(long pos)
         {
             _curPos = pos;
-            DurationSlider.Value = pos;
         }
-
-        private void OnMoviePosChanged(object sender, long pos)
-        {
-            DurationSlider.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new UpdateDurationDelegate(UpdateDuration), pos);
-        }
-
-        private void OnMovieDurationChanged(object sender, long duration)
-        {
-            TimeMarker.Duration = new TimeSpan(duration);
-
-            DurationSlider.IsEnabled = true;
-            DurationSlider.SmallChange = 500;
-            DurationSlider.LargeChange = 5000;
-            DurationSlider.Minimum = 0;
-            DurationSlider.Maximum = duration;
-        }
-
-        private void OnMovieStopped(object sender, EventArgs e)
-        {
-            DurationSlider.Value = DurationSlider.Maximum;
-            OnStop(sender, null);
-        }
+        
         #endregion
-
-        private void OnDurationChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (_vlcPlayer != null && _vlcPlayer.VideoTime > 0)
-            {
-                if(DurationSlider.Value != _curPos)
-                    _vlcPlayer.SetPlayerPositionForOuterControl((long)DurationSlider.Value);
-            }
-        }
 
         /// <summary>
         /// 清空标注
@@ -528,6 +491,7 @@ namespace VideoSearch.Views
                 GridCarInfo.Visibility = Visibility.Visible;
             }
         }
+        
     }
 
 }

@@ -24,15 +24,16 @@
             <Border Grid.Row="1">
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center">
-                    <Button Content="取消" Name="btnCancel" 
-                            IsCancel="True" 
-                            Style="{DynamicResource DlgButCancelStyle}"
-                            Margin="0 0 20 0">
-                    </Button>
                     <Button Content="确定" 
                             Name="btnSave" 
                             Click="OnButOk" 
+                            Margin="0 0 20 0"
                             Style="{DynamicResource DlgButOkStyle}"/>
+                    <Button Content="取消" 
+                            Name="btnCancel" 
+                            IsCancel="True" 
+                            Style="{DynamicResource DlgButCancelStyle}">
+                    </Button>
                 </StackPanel>
             </Border>
         </Grid>

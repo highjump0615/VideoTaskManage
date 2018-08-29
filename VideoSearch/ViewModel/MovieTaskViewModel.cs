@@ -65,13 +65,16 @@ namespace VideoSearch.ViewModel
                 if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {
                     MovieTaskSearchItem item = new MovieTaskSearchItem(Owner, response.Element("TaskId").Value, searchDlg.TaskName, MovieTaskType.SearchTask);
-                    Owner.AddItem(item);
+                    await Owner.AddItemAsync(item);
                 }
 
                 Globals.Instance.ShowWaitCursor(false);
 
                 // 跳转到任务列表
                 ShowMovieChargeList();
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -96,24 +99,17 @@ namespace VideoSearch.ViewModel
             Nullable<bool> result = outlineDlg.ShowDialog();
             if (result == true)
             {
-                Globals.Instance.ShowWaitCursor(true);
-
-                var response = await ApiManager.Instance.CreateSummaryTask(
-                    movieItem.VideoId, 
-                    outlineDlg.Sensitivity, 
-                    outlineDlg.RegionType, 
-                    outlineDlg.Region);
-
-                if(response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
-                {
-                    MovieTaskSummaryItem item = new MovieTaskSummaryItem(Owner, response.Element("TaskId").Value, outlineDlg.TaskName, MovieTaskType.OutlineTask);
-                    Owner.AddItem(item);
-                }
-
-                Globals.Instance.ShowWaitCursor(false);
+                await movieItem.CreateTaskOutline(
+                    outlineDlg.Sensitivity,
+                    outlineDlg.RegionType,
+                    outlineDlg.Region,
+                    outlineDlg.TaskName);
 
                 // 跳转到任务列表
                 ShowMovieChargeList();
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -137,6 +133,8 @@ namespace VideoSearch.ViewModel
             Nullable<bool> result = compressDlg.ShowDialog();
             if (result == true)
             {
+                Globals.Instance.ShowWaitCursor(true);
+
                 var response = await ApiManager.Instance.CreateCompressTask(
                     movieItem.VideoId, 
                     compressDlg.Thickness, 
@@ -147,8 +145,16 @@ namespace VideoSearch.ViewModel
                 if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
                 {
                     MovieTaskCompressItem item = new MovieTaskCompressItem(Owner, response.Element("TaskId").Value, compressDlg.TaskName, MovieTaskType.CompressTask);
-                    Owner.AddItem(item);
+                    await Owner.AddItemAsync(item);
                 }
+
+                Globals.Instance.ShowWaitCursor(false);
+
+                // 跳转到任务列表
+                ShowMovieChargeList();
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -179,6 +185,9 @@ namespace VideoSearch.ViewModel
                 await Owner.DeleteSelectedItemAsync();
 
                 Globals.Instance.ShowWaitCursor(false);
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 

@@ -9,6 +9,7 @@ using VideoSearch.Windows;
 using System.Xml.Linq;
 using VideoSearch.Utils;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace VideoSearch.Model
 {
@@ -62,19 +63,25 @@ namespace VideoSearch.Model
 
         private void FillDataFromXml(XElement videoInfo, bool progessOnly = false)
         {
-            if (!progessOnly)
+            try
             {
-                SubmitTime = GMTTimeToString(StringUtils.String2Int64(videoInfo.Element("SubmitTime").Value));
-                OrgPath = videoInfo.Element("FilePath").Value;
-                CvtPath = videoInfo.Element("CvtPath").Value;
-                ThumbnailPath = videoInfo.Element("FirstFrameBmp").Value;
-                MovieLength = StringUtils.String2UInt64(videoInfo.Element("FileSize").Value);
+                if (!progessOnly)
+                {
+                    SubmitTime = GMTTimeToString(StringUtils.String2Int64(videoInfo.Element("SubmitTime").Value));
+                    OrgPath = videoInfo.Element("FilePath").Value;
+                    MovieLength = StringUtils.String2UInt64(videoInfo.Element("FileSize").Value);
+                    //ThumbnailPath = videoInfo.Element("FirstFrameBmp").Value;
+                    //CvtPath = videoInfo.Element("CvtPath").Value;                    
 
-                State = (ConvertStatus)StringUtils.String2Int(videoInfo.Element("TranscodeStatus").Value);
+                    //State = (ConvertStatus)StringUtils.String2Int(videoInfo.Element("TranscodeStatus").Value);
+                }
+
+                // 转码百分比是10~100%
+                //Progress = 0.1 + StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0 * 0.9;
             }
-
-            // 转码百分比是10~100%
-            Progress = 0.1 + StringUtils.String2Double(videoInfo.Element("Progress").Value) / 100.0 * 0.9;
+            catch (Exception)
+            {
+            }
         }
 
         /// <summary>
@@ -120,8 +127,8 @@ namespace VideoSearch.Model
                     await SubmitVideo();
                 else
                 {
-                    _monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
-                    _monitorThread.Start();
+                    //_monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
+                    //_monitorThread.Start();
                 }
             }
         }
@@ -210,40 +217,28 @@ namespace VideoSearch.Model
             }
         }
 
-        private String _cvtPath = "";
-        public String CvtPath
-        {
-            get { return _cvtPath; }
-            set
-            {
-                if (_cvtPath != value)
-                {
-                    _cvtPath = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("CvtPath"));
-                }
-            }
-        }
+        //private String _cvtPath = "";
+        //public String CvtPath
+        //{
+        //    get { return _cvtPath; }
+        //    set
+        //    {
+        //        if (_cvtPath != value)
+        //        {
+        //            _cvtPath = value;
+        //            OnPropertyChanged(new PropertyChangedEventArgs("CvtPath"));
+        //        }
+        //    }
+        //}
 
-        private String _thumbnailPath = "";
         public String ThumbnailPath
         {
-            get { return _thumbnailPath; }
-            set
+            get
             {
-                String pathPrefix = "D:\\VideoInvestigationDataDB\\CvtFile";
-                String orgPath = _thumbnailPath;
-                if (orgPath.Contains(pathPrefix))
-                    orgPath = orgPath.Remove(0, pathPrefix.Length);
+                var filePathWithExt = OrgPath + ".bmp";
+                String fullPath = ConfigurationManager.AppSettings["dataPathBase"] + "\\OrgFile";
 
-                if (orgPath != value)
-                {
-                    if (value != null)
-                        _thumbnailPath = Path.Combine(pathPrefix, value);
-                    else
-                        _thumbnailPath = "";
-
-                    OnPropertyChanged(new PropertyChangedEventArgs("ThumbnailPath"));
-                }
+                return Path.Combine(fullPath, filePathWithExt);
             }
         }
 
@@ -251,12 +246,12 @@ namespace VideoSearch.Model
         {
             get
             {
-                if (State != ConvertStatus.ConvertedOk || CvtPath == null || CvtPath.Length == 0)
+                if (State != ConvertStatus.ConvertedOk || OrgPath == null || OrgPath.Length == 0)
                     return null;
 
-                String playPath = "D:\\VideoInvestigationDataDB\\CvtFile";
+                String playPath = ConfigurationManager.AppSettings["dataPathBase"] + "\\OrgFile";
 
-                return Path.Combine(playPath, CvtPath);
+                return Path.Combine(playPath, OrgPath);
             }
         }
 
@@ -467,6 +462,14 @@ namespace VideoSearch.Model
             }
         }
 
+        public double OpacityCheck
+        {
+            get
+            {
+                return Opacity == 1.0 ? 1.0 : 0.5;
+            }
+        }
+
         private Thickness _opNameMargin = new Thickness(24, 0, 8, 0);
         public Thickness OpNameMargin
         {
@@ -583,8 +586,8 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Hidden;
                         ProgressBarVisibility = Visibility.Visible;
                         OperationPos = 1;
-                        Opacity = 1.0;
-                        IsEnabled = false;
+                        Opacity = 0.7;
+                        IsEnabled = true;
                     }
                     else if (_state == ConvertStatus.Converting)
                     {
@@ -595,7 +598,7 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Visible;
                         OperationPos = 0;
-                        Opacity = 1.0;
+                        Opacity = 0.7;
                         Remark = "/VideoSearch;component/Resources/Images/Button/MovieImporting.png";
                         IsEnabled = false;
                     }
@@ -620,22 +623,22 @@ namespace VideoSearch.Model
                         ButtonVisibility = Visibility.Visible;
                         ProgressBarVisibility = Visibility.Hidden;
                         OperationPos = 0;
+                        Opacity = 1.0;
                         IsEnabled = true;
                     }
 
-                    if (Table != null)
-                        Table.Update(this);
+                    updateTable();
                 }
             }
         }
         #endregion
 
-        #region Override
-        public override bool ClearFromDB()
+        #region Override (ClearFromDB)
+        public override async Task<bool> ClearFromDBAsync()
         {
             if (VideoId > 0)
             {
-                if(ApiManager.Instance.DeleteVideo(VideoId))
+                if (await ApiManager.Instance.DeleteVideo(VideoId))
                 {
                     return base.ClearFromDB();
                 }
@@ -649,6 +652,9 @@ namespace VideoSearch.Model
         private Thread _importThread = null;
         private Thread _monitorThread = null;
 
+        /// <summary>
+        /// 视频列表操作
+        /// </summary>
         public void Import()
         {
             Console.WriteLine("=== Import start ===");
@@ -741,7 +747,7 @@ namespace VideoSearch.Model
                         write_len += (UInt64)read_len;
 
                         // 复制文件是至10%
-                        Progress = (double)write_len / (double)file_len * 0.1;
+                        Progress = (double)write_len / (double)file_len;
                     } while (write_len < file_len);
 
                     dstStream.Flush();
@@ -811,10 +817,19 @@ namespace VideoSearch.Model
                 {
                     FillDataFromXml(videoInfo);
 
-                    State = ConvertStatus.Converting;
+                    // set thumbnail
 
-                    _monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
-                    _monitorThread.Start();
+                    State = ConvertStatus.ConvertedOk;
+
+                    // 自动分析时，开始摘要任务
+                    var viewMain = Globals.Instance.MainVM.View as MainWindow;
+                    if (viewMain.ToolbarMovieAutoAnalysis.IsSelected)
+                    {
+                        await CreateTaskOutlineAuto();
+                    }                    
+
+                    //_monitorThread = new Thread(new ThreadStart(ConvertMonitorThread));
+                    //_monitorThread.Start();
                 }
             }
             else
@@ -863,5 +878,36 @@ namespace VideoSearch.Model
             return length.ToString() + "B";
         }
         #endregion
+
+        public async Task CreateTaskOutline(string sensitivity, int regionType, Rect region, string name)
+        {
+            Globals.Instance.ShowWaitCursor(true);
+
+            var response = await ApiManager.Instance.CreateSummaryTask(VideoId, sensitivity, regionType, region);
+
+            if (response != null && StringUtils.String2Int(response.Element("State").Value) == 0)
+            {
+                MovieTaskSummaryItem item = new MovieTaskSummaryItem(this, 
+                    response.Element("TaskId").Value, 
+                    name,
+                    MovieTaskType.OutlineTask);
+                await AddItemAsync(item);
+            }
+
+            Globals.Instance.ShowWaitCursor(false);
+        }
+
+        private async Task CreateTaskOutlineAuto()
+        {            
+            await CreateTaskOutline(
+                "2",    // 白天
+                0,
+                new Rect(),
+                ""      // 名称，默认
+            );
+
+            // update tree
+            Globals.Instance.MainVM.updateTreeList();
+        }
     }
 }

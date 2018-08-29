@@ -23,19 +23,19 @@
 					CanUserResizeRows="False" CanUserAddRows="False">
 
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn  Header="" Width="71*"
+                        <DataGridTemplateColumn  Header="" Width="50"
 							CellTemplate="{StaticResource CheckColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="序号" Width="91*"
+                        <DataGridTemplateColumn  Header="序号" Width="60"
 							CellTemplate="{StaticResource OrderColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="案件编号" Width="131*"
+                        <DataGridTemplateColumn  Header="案件编号" Width="170"
 							CellTemplate="{StaticResource IDColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="案件名称" Width="201*"
+                        <DataGridTemplateColumn  Header="案件名称" Width="180"
 							CellTemplate="{StaticResource NameColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="创建日期" Width="151*"
+                        <DataGridTemplateColumn  Header="创建日期" Width="120"
 							CellTemplate="{StaticResource DateColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="备注" Width="131*"
+                        <DataGridTemplateColumn  Header="备注" Width="*" MinWidth="260"
 							CellTemplate="{StaticResource RemarkColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="操作" Width="164*"
+                        <DataGridTemplateColumn  Header="操作" Width="100"
 							CellTemplate="{StaticResource OperationColumnTemplate}" />
 
                     </DataGrid.Columns>

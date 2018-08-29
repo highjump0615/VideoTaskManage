@@ -10,5 +10,9 @@
 
     <!-- 标注信息 -->
     <GridLength x:Key="LabelInfoNameWidth">90</GridLength>
+    
+    <!-- 案件添加对话框 -->
+    <GridLength x:Key="WidthAddDlgItemLabel">108</GridLength>
+    <system:Double x:Key="TopMarginAddDlg">10</system:Double>
 
 </ResourceDictionary>

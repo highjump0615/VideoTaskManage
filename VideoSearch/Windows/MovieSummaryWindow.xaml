@@ -24,14 +24,12 @@
             <Grid>
                 <Border Background="#FF464646" BorderBrush="#FF262626" BorderThickness="0,1" />
 
-                <Grid Height="32" Margin="140,0">
-
+                <Grid Margin="140,0" VerticalAlignment="Center">
                     <TextBlock HorizontalAlignment="Left" Text="视频任务" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
-                    <TextBox Name="TaskNameEditor" Text=""
-                             Padding="8" Width="356"  
-                             TextAlignment="Left" HorizontalAlignment="Right"
-                             FontSize="14" 
-                             Background="#FF646361" BorderBrush="#FF262626" Foreground="White"  />
+                    <TextBox Name="TaskNameEditor" 
+                             Style="{StaticResource DialogTextInputStyle}"
+                             Width="356"  
+                             HorizontalAlignment="Right" />
                 </Grid>
             </Grid>
 
@@ -101,9 +99,20 @@
                             <ColumnDefinition Width="20*" />
                             <ColumnDefinition Width="85*" />
                         </Grid.ColumnDefinitions>
-                        <Button Content="取消" Name="btnCancel" Foreground="White" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}">
+                        <Button 
+                            Grid.Column="2" 
+                            Content="取消" 
+                            Name="btnCancel" 
+                            Focusable="False" 
+                            IsCancel="True" 
+                            Style="{DynamicResource BrownButtonStyle}">
                         </Button>
-                        <Button Content="提交" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" Click="OnApply" Style="{DynamicResource GreenButtonStyle}">
+                        <Button 
+                            Content="提交" 
+                            Name="btnSave" 
+                            Focusable="False" 
+                            Click="OnApply" 
+                            Style="{DynamicResource GreenButtonStyle}">
                         </Button>
                     </Grid>
 

@@ -17,7 +17,7 @@ namespace VideoSearch.ViewModel
                 bool bProgress = true;
                 switch (taskItem.State)
                 {
-                    case MovieTaskState.Created:
+                    case MovieTaskState.CreateFail:
                         strNotice = "任务处理失败，请重新提交任务";
                         bProgress = false;
                         break;
@@ -42,21 +42,6 @@ namespace VideoSearch.ViewModel
                 Contents = new PanelViewTaskCompressModel(Owner);
             else
                 Contents = new PanelViewListModel(Owner);
-        }
-        
-        public void Export()
-        {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "Export";
-            dlg.DefaultExt = ".avi";
-            dlg.Filter = "Text documents (.avi)|*.AVI";
-
-            Nullable<bool> result = dlg.ShowDialog();
-
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-            }
         }
 
         #endregion

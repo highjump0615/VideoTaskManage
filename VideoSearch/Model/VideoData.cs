@@ -17,7 +17,7 @@ namespace VideoSearch.Model
 
             SetLevel(0);
 
-            ItemNamePrefix = "Event";
+            ItemNamePrefix = "案件";
 
             ItemsTable = EventTable.Table;
         }

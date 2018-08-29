@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using VideoSearch.Database;
 using VideoSearch.Model;
+using VideoSearch.Utils;
 
 namespace VideoSearch.Windows
 {
@@ -141,6 +142,17 @@ namespace VideoSearch.Windows
         #region Handler
         private void OnSelectCoordinateFromMap(object sender, RoutedEventArgs e)
         {
+            if (!AppUtils.CheckForInternetConnection())
+            {
+                // 提示
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "连接不到网络，无法显示地图",
+                    "请链接网络",
+                    MessageBoxButton.OK, MessageBoxImage.Stop);
+
+                return;
+            }
+
             MapAddLocationWindow mapDlg = new MapAddLocationWindow(this.CameraLatitude, this.CameraLongitude);
             mapDlg.Owner = this;
 

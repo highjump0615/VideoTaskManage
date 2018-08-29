@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using VideoSearch.Model;
 using VideoSearch.ViewModel;
+using VideoSearch.Views.PlayView;
+using VideoSearch.Windows;
 using vlcPlayerLib;
 
 namespace VideoSearch.Views
 {
-    public partial class PanelViewTaskCompressView : UserControl
+    public partial class PanelViewTaskCompressView : PlayerViewBase
     {
-        private vlcPlayer _vlcPlayer = null;
         private long _curPos = 0;
 
         public PanelViewTaskCompressView()
@@ -19,13 +23,12 @@ namespace VideoSearch.Views
             InitializeComponent();
 
             Unloaded += OnUnLoad;
-
         }
 
         public void OnUnLoad(object sender, RoutedEventArgs e)
         {
             Unloaded -= OnUnLoad;
-            _vlcPlayer.Stop();
+            OnStop(sender, e);
         }
 
         #region Utility
@@ -36,9 +39,11 @@ namespace VideoSearch.Views
         }
 
 
-        private void ShowPlayer(bool isShow)
+        protected override void ShowPlayer(bool isShow)
         {
-            PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
+            base.ShowPlayer(isShow);
+
+            //PlayerPanel.Visibility = isShow ? Visibility.Visible : Visibility.Hidden;
 
             PlayButton.IsEnabled = !isShow;
             PauseButton.IsEnabled = isShow;
@@ -48,15 +53,6 @@ namespace VideoSearch.Views
             GotoEndButton.IsEnabled = isShow;
             SpeedUpButton.IsEnabled = isShow;
             SpeedDownButton.IsEnabled = isShow;
-
-            DurationSlider.IsEnabled = isShow;
-
-            if (!isShow)
-            {
-                DurationSlider.Minimum = 0;
-                DurationSlider.Maximum = 1;
-                DurationSlider.Value = 0;
-            }
         }
 
         #endregion
@@ -68,17 +64,6 @@ namespace VideoSearch.Views
 
             PlayButton.IsEnabled = true;
             PauseButton.IsEnabled = false;
-        }
-
-        private void OnStop(object sender, RoutedEventArgs e)
-        {
-            if (_vlcPlayer != null)
-                _vlcPlayer.Stop();
-
-            DurationSlider.Value = 0;
-            DurationSlider.IsEnabled = false;
-
-            ShowPlayer(false);
         }
 
         private void OnPlay(object sender, RoutedEventArgs e)
@@ -137,26 +122,6 @@ namespace VideoSearch.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            ////string moviepath = moviesource.text;
-            ////if (moviepath != null && moviepath.length > 0)
-            ////{
-            ////    var task = initplayerasync();
-            ////    //_vlcplayer.setvideoinfo(moviepath, true);
-
-            ////    //// 浓缩物体显示
-            ////    ////list<string> listpath = new list<string>();
-            ////    ////listpath.add(@"e:\work\project\video\test\1.xml");
-            ////    ////vlcplayer1.setwushibiaoinfo(true, listpath);
-
-            ////    //playerpanel.child = _vlcplayer;
-
-            ////    //onplay(sender, e);
-            ////}
-            ////else
-            ////{
-            ////    onstop(this, null);
-            ////    playbutton.isenabled = false;
-            ////}
         }
 
         /// <summary>
@@ -171,26 +136,68 @@ namespace VideoSearch.Views
             var vm = (PanelViewTaskCompressModel)this.DataContext;
             if (!String.IsNullOrEmpty(vm.taskItem.CompressedPlayPath))
             {
+                // 检查视频文件是否存在
+                if (!File.Exists(vm.taskItem.CompressedPlayPath))
+                {
+                    // 显示提示
+                    Globals.Instance.MainVM.ShowWorkMask("浓缩视频不存在", false);
 
-                // 重新加载需要延迟
-                await Task.Delay(20);
+                    DisablePlayer();
+                }
+                else
+                {
+                    // 重新加载需要延迟
+                    await Task.Delay(100);
 
-                _vlcPlayer.SetVideoInfo(vm.taskItem.CompressedPlayPath, true);
-                OnPlay(this, null);
+                    _vlcPlayer.SetVideoInfo(vm.taskItem.CompressedPlayPath, true);
+
+                    //
+                    // 时间轴加载标注信息
+                    //
+                    axEventBarClearEvent();
+
+                    for (int i = 0; i < vm.taskItem.objInfos.Count; i++)
+                    {
+                        if (vm.taskItem.objInfos[i].sumVideoStartTimeStamp != vm.taskItem.objInfos[i].sumVideoEndTimeStamp)
+                        {
+                            axEventBarAddEvent((i + 1).ToString(), 
+                                "", 
+                                (vm.taskItem.objInfos[i].sumVideoStartTimeStamp).ToString(), 
+                                (vm.taskItem.objInfos[i].sumVideoEndTimeStamp).ToString());
+                        }
+                    }
+                    
+
+                    // 浓缩物体显示
+                    List<string> listPath = new List<string>();
+                    if (!String.IsNullOrEmpty(vm.taskItem.CompresseInfoXmlPath))
+                    {
+                        listPath.Add(vm.taskItem.CompresseInfoXmlPath);
+                    }
+                    _vlcPlayer.SetWuShiBiaoInfo(true, listPath);
+
+                    OnPlay(this, null);
+                }
             }
             else {
-                OnStop(this, null);
-                PlayButton.IsEnabled = false;
+                DisablePlayer();
             }
 
             Globals.Instance.ShowWaitCursor(false);
         }
 
-        protected void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void DisablePlayer()
         {
-            if (e.NewValue is PanelViewTaskCompressModel)
+            OnStop(this, null);
+            PlayButton.IsEnabled = false;
+        }
+
+        protected new void onDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            base.onDataContextChanged(sender, e);
+
+            if (e.NewValue is PanelViewTaskCompressModel vm)
             {
-                var vm = (PanelViewTaskCompressModel)e.NewValue;
                 vm.View = this;
 
                 var task = vm.InitTaskResult();
@@ -200,25 +207,44 @@ namespace VideoSearch.Views
         /// <summary>
         /// 播放器初始化
         /// </summary>
-        public void InitPlayer()
+        public override void InitPlayer()
         {
             // 初始化播放器
             ClearPlayer();
 
-            if (_vlcPlayer == null)
-            {
-                _vlcPlayer = new vlcPlayer();
-                _vlcPlayer.SetIntiTimeInfo(false);
-                _vlcPlayer.SetControlPanelTimer(false);
+            base.InitPlayer();
 
-                _vlcPlayer.VideoDurationChanged += OnMovieDurationChanged;
-                _vlcPlayer.VideoPositionChanged += OnMoviePosChanged;
-                _vlcPlayer.PlayerStopped += OnMovieStopped;
+            // 针对视频标注框内任意视频单独播放
+            _vlcPlayer.OrgVideoStartEndTime += new vlcPlayer.OrgVideoHandle(OnOrgVideoStartEndTime);
 
-                PlayerPanel.Child = _vlcPlayer;
-            }
+            PlayerPanel.Child = _vlcPlayer;
+            TrackBarPanel.Child = _trackBar;
+
+            controlEffect.initEffect(this);
 
             var taskInit = InitPlayerAsync();
+        }
+
+        private async void OnOrgVideoStartEndTime(long orgVideoStartTime, long orgVideoEndTime)
+        {
+            // 暂停播放
+            OnPause(null, null);
+
+            Console.WriteLine($"PanelViewTaskCompressView --- OnOrgVideoStartEndTime ({orgVideoStartTime}, {orgVideoEndTime})");
+
+            // 获取所属视频
+            var vm = (PanelViewTaskCompressModel)this.DataContext;
+            var movie = vm.taskItem.Parent as MovieItem;
+
+            // 是否已获取
+            if (!movie.IsFetched())
+            {
+                await movie.InitFromServer(true);
+            }
+
+            PlayerWindow.PlayMovie(movie.Name, movie.PlayPath, orgVideoStartTime, orgVideoEndTime);
+
+            // 播放对话框关闭，继续播放
         }
 
         /// <summary>
@@ -232,52 +258,52 @@ namespace VideoSearch.Views
         protected void UpdateDuration(long pos)
         {
             _curPos = pos;
-            DurationSlider.Value = pos;
         }
 
-        private void OnMoviePosChanged(object sender, long pos)
-        {
-            DurationSlider.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new UpdateDurationDelegate(UpdateDuration), pos);
-        }
-
-        private void OnMovieDurationChanged(object sender, long duration)
-        {
-            TimeMarker.Duration = new TimeSpan(duration);
-
-            DurationSlider.IsEnabled = true;
-            DurationSlider.SmallChange = 500;
-            DurationSlider.LargeChange = 5000;
-            DurationSlider.Minimum = 0;
-            DurationSlider.Maximum = duration;
-        }
-
-        private void OnMovieStopped(object sender, EventArgs e)
-        {
-            DurationSlider.Value = DurationSlider.Maximum;
-            OnStop(sender, null);
-        }
         #endregion
 
-        private void OnDurationChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ChkTarget_Checked(object sender, RoutedEventArgs e)
         {
-            if (_vlcPlayer.VideoTime > 0)
+            setPlayerTargetShow(true);
+        }
+
+        private void ChkTarget_Unchecked(object sender, RoutedEventArgs e)
+        {
+            setPlayerTargetShow(false);
+        }
+
+        /// <summary>
+        /// 显示/隐藏物标
+        /// </summary>
+        /// <param name="show"></param>
+        private void setPlayerTargetShow(bool show)
+        {
+            if (_vlcPlayer != null)
             {
-                if (_vlcPlayer.VideoTime > 0)
-                {
-                    if (DurationSlider.Value != _curPos)
-                        _vlcPlayer.SetPlayerPositionForOuterControl((long)DurationSlider.Value);
-                }
+                _vlcPlayer.SetWubiaoShow(show);
             }
         }
 
-        private void OnClear(object sender, RoutedEventArgs e)
+        private void ChkTime_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            setPlayerTimeShow(false);
         }
 
-        private void OnSave(object sender, RoutedEventArgs e)
+        private void ChkTime_Checked(object sender, RoutedEventArgs e)
         {
+            setPlayerTimeShow(true);
+        }
 
+        /// <summary>
+        /// 显示/隐藏时标
+        /// </summary>
+        /// <param name="show"></param>
+        private void setPlayerTimeShow(bool show)
+        {
+            if (_vlcPlayer != null)
+            {
+                _vlcPlayer.SetShibiaoShow(show);
+            }
         }
     }
 }

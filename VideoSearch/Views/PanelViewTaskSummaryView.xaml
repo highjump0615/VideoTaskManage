@@ -78,83 +78,81 @@
                     <Separator Background="Black" Margin="0"/>
                     <Separator Background="#FF3B3B3B" Margin="0" Grid.Row="1"/>
                     <Border CornerRadius="0,0,3,3" Background="#FF323232" BorderThickness="0" Grid.Row="2">
-
+                        <TextBlock Style="{StaticResource TaskResultNoticeStyle}"
+                                   Text="无摘要结果，请使用有效视频再试" 
+                                   Visibility="{Binding NoticeVisible}"/>
                     </Border>
-                    <ItemsControl Margin="15,0"
-                                Grid.Row="2"
-                              ItemsSource="{Binding Path=Snapshots}" 
-                              HorizontalContentAlignment="Stretch" 
-                              VerticalContentAlignment="Stretch" 
-                              VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <ItemsControl.Template>
-                            <ControlTemplate TargetType="ItemsControl">
-                                <Border>
-                                    <WrapPanel Orientation="Horizontal"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Center">
-                                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer Grid.Row="2" 
+                                  VerticalScrollBarVisibility="Auto">
+                        <ItemsControl Margin="15,0"
+                                      ItemsSource="{Binding Path=Snapshots}" 
+                                      Visibility="{Binding GridVisible}">
+                            <ItemsControl.Template>
+                                <ControlTemplate TargetType="ItemsControl">
+                                    <Border>
+                                        <WrapPanel Orientation="Horizontal">
                                             <ItemsPresenter/>
-                                        </ScrollViewer>
-                                    </WrapPanel>
-                                </Border>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="{Binding Path=Width}" Height="{Binding Path=Height}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition Height="1"/>
-                                        <RowDefinition Height="1"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Grid Margin="5,0">
+                                        </WrapPanel>
+                                    </Border>
+                                </ControlTemplate>
+                            </ItemsControl.Template>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="{Binding Path=Width}" Height="{Binding Path=Height}">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="20"/>
                                             <RowDefinition />
-                                            <RowDefinition Height="55"/>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="1"/>
                                         </Grid.RowDefinitions>
-                                        <Border Grid.Row="1"
-                                            CornerRadius="2">
-                                            <Border.Background>
-                                                <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail.png"/>
-                                            </Border.Background>
-                                        </Border>
 
-                                        <Border Grid.Row="1"
-                                                CornerRadius="2"
-                                                Background="Black"
-                                                Visibility="{Binding BlackBGVisible, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Grid Margin="5,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition />
+                                                <RowDefinition Height="55"/>
+                                            </Grid.RowDefinitions>
+                                            <Border Grid.Row="1"
+                                                CornerRadius="2">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="/VideoSearch;component/Resources/Images/View/MovieProcess/Thumbnail.png"/>
+                                                </Border.Background>
+                                            </Border>
 
-                                        <Border Grid.Row="1"
-                                                CornerRadius="2"
-                                                Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
-                                                BorderThickness="{Binding BorderThickness, UpdateSourceTrigger=PropertyChanged}"
-                                                BorderBrush="Black">
-                                            <Border.Background>
-                                                <ImageBrush ImageSource="{Binding PicPath}" Viewbox="{Binding ViewPort, UpdateSourceTrigger=PropertyChanged}"/>
-                                            </Border.Background>
-                                        </Border>
+                                            <Border Grid.Row="1"
+                                                    CornerRadius="2"
+                                                    Background="Black"
+                                                    Visibility="{Binding BlackBGVisible, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                            <Border Grid.Row="1"
+                                                    CornerRadius="2"
+                                                    Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                                    BorderThickness="{Binding BorderThickness, UpdateSourceTrigger=PropertyChanged}"
+                                                    BorderBrush="Black">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="{Binding PicPath}" Viewbox="{Binding ViewPort, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </Border.Background>
+                                            </Border>
                                         
-                                        <TextBlock Grid.Row="2" Text="{Binding PicTitle}"
-                                               FontSize="16" 
-                                               Height="18" Margin="8,8" Foreground="White" 
-                                               TextAlignment="Center" 
-                                               VerticalAlignment="Center" IsHitTestVisible="False" />
+                                            <TextBlock Grid.Row="2" Text="{Binding PicTitle}"
+                                                   FontSize="16" 
+                                                   Height="18" Margin="8,8" Foreground="White" 
+                                                   TextAlignment="Center" 
+                                                   VerticalAlignment="Center" IsHitTestVisible="False" />
+                                        </Grid>
+
+                                        <Separator Background="Black" Margin="0" Grid.Row="1"/>
+                                        <Separator Background="#FF3B3B3B" Margin="0" Grid.Row="2"/>
+
                                     </Grid>
-
-                                    <Separator Background="Black" Margin="0" Grid.Row="1"/>
-                                    <Separator Background="#FF3B3B3B" Margin="0" Grid.Row="2"/>
-
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </Grid>
             </Grid>
 

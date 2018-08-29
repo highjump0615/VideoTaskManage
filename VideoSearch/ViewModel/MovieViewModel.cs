@@ -20,14 +20,13 @@ namespace VideoSearch.ViewModel
         protected void updateList()
         {
             if (Contents == null || 
-                Contents.GetType() == typeof(MovieViewPlayModel) ||
-                Contents.GetType() == typeof(MovieViewAnalysisModel))
+                Contents.GetType() == typeof(MovieViewPlayModel))
             {
                 Contents = new MovieViewListModel(Owner);
             }
         }
 
-        public void ImportMovie()
+        public async void ImportMovie()
         {
             if (Owner == null)
                 return;
@@ -48,8 +47,11 @@ namespace VideoSearch.ViewModel
                 
                 foreach (String filePath in filenames)
                 {
-                    Owner.AddItem(new MovieItem(Owner, filePath));
+                    await Owner.AddItemAsync(new MovieItem(Owner, filePath));
                 }
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -64,6 +66,26 @@ namespace VideoSearch.ViewModel
             if (Owner == null || !Owner.HasCheckedItem)
                 return;
 
+            var bHasChildren = false;
+            foreach (MovieItem mv in Owner)
+            {
+                if (mv.IsChecked && mv.Children.Count > 0)
+                {
+                    bHasChildren = true;
+                    break;
+                }
+            }
+
+            if (bHasChildren)
+            {
+                MessageBox.Show(Globals.Instance.MainVM.View as MainWindow,
+                    "此视频内含任务，无法删除有内容的视频",
+                    "提示",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
             ConfirmDeleteWindow deleteDlg = new ConfirmDeleteWindow();
 
             Nullable<bool> result = deleteDlg.ShowDialog();
@@ -76,6 +98,9 @@ namespace VideoSearch.ViewModel
                 Owner.DeleteSelectedItem();
 
                 Globals.Instance.ShowWaitCursor(false);
+
+                // update tree
+                Globals.Instance.MainVM.updateTreeList();
             }
         }
 
@@ -95,7 +120,7 @@ namespace VideoSearch.ViewModel
 
             if(movieList.Count == 0)
             {
-                MessageBox.Show("Please check the movie now, you want to play!");
+                MessageBox.Show("无选择视频，请勾选要播放的视频", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -109,7 +134,6 @@ namespace VideoSearch.ViewModel
 
         public void ShowMovieAnalysis()
         {
-            Contents = new MovieViewAnalysisModel();
         }
         #endregion
     }

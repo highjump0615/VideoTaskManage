@@ -18,5 +18,15 @@ namespace VideoSearch.Windows
         {
             DialogResult = true;
         }
+
+        public void setMessage(string text, bool showIcon = false)
+        {
+            Msg.Text = text;
+            if (!showIcon)
+            {
+                // 隐藏图标
+                Icon.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

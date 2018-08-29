@@ -34,13 +34,22 @@ namespace VideoSearch.Windows
             this.Longitude = lng;
 
             _wbo = new WebBrowserOverlay(bdMap);
-            _wbo.webBrowser.Navigate(Path.Combine(Environment.CurrentDirectory, "Map\\addLocation.html"));
+
+            // Load HTML document as a stream
+            Uri uri = new Uri(@"pack://application:,,,/Map/addLocation.html", UriKind.Absolute);
+            Stream source = Application.GetResourceStream(uri).Stream;
+            // Navigate to HTML document stream
+            _wbo.webBrowser.NavigateToStream(source);
 
             _wbo.webBrowser.LoadCompleted += new LoadCompletedEventHandler(BrowserLoadCompleted);
         }
 
         private void BrowserLoadCompleted(object sender, NavigationEventArgs e)
         {
+            // 标注图片路径
+            var strMark = Path.Combine(Environment.CurrentDirectory, "Map\\map-marker.png");
+            _wbo.webBrowser.InvokeScript("setMarkerImg", strMark);
+
             // 地图移动到指定位置
             _wbo.webBrowser.InvokeScript("moveToPosition", this.Latitude, this.Longitude);
         }

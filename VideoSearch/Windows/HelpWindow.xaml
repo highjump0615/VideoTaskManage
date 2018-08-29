@@ -13,11 +13,57 @@
         <SkinFrame:AssistFrame Margin="0" ShadowSize="6" Opacity="0.9" />
         <Grid Margin="30,20,30,30" x:Name="grid1" IsHitTestVisible="False">
             <Image Height="40" HorizontalAlignment="Left" Margin="0" x:Name="HelpIcon" Stretch="Fill" VerticalAlignment="Top" Width="105" Source="/VideoSearch;component/Resources/Images/View/Help/HelpIcon.png" IsHitTestVisible="False" />
-            <TextBlock Height="32" Margin="132,8,0,0" x:Name="HelpTitle" Text="瑞源 VDEC 视频检索系统" VerticalAlignment="Top" HorizontalAlignment="Left" Width="297" TextAlignment="Left" Foreground="White" FontSize="26" IsHitTestVisible="False" />
-            <TextBlock FontSize="12" Foreground="White" Height="12" HorizontalAlignment="Left" Margin="0,72,0,0" x:Name="txtDate" Text="版本号: 2017.2.6.78" TextAlignment="Left" VerticalAlignment="Top" Width="120" IsHitTestVisible="False" Opacity="0.8" />
-            <TextBlock FontSize="12" Foreground="White" Height="12" HorizontalAlignment="Left" Margin="0,100,0,0" x:Name="txtCreator" Text="授权状态: 已授权" TextAlignment="Left" VerticalAlignment="Top" Width="120" IsHitTestVisible="False" Opacity="0.8" />
+            
+            <!-- 标题 -->
+            <TextBlock 
+                Margin="132,8,0,0" 
+                x:Name="HelpTitle" 
+                Text="瑞源 VDEC 视频检索系统" 
+                VerticalAlignment="Top" HorizontalAlignment="Left" 
+                Foreground="White" 
+                FontSize="26" 
+                IsHitTestVisible="False" />
+            
+            <TextBlock 
+                FontSize="12" 
+                Foreground="White" 
+                HorizontalAlignment="Left" VerticalAlignment="Top" 
+                Margin="0,72,0,0" 
+                x:Name="txtDate" 
+                Text="版本号: 2017.2.6.78" 
+                IsHitTestVisible="False" 
+                Opacity="0.8" />
+            <StackPanel 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
+                Margin="0,100,0,0"
+                IsHitTestVisible="False" 
+                Opacity="0.8">
+                <TextBlock 
+                    FontSize="12" 
+                    Foreground="White" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top"                    
+                    x:Name="txtCreator" 
+                    Text="授权状态: 已授权"  />
+                <TextBlock 
+                    Name="txtExpire"
+                    FontSize="11"
+                    Text="（至2018-09-08）"
+                    Foreground="White"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+
             <Separator Height="5" Margin="0,122,0,0" x:Name="separator1" VerticalAlignment="Top" IsHitTestVisible="False" />
-            <TextBlock FontSize="12" Foreground="White" Margin="0,156,0,0" x:Name="txtDescription" Text="" TextAlignment="Left" TextWrapping="NoWrap" TextTrimming="WordEllipsis" Opacity="0.8" />
+            
+            <TextBlock 
+                FontSize="12" 
+                Foreground="White" 
+                Margin="0,156,0,0" 
+                x:Name="txtDescription" 
+                TextWrapping="NoWrap" 
+                TextTrimming="WordEllipsis" 
+                Opacity="0.8" />
         </Grid>
         <SkinControl:SkinButton HorizontalAlignment="Right" Margin="0,18,20,0" x:Name="btnClose" Width="24" Height="24" VerticalAlignment="Top" Click="OnClose" NormalImage="/VideoSearch;component/Resources/Images/Button/dlg_close_normal.png" OverImage="/VideoSearch;component/Resources/Images/Button/dlg_close_over.png" PressedImage="/VideoSearch;component/Resources/Images/Button/dlg_close_pressed.png" />
     </Grid>

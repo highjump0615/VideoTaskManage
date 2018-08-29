@@ -107,7 +107,6 @@ namespace VideoSearch.Model
 
         public DetailInfo DetailInfo = null;
 
-        private String _frameInfo = "";
         public String FrameInfo
         {
             get { return $"{DetailInfo.frame}"; }

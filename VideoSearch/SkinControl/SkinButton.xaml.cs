@@ -35,11 +35,13 @@ namespace VideoSearch.SkinControl
         private bool m_isDown = false;
         private bool m_isOver = false;
         private bool m_isAltState = false;
+        private bool m_isSelected = false;
 
         private BitmapSource m_OverImage = null;
         private BitmapSource m_NormalImage = null;
         private BitmapSource m_PressedImage = null;
         private BitmapSource m_DisabledImage = null;
+        private BitmapSource m_SelectedImage = null;
 
         private BitmapSource m_AltOverImage = null;
         private BitmapSource m_AltNormalImage = null;
@@ -275,6 +277,11 @@ namespace VideoSearch.SkinControl
                         else if (m_NormalImage != null)
                             drawingContext.DrawImage(m_NormalImage, rtImage);
                     }
+                }
+
+                if (m_isSelected)
+                {
+                    drawingContext.DrawImage(m_SelectedImage, rtImage);
                 }
             }
             else
@@ -522,6 +529,21 @@ namespace VideoSearch.SkinControl
 
         [Bindable(true)]
         [Category("SkinButton")]
+        public BitmapSource SelectedImage
+        {
+            get
+            {
+                return m_SelectedImage;
+            }
+            set
+            {
+                m_SelectedImage = value;
+                Refresh();
+            }
+        }
+
+        [Bindable(true)]
+        [Category("SkinButton")]
         public BitmapSource OverImage
         {
             get
@@ -700,6 +722,21 @@ namespace VideoSearch.SkinControl
             {
                 m_isAltState = value;
 
+                Refresh();
+            }
+        }
+
+        [Bindable(true)]
+        [Category("SkinButton")]
+        public bool IsSelected
+        {
+            get
+            {
+                return m_isSelected;
+            }
+            set
+            {
+                m_isSelected = value;
                 Refresh();
             }
         }

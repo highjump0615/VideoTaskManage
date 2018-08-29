@@ -24,13 +24,12 @@
             <Grid>
                 <Border Background="#FF464646" BorderBrush="#FF262626" BorderThickness="0,1" />
 
-                <Grid Height="32" Margin="140,0">
+                <Grid Margin="140,0" VerticalAlignment="Center">
                     <TextBlock HorizontalAlignment="Left" Text="视频任务" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
-                    <TextBox Name="TaskNameEditor" Text=""
-                             Padding="8" Width="356"  
-                             TextAlignment="Left" HorizontalAlignment="Right"
-                             FontSize="14" 
-                             Background="#FF646361" BorderBrush="#FF262626" Foreground="White"  />
+                    <TextBox Name="TaskNameEditor" 
+                             Style="{StaticResource DialogTextInputStyle}"
+                             Width="356"  
+                             HorizontalAlignment="Right" />
                 </Grid>
             </Grid>
 
@@ -60,9 +59,34 @@
                         <Border BorderBrush="#FF262626" BorderThickness="1" Margin="0,7,0,0" />
                         <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Center" Text="浓缩参数" VerticalAlignment="Top" FontSize="14" Width="80" Foreground="White" Background="#FF403F3A"/>
 
-                        <Grid Margin="40,10,15,0" VerticalAlignment="Center" Height="26">
+                        <Grid Margin="40,10,15,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
 
-                            <Slider x:Name="ThicknessSlider" TickPlacement="BottomRight" Style="{DynamicResource SettingSlider}" Maximum="20" SmallChange="1" IsMoveToPointEnabled="True" IsSnapToTickEnabled="True" LargeChange="5" Value="20" />
+                            <TextBlock
+                                Grid.Column="0"
+                                Text="稀疏"
+                                VerticalAlignment="Center"
+                                Foreground="#aaaaaa" />
+                            <Slider Grid.Column="1"
+                                    x:Name="ThicknessSlider" 
+                                    Margin="8 0"
+                                    TickPlacement="BottomRight" 
+                                    Style="{DynamicResource SettingSlider}" 
+                                    Maximum="20" 
+                                    SmallChange="1" 
+                                    IsMoveToPointEnabled="True" 
+                                    IsSnapToTickEnabled="True" 
+                                    LargeChange="5" 
+                                    Value="12" />
+                            <TextBlock
+                                Grid.Column="3"
+                                Text="稠密"
+                                VerticalAlignment="Center"
+                                Foreground="#eeeeee" />
 
                         </Grid>
                     </Grid>
@@ -113,9 +137,20 @@
                             <ColumnDefinition Width="20*" />
                             <ColumnDefinition Width="85*" />
                         </Grid.ColumnDefinitions>
-                        <Button Content="取消" Name="btnCancel" Foreground="White" FontSize="14" Focusable="False" IsCancel="True" Style="{DynamicResource BrownButtonStyle}">
+                        <Button 
+                            Grid.Column="2" 
+                            Content="取消" 
+                            Name="btnCancel" 
+                            Focusable="False" 
+                            IsCancel="True" 
+                            Style="{DynamicResource BrownButtonStyle}">
                         </Button>
-                        <Button Content="提交" Name="btnSave" Foreground="White" FontSize="14" Grid.Column="2" Focusable="False" Click="OnApply" Style="{DynamicResource GreenButtonStyle}">
+                        <Button 
+                            Content="提交" 
+                            Name="btnSave" 
+                            Focusable="False" 
+                            Click="OnApply" 
+                            Style="{DynamicResource GreenButtonStyle}">
                         </Button>
                     </Grid>
 

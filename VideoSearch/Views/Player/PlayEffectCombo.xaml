@@ -1,0 +1,33 @@
+﻿<UserControl 
+    x:Class="VideoSearch.Views.Player.PlayEffectCombo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:VideoSearch.Views.Player"
+    mc:Ignorable="d" 
+    d:DesignHeight="30" d:DesignWidth="100">
+    <Grid>
+        <ComboBox 
+            x:Name="cmbEffect"
+            Style="{StaticResource BlueComboBox}"
+            FontSize="12"
+            Foreground="White"
+            SelectionChanged="cmbEffect_SelectionChanged">
+            <ComboBoxItem Content="去雾" />
+            <ComboBoxItem Content="对比度增强" />
+            <ComboBoxItem Content="直方图均衡" />
+            <ComboBoxItem Content="锐化" />
+            <ComboBoxItem Content="平滑" />
+            <ComboBoxItem Content="关闭" />
+        </ComboBox>
+        <TextBlock 
+            Name="txtComboLabel"
+            Text="效果" 
+            VerticalAlignment="Center"
+            Margin="10 0"
+            FontSize="12"
+            Foreground="White"
+            IsHitTestVisible="False"/>
+    </Grid>
+</UserControl>

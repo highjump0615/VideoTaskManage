@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using VideoSearch.Database;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace VideoSearch.Model
 {
@@ -14,6 +15,8 @@ namespace VideoSearch.Model
 
     public class DataItemBase : ObservableCollection<DataItemBase>, INotifyPropertyChanged, IDisposable
     {
+        public event PropertyChangedEventHandler PropertyChangedEvent;
+
         #region Constructor & Init & Destructor
         public DataItemBase()
         {
@@ -55,6 +58,8 @@ namespace VideoSearch.Model
 
         #region Backend property
         private bool _isEnabled = true;
+        private SemaphoreSlim semaphoreDb = new SemaphoreSlim(1, 1);
+
         public bool IsEnabled
         {
             get { return _isEnabled; }
@@ -398,31 +403,6 @@ namespace VideoSearch.Model
 
         #endregion
 
-        #region Notify Reference
-        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            base.OnCollectionChanged(e);
-
-            SendCollectionChangedNotification(this);
-        }
-
-        public void SendCollectionChangedNotification(DataItemBase item)
-        {
-            if(item != this)
-            {
-                int index = IndexOf(item);
-
-                if (index >= 0)
-                {
-                    Remove(item);
-                    Insert(index, item);
-                }
-            }
-                    
-            if (Parent != null)
-                Parent.SendCollectionChangedNotification(this);
-        }
-        #endregion
 
         #region Common function
 
@@ -460,7 +440,7 @@ namespace VideoSearch.Model
             return null;
         }
 
-        public bool AddItem(DataItemBase newItem, bool needsUpdateDB = true)
+        public async Task<bool> AddItemAsync(DataItemBase newItem, bool needsUpdateDB = true)
         {
             if (newItem == null)
                 return false;
@@ -468,7 +448,7 @@ namespace VideoSearch.Model
             if (GetItem(newItem.ID) != null)
                 return false;
 
-            if (needsUpdateDB && (ItemsTable == null || ItemsTable.Add(newItem) == 0))
+            if (needsUpdateDB && (ItemsTable == null || await ItemsTable.Add(newItem) == 0))
                 return false;
 
             newItem.Parent = this;
@@ -527,6 +507,16 @@ namespace VideoSearch.Model
 
             return true;
         }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+
+            var handler = PropertyChangedEvent;
+            if (handler != null)
+                handler(this, e);
+        }
+
         #endregion
 
         #region Utility for DataTable (LoadItems, ClearFromDB)
@@ -565,6 +555,18 @@ namespace VideoSearch.Model
         }
 
         #endregion
+
+        protected async void updateTable()
+        {
+            if (Table == null)
+            {
+                return;
+            }
+
+            await semaphoreDb.WaitAsync();
+            await Table.Update(this);
+            semaphoreDb.Release();
+        }
 
         #region Utility for Search (GetSearchText)
 

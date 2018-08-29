@@ -1,4 +1,4 @@
-﻿VideoTaskManage
+VideoTaskManage
 ======
 
 > Desktop Application for Video synopsis, search, etc .NET Framework + WPF
@@ -28,9 +28,9 @@
 - 案件详情  
 基础：``CameraViewModel``  
   - 摄像头列表  
-~~``CameraViewListView.xaml``~~ / ~~``CameraViewListModel``~~
-``CameraViewDetailListView.xaml`` / ``CameraViewDetailListModel``  
-  - 摄像头地图查看
+~~``CameraViewListView.xaml``~~ / ~~``CameraViewListModel``~~  
+``CameraViewDetailListView.xaml`` / ``CameraViewDetailListModel``    
+  - 摄像头地图查看  
 ``CameraViewMapView.xaml`` / ``CameraViewMapModel``
   - 标注列表  
 ``PanelViewListView.xaml`` / ``PanelViewListModel``  
@@ -48,25 +48,25 @@
 ##### 2.1.2 视频处理  
 - 添加视频  
 ``MovieViewModel`` -> ``ImportMovie()``  
-- 视频任务  
+- 视频任务    
 基础：``MovieTaskViewModel``  
-  - 视频处理主页面
+  - 视频处理主页面  
 ``MovieTaskViewMainView.xaml`` / ``MovieTaskViewMainModel``
-  - 视频任务列表
+  - 视频任务列表  
 ``MovieTaskViewListView.xaml`` / ``MovieTaskViewListModel``  
   - 视频摘要  
 ``MovieSummaryWindow.xaml``    
   - 视频检索  
 ``MovieSearchWindow.xaml``  
-  - 视频浓缩
-``MovieCompressWindow.xaml``   
+  - 视频浓缩  
+``MovieCompressWindow.xaml``     
 - 视频处理结果  
 基础：``PanelViewModel``  
   - 视频搜索结果  
 ``PanelViewTaskSearchView.xaml`` / ``PanelViewTaskSearchModel``  
   - 视频浓缩结果  
 ``PanelViewTaskCompressView.xaml`` / ``PanelViewTaskCompressModel``  
-  - 视频摘要结果
+  - 视频摘要结果  
 ``PanelViewTaskSummaryView.xaml`` / ``PanelViewTaskSummaryModel``
 
 #### 2.2 功能实现
@@ -128,7 +128,7 @@ AllowsTransparency为True时WebBrower不显示
 [https://blogs.msdn.microsoft.com/changov/2009/01/19/webbrowser-control-on-transparent-wpf-window/](https://blogs.msdn.microsoft.com/changov/2009/01/19/webbrowser-control-on-transparent-wpf-window/)  
 
 - WebBrowser控件样式不兼容问题
-  - 添加meta标签
+  - 添加meta标签  
 ``<meta http-equiv="X-UA-Compatible" content="IE=edge" /> ``
 - IE上自动Allow blocked content setting  
   - ~~``<!-- saved from url=(0014)about:internet -->``~~  

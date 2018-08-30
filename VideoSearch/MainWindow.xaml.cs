@@ -12,6 +12,7 @@ using VideoSearch.Views;
 using VideoSearch.ViewModel.Base;
 using System.IO;
 using System.Threading;
+using System.Linq;
 
 namespace VideoSearch
 {
@@ -665,9 +666,16 @@ namespace VideoSearch
             OnTabChanged(sender, e);
 
             Object viewContents = workView.Content;
-            if (viewContents is CameraViewModel)
+            if (viewContents is CameraViewModel vmWork)
             {
-                ((CameraViewModel)viewContents).ShowLabelTracking();
+                if (vmWork.Contents is PanelViewListModel vmChild)
+                {
+                    // 获取打勾选择的标注
+                    var articlesSelected = vmChild.Articles.Where(x => x.IsChecked == true).ToList();
+
+                    // 显示轨迹查询页面
+                    vmWork.ShowLabelTracking(articlesSelected);
+                }
             }
         }
 

@@ -132,6 +132,8 @@ namespace VideoSearch.ViewModel
 
                 var viewMain = Globals.Instance.MainVM.View as MainWindow;
                 viewMain.ToolbarMarkDelete.IsEnabled = countSelected > 0;
+                viewMain.ToolbarPanelShowPath.IsEnabled = countSelected > 0;
+                viewMain.ToolbarPanelExport.IsEnabled = countSelected > 0;
             }
         }
 
@@ -170,7 +172,7 @@ namespace VideoSearch.ViewModel
         {
             var articlesRemove = Articles.Where(x => x.IsChecked == true).ToList();
 
-            // 没有已选择的，推出
+            // 没有已选择的，退出
             if (articlesRemove.Count <= 0)
             {
                 return;
@@ -200,6 +202,14 @@ namespace VideoSearch.ViewModel
         /// </summary>
         public void Export()
         {
+            var articlesExport = Articles.Where(x => x.IsChecked == true).ToList();
+
+            // 没有已选择的，退出
+            if (articlesExport.Count <= 0)
+            {
+                return;
+            }
+
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "Export";
             dlg.DefaultExt = ".csv";
@@ -218,7 +228,7 @@ namespace VideoSearch.ViewModel
                 var newLine = "ID, 视频ID, 时间点, X, Y, 长度, 宽度, 轨迹说明, 关键词, 目标类型";
                 csv.AppendLine(newLine);
 
-                foreach (ArticleItem item in Articles)
+                foreach (ArticleItem item in articlesExport)
                 {
                     newLine = $"{item.ID}, {item.DetailInfo.videoId}, {item.DetailInfo.frame}, {item.DetailInfo.x}, {item.DetailInfo.y}, {item.DetailInfo.width}, {item.DetailInfo.height}";
                     newLine += $"{item.DetailInfo.desc}, {item.DetailInfo.keyword}, {item.TargetType}";

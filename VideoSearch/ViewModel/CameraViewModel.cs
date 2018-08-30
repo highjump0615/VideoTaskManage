@@ -6,6 +6,7 @@ using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
 using VideoSearch.Windows;
 using VideoSearch.Utils;
+using System.Collections.Generic;
 
 namespace VideoSearch.ViewModel
 {
@@ -161,11 +162,11 @@ namespace VideoSearch.ViewModel
         /// <summary>
         /// 打开轨迹查询
         /// </summary>
-        public void ShowLabelTracking()
+        public void ShowLabelTracking(List<ArticleItem> articles)
         {
             if (AppUtils.CheckForInternetConnection())
             {
-                Contents = new PanelViewPathModel(Owner, this);
+                Contents = new PanelViewPathModel(Owner, this, articles);
             }
             else
             {
@@ -187,12 +188,7 @@ namespace VideoSearch.ViewModel
             // 导出&删除
             viewMain.ToolbarPanelExport.IsEnabled = false;
             viewMain.ToolbarMarkDelete.IsEnabled = false;
-
-            // 标注列表
-            if (Contents is PanelViewListModel)
-            {
-                viewMain.ToolbarPanelExport.IsEnabled = true;
-            }
+            viewMain.ToolbarPanelShowPath.IsEnabled = false;
         }
 
         public override void contentChanged()

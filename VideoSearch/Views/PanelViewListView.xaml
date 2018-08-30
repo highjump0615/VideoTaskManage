@@ -81,17 +81,17 @@
 							CellTemplate="{StaticResource CheckColumnTemplate}" />
                         <DataGridTemplateColumn  Header="序号" Width="50"
 							CellTemplate="{StaticResource OrderColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="摄像头名称" Width="131*"
+                        <DataGridTemplateColumn  Header="摄像头名称" Width="110*"
 							CellTemplate="{StaticResource ArticleCameraNameColumnTemplate}" />
                         <DataGridTemplateColumn  Header="摄像头位置" Width="131*"
 							CellTemplate="{StaticResource ArticleCameraPosColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="视频名称" Width="131*"
+                        <DataGridTemplateColumn  Header="视频名称" Width="111*"
 							CellTemplate="{StaticResource ArticleMovieNameColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="目标对象" Width="131*"
+                        <DataGridTemplateColumn  Header="目标对象" Width="80"
 							CellTemplate="{StaticResource ArticleTargetTypeColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="时间点" Width="162*"
+                        <DataGridTemplateColumn  Header="时间点" Width="100"
 							CellTemplate="{StaticResource ArticleFrameColumnTemplate}" />
-                        <DataGridTemplateColumn  Header="线索内容" Width="112*"
+                        <DataGridTemplateColumn  Header="线索内容" Width="130*"
 							CellTemplate="{StaticResource ArticleDescriptionTemplate}" />
                     </DataGrid.Columns>
 

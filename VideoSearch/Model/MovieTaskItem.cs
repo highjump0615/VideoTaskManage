@@ -411,7 +411,7 @@ namespace VideoSearch.Model
         }
 
 
-        private double _progress = 0.5;
+        private double _progress = 0.523234;
         public double Progress
         {
             get { return _progress; }
@@ -430,7 +430,7 @@ namespace VideoSearch.Model
         {
             get
             {
-                return $"{Progress * 100} %";
+                return $"{(int)(Progress * 100)} %";
             }
         }
 

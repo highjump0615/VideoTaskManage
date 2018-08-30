@@ -80,8 +80,8 @@ namespace VideoSearch.ViewModel
             // 加载标注信息
             var sql = "select Camera.*, Article.*, Article.ID as ArticleID " +
                 "from Article " +
-                "join Movie on Movie.id = Article.videoId " +
-                "join Camera on Camera.id = Movie.cameraPos " +
+                "join Movie on Movie.ID = Article.VideoId " +
+                "join Camera on Camera.ID = Movie.CameraPos " +
                 $"where Camera.eventPos = '{itemEvent.ID}' ";
 
             // 筛选目标类型
@@ -91,7 +91,8 @@ namespace VideoSearch.ViewModel
             }
             if (!string.IsNullOrEmpty(FilterKeyword))
             {
-                sql += $"and Article.Description like '%{FilterKeyword}%' ";
+                sql += $"and (Article.Description like '%{FilterKeyword}%' ";
+                sql += $"or Camera.Name like '%{FilterKeyword}%') ";
             }
 
             Articles.Clear();

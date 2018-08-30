@@ -74,7 +74,7 @@
 
                 <Border x:Name="ExtractorContainer" Grid.Column="1" Margin="0,20,20,20" CornerRadius="2" Background="#B23F4249" BorderBrush="#FF252627" BorderThickness="1">
                     <SkinControl:ModelExtractor x:Name="Extractor" 
-                                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2,2,-2,-2" />
                 </Border>
             </Grid>
         </Grid>

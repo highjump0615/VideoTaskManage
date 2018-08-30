@@ -69,6 +69,8 @@ namespace VideoSearch.Windows
             }
         }
 
+        public string BackgroundImagePath;
+
         private Thickness _extractorMargin;
         public Thickness ExtractorMargin
         {
@@ -145,6 +147,7 @@ namespace VideoSearch.Windows
                 String[] filenames = dlg.FileNames;
                 if(filenames.Length > 0)
                 {
+                    BackgroundImagePath = filenames[0];
                     FileInfo info = new FileInfo(filenames[0]);
 
                     if(info.Length > 1048576 * 7)

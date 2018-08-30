@@ -8,6 +8,12 @@ namespace VideoSearch.ViewModel
     {
         public MovieTaskViewListModel(DataItemBase owner) : base(owner)
         {
+            var movieItem = (MovieItem)owner;
+
+            foreach (MovieTaskItem taskItem in movieItem.Children)
+            {
+                var task = taskItem.InitFromServer();
+            }
         }
     }
 }

@@ -13,10 +13,15 @@ namespace VideoSearch.ViewModel
         private Object _parentViewModel;
         private EventItem parentItem;
 
-        public PanelViewPathModel(DataItemBase owner, Object parentViewModel)
+        private List<ArticleItem> articlesSelected;
+
+        public PanelViewPathModel(DataItemBase owner, Object parentViewModel, List<ArticleItem> articles)
         {
             parentItem = (EventItem)owner;
             _parentViewModel = parentViewModel;
+
+            articlesSelected = articles;
+
             WireCommand();
         }
 
@@ -40,18 +45,11 @@ namespace VideoSearch.ViewModel
         public List<CameraItem> LoadArticles()
         {
             // 加载标注信息
-            var sql = "select distinct Camera.ID as cameraId " +
-                "from Article " +
-                "join Movie on Movie.id = Article.videoId " +
-                "join Camera on Camera.id = Movie.cameraPos " +
-                $"where Camera.eventPos = '{parentItem.ID}' ";
-
             var listItem = new List<CameraItem>();
 
-            DataTable dt = DBManager.GetDataTable(sql, null);
-            foreach (DataRow row in dt.Rows)
+            foreach (ArticleItem article in articlesSelected)
             {
-                var cameraId = String.Format("{0}", row["cameraId"]);
+                var cameraId = article.Parent.Parent.ID;
 
                 // 匹配摄像头
                 foreach (CameraItem c in parentItem.Children)
@@ -61,7 +59,7 @@ namespace VideoSearch.ViewModel
                         listItem.Add(c);
                         break;
                     }
-                }                
+                }
             }
 
             return listItem;

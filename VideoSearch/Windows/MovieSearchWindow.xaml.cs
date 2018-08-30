@@ -112,9 +112,7 @@ namespace VideoSearch.Windows
                 if (_image == null)
                     return null;
 
-                String filePath = _image.UriSource.AbsolutePath;
-
-                return Base64EncodedData(filePath);
+                return Base64EncodedData(_backgroundImagePath);
             }
         }
 
@@ -145,6 +143,8 @@ namespace VideoSearch.Windows
         private BitmapSource _maskImage = null;
         private Rect _renXingWaiJieRect = new Rect();
         private PointCollection _path = null;
+
+        private string _backgroundImagePath;
 
         #region Constructor & Init
         public MovieSearchWindow(MovieItem movie)
@@ -293,6 +293,8 @@ namespace VideoSearch.Windows
                 _path = puppetWindow.Path;
                 _maskImage = puppetWindow.ClippedThumbnail;
                 _renXingWaiJieRect = puppetWindow.Bounds;
+                _backgroundImagePath = puppetWindow.BackgroundImagePath;
+
                 PuppetImage.Source = _maskImage;
             }
         }

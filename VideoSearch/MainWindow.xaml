@@ -282,7 +282,8 @@
                         Tag="1" 
                         Click="OnPanelShowPath" 
                         TextMode="Right" 
-                        Text="轨迹查看" />
+                        Text="轨迹查看"
+                        IsEnabled="False"/>
                     <SkinControl:SkinButton 
                         Height="22" Width="80" 
                         HorizontalAlignment="Right" VerticalAlignment="Top" 

@@ -80,8 +80,8 @@ namespace VideoSearch.ViewModel
             // 加载标注信息
             var sql = "select Camera.*, Article.*, Article.ID as ArticleID " +
                 "from Article " +
-                "join Movie on Movie.id = Article.videoId " +
-                "join Camera on Camera.id = Movie.cameraPos " +
+                "join Movie on Movie.ID = Article.VideoId " +
+                "join Camera on Camera.ID = Movie.CameraPos " +
                 $"where Camera.eventPos = '{itemEvent.ID}' ";
 
             // 筛选目标类型
@@ -91,7 +91,8 @@ namespace VideoSearch.ViewModel
             }
             if (!string.IsNullOrEmpty(FilterKeyword))
             {
-                sql += $"and Article.Description like '%{FilterKeyword}%' ";
+                sql += $"and (Article.Description like '%{FilterKeyword}%' ";
+                sql += $"or Camera.Name like '%{FilterKeyword}%') ";
             }
 
             Articles.Clear();
@@ -131,6 +132,8 @@ namespace VideoSearch.ViewModel
 
                 var viewMain = Globals.Instance.MainVM.View as MainWindow;
                 viewMain.ToolbarMarkDelete.IsEnabled = countSelected > 0;
+                viewMain.ToolbarPanelShowPath.IsEnabled = countSelected > 0;
+                viewMain.ToolbarPanelExport.IsEnabled = countSelected > 0;
             }
         }
 
@@ -169,7 +172,7 @@ namespace VideoSearch.ViewModel
         {
             var articlesRemove = Articles.Where(x => x.IsChecked == true).ToList();
 
-            // 没有已选择的，推出
+            // 没有已选择的，退出
             if (articlesRemove.Count <= 0)
             {
                 return;
@@ -199,6 +202,14 @@ namespace VideoSearch.ViewModel
         /// </summary>
         public void Export()
         {
+            var articlesExport = Articles.Where(x => x.IsChecked == true).ToList();
+
+            // 没有已选择的，退出
+            if (articlesExport.Count <= 0)
+            {
+                return;
+            }
+
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "Export";
             dlg.DefaultExt = ".csv";
@@ -217,7 +228,7 @@ namespace VideoSearch.ViewModel
                 var newLine = "ID, 视频ID, 时间点, X, Y, 长度, 宽度, 轨迹说明, 关键词, 目标类型";
                 csv.AppendLine(newLine);
 
-                foreach (ArticleItem item in Articles)
+                foreach (ArticleItem item in articlesExport)
                 {
                     newLine = $"{item.ID}, {item.DetailInfo.videoId}, {item.DetailInfo.frame}, {item.DetailInfo.x}, {item.DetailInfo.y}, {item.DetailInfo.width}, {item.DetailInfo.height}";
                     newLine += $"{item.DetailInfo.desc}, {item.DetailInfo.keyword}, {item.TargetType}";

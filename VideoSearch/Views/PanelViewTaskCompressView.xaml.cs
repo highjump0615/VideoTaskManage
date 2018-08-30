@@ -147,7 +147,7 @@ namespace VideoSearch.Views
                 else
                 {
                     // 重新加载需要延迟
-                    await Task.Delay(100);
+                    await Task.Delay(400);
 
                     _vlcPlayer.SetVideoInfo(vm.taskItem.CompressedPlayPath, true);
 

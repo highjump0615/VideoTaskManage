@@ -113,11 +113,6 @@ namespace VideoSearch.Model
 
         private readonly String _compressInfoPath = "compressInfo.xml";
 
-        #region Override
-        public override void UpdateProperty()
-        {
-        }
-        #endregion
 
         /// <summary>
         /// 获取任务结果

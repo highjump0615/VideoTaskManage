@@ -65,7 +65,7 @@ namespace VideoSearch.Model
             TaskType = taskType;
             State = state;
 
-            //InitFromServer();
+            var taskQuery = InitFromServer(true);
         }
 
         /// <summary>
@@ -90,12 +90,15 @@ namespace VideoSearch.Model
             var taskQuery = InitFromServer();
         }
 
-        public async Task InitFromServer()
+        public async Task InitFromServer(bool FetchOnly = false)
         {
-            if (State != MovieTaskState.Created && State != MovieTaskState.CreateFail)
+            if (State != MovieTaskState.Created && State != MovieTaskState.CreateFail && State != MovieTaskState.ErrorOccur)
             {
-                _monitorThread = new Thread(new ThreadStart(TaskProcess));
-                _monitorThread.Start();
+                if (!FetchOnly)
+                {
+                    _monitorThread = new Thread(new ThreadStart(TaskProcess));
+                    _monitorThread.Start();
+                }                
 
                 return;
             }
@@ -111,7 +114,6 @@ namespace VideoSearch.Model
                 Globals.Instance.ShowWaitCursor(true);
                 await FetchResult();
 
-                UpdateProperty();
                 Globals.Instance.ShowWaitCursor(false);
             }
         }
@@ -411,7 +413,7 @@ namespace VideoSearch.Model
         }
 
 
-        private double _progress = 0.5;
+        private double _progress = 0;
         public double Progress
         {
             get { return _progress; }
@@ -430,7 +432,7 @@ namespace VideoSearch.Model
         {
             get
             {
-                return $"{Progress * 100} %";
+                return $"{(int)(Progress * 100)} %";
             }
         }
 
@@ -441,10 +443,8 @@ namespace VideoSearch.Model
             set
             {
                 if (_state != value)
-                {
-                    _state = value;
-
-                    if (_state == MovieTaskState.CreateReady)
+                {                    
+                    if (value == MovieTaskState.CreateReady)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImport.png";
                         Operation = "正在处理...";
@@ -456,7 +456,7 @@ namespace VideoSearch.Model
                         IsEnabled = false;
                         Progress = 0.0;
                     }
-                    else if (_state == MovieTaskState.Creating)
+                    else if (value == MovieTaskState.Creating)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieImportStop.png";
                         Operation = "";
@@ -467,7 +467,7 @@ namespace VideoSearch.Model
                         Opacity = 1.0;
                         IsEnabled = false;
                     }
-                    else if (_state == MovieTaskState.Created)
+                    else if (value == MovieTaskState.Created)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MoviePlay.png";
                         Operation = "已完成";
@@ -477,10 +477,10 @@ namespace VideoSearch.Model
                         ProgressBarVisibility = Visibility.Hidden;
                         IsEnabled = true;
                     }
-                    else if(_state == MovieTaskState.CreateFail)
+                    else if (value == MovieTaskState.CreateFail || value == MovieTaskState.ErrorOccur)
                     {
                         OpIcon = "/VideoSearch;component/Resources/Images/Button/MovieTaskDelete.png";
-                        Operation = "异常结束";
+                        Operation = (value == MovieTaskState.CreateFail) ? "提交失败" : "发生异常";
                         OpNameMargin = new Thickness(16, 0, 0, 0);
                         OpName = "删除";
                         ButtonVisibility = Visibility.Visible;
@@ -489,8 +489,10 @@ namespace VideoSearch.Model
                         IsEnabled = true;
                     }
 
-                    if (Table != null && TaskType != MovieTaskType.UnInitTask)
+                    if (Table != null && TaskType != MovieTaskType.UnInitTask && _state != MovieTaskState.UnInited)
                         updateTable();
+
+                    _state = value;
                 }
             }
         }
@@ -537,18 +539,12 @@ namespace VideoSearch.Model
                     state = (MovieTaskState)StringUtils.String2Int(response.Element("Status").Value);
 
                     Progress = StringUtils.String2Double(response.Element("Progress").Value) / 100.0;
-                    Console.WriteLine("*** state = {0}, progress = {1}", state, Progress);
+                    Console.WriteLine("***task={0}, state = {1}, progress = {2}", TaskId, state, Progress);
                 }
 
-            } while (state != MovieTaskState.Created && state != MovieTaskState.CreateFail);
+            } while (state != MovieTaskState.Created && state != MovieTaskState.CreateFail && state != MovieTaskState.ErrorOccur);
 
-            if (response != null && state == MovieTaskState.Created)
-            {
-                State = MovieTaskState.Created;
-                UpdateProperty();
-            }
-            else
-                State = MovieTaskState.CreateFail;
+            State = state;
 
             _monitorThread = null;
         }

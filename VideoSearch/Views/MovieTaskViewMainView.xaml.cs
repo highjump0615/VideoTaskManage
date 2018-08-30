@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using VideoSearch.Database;
 using VideoSearch.Model;
 using VideoSearch.Utils;
 using VideoSearch.ViewModel;
@@ -79,7 +80,21 @@ namespace VideoSearch.Views
                 
                 _vlcPlayer.SetVideoInfo(vm.movieItem.PlayPath, true);
                 _vlcPlayer.SetManualMarkMode(true);
+
+
                 _markUtils = new ManualMarkUtils(_vlcPlayer, vm.movieItem.VideoId);
+
+                //
+                // 时间轴加载标注信息
+                //
+                axEventBarClearEvent();
+
+                // 获取标注信息
+                var articles = ArticleTable.Table.QueryArticlesWithVideoId(vm.movieItem.ID);
+                foreach (ArticleItem a in articles)
+                {
+                    axEventBarAddEvent(a.ID, a.DetailInfo.desc, a.DetailInfo.frame.ToString(), (a.DetailInfo.frame + 100).ToString());
+                }
 
                 OnPlay(this, null);
             }
@@ -272,8 +287,11 @@ namespace VideoSearch.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnSave(object sender, RoutedEventArgs e)
+        private async void OnSave(object sender, RoutedEventArgs e)
         {
+            // loading cursor
+            Globals.Instance.ShowWaitCursor(true);
+
             _markUtils.SaveManualMark();
 
             //
@@ -325,9 +343,13 @@ namespace VideoSearch.Views
 
             // 保存到数据库
             var vm = (MovieTaskViewMainModel)this.DataContext;
-            vm.saveMarkInfo(_markUtils.getMarkAt(0), markInfo);
+            var mark = await vm.saveMarkInfo(_markUtils.getMarkAt(0), markInfo);
 
+            // 时间轴加载标注信息
+            axEventBarAddEvent(mark.ID, mark.DetailInfo.desc, mark.DetailInfo.frame.ToString(), (mark.DetailInfo.frame + 100).ToString());
 
+            // hide loading cursor
+            Globals.Instance.ShowWaitCursor(false);
 
             Reset();
         }

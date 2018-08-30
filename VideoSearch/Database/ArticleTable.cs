@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace VideoSearch.Database
 
         public override void Load(DataItemBase parent)
         {
-            String sql = "select * from Article where VideoID=@VideoID order by ID Asc";
+            String sql = "select *, ID as ArticleID from Article where VideoID=@VideoID order by ID Asc";
 
             LoadAsync(parent, sql, new SQLiteParameter[]
                 {
@@ -179,5 +180,26 @@ namespace VideoSearch.Database
             });
         }
         #endregion
+
+        public List<ArticleItem> QueryArticlesWithVideoId(string videoId) {
+
+            var lstArticles = new List<ArticleItem>();
+
+            //
+            // 获取标注信息
+            //
+            var sql = "select *, ID as ArticleID from Article " +
+                $"where VideoId = '{videoId}' ";
+
+            DataTable dt = DBManager.GetDataTable(sql, null);
+            foreach (DataRow row in dt.Rows)
+            {
+                var item = (ArticleItem)DataItemWithRow(row, null);
+                lstArticles.Add(item);
+            }
+
+            return lstArticles;
+        } 
+
     }
 }

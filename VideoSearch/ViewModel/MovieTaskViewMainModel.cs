@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using VideoSearch.Database;
 using VideoSearch.Model;
 using VideoSearch.ViewModel.Base;
@@ -126,7 +127,7 @@ namespace VideoSearch.ViewModel
         }
         #endregion
 
-        public async void saveMarkInfo(ManualMark mark, DetailInfo info)
+        public async Task<ArticleItem> saveMarkInfo(ManualMark mark, DetailInfo info)
         {
             // 位置&大小
             info.frame = MarkList[0].Frame;
@@ -141,6 +142,8 @@ namespace VideoSearch.ViewModel
             ArticleItem item = new ArticleItem(movieItem, info);
             // 保存到数据库
             await ArticleTable.Table.Add(item);
+
+            return item;
         }
     }
 }

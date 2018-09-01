@@ -93,7 +93,7 @@ namespace VideoSearch.Views
                 var articles = ArticleTable.Table.QueryArticlesWithVideoId(vm.movieItem.ID);
                 foreach (ArticleItem a in articles)
                 {
-                    axEventBarAddEvent(a.ID, a.DetailInfo.desc, a.DetailInfo.frame.ToString(), (a.DetailInfo.frame + 100).ToString());
+                    axEventBarAddEvent(a.DetailInfo.desc, a.DetailInfo.frame.ToString(), (a.DetailInfo.frame + 100).ToString());
                 }
 
                 OnPlay(this, null);
@@ -346,7 +346,7 @@ namespace VideoSearch.Views
             var mark = await vm.saveMarkInfo(_markUtils.getMarkAt(0), markInfo);
 
             // 时间轴加载标注信息
-            axEventBarAddEvent(mark.ID, mark.DetailInfo.desc, mark.DetailInfo.frame.ToString(), (mark.DetailInfo.frame + 100).ToString());
+            axEventBarAddEvent(mark.DetailInfo.desc, mark.DetailInfo.frame.ToString(), (mark.DetailInfo.frame + 100).ToString());
 
             // hide loading cursor
             Globals.Instance.ShowWaitCursor(false);

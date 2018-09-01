@@ -197,11 +197,11 @@ namespace VideoSearch.Views.PlayView
         /// 添加标注至时间轴
         /// </summary>
         /// <param name="obj"></param>
-        protected void axEventBarAddEvent(string id, string description, string startframe, string endframe)
+        protected void axEventBarAddEvent(string description, string startframe, string endframe, string id = "")
         {
-            _trackBar.AddEvent(string.Format("{0};{1};{2};{3}", id, description, startframe, endframe));
-
             mnTrackBarEventCount++;
+
+            _trackBar.AddEvent(string.Format("{0};{1};{2};{3}", String.IsNullOrEmpty(id) ? mnTrackBarEventCount.ToString() : id, description, startframe, endframe));            
         }
 
         protected void axEventBarClearEvent()

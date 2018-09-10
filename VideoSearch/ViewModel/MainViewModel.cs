@@ -207,7 +207,14 @@ namespace VideoSearch.ViewModel
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     var viewMain = View as MainWindow;
+
+                    // set refresh flag
+                    viewMain.IsInTreeviewRefresh = true;
+
                     viewMain.treeView.Items.Refresh();
+
+                    // clear refresh flag
+                    viewMain.IsInTreeviewRefresh = false;
                 });                
             })
             .Start();

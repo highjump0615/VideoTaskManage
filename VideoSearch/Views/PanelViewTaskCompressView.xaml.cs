@@ -160,8 +160,7 @@ namespace VideoSearch.Views
                     {
                         if (vm.taskItem.objInfos[i].sumVideoStartTimeStamp != vm.taskItem.objInfos[i].sumVideoEndTimeStamp)
                         {
-                            axEventBarAddEvent((i + 1).ToString(), 
-                                "", 
+                            axEventBarAddEvent("", 
                                 (vm.taskItem.objInfos[i].sumVideoStartTimeStamp).ToString(), 
                                 (vm.taskItem.objInfos[i].sumVideoEndTimeStamp).ToString());
                         }

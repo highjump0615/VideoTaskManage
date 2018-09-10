@@ -24,6 +24,8 @@ namespace VideoSearch
 
         private ObservableCollection<Control> _groupList = null;
 
+        public bool IsInTreeviewRefresh = false;
+
         private static MainWindow _mainWindow = null;
         public static MainWindow VideoSearchMainWindow
         {
@@ -184,6 +186,8 @@ namespace VideoSearch
         {
             if (_selectedItem != selectedItem)
             {
+                Console.WriteLine("Updated current selected item: {0}", (selectedItem != null) ? selectedItem.Name : "");
+
                 _selectedItem = selectedItem;
 
                 // 隐藏加载中提示
@@ -222,8 +226,6 @@ namespace VideoSearch
 
         private void OnTreeItemSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            DataItemBase selectedItem = (DataItemBase)treeView.SelectedItem;
-
             DataItemBase itemOld = (DataItemBase)e.OldValue;
             DataItemBase itemNew = (DataItemBase)e.NewValue;
 
@@ -231,22 +233,28 @@ namespace VideoSearch
                 itemOld == null ? "" : itemOld.Name,
                 itemNew == null ? "" : itemNew.Name);
 
-            // 树选项不变，不更新界面，直接退出
-            if (selectedItem == e.OldValue)
+            // 刷新导致的Selection Change, 直接退出
+            if (IsInTreeviewRefresh)
             {
                 return;
             }
 
-            if (selectedItem != null)
+            // 树选项不变，不更新界面，直接退出
+            if (itemNew == _selectedItem)
             {
-                SelectTabWithLevel(selectedItem.Level);
+                return;
+            }
+
+            if (itemNew != null)
+            {
+                SelectTabWithLevel(itemNew.Level);
             }
             else
             {
                 SelectRoot();
             }
 
-            UpdateContentsWithSelectedItem(selectedItem);
+            UpdateContentsWithSelectedItem(itemNew);
         }
 
         /////////////////////////////////////////////////////////

@@ -151,7 +151,7 @@ namespace VideoSearch.Model
         {
             if (State == MovieTaskState.Created)
                 IsSelected = true;
-            else if(State == MovieTaskState.CreateFail && Parent != null)
+            else if ((State == MovieTaskState.CreateFail || State == MovieTaskState.ErrorOccur) && Parent != null)
             {
                 // delete
                 Parent.DeleteItem(this);
